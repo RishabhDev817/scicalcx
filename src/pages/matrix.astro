@@ -1,0 +1,398 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout activeTab="matrix">
+  <div class="w-full max-w-2xl mx-auto space-y-6">
+    <!-- Page Header -->
+    <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
+        System Mode: Linear Algebra
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight text-brand-text">
+        Matrix Computational Suite<span class="text-brand-blue">.</span>
+      </h1>
+      <p class="text-xs text-brand-text-muted">
+        Perform vector-matrix algebra, transpose, compute determinants, and compute inverses with full precision rounding.
+      </p>
+    </div>
+
+    <!-- Live Status -->
+    <div class="flex items-center justify-between px-3 py-1.5 bg-brand-gray-light/40 border border-brand-border rounded text-[10px] font-mono text-brand-text-muted">
+      <div>MATRIX A Dimensions: <span id="dim-a-display">3x3</span></div>
+      <div>MATRIX B Dimensions: <span id="dim-b-display">3x3</span></div>
+    </div>
+
+    <!-- Matrix Configuration & Inputs -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Matrix A Card -->
+      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text light:text-neutral-500 font-mono">Matrix A</h2>
+          <div class="flex space-x-1">
+            <button class="dim-btn-a px-2 py-0.5 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover" data-dim="2">2x2</button>
+            <button class="dim-btn-a px-2 py-0.5 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text light:text-neutral-600 rounded font-mono" data-dim="3">3x3</button>
+          </div>
+        </div>
+
+        <!-- Matrix A Grid -->
+        <div id="grid-a" class="grid grid-cols-3 gap-2 py-2">
+          <!-- Dynamic Input Cells -->
+        </div>
+
+        <!-- A Operations -->
+        <div class="grid grid-cols-2 gap-2 pt-2">
+          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white" data-op="det-a">Determinant</button>
+          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white" data-op="inv-a">Inverse</button>
+          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white col-span-2" data-op="trans-a">Transpose</button>
+        </div>
+      </div>
+
+      <!-- Matrix B Card -->
+      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text light:text-neutral-500 font-mono">Matrix B</h2>
+          <div class="flex space-x-1">
+            <button class="dim-btn-b px-2 py-0.5 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover" data-dim="2">2x2</button>
+            <button class="dim-btn-b px-2 py-0.5 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text light:text-neutral-600 rounded font-mono" data-dim="3">3x3</button>
+          </div>
+        </div>
+
+        <!-- Matrix B Grid -->
+        <div id="grid-b" class="grid grid-cols-3 gap-2 py-2">
+          <!-- Dynamic Input Cells -->
+        </div>
+
+        <!-- B Operations -->
+        <div class="grid grid-cols-2 gap-2 pt-2">
+          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white" data-op="det-b">Determinant</button>
+          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white" data-op="inv-b">Inverse</button>
+          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white col-span-2" data-op="trans-b">Transpose</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dual Matrix Joint Operations -->
+    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-4 flex flex-wrap gap-2 justify-center items-center">
+      <span class="text-xs font-mono text-brand-text-muted px-2">Binary Operations:</span>
+      <button class="op-btn-matrix px-4 py-2 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold" data-op="add">A + B</button>
+      <button class="op-btn-matrix px-4 py-2 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold" data-op="sub">A - B</button>
+      <button class="op-btn-matrix px-4 py-2 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold" data-op="mul">A &times; B (Product)</button>
+    </div>
+
+    <!-- Viewport Result Console -->
+    <div class="border border-brand-border bg-brand-black rounded-xl p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-brand-border/60 pb-2">
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-brand-text-muted font-mono flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> Output Console
+        </h3>
+        <div id="output-operation" class="text-[10px] font-mono text-brand-blue-neon uppercase">Ready</div>
+      </div>
+
+      <div id="console-display" class="flex flex-col items-center justify-center min-h-[120px] text-center font-mono">
+        <span class="text-brand-text-dim text-xs">Awaiting calculation input...</span>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    button {
+      outline: none;
+    }
+    .op-btn-matrix {
+      height: 36px;
+      border-radius: 6px;
+      transition: all 0.15s ease-in-out;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    let dimA = 3;
+    let dimB = 3;
+
+    // Helper: Precision rounding for float calculations
+    function clean(val: number) {
+      if (isNaN(val) || !isFinite(val)) return val;
+      return Number(val.toPrecision(12));
+    }
+
+    // Dynamic grid builders
+    function buildGrid(matrixName: 'a' | 'b', dim: number) {
+      const grid = document.getElementById(`grid-${matrixName}`)!;
+      grid.className = `grid gap-1.5 py-2 ${dim === 2 ? 'grid-cols-2' : 'grid-cols-3'}`;
+      
+      let html = '';
+      for (let r = 0; r < dim; r++) {
+        for (let c = 0; c < dim; c++) {
+          const val = (r === c) ? '1' : '0'; // Default identity matrix helper
+          html += `
+            <input 
+              type="number" 
+              step="any" 
+              class="cell-${matrixName} bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded text-white font-mono text-center py-2 text-sm focus:outline-none focus:ring-1 focus:ring-brand-blue/30"
+              data-row="${r}" 
+              data-col="${c}" 
+              value="${val}" 
+              placeholder="0"
+            />
+          `;
+        }
+      }
+      grid.innerHTML = html;
+    }
+
+    // Retrieve matrix values as multi-dimensional array
+    function getMatrixValues(matrixName: 'a' | 'b', dim: number): number[][] {
+      const inputs = document.querySelectorAll(`.cell-${matrixName}`) as NodeListOf<HTMLInputElement>;
+      const matrix: number[][] = Array.from({ length: dim }, () => Array(dim).fill(0));
+      
+      inputs.forEach(input => {
+        const row = parseInt(input.getAttribute('data-row')!);
+        const col = parseInt(input.getAttribute('data-col')!);
+        const val = parseFloat(input.value);
+        matrix[row][col] = isNaN(val) ? 0 : val;
+      });
+      return matrix;
+    }
+
+    // Format matrix output helper to match input grid structures
+    function renderMatrixHtml(matrix: number[][]): string {
+      const rows = matrix.length;
+      const cols = matrix[0].length;
+      let gridStyles = rows === 2 ? 'grid-cols-2' : 'grid-cols-3';
+
+      let cellsHtml = matrix
+        .map(row => 
+          row.map(val => `<input type="text" class="bg-brand-black/40 border border-brand-border rounded text-brand-text font-mono text-center py-2 text-sm focus:outline-none min-w-[64px]" value="${clean(val)}" readonly />`).join('')
+        )
+        .join('');
+
+      return `
+        <div class="grid gap-2 ${gridStyles} max-w-[240px] mx-auto p-4 bg-brand-gray-dark/30 border border-brand-border rounded-xl">
+          ${cellsHtml}
+        </div>
+      `;
+    }
+
+    // Det calculation (2x2 & 3x3)
+    function calcDet(m: number[][]): number {
+      if (m.length === 2) {
+        return m[0][0] * m[1][1] - m[0][1] * m[1][0];
+      } else {
+        return (
+          m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) -
+          m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
+          m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0])
+        );
+      }
+    }
+
+    // Transpose calculation
+    function calcTranspose(m: number[][]): number[][] {
+      const dim = m.length;
+      const result = Array.from({ length: dim }, () => Array(dim).fill(0));
+      for (let r = 0; r < dim; r++) {
+        for (let c = 0; c < dim; c++) {
+          result[c][r] = m[r][c];
+        }
+      }
+      return result;
+    }
+
+    // Inverse calculation
+    function calcInverse(m: number[][]): number[][] | null {
+      const det = calcDet(m);
+      if (Math.abs(det) < 1e-12) return null; // Non-invertible
+
+      const dim = m.length;
+      if (dim === 2) {
+        return [
+          [m[1][1] / det, -m[0][1] / det],
+          [-m[1][0] / det, m[0][0] / det]
+        ];
+      } else {
+        const result = Array.from({ length: 3 }, () => Array(3).fill(0));
+        // Adjugate calculation
+        result[0][0] = (m[1][1] * m[2][2] - m[1][2] * m[2][1]) / det;
+        result[0][1] = -(m[0][1] * m[2][2] - m[0][2] * m[2][1]) / det;
+        result[0][2] = (m[0][1] * m[1][2] - m[0][2] * m[1][1]) / det;
+
+        result[1][0] = -(m[1][0] * m[2][2] - m[1][2] * m[2][0]) / det;
+        result[1][1] = (m[0][0] * m[2][2] - m[0][2] * m[2][0]) / det;
+        result[1][2] = -(m[0][0] * m[1][2] - m[0][2] * m[1][0]) / det;
+
+        result[2][0] = (m[1][0] * m[2][1] - m[1][1] * m[2][0]) / det;
+        result[2][1] = -(m[0][0] * m[2][1] - m[0][1] * m[2][0]) / det;
+        result[2][2] = (m[0][0] * m[1][1] - m[0][1] * m[1][0]) / det;
+
+        return result;
+      }
+    }
+
+    // Handle operations
+    const consoleDisplay = document.getElementById('console-display')!;
+    const outputOperation = document.getElementById('output-operation')!;
+
+    function handleMatrixOp(op: string) {
+      const mDecA = getMatrixValues('a', dimA);
+      const mDecB = getMatrixValues('b', dimB);
+
+      try {
+        if (op === 'det-a') {
+          const val = calcDet(mDecA);
+          const formatted = String(clean(val));
+          outputOperation.textContent = 'Det(A)';
+          consoleDisplay.innerHTML = `<div class="text-xl font-bold text-white">Determinant of A = ${formatted}</div>`;
+          saveToHistory(`Det(A)`, formatted);
+        } else if (op === 'det-b') {
+          const val = calcDet(mDecB);
+          const formatted = String(clean(val));
+          outputOperation.textContent = 'Det(B)';
+          consoleDisplay.innerHTML = `<div class="text-xl font-bold text-white">Determinant of B = ${formatted}</div>`;
+          saveToHistory(`Det(B)`, formatted);
+        } else if (op === 'trans-a') {
+          const trans = calcTranspose(mDecA);
+          outputOperation.textContent = 'A^T';
+          consoleDisplay.innerHTML = renderMatrixHtml(trans);
+          saveToHistory(`Transpose(A)`, JSON.stringify(trans));
+        } else if (op === 'trans-b') {
+          const trans = calcTranspose(mDecB);
+          outputOperation.textContent = 'B^T';
+          consoleDisplay.innerHTML = renderMatrixHtml(trans);
+          saveToHistory(`Transpose(B)`, JSON.stringify(trans));
+        } else if (op === 'inv-a') {
+          const inv = calcInverse(mDecA);
+          outputOperation.textContent = 'A^-1';
+          if (!inv) {
+            consoleDisplay.innerHTML = `<span class="text-red-500 font-semibold text-xs">Error: Matrix is singular (determinant is 0). Inverse does not exist.</span>`;
+          } else {
+            consoleDisplay.innerHTML = renderMatrixHtml(inv);
+            saveToHistory(`Inverse(A)`, JSON.stringify(inv));
+          }
+        } else if (op === 'inv-b') {
+          const inv = calcInverse(mDecB);
+          outputOperation.textContent = 'B^-1';
+          if (!inv) {
+            consoleDisplay.innerHTML = `<span class="text-red-500 font-semibold text-xs">Error: Matrix is singular (determinant is 0). Inverse does not exist.</span>`;
+          } else {
+            consoleDisplay.innerHTML = renderMatrixHtml(inv);
+            saveToHistory(`Inverse(B)`, JSON.stringify(inv));
+          }
+        } else if (op === 'add') {
+          if (dimA !== dimB) {
+            consoleDisplay.innerHTML = `<span class="text-red-500 text-xs">Dimension Error: Matrices must share matching dimensions.</span>`;
+            return;
+          }
+          const res = mDecA.map((row, r) => row.map((val, c) => val + mDecB[r][c]));
+          outputOperation.textContent = 'A + B';
+          consoleDisplay.innerHTML = renderMatrixHtml(res);
+          saveToHistory(`A + B`, JSON.stringify(res));
+        } else if (op === 'sub') {
+          if (dimA !== dimB) {
+            consoleDisplay.innerHTML = `<span class="text-red-500 text-xs">Dimension Error: Matrices must share matching dimensions.</span>`;
+            return;
+          }
+          const res = mDecA.map((row, r) => row.map((val, c) => val - mDecB[r][c]));
+          outputOperation.textContent = 'A - B';
+          consoleDisplay.innerHTML = renderMatrixHtml(res);
+          saveToHistory(`A - B`, JSON.stringify(res));
+        } else if (op === 'mul') {
+          if (dimA !== dimB) {
+            consoleDisplay.innerHTML = `<span class="text-red-500 text-xs">Dimension Error: Matrices must share matching dimensions.</span>`;
+            return;
+          }
+          const dim = dimA;
+          const res = Array.from({ length: dim }, () => Array(dim).fill(0));
+          for (let r = 0; r < dim; r++) {
+            for (let c = 0; c < dim; c++) {
+              let sum = 0;
+              for (let k = 0; k < dim; k++) {
+                sum += mDecA[r][k] * mDecB[k][c];
+              }
+              res[r][c] = sum;
+            }
+          }
+          outputOperation.textContent = 'A * B';
+          consoleDisplay.innerHTML = renderMatrixHtml(res);
+          saveToHistory(`A * B`, JSON.stringify(res));
+        }
+      } catch (err: any) {
+        consoleDisplay.innerHTML = `<span class="text-red-500 text-xs">Evaluation Error: ${err.message}</span>`;
+      }
+    }
+
+    // History sync helper
+    function saveToHistory(expr: string, result: string) {
+      window.dispatchEvent(
+        new CustomEvent('add-history', {
+          detail: { expr, result, mode: 'matrix' }
+        })
+      );
+    }
+
+    // Dynamic configuration hooks
+    function initDimensionListeners() {
+      // Dimensions A
+      document.querySelectorAll('.dim-btn-a').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.dim-btn-a').forEach(b => b.classList.replace('border-brand-blue', 'border-brand-border'));
+          document.querySelectorAll('.dim-btn-a').forEach(b => b.classList.remove('bg-brand-gray-hover', 'text-white'));
+          btn.classList.replace('border-brand-border', 'border-brand-blue');
+          btn.classList.add('bg-brand-gray-hover', 'text-white');
+          
+          dimA = parseInt(btn.getAttribute('data-dim')!);
+          document.getElementById('dim-a-display')!.textContent = `${dimA}x${dimA}`;
+          buildGrid('a', dimA);
+        });
+      });
+
+      // Dimensions B
+      document.querySelectorAll('.dim-btn-b').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.dim-btn-b').forEach(b => b.classList.replace('border-brand-blue', 'border-brand-border'));
+          document.querySelectorAll('.dim-btn-b').forEach(b => b.classList.remove('bg-brand-gray-hover', 'text-white'));
+          btn.classList.replace('border-brand-border', 'border-brand-blue');
+          btn.classList.add('bg-brand-gray-hover', 'text-white');
+          
+          dimB = parseInt(btn.getAttribute('data-dim')!);
+          document.getElementById('dim-b-display')!.textContent = `${dimB}x${dimB}`;
+          buildGrid('b', dimB);
+        });
+      });
+
+      // Ops handlers
+      document.querySelectorAll('.op-btn-matrix').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const op = btn.getAttribute('data-op')!;
+          handleMatrixOp(op);
+        });
+      });
+    }
+
+    // Populate initial inputs from history triggers
+    window.addEventListener('load-expression', (e: any) => {
+      if (e.detail.mode === 'matrix') {
+        const expr = e.detail.expression;
+        const resStr = e.detail.result;
+        outputOperation.textContent = expr;
+        
+        try {
+          const parsed = JSON.parse(resStr);
+          if (Array.isArray(parsed) && Array.isArray(parsed[0])) {
+            consoleDisplay.innerHTML = renderMatrixHtml(parsed);
+          } else {
+            consoleDisplay.innerHTML = `<div class="text-xl font-bold text-brand-text">${resStr}</div>`;
+          }
+        } catch {
+          consoleDisplay.innerHTML = `<div class="text-xl font-bold text-brand-text">${resStr}</div>`;
+        }
+      }
+    });
+
+    // Run builders
+    buildGrid('a', 3);
+    buildGrid('b', 3);
+    initDimensionListeners();
+  </script>
+</Layout>

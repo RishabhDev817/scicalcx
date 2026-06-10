@@ -1,11 +1,648 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout activeTab="scientific">
+  <div class="w-full max-w-2xl mx-auto space-y-6">
+    <!-- Page Header and Eyebrow -->
+    <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
+        System Mode: Core Compute
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight text-brand-text">
+        Scientific Calculator<span class="text-brand-blue">.</span>
+      </h1>
+    </div>
+
+    <!-- Live Engine Status Bar -->
+    <div class="flex items-center justify-between px-3 py-1.5 bg-brand-gray-light/40 border border-brand-border rounded text-[10px] font-mono text-brand-text-muted">
+      <div class="flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        ENGINE STATUS: ACTIVE
+      </div>
+      <div class="flex gap-4">
+        <span>PRECISION: FLOAT64 (12-DEC)</span>
+        <span>ANGLE: RAD</span>
+      </div>
+    </div>
+
+    <!-- Main Calculator Interface -->
+    <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-6 space-y-4 shadow-xl backdrop-blur-sm relative overflow-hidden">
+      <!-- Hidden Input for Native Keyboard Interaction -->
+      <input 
+        type="text" 
+        id="raw-input" 
+        class="sr-only" 
+        autocomplete="off" 
+        autocorrect="off" 
+        autocapitalize="off" 
+        spellcheck="false"
+        autofocus
+      />
+
+      <!-- Auto-Wrapping Multi-Line Viewport Display -->
+      <div 
+        id="display-container" 
+        class="w-full min-h-[96px] bg-brand-black border border-brand-border rounded-lg p-4 flex flex-col justify-between cursor-text hover:border-brand-border-hover transition-colors focus-within:border-brand-blue focus-within:ring-1 focus-within:ring-brand-blue"
+        tabindex="0"
+      >
+        <!-- Token Matcher Syntax Overlay -->
+        <div id="display-tokens" class="w-full text-base sm:text-lg font-mono break-all whitespace-pre-wrap text-brand-text-muted min-h-[28px] leading-relaxed">
+          <span class="text-brand-text-dim italic">Type or press keys to calculate...</span>
+        </div>
+
+        <!-- Result / Error Real-time Preview Pane -->
+        <div class="flex items-end justify-between mt-3 pt-2 border-t border-brand-border/30">
+          <div id="bracket-validation" class="text-[10px] font-mono text-brand-text-dim">
+            <!-- Bracket validation state -->
+          </div>
+          <div id="display-result" class="text-2xl sm:text-3xl font-bold font-mono text-brand-text tracking-tight break-all">
+            0
+          </div>
+        </div>
+      </div>
+
+      <!-- Keypad Grid Layout -->
+      <div class="grid grid-cols-5 gap-2">
+        <!-- Science Panel Buttons -->
+        <button class="key-sci" data-key="sin">sin</button>
+        <button class="key-sci" data-key="cos">cos</button>
+        <button class="key-sci" data-key="tan">tan</button>
+        <button class="key-sci" data-key="asin">asin</button>
+        <button class="key-cmd" data-key="clear">AC</button>
+
+        <button class="key-sci" data-key="log">log</button>
+        <button class="key-sci" data-key="ln">ln</button>
+        <button class="key-sci" data-key="sqrt">sqrt</button>
+        <button class="key-sci" data-key="acos">acos</button>
+        <button class="key-cmd" data-key="backspace">DEL</button>
+
+        <button class="key-sci" data-key="pi">π</button>
+        <button class="key-sci" data-key="e">e</button>
+        <button class="key-sci" data-key="^">^</button>
+        <button class="key-sci" data-key="!">x!</button>
+        <button class="key-op" data-key="/">/</button>
+
+        <!-- Standard Numeric & Binary Ops Grid -->
+        <button class="key-num" data-key="7">7</button>
+        <button class="key-num" data-key="8">8</button>
+        <button class="key-num" data-key="9">9</button>
+        <button class="key-sci" data-key="%">%</button>
+        <button class="key-op" data-key="*">*</button>
+
+        <button class="key-num" data-key="4">4</button>
+        <button class="key-num" data-key="5">5</button>
+        <button class="key-num" data-key="6">6</button>
+        <button class="key-sci" data-key="(">(</button>
+        <button class="key-op" data-key="-">-</button>
+
+        <button class="key-num" data-key="1">1</button>
+        <button class="key-num" data-key="2">2</button>
+        <button class="key-num" data-key="3">3</button>
+        <button class="key-sci" data-key=")">)</button>
+        <button class="key-op" data-key="+">+</button>
+
+        <!-- Bottom wide row -->
+        <button class="key-num" data-key=".">.</button>
+        <button class="key-num" data-key="0">0</button>
+        <button class="key-sci" data-key="ans" id="btn-ans">Ans</button>
+        <button class="key-action col-span-2 active-glow" data-key="equals">=</button>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* Styling key groups matching Vercel Design Language */
+    button {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.875rem;
+      font-weight: 500;
+      height: 44px;
+      border-radius: 6px;
+      transition: all 0.15s ease-in-out;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      outline: none;
+    }
+    
+    .key-num {
+      background-color: var(--color-brand-gray-dark);
+      border: 1px solid var(--color-brand-border);
+      color: var(--color-brand-text);
+    }
+    .key-num:hover {
+      background-color: var(--color-brand-gray-hover);
+      border-color: var(--color-brand-border-hover);
+    }
+    .key-num:active {
+      background-color: var(--color-brand-gray-light);
+    }
+
+    .key-sci {
+      background-color: var(--color-brand-gray-light);
+      border: 1px solid var(--color-brand-border);
+      color: var(--color-brand-text-muted);
+    }
+    .key-sci:hover {
+      background-color: var(--color-brand-gray-hover);
+      color: var(--color-brand-text);
+      border-color: var(--color-brand-border-hover);
+    }
+    .key-sci:active {
+      background-color: var(--color-brand-gray-dark);
+    }
+
+    .key-op {
+      background-color: rgba(0, 112, 243, 0.06);
+      border: 1px solid rgba(0, 112, 243, 0.2);
+      color: var(--color-brand-blue);
+      font-weight: 600;
+    }
+    .key-op:hover {
+      background-color: rgba(0, 112, 243, 0.15);
+      color: var(--color-brand-blue-neon);
+      border-color: var(--color-brand-blue);
+    }
+    .key-op:active {
+      background-color: rgba(0, 112, 243, 0.25);
+    }
+
+    .key-cmd {
+      background-color: rgba(234, 67, 53, 0.06);
+      border: 1px solid rgba(234, 67, 53, 0.2);
+      color: #ea4335;
+    }
+    .key-cmd:hover {
+      background-color: rgba(234, 67, 53, 0.15);
+      border-color: #ea4335;
+    }
+    .key-cmd:active {
+      background-color: rgba(234, 67, 53, 0.25);
+    }
+
+    .key-action {
+      background-color: var(--color-brand-blue);
+      border: 1px solid var(--color-brand-blue-hover);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .key-action:hover {
+      background-color: var(--color-brand-blue-hover);
+      box-shadow: 0 0 10px rgba(0, 112, 243, 0.4);
+    }
+    .key-action:active {
+      background-color: #003e8a;
+    }
+  </style>
+
+  <script>
+    // --- Expression Parser Logic ---
+    function tokenize(str: string) {
+      // Regex for numbers, scientific functions, variables, brackets, operators, etc.
+      const regex = /\d+(\.\d*)?(e[+-]?\d+)?|[a-zA-Z]+|\+|\-|\*|\/|\^|\%|\(|\)|\!/g;
+      return str.match(regex) || [];
+    }
+
+    function parse(tokens: string[]) {
+      const outputQueue: any[] = [];
+      const operatorStack: string[] = [];
+      
+      const operators: Record<string, { precedence: number; associativity: 'Left' | 'Right'; isUnary: boolean }> = {
+        '+': { precedence: 2, associativity: 'Left', isUnary: false },
+        '-': { precedence: 2, associativity: 'Left', isUnary: false },
+        '*': { precedence: 3, associativity: 'Left', isUnary: false },
+        '/': { precedence: 3, associativity: 'Left', isUnary: false },
+        '%': { precedence: 3, associativity: 'Left', isUnary: false },
+        '^': { precedence: 4, associativity: 'Right', isUnary: false },
+        'u-': { precedence: 5, associativity: 'Right', isUnary: true },
+        'u+': { precedence: 5, associativity: 'Right', isUnary: true }
+      };
+
+      const functions = new Set(['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'log', 'ln', 'sqrt', 'abs', 'fact']);
+
+      for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i];
+        
+        // Unary operator detection
+        if (token === '-' || token === '+') {
+          const prev = tokens[i - 1];
+          const isUnary = i === 0 || prev === '(' || prev === '+' || prev === '-' || prev === '*' || prev === '/' || prev === '^' || prev === '%';
+          if (isUnary) {
+            const uToken = token === '-' ? 'u-' : 'u+';
+            const op = operators[uToken];
+            while (operatorStack.length > 0) {
+              const top = operatorStack[operatorStack.length - 1];
+              if (operators[top] && (operators[top].precedence > op.precedence || (operators[top].precedence === op.precedence && op.associativity === 'Left'))) {
+                outputQueue.push(operatorStack.pop());
+              } else {
+                break;
+              }
+            }
+            operatorStack.push(uToken);
+            continue;
+          }
+        }
+
+        if (!isNaN(parseFloat(token)) && isFinite(token as any)) {
+          outputQueue.push({ type: 'number', value: parseFloat(token) });
+        } else if (token === 'pi' || token === 'π') {
+          outputQueue.push({ type: 'number', value: Math.PI });
+        } else if (token === 'e') {
+          outputQueue.push({ type: 'number', value: Math.E });
+        } else if (functions.has(token)) {
+          operatorStack.push(token);
+        } else if (operators[token]) {
+          const op = operators[token];
+          while (operatorStack.length > 0) {
+            const top = operatorStack[operatorStack.length - 1];
+            if (functions.has(top)) {
+              outputQueue.push(operatorStack.pop());
+            } else if (operators[top] && (operators[top].precedence > op.precedence || (operators[top].precedence === op.precedence && op.associativity === 'Left'))) {
+              outputQueue.push(operatorStack.pop());
+            } else {
+              break;
+            }
+          }
+          operatorStack.push(token);
+        } else if (token === '(') {
+          operatorStack.push(token);
+        } else if (token === ')') {
+          let foundOpen = false;
+          while (operatorStack.length > 0) {
+            const top = operatorStack.pop();
+            if (top === '(') {
+              foundOpen = true;
+              break;
+            } else {
+              outputQueue.push(top);
+            }
+          }
+          if (!foundOpen) throw new Error('Mismatched parentheses');
+        } else if (token === '!') {
+          outputQueue.push('!');
+        } else {
+          throw new Error(`Unknown token: ${token}`);
+        }
+      }
+
+      while (operatorStack.length > 0) {
+        const top = operatorStack.pop();
+        if (top === '(' || top === ')') throw new Error('Mismatched parentheses');
+        outputQueue.push(top);
+      }
+
+      return outputQueue;
+    }
+
+    function evaluateRPN(rpn: any[]) {
+      const stack: number[] = [];
+      
+      const factorial = (n: number): number => {
+        if (n < 0) throw new Error('Factorial negative');
+        if (n === 0 || n === 1) return 1;
+        let result = 1;
+        for (let i = 2; i <= n; i++) result *= i;
+        return result;
+      };
+
+      for (let i = 0; i < rpn.length; i++) {
+        const token = rpn[i];
+        if (typeof token === 'object' && token.type === 'number') {
+          stack.push(token.value);
+        } else if (token === '!') {
+          if (stack.length < 1) throw new Error('Syntax error');
+          const val = stack.pop()!;
+          stack.push(factorial(val));
+        } else if (token === 'u-') {
+          if (stack.length < 1) throw new Error('Syntax error');
+          const val = stack.pop()!;
+          stack.push(-val);
+        } else if (token === 'u+') {
+          if (stack.length < 1) throw new Error('Syntax error');
+          // No operation
+        } else if (typeof token === 'string') {
+          const functions: Record<string, (v: number) => number> = {
+            'sin': Math.sin, 'cos': Math.cos, 'tan': Math.tan,
+            'asin': Math.asin, 'acos': Math.acos, 'atan': Math.atan,
+            'log': Math.log10, 'ln': Math.log, 'sqrt': Math.sqrt,
+            'abs': Math.abs, 'fact': factorial
+          };
+          
+          if (functions[token]) {
+            if (stack.length < 1) throw new Error('Syntax error');
+            const val = stack.pop()!;
+            stack.push(functions[token](val));
+          } else {
+            if (stack.length < 2) throw new Error('Syntax error');
+            const b = stack.pop()!;
+            const a = stack.pop()!;
+            
+            switch (token) {
+              case '+': stack.push(a + b); break;
+              case '-': stack.push(a - b); break;
+              case '*': stack.push(a * b); break;
+              case '/': 
+                if (b === 0) throw new Error('Divide by zero');
+                stack.push(a / b); 
+                break;
+              case '%': stack.push(a % b); break;
+              case '^': stack.push(Math.pow(a, b)); break;
+              default: throw new Error(`Unknown operator: ${token}`);
+            }
+          }
+        }
+      }
+      
+      if (stack.length !== 1) throw new Error('Syntax error');
+      return stack[0];
+    }
+
+    // High precision rounding to solve float arithmetic (e.g. 0.1 + 0.2 = 0.3)
+    function cleanResult(val: number) {
+      if (typeof val !== 'number' || isNaN(val) || !isFinite(val)) return val;
+      // Precision rounding (12 significant digits)
+      const res = Number(val.toPrecision(12));
+      return res;
+    }
+
+    // --- Core UI Management ---
+    let expression = '';
+    let lastAns = '0';
+
+    const rawInput = document.getElementById('raw-input') as HTMLInputElement;
+    const displayContainer = document.getElementById('display-container')!;
+    const displayTokens = document.getElementById('display-tokens')!;
+    const displayResult = document.getElementById('display-result')!;
+    const bracketValidation = document.getElementById('bracket-validation')!;
+    const btnAns = document.getElementById('btn-ans')!;
+
+    // Focus raw-input when clicking the display viewport
+    displayContainer.addEventListener('click', () => {
+      rawInput.focus();
+    });
+
+    // Sanitizer rules on keystroke
+    function sanitizeInput(currentVal: string, nextChar: string) {
+      const operators = ['+', '*', '/', '^', '%'];
+      
+      // Prevent operators at start (except - and +)
+      if (currentVal === '' && operators.includes(nextChar)) {
+        return '';
+      }
+      
+      const lastChar = currentVal[currentVal.length - 1];
+      
+      // Prevent double decimals in the same number token
+      if (nextChar === '.') {
+        const tokens = tokenize(currentVal);
+        const lastToken = tokens[tokens.length - 1] || '';
+        const isOperator = ['+', '-', '*', '/', '^', '%', '(', ')', '!'].includes(lastToken);
+        if (!isOperator && lastToken.includes('.')) {
+          return currentVal; // Block duplicate decimal
+        }
+      }
+      
+      // Operator collision sanitizer
+      const allOps = ['+', '-', '*', '/', '^', '%'];
+      if (allOps.includes(nextChar)) {
+        if (allOps.includes(lastChar)) {
+          // Allow unary minus (e.g., '*-', '/-', '^-')
+          if (nextChar === '-' && ['*', '/', '+', '(', '^', '%'].includes(lastChar)) {
+            return currentVal + nextChar;
+          }
+          
+          // Replace operator sequence like '*-' or '+-' when another operator is typed
+          if (currentVal.length >= 2) {
+            const secondToLast = currentVal[currentVal.length - 2];
+            if (allOps.includes(secondToLast)) {
+              return currentVal.slice(0, -2) + nextChar;
+            }
+          }
+          
+          // Replace last single operator
+          return currentVal.slice(0, -1) + nextChar;
+        }
+      }
+      
+      return currentVal + nextChar;
+    }
+
+    // Syntax highlight / Token highlight generator
+    function generateHighlightHtml(expr: string) {
+      if (!expr) {
+        return `<span class="text-brand-text-dim italic">Type or press keys to calculate...</span>`;
+      }
+      
+      const tokens = tokenize(expr);
+      
+      // Evaluate matching brackets stack
+      const openIndices: number[] = [];
+      const matchMap: Record<number, boolean> = {};
+      
+      tokens.forEach((tok, idx) => {
+        if (tok === '(') {
+          openIndices.push(idx);
+        } else if (tok === ')') {
+          if (openIndices.length > 0) {
+            const openIdx = openIndices.pop()!;
+            matchMap[openIdx] = true;
+            matchMap[idx] = true;
+          } else {
+            matchMap[idx] = false; // Mismatched close
+          }
+        }
+      });
+      
+      openIndices.forEach((idx) => {
+        matchMap[idx] = false; // Mismatched open
+      });
+
+      const functions = new Set(['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'log', 'ln', 'sqrt', 'abs', 'fact']);
+      const constants = new Set(['pi', 'e', 'π']);
+      const operators = new Set(['+', '-', '*', '/', '^', '%', '!']);
+
+      return tokens
+        .map((tok, idx) => {
+          if (!isNaN(parseFloat(tok)) && isFinite(tok as any)) {
+            return `<span class="token-number">${tok}</span>`;
+          } else if (constants.has(tok)) {
+            return `<span class="token-constant font-medium">${tok}</span>`;
+          } else if (functions.has(tok)) {
+            return `<span class="token-function font-medium">${tok}</span>`;
+          } else if (operators.has(tok)) {
+            return `<span class="token-operator font-semibold">${tok}</span>`;
+          } else if (tok === '(') {
+            const matched = matchMap[idx];
+            return `<span class="${matched ? 'token-paren-match' : 'token-paren-error'}">${tok}</span>`;
+          } else if (tok === ')') {
+            const matched = matchMap[idx];
+            return `<span class="${matched ? 'token-paren-match' : 'token-paren-error'}">${tok}</span>`;
+          } else if (tok === '.') {
+            return `<span class="token-number">${tok}</span>`;
+          }
+          return `<span class="token-paren-error">${tok}</span>`;
+        })
+        .join('');
+    }
+
+    // Bracket validation UI updating
+    function updateBracketStatus() {
+      const tokens = tokenize(expression);
+      let openCount = 0;
+      let closeCount = 0;
+      tokens.forEach(tok => {
+        if (tok === '(') openCount++;
+        if (tok === ')') closeCount++;
+      });
+      if (openCount > closeCount) {
+        bracketValidation.innerHTML = `<span class="text-brand-blue-neon font-medium">Unclosed: ${openCount - closeCount} )</span>`;
+      } else if (closeCount > openCount) {
+        bracketValidation.innerHTML = `<span class="text-red-500 font-medium">Extra: ${closeCount - openCount} )</span>`;
+      } else {
+        bracketValidation.innerHTML = expression ? `<span class="text-emerald-400 font-medium">Syntax valid</span>` : '';
+      }
+    }
+
+    // Evaluate live input
+    function updateDisplay() {
+      displayTokens.innerHTML = generateHighlightHtml(expression);
+      updateBracketStatus();
+
+      if (!expression) {
+        displayResult.textContent = '0';
+        displayResult.classList.remove('text-red-500');
+        displayResult.classList.add('text-brand-text');
+        return;
+      }
+
+      try {
+        const tokens = tokenize(expression);
+        const rpn = parse(tokens);
+        const rawRes = evaluateRPN(rpn);
+        const clean = cleanResult(rawRes);
+        
+        displayResult.textContent = isNaN(clean) ? 'Error' : String(clean);
+        displayResult.classList.remove('text-red-500');
+        displayResult.classList.add('text-brand-text');
+      } catch (err: any) {
+        // Only display parsing issues if we aren't mid-expression
+        displayResult.textContent = '...';
+        displayResult.classList.remove('text-red-500');
+        displayResult.classList.add('text-brand-text-dim');
+      }
+    }
+
+    function processKey(key: string) {
+      if (key === 'clear') {
+        expression = '';
+      } else if (key === 'backspace') {
+        const functions = ['sin', 'cos', 'tan', 'log', 'sqrt', 'fact', 'asin', 'acos', 'atan'];
+        let matchedFunc = false;
+        for (const func of functions) {
+          if (expression.endsWith(func)) {
+            expression = expression.slice(0, -func.length);
+            matchedFunc = true;
+            break;
+          }
+        }
+        if (!matchedFunc) {
+          expression = expression.slice(0, -1);
+        }
+      } else if (key === 'equals') {
+        if (!expression) return;
+        try {
+          const tokens = tokenize(expression);
+          const rpn = parse(tokens);
+          const result = cleanResult(evaluateRPN(rpn));
+          if (isNaN(result)) throw new Error('Invalid output');
+          
+          const finalResult = String(result);
+          
+          // Save result to Ansible/Answer
+          lastAns = finalResult;
+          btnAns.textContent = `Ans (${lastAns})`;
+
+          // Trigger Sidebar History addition
+          window.dispatchEvent(
+            new CustomEvent('add-history', {
+              detail: { expr: expression, result: finalResult, mode: 'scientific' }
+            })
+          );
+
+          expression = finalResult;
+          displayResult.classList.remove('text-brand-text-dim');
+          displayResult.classList.add('text-brand-blue-neon');
+        } catch (err: any) {
+          displayResult.textContent = 'Syntax Error';
+          displayResult.classList.remove('text-brand-text');
+          displayResult.classList.add('text-red-500');
+        }
+        return;
+      } else if (key === 'ans') {
+        expression = sanitizeInput(expression, lastAns);
+      } else {
+        // Convert virtual keys where needed
+        let character = key;
+        if (key === 'pi') character = 'pi';
+        
+        // Auto-insert parentheses after function keys
+        const functions = ['sin', 'cos', 'tan', 'log', 'ln', 'sqrt', 'abs', 'fact'];
+        if (functions.includes(key)) {
+          character = key + '(';
+        }
+
+        expression = sanitizeInput(expression, character);
+      }
+      updateDisplay();
+    }
+
+    // Keyboard support
+    window.addEventListener('keydown', (e) => {
+      // Prevent focus issues if target is a normal input (e.g., inside sidebars if added)
+      if (document.activeElement?.tagName === 'INPUT' && document.activeElement !== rawInput) {
+        return;
+      }
+      
+      const key = e.key;
+      
+      if (key >= '0' && key <= '9') {
+        processKey(key);
+      } else if (['+', '-', '*', '/', '.', '(', ')', '%', '^', '!'].includes(key)) {
+        processKey(key);
+      } else if (key === 'Enter' || key === '=') {
+        e.preventDefault();
+        processKey('equals');
+      } else if (key === 'Backspace') {
+        e.preventDefault();
+        processKey('backspace');
+      } else if (key === 'Escape') {
+        processKey('clear');
+      }
+    });
+
+    // Handle mouse button clicks
+    document.querySelectorAll('button[data-key]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const key = btn.getAttribute('data-key')!;
+        processKey(key);
+        // Reset raw input focus
+        rawInput.focus();
+      });
+    });
+
+    // Listen for history item clicks
+    window.addEventListener('load-expression', (e: any) => {
+      if (e.detail.mode === 'scientific') {
+        expression = e.detail.expression;
+        updateDisplay();
+      }
+    });
+
+    // Initialize UI display
+    updateDisplay();
+  </script>
 </Layout>

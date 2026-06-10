@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@custom-variant light (.light &);
+
+
+@theme {
+  --color-brand-black: #000000;
+  --color-brand-gray-dark: #0a0a0a;
+  --color-brand-gray-light: #121212;
+  --color-brand-gray-hover: #1f1f1f;
+  --color-brand-border: #1e1e1e;
+  --color-brand-border-hover: #2e2e2e;
+  --color-brand-border-strong: #3e3e3e;
+  --color-brand-blue: #0070f3;
+  --color-brand-blue-hover: #0051b3;
+  --color-brand-blue-neon: #00a2ff;
+  --color-brand-text: #ffffff;
+  --color-brand-text-muted: #888888;
+  --color-brand-text-dim: #666666;
+
+  --font-sans: "Inter", "Geist", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Geist Mono", ui-monospace, monospace;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e1e1e;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2e2e2e;
+}
+
+/* Light Mode overrides */
+html.light {
+  --color-brand-black: #fafafa;
+  --color-brand-gray-dark: #ffffff;
+  --color-brand-gray-light: #eaeaea;
+  --color-brand-gray-hover: #e1e1e1;
+  --color-brand-border: #d5d5d5;
+  --color-brand-border-hover: #b5b5b5;
+  --color-brand-border-strong: #888888;
+  --color-brand-blue: #0070f3;
+  --color-brand-blue-hover: #0051b3;
+  --color-brand-blue-neon: #0070f3;
+  --color-brand-text: #171717;
+  --color-brand-text-muted: #4d4d4d;
+  --color-brand-text-dim: #888888;
+}
+
+html.light .text-white {
+  color: var(--color-brand-text) !important;
+}
+
+html.light .hover\:text-white:hover {
+  color: var(--color-brand-text) !important;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #fafafa;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #d5d5d5;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #b5b5b5;
+}
+
+/* Global Reset overrides */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-brand-black);
+  color: var(--color-brand-text);
+  font-family: "Inter", "Geist", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Theme-adaptable Token Matching Styles */
+.token-number {
+  color: var(--color-brand-text);
+}
+.token-constant {
+  color: #10b981;
+}
+html.light .token-constant {
+  color: #059669;
+}
+.token-function {
+  color: #c084fc;
+}
+html.light .token-function {
+  color: #7e22ce;
+}
+.token-operator {
+  color: var(--color-brand-blue-neon);
+}
+.token-paren-match {
+  color: #10b981;
+}
+html.light .token-paren-match {
+  color: #059669;
+}
+.token-paren-error {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+/* Custom micro-animations */
+@keyframes pulse-blue {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 112, 243, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(0, 162, 255, 0.4);
+  }
+}
+
+.focus-neon-blue:focus-within {
+  border-color: #0070f3;
+  box-shadow: 0 0 10px rgba(0, 112, 243, 0.25);
+  transition: all 0.2s ease-in-out;
+}
+
+.hover-glow:hover {
+  border-color: #2e2e2e;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.03);
+}
+
+.active-glow {
+  animation: pulse-blue 2s infinite ease-in-out;
+}
