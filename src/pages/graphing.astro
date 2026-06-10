@@ -1,0 +1,637 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout activeTab="graphing" title="SciCalcX | Interactive Graphing Studio">
+  <div class="w-full max-w-6xl mx-auto space-y-6 flex flex-col h-full">
+    <!-- Page Header -->
+    <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
+        System Mode: Graphing Studio
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight text-brand-text">
+        Graphing Studio<span class="text-brand-blue">.</span>
+      </h1>
+    </div>
+
+    <!-- Layout Wrapper -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+      <!-- Left Controls Sidebar -->
+      <div class="lg:col-span-1 space-y-4 border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 shadow-xl backdrop-blur-sm">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5 border-b border-brand-border/40 pb-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
+          Function Inputs
+        </h2>
+        
+        <div class="space-y-3 font-mono text-xs">
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between">
+              <label class="text-brand-text-dim uppercase text-[9px]">f(x) (Blue)</label>
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+            </div>
+            <input 
+              type="text" 
+              id="func-f" 
+              placeholder="e.g. x^2" 
+              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
+              value="x^2 - 4"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center justify-between">
+              <label class="text-brand-text-dim uppercase text-[9px]">g(x) (Green)</label>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            </div>
+            <input 
+              type="text" 
+              id="func-g" 
+              placeholder="e.g. sin(x)" 
+              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
+              value="2*sin(x)"
+            />
+          </div>
+
+          <button 
+            id="btn-plot"
+            class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm"
+          >
+            Plot Functions
+          </button>
+        </div>
+
+        <!-- Preset Curves Selector -->
+        <div class="space-y-2 pt-2">
+          <span class="text-brand-text-dim font-mono text-[9px] uppercase tracking-wider block">Quick Presets</span>
+          <div class="grid grid-cols-2 gap-2 font-mono text-[10px]">
+            <button class="preset-btn bg-brand-gray-light border border-brand-border text-brand-text-muted hover:text-white rounded py-1 cursor-pointer transition-colors" data-f="x^2" data-g="2*x">Parabola / Line</button>
+            <button class="preset-btn bg-brand-gray-light border border-brand-border text-brand-text-muted hover:text-white rounded py-1 cursor-pointer transition-colors" data-f="x^3 - 3*x" data-g="x">Cubic Curves</button>
+            <button class="preset-btn bg-brand-gray-light border border-brand-border text-brand-text-muted hover:text-white rounded py-1 cursor-pointer transition-colors" data-f="sin(x)" data-g="cos(x)">Trig Waves</button>
+            <button class="preset-btn bg-brand-gray-light border border-brand-border text-brand-text-muted hover:text-white rounded py-1 cursor-pointer transition-colors" data-f="exp(-0.2*x)*sin(2*x)" data-g="exp(-0.2*x)">Dampened Osc</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Graph Area & Canvas -->
+      <div class="lg:col-span-3 space-y-4">
+        <!-- Interactive Graph Pane -->
+        <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-6 shadow-xl backdrop-blur-sm relative flex flex-col gap-4">
+          
+          <div class="relative">
+            <!-- Canvas Plotter -->
+            <canvas 
+              id="graph-canvas" 
+              width="1000" 
+              height="600" 
+              class="w-full h-[450px] sm:h-[500px] bg-brand-black border border-neutral-800 rounded-lg cursor-crosshair"
+            ></canvas>
+
+            <!-- Floating Mouse Coordinate / Math Readout overlay -->
+            <div 
+              id="coord-overlay" 
+              class="absolute hidden bg-brand-black/95 border border-brand-border rounded px-3 py-2 text-[10px] font-mono text-brand-text shadow-2xl backdrop-blur pointer-events-none space-y-1 z-10"
+            >
+              <!-- Populated dynamically by mousemove -->
+            </div>
+          </div>
+
+          <!-- Micro-Analytic Math Readouts -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-[11px] border-t border-brand-border/40 pt-4 bg-brand-black/20 p-4 rounded-lg border border-brand-border/60">
+            <!-- f(x) Analytics -->
+            <div class="space-y-1.5">
+              <div class="flex items-center gap-1.5 text-brand-blue font-bold border-b border-brand-border/20 pb-1 uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
+                f(x) Function Analytics
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <span class="text-brand-text-dim text-[10px]">Y-INTERCEPT:</span>
+                <span id="f-y-intercept" class="col-span-2 text-brand-text font-bold text-right">-4</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <span class="text-brand-text-dim text-[10px]">X-INTERCEPTS:</span>
+                <span id="f-x-intercepts" class="col-span-2 text-emerald-400 font-bold text-right">-2.0, 2.0</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <span class="text-brand-text-dim text-[10px]">EXTREMA:</span>
+                <span id="f-extrema" class="col-span-2 text-brand-blue-neon font-bold text-right">(0.0, -4.0) Min</span>
+              </div>
+            </div>
+
+            <!-- g(x) Analytics -->
+            <div class="space-y-1.5">
+              <div class="flex items-center gap-1.5 text-emerald-400 font-bold border-b border-brand-border/20 pb-1 uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                g(x) Function Analytics
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <span class="text-brand-text-dim text-[10px]">Y-INTERCEPT:</span>
+                <span id="g-y-intercept" class="col-span-2 text-brand-text font-bold text-right">0</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <span class="text-brand-text-dim text-[10px]">X-INTERCEPTS:</span>
+                <span id="g-x-intercepts" class="col-span-2 text-emerald-400 font-bold text-right">-3.14, 0.0, 3.14</span>
+              </div>
+              <div class="grid grid-cols-3 gap-2">
+                <span class="text-brand-text-dim text-[10px]">EXTREMA:</span>
+                <span id="g-extrema" class="col-span-2 text-brand-blue-neon font-bold text-right">(-1.57, -2.0) Min, (1.57, 2.0) Max</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Expression Parser for variable x ---
+    function tokenize(str: string) {
+      const regex = /\d+(\.\d*)?(e[+-]?\d+)?|[a-zA-Z_]+|\+|\-|\*|\/|\^|\%|\(|\)|\!|\,/g;
+      return str.match(regex) || [];
+    }
+
+    function parse(tokens: string[]) {
+      const outputQueue: any[] = [];
+      const operatorStack: string[] = [];
+      const operators: Record<string, { precedence: number; associativity: 'Left' | 'Right' }> = {
+        '+': { precedence: 2, associativity: 'Left' },
+        '-': { precedence: 2, associativity: 'Left' },
+        '*': { precedence: 3, associativity: 'Left' },
+        '/': { precedence: 3, associativity: 'Left' },
+        '^': { precedence: 4, associativity: 'Right' },
+        'u-': { precedence: 5, associativity: 'Right' }
+      };
+      const functions = new Set(['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'log', 'ln', 'sqrt', 'exp']);
+
+      for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i];
+
+        if (token === '-' || token === '+') {
+          const prev = tokens[i - 1];
+          const isUnary = i === 0 || prev === '(' || prev === ',' || ['+', '-', '*', '/', '^'].includes(prev);
+          if (isUnary) {
+            if (token === '-') {
+              while (operatorStack.length > 0) {
+                const top = operatorStack[operatorStack.length - 1];
+                if (operators[top] && operators[top].precedence >= 5) {
+                  outputQueue.push(operatorStack.pop());
+                } else break;
+              }
+              operatorStack.push('u-');
+            }
+            continue;
+          }
+        }
+
+        if (!isNaN(parseFloat(token)) && isFinite(token as any)) {
+          outputQueue.push({ type: 'number', value: parseFloat(token) });
+        } else if (token === 'x' || token === 'X') {
+          outputQueue.push({ type: 'variable', name: 'x' });
+        } else if (token === 'pi' || token === 'π') {
+          outputQueue.push({ type: 'number', value: Math.PI });
+        } else if (token === 'e') {
+          outputQueue.push({ type: 'number', value: Math.E });
+        } else if (functions.has(token)) {
+          operatorStack.push(token);
+        } else if (operators[token]) {
+          const op = operators[token];
+          while (operatorStack.length > 0) {
+            const top = operatorStack[operatorStack.length - 1];
+            if (functions.has(top)) {
+              outputQueue.push(operatorStack.pop());
+            } else if (operators[top] && (operators[top].precedence > op.precedence || (operators[top].precedence === op.precedence && op.associativity === 'Left'))) {
+              outputQueue.push(operatorStack.pop());
+            } else break;
+          }
+          operatorStack.push(token);
+        } else if (token === '(') {
+          operatorStack.push(token);
+        } else if (token === ')') {
+          let found = false;
+          while (operatorStack.length > 0) {
+            const top = operatorStack.pop();
+            if (top === '(') { found = true; break; }
+            outputQueue.push(top);
+          }
+          if (!found) throw new Error('Parentheses mismatch');
+        } else if (token === ',') {
+          let found = false;
+          while (operatorStack.length > 0) {
+            const top = operatorStack[operatorStack.length - 1];
+            if (top === '(') { found = true; break; }
+            outputQueue.push(operatorStack.pop());
+          }
+          if (!found) throw new Error('Comma misplaced');
+        }
+      }
+
+      while (operatorStack.length > 0) {
+        const top = operatorStack.pop();
+        if (top === '(' || top === ')') throw new Error('Parentheses mismatch');
+        outputQueue.push(top);
+      }
+
+      return outputQueue;
+    }
+
+    function evaluateRPN(rpn: any[], xVal: number) {
+      const stack: number[] = [];
+
+      for (let i = 0; i < rpn.length; i++) {
+        const token = rpn[i];
+        if (typeof token === 'object' && token.type === 'number') {
+          stack.push(token.value);
+        } else if (typeof token === 'object' && token.type === 'variable' && token.name === 'x') {
+          stack.push(xVal);
+        } else if (token === 'u-') {
+          const v = stack.pop()!;
+          stack.push(-v);
+        } else if (typeof token === 'string') {
+          const functions: Record<string, (v: number) => number> = {
+            'sin': Math.sin, 'cos': Math.cos, 'tan': Math.tan,
+            'asin': Math.asin, 'acos': Math.acos, 'atan': Math.atan,
+            'log': Math.log10, 'ln': Math.log, 'sqrt': Math.sqrt, 'exp': Math.exp
+          };
+
+          if (functions[token]) {
+            const val = stack.pop()!;
+            stack.push(functions[token](val));
+          } else {
+            const b = stack.pop()!;
+            const a = stack.pop()!;
+            switch (token) {
+              case '+': stack.push(a + b); break;
+              case '-': stack.push(a - b); break;
+              case '*': stack.push(a * b); break;
+              case '/': stack.push(a / b); break;
+              case '^': stack.push(Math.pow(a, b)); break;
+            }
+          }
+        }
+      }
+      return stack[0];
+    }
+
+    function cleanVal(v: number) {
+      if (typeof v !== 'number' || isNaN(v) || !isFinite(v)) return v;
+      return Number(v.toFixed(3));
+    }
+
+    // --- Interactive Graphing Dashboard logic ---
+    const canvas = document.getElementById('graph-canvas') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d')!;
+    
+    const coordOverlay = document.getElementById('coord-overlay')!;
+    
+    const inputF = document.getElementById('func-f') as HTMLInputElement;
+    const inputG = document.getElementById('func-g') as HTMLInputElement;
+    const btnPlot = document.getElementById('btn-plot')!;
+
+    // Math boundaries
+    const xMin = -10, xMax = 10;
+    const yMin = -6, yMax = 6;
+
+    let rpnF: any[] | null = null;
+    let rpnG: any[] | null = null;
+
+    function toPixelX(x: number) {
+      return ((x - xMin) / (xMax - xMin)) * canvas.width;
+    }
+
+    function toPixelY(y: number) {
+      return (1 - (y - yMin) / (yMax - yMin)) * canvas.height;
+    }
+
+    function toMathX(px: number) {
+      return xMin + (px / canvas.width) * (xMax - xMin);
+    }
+
+    function toMathY(py: number) {
+      return yMax - (py / canvas.height) * (yMax - yMin);
+    }
+
+    // Parse and plot formula values
+    function compileFunctions() {
+      rpnF = null;
+      rpnG = null;
+      
+      try {
+        if (inputF.value.trim()) rpnF = parse(tokenize(inputF.value));
+      } catch (err) {}
+
+      try {
+        if (inputG.value.trim()) rpnG = parse(tokenize(inputG.value));
+      } catch (err) {}
+
+      drawGrid();
+      if (rpnF) plotCurve(rpnF, '#0070f3'); // Neon Blue
+      if (rpnG) plotCurve(rpnG, '#10b981'); // Neon Green
+      
+      calculateAnalytics();
+    }
+
+    function drawGrid() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Light/Dark Theme colors check
+      const isLight = document.documentElement.classList.contains('light');
+      const gridColor = isLight ? '#eaeaea' : '#171717';
+      const axisColor = isLight ? '#888888' : '#3e3e3e';
+      const textColor = isLight ? '#171717' : '#888888';
+
+      // Draw horizontal & vertical grid lines
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = gridColor;
+      ctx.fillStyle = textColor;
+      ctx.font = '10px monospace';
+
+      // Vertical lines
+      for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
+        const px = toPixelX(x);
+        ctx.beginPath();
+        ctx.moveTo(px, 0);
+        ctx.lineTo(px, canvas.height);
+        ctx.stroke();
+
+        // tick labels on x-axis
+        if (x !== 0) {
+          const py = toPixelY(0);
+          ctx.fillText(String(x), px - 4, py + 12);
+        }
+      }
+
+      // Horizontal lines
+      for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
+        const py = toPixelY(y);
+        ctx.beginPath();
+        ctx.moveTo(0, py);
+        ctx.lineTo(canvas.width, py);
+        ctx.stroke();
+
+        // tick labels on y-axis
+        if (y !== 0) {
+          const px = toPixelX(0);
+          ctx.fillText(String(y), px + 6, py + 3);
+        }
+      }
+
+      // Main Central axes lines
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = axisColor;
+
+      // X-Axis
+      ctx.beginPath();
+      ctx.moveTo(0, toPixelY(0));
+      ctx.lineTo(canvas.width, toPixelY(0));
+      ctx.stroke();
+
+      // Y-Axis
+      ctx.beginPath();
+      ctx.moveTo(toPixelX(0), 0);
+      ctx.lineTo(toPixelX(0), canvas.height);
+      ctx.stroke();
+    }
+
+    function plotCurve(rpn: any[], color: string) {
+      ctx.beginPath();
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = color;
+
+      let first = true;
+      const step = 2; // pixel step
+
+      for (let px = 0; px <= canvas.width; px += step) {
+        const x = toMathX(px);
+        try {
+          const y = evaluateRPN(rpn, x);
+          if (isNaN(y) || !isFinite(y)) {
+            first = true;
+            continue;
+          }
+          const py = toPixelY(y);
+
+          if (first) {
+            ctx.moveTo(px, py);
+            first = false;
+          } else {
+            ctx.lineTo(px, py);
+          }
+        } catch (err) {
+          first = true;
+        }
+      }
+      ctx.stroke();
+    }
+
+    // Sweeping algorithms to calculate mathematical readouts
+    function calculateAnalytics() {
+      // f(x)
+      calculateSingleAnalytics(rpnF, 'f');
+      // g(x)
+      calculateSingleAnalytics(rpnG, 'g');
+    }
+
+    function calculateSingleAnalytics(rpn: any[] | null, prefix: string) {
+      const yInterceptEl = document.getElementById(`${prefix}-y-intercept`)!;
+      const xInterceptsEl = document.getElementById(`${prefix}-x-intercepts`)!;
+      const extremaEl = document.getElementById(`${prefix}-extrema`)!;
+
+      if (!rpn) {
+        yInterceptEl.textContent = '—';
+        xInterceptsEl.textContent = '—';
+        extremaEl.textContent = '—';
+        return;
+      }
+
+      try {
+        // Y-intercept
+        const y0 = evaluateRPN(rpn, 0);
+        yInterceptEl.textContent = isNaN(y0) || !isFinite(y0) ? 'Undefined' : String(cleanVal(y0));
+
+        // X-intercepts (Sweep + Bisection)
+        const roots: number[] = [];
+        const sweepStep = 0.05;
+        let prevVal = evaluateRPN(rpn, xMin);
+        
+        for (let x = xMin + sweepStep; x <= xMax; x += sweepStep) {
+          const val = evaluateRPN(rpn, x);
+          if (isNaN(val) || !isFinite(val) || isNaN(prevVal) || !isFinite(prevVal)) {
+            prevVal = val;
+            continue;
+          }
+
+          if ((prevVal < 0 && val > 0) || (prevVal > 0 && val < 0)) {
+            // Root bracketed between x - sweepStep and x. Perform bisection
+            let left = x - sweepStep;
+            let right = x;
+            let mid = left;
+            for (let iter = 0; iter < 8; iter++) {
+              mid = (left + right) / 2;
+              const midVal = evaluateRPN(rpn, mid);
+              if (Math.abs(midVal) < 1.e-6) break;
+              if (midVal * evaluateRPN(rpn, left) < 0) right = mid;
+              else left = mid;
+            }
+            roots.push(cleanVal(mid));
+          } else if (Math.abs(val) < 1.e-5) {
+            roots.push(cleanVal(x));
+          }
+          prevVal = val;
+        }
+        
+        // Remove duplicate roots
+        const uniqueRoots = [...new Set(roots)].filter(r => r >= xMin && r <= xMax).sort((a,b)=>a-b);
+        xInterceptsEl.textContent = uniqueRoots.length > 0 ? uniqueRoots.join(', ') : 'None inside grid';
+
+        // Extrema detection
+        // We evaluate derivatives at visible steps. Where slope changes sign:
+        // slope > 0 to slope < 0 -> Maxima
+        // slope < 0 to slope > 0 -> Minima
+        const extrema: string[] = [];
+        const h = 0.01;
+        const getSlope = (coordX: number) => {
+          const y1 = evaluateRPN(rpn, coordX + h);
+          const y0 = evaluateRPN(rpn, coordX - h);
+          return (y1 - y0) / (2 * h);
+        };
+
+        let prevSlope = getSlope(xMin + 0.1);
+        for (let x = xMin + 0.2; x < xMax - 0.2; x += 0.05) {
+          const slope = getSlope(x);
+          if (isNaN(slope) || isNaN(prevSlope)) {
+            prevSlope = slope;
+            continue;
+          }
+
+          if (prevSlope < 0 && slope > 0) {
+            // valley (Min)
+            const y = evaluateRPN(rpn, x);
+            extrema.push(`(${cleanVal(x)}, ${cleanVal(y)}) Min`);
+          } else if (prevSlope > 0 && slope < 0) {
+            // peak (Max)
+            const y = evaluateRPN(rpn, x);
+            extrema.push(`(${cleanVal(x)}, ${cleanVal(y)}) Max`);
+          }
+          prevSlope = slope;
+        }
+
+        extremaEl.textContent = extrema.length > 0 ? extrema.slice(0, 2).join(', ') : 'None inside grid';
+
+      } catch (err) {
+        yInterceptEl.textContent = 'Error';
+        xInterceptsEl.textContent = 'Error';
+        extremaEl.textContent = 'Error';
+      }
+    }
+
+    // Mouse interactive coordinates tracking
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      // Scaling factor for CSS width/height mismatch
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+
+      const px = mouseX * scaleX;
+      const py = mouseY * scaleY;
+
+      const mathX = toMathX(px);
+      const mathY = toMathY(py);
+
+      let overlayHtml = `<div class="font-bold text-brand-blue-neon uppercase text-[9px] border-b border-brand-border/30 pb-1 mb-1">Grid Cursor</div>`;
+      overlayHtml += `<div>X: ${mathX.toFixed(2)}</div>`;
+      overlayHtml += `<div>Y: ${mathY.toFixed(2)}</div>`;
+
+      // Check if functions are active to calculate exact overlays
+      const h = 0.001;
+      
+      if (rpnF) {
+        try {
+          const yF = evaluateRPN(rpnF, mathX);
+          const yF_plus = evaluateRPN(rpnF, mathX + h);
+          const yF_minus = evaluateRPN(rpnF, mathX - h);
+          const slopeF = (yF_plus - yF_minus) / (2 * h);
+          
+          if (!isNaN(yF) && isFinite(yF)) {
+            overlayHtml += `<div class="mt-1.5 pt-1.5 border-t border-brand-border/20 text-brand-blue font-bold">f(x): ${yF.toFixed(3)}</div>`;
+            overlayHtml += `<div class="text-[9px] text-brand-text-dim">Slope: ${slopeF.toFixed(3)}</div>`;
+          }
+        } catch(err){}
+      }
+
+      if (rpnG) {
+        try {
+          const yG = evaluateRPN(rpnG, mathX);
+          const yG_plus = evaluateRPN(rpnG, mathX + h);
+          const yG_minus = evaluateRPN(rpnG, mathX - h);
+          const slopeG = (yG_plus - yG_minus) / (2 * h);
+
+          if (!isNaN(yG) && isFinite(yG)) {
+            overlayHtml += `<div class="mt-1 pt-1 border-t border-brand-border/20 text-emerald-400 font-bold">g(x): ${yG.toFixed(3)}</div>`;
+            overlayHtml += `<div class="text-[9px] text-brand-text-dim">Slope: ${slopeG.toFixed(3)}</div>`;
+          }
+        } catch(err){}
+      }
+
+      coordOverlay.innerHTML = overlayHtml;
+      
+      // Position floating overlay near mouse
+      coordOverlay.style.left = `${mouseX + 15}px`;
+      coordOverlay.style.top = `${mouseY + 15}px`;
+      coordOverlay.classList.remove('hidden');
+
+      // Re-draw guide crosshair
+      drawGrid();
+      if (rpnF) plotCurve(rpnF, '#0070f3');
+      if (rpnG) plotCurve(rpnG, '#10b981');
+
+      // Guide lines
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.strokeStyle = '#3e3e3e';
+      
+      // vertical crosshair
+      ctx.beginPath();
+      ctx.moveTo(px, 0);
+      ctx.lineTo(px, canvas.height);
+      ctx.stroke();
+
+      // horizontal crosshair
+      ctx.beginPath();
+      ctx.moveTo(0, py);
+      ctx.lineTo(canvas.width, py);
+      ctx.stroke();
+
+      ctx.setLineDash([]); // clear dash
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      coordOverlay.classList.add('hidden');
+      drawGrid();
+      if (rpnF) plotCurve(rpnF, '#0070f3');
+      if (rpnG) plotCurve(rpnG, '#10b981');
+    });
+
+    btnPlot.addEventListener('click', compileFunctions);
+
+    // Dynamic presets triggers
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const f = btn.getAttribute('data-f')!;
+        const g = btn.getAttribute('data-g')!;
+        inputF.value = f;
+        inputG.value = g;
+        compileFunctions();
+      });
+    });
+
+    // Theme changes events listener
+    window.addEventListener('theme-changed', () => {
+      compileFunctions();
+    });
+
+    // Initial load
+    compileFunctions();
+  </script>
+</Layout>

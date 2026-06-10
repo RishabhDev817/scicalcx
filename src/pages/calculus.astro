@@ -1,0 +1,603 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout activeTab="calculus" title="SciCalcX | Calculus & Algebra Suite">
+  <div class="w-full max-w-4xl mx-auto space-y-6">
+    <!-- Page Header -->
+    <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
+        System Mode: Calculus & Algebra
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight text-brand-text">
+        Calculus & Algebra Suite<span class="text-brand-blue">.</span>
+      </h1>
+    </div>
+
+    <!-- Interface Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Definite Integration Card -->
+      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4 shadow-xl backdrop-blur-sm relative animate-fade-in">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5 border-b border-brand-border/40 pb-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
+          Definite Integration (Simpson's Rule)
+        </h2>
+        <div class="space-y-3 font-mono text-xs">
+          <div class="flex flex-col gap-1.5">
+            <label class="text-brand-text-dim uppercase text-[10px]">Expression f(x)</label>
+            <input 
+              type="text" 
+              id="def-expr" 
+              placeholder="e.g. x^2, sin(x), e^x" 
+              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
+              value="x^2"
+            />
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="flex flex-col gap-1.5">
+              <label class="text-brand-text-dim uppercase text-[10px]">Lower Limit (a)</label>
+              <input 
+                type="number" 
+                id="def-limit-a" 
+                class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text focus:outline-none focus:border-brand-blue"
+                value="0"
+                step="any"
+              />
+            </div>
+            <div class="flex flex-col gap-1.5">
+              <label class="text-brand-text-dim uppercase text-[10px]">Upper Limit (b)</label>
+              <input 
+                type="number" 
+                id="def-limit-b" 
+                class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text focus:outline-none focus:border-brand-blue"
+                value="3"
+                step="any"
+              />
+            </div>
+          </div>
+          <button 
+            id="btn-integrate-definite"
+            class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm"
+          >
+            Compute Definite Integral
+          </button>
+          
+          <div class="mt-4 pt-3 border-t border-brand-border/30 flex justify-between items-center bg-brand-black/40 p-3 rounded border border-brand-border/60">
+            <span class="text-[10px] text-brand-text-dim uppercase">Bounded Area Result</span>
+            <span id="definite-result" class="text-base font-bold text-brand-blue-neon">9</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indefinite Integration Card -->
+      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4 shadow-xl backdrop-blur-sm relative">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5 border-b border-brand-border/40 pb-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
+          Indefinite Integration (Symbolic Polynomial)
+        </h2>
+        <div class="space-y-3 font-mono text-xs">
+          <div class="flex flex-col gap-1.5">
+            <label class="text-brand-text-dim uppercase text-[10px]">Polynomial Expression f(x)</label>
+            <input 
+              type="text" 
+              id="indef-expr" 
+              placeholder="e.g. 3*x^2 + 5*x - 2" 
+              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
+              value="3*x^2 + 2*x - 1"
+            />
+          </div>
+          <button 
+            id="btn-integrate-indefinite"
+            class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm"
+          >
+            Find Anti-Derivative
+          </button>
+          
+          <div class="mt-4 pt-3 border-t border-brand-border/30 flex flex-col gap-1.5 bg-brand-black/40 p-3 rounded border border-brand-border/60">
+            <span class="text-[10px] text-brand-text-dim uppercase">Anti-Derivative F(x)</span>
+            <span id="indefinite-result" class="text-sm font-bold text-brand-blue-neon break-all">x^3 + x^2 - x + C</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Polynomial Solver Card -->
+      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4 shadow-xl backdrop-blur-sm relative md:col-span-2">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5 border-b border-brand-border/40 pb-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
+          Polynomial & Algebraic Root Solver
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
+          <!-- Solver Selector & Coefficients Input -->
+          <div class="md:col-span-1 space-y-4">
+            <div class="flex flex-col gap-1.5">
+              <label class="text-brand-text-dim uppercase text-[10px]">Equation Degree</label>
+              <div class="flex border border-brand-border rounded overflow-hidden">
+                <button id="btn-deg-2" class="flex-1 py-1.5 text-center bg-brand-gray-light text-white font-medium focus:outline-none cursor-pointer">Quadratic (x²)</button>
+                <button id="btn-deg-3" class="flex-1 py-1.5 text-center text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50 focus:outline-none cursor-pointer border-l border-brand-border">Cubic (x³)</button>
+              </div>
+            </div>
+            
+            <div id="coeff-inputs" class="space-y-3">
+              <!-- Dynamically populated fields -->
+            </div>
+
+            <button 
+              id="btn-solve-roots"
+              class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm"
+            >
+              Solve Equation Roots
+            </button>
+          </div>
+
+          <!-- Calculated Roots Output Panel -->
+          <div class="md:col-span-2 border border-brand-border bg-brand-black/40 rounded-lg p-4 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="text-[10px] text-brand-text-dim uppercase tracking-wider border-b border-brand-border/40 pb-1.5">
+                Equation Form
+              </div>
+              <div id="equation-display" class="text-sm font-bold text-brand-text tracking-wide">
+                <!-- Equation representation -->
+              </div>
+              <div class="text-[10px] text-brand-text-dim uppercase tracking-wider pt-2 border-b border-brand-border/40 pb-1.5">
+                Calculated Roots
+              </div>
+              <div id="roots-output" class="space-y-2.5">
+                <!-- Solved Roots values -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- Parser Engine adapted for single variable x ---
+    function tokenize(str: string) {
+      const regex = /\d+(\.\d*)?(e[+-]?\d+)?|[a-zA-Z_]+|\+|\-|\*|\/|\^|\%|\(|\)|\!|\,/g;
+      return str.match(regex) || [];
+    }
+
+    function parse(tokens: string[]) {
+      const outputQueue: any[] = [];
+      const operatorStack: string[] = [];
+      const operators: Record<string, { precedence: number; associativity: 'Left' | 'Right' }> = {
+        '+': { precedence: 2, associativity: 'Left' },
+        '-': { precedence: 2, associativity: 'Left' },
+        '*': { precedence: 3, associativity: 'Left' },
+        '/': { precedence: 3, associativity: 'Left' },
+        '^': { precedence: 4, associativity: 'Right' },
+        'u-': { precedence: 5, associativity: 'Right' }
+      };
+      const functions = new Set(['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'log', 'ln', 'sqrt', 'exp']);
+
+      for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i];
+
+        if (token === '-' || token === '+') {
+          const prev = tokens[i - 1];
+          const isUnary = i === 0 || prev === '(' || prev === ',' || ['+', '-', '*', '/', '^'].includes(prev);
+          if (isUnary) {
+            if (token === '-') {
+              while (operatorStack.length > 0) {
+                const top = operatorStack[operatorStack.length - 1];
+                if (operators[top] && operators[top].precedence >= 5) {
+                  outputQueue.push(operatorStack.pop());
+                } else break;
+              }
+              operatorStack.push('u-');
+            }
+            continue;
+          }
+        }
+
+        if (!isNaN(parseFloat(token)) && isFinite(token as any)) {
+          outputQueue.push({ type: 'number', value: parseFloat(token) });
+        } else if (token === 'x' || token === 'X') {
+          outputQueue.push({ type: 'variable', name: 'x' });
+        } else if (token === 'pi' || token === 'π') {
+          outputQueue.push({ type: 'number', value: Math.PI });
+        } else if (token === 'e') {
+          outputQueue.push({ type: 'number', value: Math.E });
+        } else if (functions.has(token)) {
+          operatorStack.push(token);
+        } else if (operators[token]) {
+          const op = operators[token];
+          while (operatorStack.length > 0) {
+            const top = operatorStack[operatorStack.length - 1];
+            if (functions.has(top)) {
+              outputQueue.push(operatorStack.pop());
+            } else if (operators[top] && (operators[top].precedence > op.precedence || (operators[top].precedence === op.precedence && op.associativity === 'Left'))) {
+              outputQueue.push(operatorStack.pop());
+            } else break;
+          }
+          operatorStack.push(token);
+        } else if (token === '(') {
+          operatorStack.push(token);
+        } else if (token === ')') {
+          let found = false;
+          while (operatorStack.length > 0) {
+            const top = operatorStack.pop();
+            if (top === '(') { found = true; break; }
+            outputQueue.push(top);
+          }
+          if (!found) throw new Error('Parentheses mismatch');
+        } else if (token === ',') {
+          let found = false;
+          while (operatorStack.length > 0) {
+            const top = operatorStack[operatorStack.length - 1];
+            if (top === '(') { found = true; break; }
+            outputQueue.push(outputQueue.pop()); // Pop until open bracket
+          }
+        }
+      }
+
+      while (operatorStack.length > 0) {
+        const top = operatorStack.pop();
+        if (top === '(' || top === ')') throw new Error('Parentheses mismatch');
+        outputQueue.push(top);
+      }
+
+      return outputQueue;
+    }
+
+    function evaluateRPN(rpn: any[], xVal: number) {
+      const stack: number[] = [];
+
+      for (let i = 0; i < rpn.length; i++) {
+        const token = rpn[i];
+        if (typeof token === 'object' && token.type === 'number') {
+          stack.push(token.value);
+        } else if (typeof token === 'object' && token.type === 'variable' && token.name === 'x') {
+          stack.push(xVal);
+        } else if (token === 'u-') {
+          const v = stack.pop()!;
+          stack.push(-v);
+        } else if (typeof token === 'string') {
+          const functions: Record<string, (v: number) => number> = {
+            'sin': Math.sin, 'cos': Math.cos, 'tan': Math.tan,
+            'asin': Math.asin, 'acos': Math.acos, 'atan': Math.atan,
+            'log': Math.log10, 'ln': Math.log, 'sqrt': Math.sqrt, 'exp': Math.exp
+          };
+
+          if (functions[token]) {
+            const val = stack.pop()!;
+            stack.push(functions[token](val));
+          } else {
+            const b = stack.pop()!;
+            const a = stack.pop()!;
+            switch (token) {
+              case '+': stack.push(a + b); break;
+              case '-': stack.push(a - b); break;
+              case '*': stack.push(a * b); break;
+              case '/': stack.push(a / b); break;
+              case '^': stack.push(Math.pow(a, b)); break;
+            }
+          }
+        }
+      }
+      return stack[0];
+    }
+
+    function cleanResult(val: number) {
+      if (typeof val !== 'number' || isNaN(val) || !isFinite(val)) return val;
+      return Number(val.toPrecision(10));
+    }
+
+    // --- Definite Integration via Simpson's Rule ---
+    function integrateDefinite() {
+      const exprInput = (document.getElementById('def-expr') as HTMLInputElement).value;
+      const limitA = parseFloat((document.getElementById('def-limit-a') as HTMLInputElement).value);
+      const limitB = parseFloat((document.getElementById('def-limit-b') as HTMLInputElement).value);
+      const output = document.getElementById('definite-result')!;
+
+      try {
+        const tokens = tokenize(exprInput);
+        const rpn = parse(tokens);
+
+        let n = 1000;
+        const h = (limitB - limitA) / n;
+        let sum = evaluateRPN(rpn, limitA) + evaluateRPN(rpn, limitB);
+
+        for (let i = 1; i < n; i++) {
+          const x = limitA + i * h;
+          const coeff = i % 2 === 0 ? 2 : 4;
+          sum += coeff * evaluateRPN(rpn, x);
+        }
+
+        const area = (h / 3) * sum;
+        output.textContent = String(cleanResult(area));
+      } catch (err) {
+        output.textContent = 'Calculation Error';
+      }
+    }
+
+    // --- Indefinite Integration (Symbolic) ---
+    function integrateIndefinite() {
+      const expr = (document.getElementById('indef-expr') as HTMLInputElement).value;
+      const output = document.getElementById('indefinite-result')!;
+
+      try {
+        const cleanExpr = expr.replace(/\s+/g, '');
+        if (cleanExpr === 'sin(x)') { output.textContent = '-cos(x) + C'; return; }
+        if (cleanExpr === 'cos(x)') { output.textContent = 'sin(x) + C'; return; }
+        if (cleanExpr === 'e^x' || cleanExpr === 'exp(x)') { output.textContent = 'e^x + C'; return; }
+        if (cleanExpr === '1/x') { output.textContent = 'ln(|x|) + C'; return; }
+
+        const termRegex = /([+-]?)([^+-]*)/g;
+        const matches = [...cleanExpr.matchAll(termRegex)];
+        let integratedTerms: Array<{ sign: string; term: string }> = [];
+
+        for (const match of matches) {
+          const sign = match[1];
+          let term = match[2];
+          if (!term) continue;
+
+          let coeff = 1;
+          let power = 0;
+          let hasX = false;
+
+          if (term.includes('x')) {
+            hasX = true;
+            const parts = term.split('x');
+            let coeffStr = parts[0].replace(/\*$/, '');
+            if (coeffStr === '') coeff = 1;
+            else if (coeffStr === '-') coeff = -1;
+            else coeff = parseFloat(coeffStr);
+
+            let expStr = parts[1];
+            if (expStr === '') power = 1;
+            else if (expStr.startsWith('^')) power = parseFloat(expStr.substring(1));
+          } else {
+            coeff = parseFloat(term);
+            power = 0;
+          }
+
+          if (isNaN(coeff) || isNaN(power)) {
+            output.textContent = 'Equation too complex';
+            return;
+          }
+
+          let intTerm = '';
+          if (!hasX) {
+            intTerm = coeff === 1 ? 'x' : coeff === -1 ? '-x' : `${coeff}*x`;
+          } else {
+            if (power === -1) {
+              intTerm = coeff === 1 ? 'ln(|x|)' : coeff === -1 ? '-ln(|x|)' : `${coeff}*ln(|x|)`;
+            } else {
+              const newCoeff = coeff / (power + 1);
+              const newPower = power + 1;
+              const coeffVal = cleanResult(newCoeff);
+
+              let coeffText = String(coeffVal);
+              if (coeffVal === 1) coeffText = '';
+              else if (coeffVal === -1) coeffText = '-';
+              else coeffText = coeffText + '*';
+
+              let powerText = newPower === 1 ? '' : `^${newPower}`;
+              intTerm = `${coeffText}x${powerText}`;
+            }
+          }
+
+          integratedTerms.push({ sign, term: intTerm });
+        }
+
+        let result = '';
+        for (let i = 0; i < integratedTerms.length; i++) {
+          const { sign, term } = integratedTerms[i];
+          if (i === 0) {
+            if (sign === '-') {
+              result += '-' + term;
+            } else {
+              result += term;
+            }
+          } else {
+            const op = sign === '-' ? '-' : '+';
+            result += ` ${op} ${term}`;
+          }
+        }
+
+        output.textContent = result ? result + ' + C' : '0 + C';
+      } catch (err) {
+        output.textContent = 'Parser Error';
+      }
+    }
+
+    // --- Polynomial & Cubic Equation Root Solver ---
+    interface Complex {
+      re: number;
+      im: number;
+    }
+
+    let activeDegree = 2;
+
+    const btnDeg2 = document.getElementById('btn-deg-2')!;
+    const btnDeg3 = document.getElementById('btn-deg-3')!;
+    const coeffInputs = document.getElementById('coeff-inputs')!;
+    const equationDisplay = document.getElementById('equation-display')!;
+    const rootsOutput = document.getElementById('roots-output')!;
+
+    function setupSolverUI(degree: number) {
+      activeDegree = degree;
+      coeffInputs.innerHTML = '';
+
+      if (degree === 2) {
+        btnDeg2.className = "flex-1 py-1.5 text-center bg-brand-gray-light text-white font-medium focus:outline-none cursor-pointer";
+        btnDeg3.className = "flex-1 py-1.5 text-center text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50 focus:outline-none cursor-pointer border-l border-brand-border";
+        
+        coeffInputs.innerHTML = `
+          <div class="grid grid-cols-3 gap-2">
+            <div class="flex flex-col gap-1">
+              <label class="text-brand-text-dim text-[9px]">A (x²)</label>
+              <input type="number" id="coeff-a" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="1"/>
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="text-brand-text-dim text-[9px]">B (x)</label>
+              <input type="number" id="coeff-b" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="-5"/>
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="text-brand-text-dim text-[9px]">C (const)</label>
+              <input type="number" id="coeff-c" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="6"/>
+            </div>
+          </div>
+        `;
+        equationDisplay.textContent = 'ax² + bx + c = 0';
+      } else {
+        btnDeg3.className = "flex-1 py-1.5 text-center bg-brand-gray-light text-white font-medium focus:outline-none cursor-pointer";
+        btnDeg2.className = "flex-1 py-1.5 text-center text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50 focus:outline-none cursor-pointer border-r border-brand-border";
+
+        coeffInputs.innerHTML = `
+          <div class="grid grid-cols-4 gap-2">
+            <div class="flex flex-col gap-1">
+              <label class="text-brand-text-dim text-[9px]">A (x³)</label>
+              <input type="number" id="coeff-a" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="1"/>
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="text-brand-text-dim text-[9px]">B (x²)</label>
+              <input type="number" id="coeff-b" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="-6"/>
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="text-brand-text-dim text-[9px]">C (x)</label>
+              <input type="number" id="coeff-a_c" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="11"/>
+            </div>
+            <div class="flex flex-col gap-1">
+              <label class="text-brand-text-dim text-[9px]">D (const)</label>
+              <input type="number" id="coeff-d" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="-6"/>
+            </div>
+          </div>
+        `;
+        equationDisplay.textContent = 'ax³ + bx² + cx + d = 0';
+      }
+      rootsOutput.innerHTML = '<div class="text-brand-text-dim text-[11px] italic">Coefficients loaded. Solve roots to view values.</div>';
+    }
+
+    function formatComplex(c: Complex): string {
+      const re = cleanResult(c.re);
+      const im = cleanResult(c.im);
+      if (im === 0) return String(re);
+      const sign = im < 0 ? '-' : '+';
+      const absIm = Math.abs(im);
+      const imText = absIm === 1 ? 'i' : `${absIm}i`;
+      if (re === 0) return im < 0 ? `-${imText}` : imText;
+      return `${re} ${sign} ${imText}`;
+    }
+
+    function solveRoots() {
+      rootsOutput.innerHTML = '';
+      const a = parseFloat((document.getElementById('coeff-a') as HTMLInputElement).value || '0');
+      const b = parseFloat((document.getElementById('coeff-b') as HTMLInputElement).value || '0');
+
+      if (activeDegree === 2) {
+        const c = parseFloat((document.getElementById('coeff-c') as HTMLInputElement).value || '0');
+        if (a === 0) {
+          rootsOutput.innerHTML = '<div class="text-red-500 font-bold">Coefficient A cannot be 0 for quadratic solver.</div>';
+          return;
+        }
+        
+        const disc = b * b - 4 * a * c;
+        let roots: Complex[] = [];
+        if (disc > 0) {
+          roots = [
+            { re: (-b + Math.sqrt(disc)) / (2 * a), im: 0 },
+            { re: (-b - Math.sqrt(disc)) / (2 * a), im: 0 }
+          ];
+        } else if (disc === 0) {
+          roots = [
+            { re: -b / (2 * a), im: 0 },
+            { re: -b / (2 * a), im: 0 }
+          ];
+        } else {
+          const re = -b / (2 * a);
+          const im = Math.sqrt(-disc) / (2 * a);
+          roots = [
+            { re: re, im: im },
+            { re: re, im: -im }
+          ];
+        }
+
+        equationDisplay.innerHTML = `<span class="text-brand-blue-neon font-bold">${a}</span>x² ${b >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${b}</span>x ${c >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${c}</span> = 0`;
+
+        rootsOutput.innerHTML = roots.map((r, idx) => `
+          <div class="flex items-center justify-between py-1 border-b border-brand-border/20 last:border-b-0">
+            <span class="text-brand-text-dim">Root x${idx + 1}</span>
+            <span class="font-bold text-emerald-400 text-sm">${formatComplex(r)}</span>
+          </div>
+        `).join('');
+
+      } else {
+        const c = parseFloat((document.getElementById('coeff-a_c') as HTMLInputElement).value || '0');
+        const d = parseFloat((document.getElementById('coeff-d') as HTMLInputElement).value || '0');
+
+        if (a === 0) {
+          rootsOutput.innerHTML = '<div class="text-red-500 font-bold">Coefficient A cannot be 0 for cubic solver.</div>';
+          return;
+        }
+
+        const A = b / a;
+        const B = c / a;
+        const C = d / a;
+
+        const p = B - (A * A) / 3;
+        const q = C - (A * B) / 3 + (2 * A * A * A) / 27;
+
+        const discriminant = (q * q) / 4 + (p * p * p) / 27;
+        const shift = -A / 3;
+        let roots: Complex[] = [];
+
+        if (discriminant > 0) {
+          const u = Math.cbrt(-q / 2 + Math.sqrt(discriminant));
+          const v = Math.cbrt(-q / 2 - Math.sqrt(discriminant));
+          roots = [
+            { re: u + v + shift, im: 0 },
+            { re: -0.5 * (u + v) + shift, im: (Math.sqrt(3) / 2) * (u - v) },
+            { re: -0.5 * (u + v) + shift, im: -(Math.sqrt(3) / 2) * (u - v) }
+          ];
+        } else if (discriminant === 0) {
+          if (p === 0) {
+            roots = [{ re: shift, im: 0 }, { re: shift, im: 0 }, { re: shift, im: 0 }];
+          } else {
+            const u = Math.cbrt(-q / 2);
+            roots = [
+              { re: 2 * u + shift, im: 0 },
+              { re: -u + shift, im: 0 },
+              { re: -u + shift, im: 0 }
+            ];
+          }
+        } else {
+          const r = Math.sqrt(-(p * p * p) / 27);
+          const phi = Math.acos(-q / (2 * r));
+          const factor = 2 * Math.sqrt(-p / 3);
+          roots = [
+            { re: factor * Math.cos(phi / 3) + shift, im: 0 },
+            { re: factor * Math.cos((phi + 2 * Math.PI) / 3) + shift, im: 0 },
+            { re: factor * Math.cos((phi + 4 * Math.PI) / 3) + shift, im: 0 }
+          ];
+        }
+
+        equationDisplay.innerHTML = `<span class="text-brand-blue-neon font-bold">${a}</span>x³ ${b >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${b}</span>x² ${c >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${c}</span>x ${d >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${d}</span> = 0`;
+
+        rootsOutput.innerHTML = roots.map((r, idx) => `
+          <div class="flex items-center justify-between py-1 border-b border-brand-border/20 last:border-b-0">
+            <span class="text-brand-text-dim">Root x${idx + 1}</span>
+            <span class="font-bold text-emerald-400 text-sm">${formatComplex(r)}</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Event Listeners initialization
+    document.getElementById('btn-integrate-definite')!.addEventListener('click', integrateDefinite);
+    document.getElementById('btn-integrate-indefinite')!.addEventListener('click', integrateIndefinite);
+    document.getElementById('btn-solve-roots')!.addEventListener('click', solveRoots);
+
+    btnDeg2.addEventListener('click', () => setupSolverUI(2));
+    btnDeg3.addEventListener('click', () => setupSolverUI(3));
+
+    // Initial setups
+    setupSolverUI(2);
+    integrateDefinite();
+    integrateIndefinite();
+  </script>
+</Layout>
