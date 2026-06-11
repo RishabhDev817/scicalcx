@@ -59,7 +59,7 @@ import Layout from '../layouts/Layout.astro';
         data-base="2"
       >
         <span class="text-xs font-mono font-semibold text-brand-text-muted light:text-neutral-500 uppercase w-12">BIN</span>
-        <input id="display-bin" class="text-sm sm:text-base font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-default" value="0" readonly />
+        <input id="display-bin" class="text-[10px] min-[375px]:text-xs sm:text-sm md:text-base font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-default" value="0" readonly />
         <span class="base-indicator text-[9px] font-mono text-brand-blue-neon opacity-0 ml-3">● ACTIVE</span>
       </div>
     </div>
@@ -74,7 +74,7 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <!-- 32-Bit Toggle Board -->
-      <div class="grid grid-cols-8 gap-2 py-2" id="bit-grid">
+      <div class="grid grid-cols-8 gap-1 sm:gap-2 py-2" id="bit-grid">
         <!-- 32 individual boxes from MSB to LSB -->
       </div>
     </div>

@@ -18,66 +18,66 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
     <!-- Live Status -->
-    <div class="flex items-center justify-between px-3 py-1.5 bg-brand-gray-light/40 border border-brand-border rounded text-[10px] font-mono text-brand-text-muted">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-2 px-3 py-1.5 bg-brand-gray-light/40 border border-brand-border rounded text-[10px] font-mono text-brand-text-muted">
       <div>MATRIX A Dimensions: <span id="dim-a-display">3x3</span></div>
       <div>MATRIX B Dimensions: <span id="dim-b-display">3x3</span></div>
     </div>
 
     <!-- Matrix Configuration & Inputs -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
       <!-- Matrix A Card -->
-      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 space-y-4">
-        <div class="flex items-center justify-between">
+      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-5 space-y-3 sm:space-y-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
           <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text light:text-neutral-500 font-mono">Matrix A</h2>
           <div class="flex space-x-1">
-            <button class="dim-btn-a px-2 py-0.5 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover" data-dim="2">2x2</button>
-            <button class="dim-btn-a px-2 py-0.5 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text light:text-neutral-600 rounded font-mono" data-dim="3">3x3</button>
+            <button class="dim-btn-a px-2.5 py-1 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover min-h-[40px]" data-dim="2">2x2</button>
+            <button class="dim-btn-a px-2.5 py-1 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text light:text-neutral-600 rounded font-mono min-h-[40px]" data-dim="3">3x3</button>
           </div>
         </div>
 
         <!-- Matrix A Grid -->
-        <div id="grid-a" class="grid grid-cols-3 gap-2 py-2">
+        <div id="grid-a" class="grid gap-1.5 sm:gap-2 py-2">
           <!-- Dynamic Input Cells -->
         </div>
 
         <!-- A Operations -->
-        <div class="grid grid-cols-2 gap-2 pt-2">
-          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white" data-op="det-a">Determinant</button>
-          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white" data-op="inv-a">Inverse</button>
-          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white col-span-2" data-op="trans-a">Transpose</button>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white min-h-[40px]" data-op="det-a">Determinant</button>
+          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white min-h-[40px]" data-op="inv-a">Inverse</button>
+          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white sm:col-span-2 min-h-[40px]" data-op="trans-a">Transpose</button>
         </div>
       </div>
 
       <!-- Matrix B Card -->
-      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 space-y-4">
-        <div class="flex items-center justify-between">
+      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-5 space-y-3 sm:space-y-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
           <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text light:text-neutral-500 font-mono">Matrix B</h2>
           <div class="flex space-x-1">
-            <button class="dim-btn-b px-2 py-0.5 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover" data-dim="2">2x2</button>
-            <button class="dim-btn-b px-2 py-0.5 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text light:text-neutral-600 rounded font-mono" data-dim="3">3x3</button>
+            <button class="dim-btn-b px-2.5 py-1 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover min-h-[40px]" data-dim="2">2x2</button>
+            <button class="dim-btn-b px-2.5 py-1 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text light:text-neutral-600 rounded font-mono min-h-[40px]" data-dim="3">3x3</button>
           </div>
         </div>
 
         <!-- Matrix B Grid -->
-        <div id="grid-b" class="grid grid-cols-3 gap-2 py-2">
+        <div id="grid-b" class="grid gap-1.5 sm:gap-2 py-2">
           <!-- Dynamic Input Cells -->
         </div>
 
         <!-- B Operations -->
-        <div class="grid grid-cols-2 gap-2 pt-2">
-          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white" data-op="det-b">Determinant</button>
-          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white" data-op="inv-b">Inverse</button>
-          <button class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white col-span-2" data-op="trans-b">Transpose</button>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white min-h-[40px]" data-op="det-b">Determinant</button>
+          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white min-h-[40px]" data-op="inv-b">Inverse</button>
+          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white sm:col-span-2 min-h-[40px]" data-op="trans-b">Transpose</button>
         </div>
       </div>
     </div>
 
     <!-- Dual Matrix Joint Operations -->
-    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-4 flex flex-wrap gap-2 justify-center items-center">
+    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 justify-center items-center">
       <span class="text-xs font-mono text-brand-text-muted px-2">Binary Operations:</span>
-      <button class="op-btn-matrix px-4 py-2 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold" data-op="add">A + B</button>
-      <button class="op-btn-matrix px-4 py-2 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold" data-op="sub">A - B</button>
-      <button class="op-btn-matrix px-4 py-2 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold" data-op="mul">A &times; B (Product)</button>
+      <button class="op-btn-matrix px-3 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold min-h-[40px] flex-1 sm:flex-initial" data-op="add">A + B</button>
+      <button class="op-btn-matrix px-3 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold min-h-[40px] flex-1 sm:flex-initial" data-op="sub">A - B</button>
+      <button class="op-btn-matrix px-3 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold min-h-[40px] flex-1 sm:flex-initial" data-op="mul">A &times; B (Product)</button>
     </div>
 
     <!-- Viewport Result Console -->
@@ -100,10 +100,30 @@ import Layout from '../layouts/Layout.astro';
       outline: none;
     }
     .op-btn-matrix {
-      height: 36px;
+      height: 40px;
+      min-height: 40px;
       border-radius: 6px;
       transition: all 0.15s ease-in-out;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dim-btn-a, .dim-btn-b {
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-a, .cell-b {
+      min-height: 44px;
+      font-size: 0.875rem;
+    }
+    @media (max-width: 639px) {
+      .cell-a, .cell-b {
+        font-size: 1rem;
+        padding: 0.75rem 0.5rem;
+      }
     }
   </style>
 
@@ -130,7 +150,7 @@ import Layout from '../layouts/Layout.astro';
             <input 
               type="number" 
               step="any" 
-              class="cell-${matrixName} bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded text-white font-mono text-center py-2 text-sm focus:outline-none focus:ring-1 focus:ring-brand-blue/30"
+              class="cell-${matrixName} bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded text-white font-mono text-center text-sm sm:text-base focus:outline-none focus:ring-1 focus:ring-brand-blue/30 min-h-[44px]"
               data-row="${r}" 
               data-col="${c}" 
               value="${val}" 
@@ -164,7 +184,7 @@ import Layout from '../layouts/Layout.astro';
 
       let cellsHtml = matrix
         .map(row => 
-          row.map(val => `<input type="text" class="bg-brand-black/40 border border-brand-border rounded text-brand-text font-mono text-center py-2 text-sm focus:outline-none min-w-[64px]" value="${clean(val)}" readonly />`).join('')
+          row.map(val => `<input type="text" class="bg-brand-black/40 border border-brand-border rounded text-brand-text font-mono text-center text-sm sm:text-base focus:outline-none min-w-[64px] min-h-[44px]" value="${clean(val)}" readonly />`).join('')
         )
         .join('');
 

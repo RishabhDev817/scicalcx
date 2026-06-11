@@ -19,7 +19,12 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="SciCalcX" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -45,10 +50,10 @@ const {
     <div class="absolute inset-0 -z-10 bg-[linear-gradient(to_right,#0f0f0f_1px,transparent_1px),linear-gradient(to_bottom,#0f0f0f_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-70"></div>
 
     <!-- Sticky Header -->
-    <header class="sticky top-0 z-40 bg-brand-black/80 backdrop-blur-md border-b border-brand-border h-16 flex items-center justify-between px-6">
-      <div class="flex items-center space-x-6">
-        <a href="/" class="flex items-center space-x-2.5 group focus:outline-none">
-          <span class="text-xl font-bold tracking-tight text-brand-text flex items-center gap-1.5">
+    <header class="sticky top-0 z-40 bg-brand-black/80 backdrop-blur-md border-b border-brand-border h-14 flex items-center justify-between px-3 sm:px-6">
+      <div class="flex items-center space-x-3 sm:space-x-6">
+        <a href="/" class="flex items-center space-x-2 group focus:outline-none">
+          <span class="text-lg sm:text-xl font-bold tracking-tight text-brand-text flex items-center gap-1.5">
             <span class="text-brand-blue transition-transform group-hover:scale-110">▲</span>
             SciCalc<span class="text-brand-blue-neon">X</span>
           </span>
@@ -56,7 +61,7 @@ const {
         <nav class="hidden md:flex items-center space-x-1">
           <a
             href="/"
-            class={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'scientific'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
@@ -66,48 +71,48 @@ const {
           </a>
           <a
             href="/matrix"
-            class={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'matrix'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Matrix Suite
+            Matrix
           </a>
           <a
             href="/calculus"
-            class={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'calculus'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Calculus & Algebra
+            Calculus
           </a>
           <a
             href="/graphing"
-            class={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'graphing'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Graphing Studio
+            Graphing
           </a>
           <a
             href="/programming"
-            class={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'programming'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Base-N Programmer
+            Programmer
           </a>
         </nav>
       </div>
 
-      <div class="flex items-center space-x-3">
+      <div class="flex items-center space-x-2">
         <!-- Theme Toggle Button -->
         <button
           id="theme-toggle"
@@ -127,7 +132,7 @@ const {
         <!-- History Sidebar Toggle -->
         <button
           id="history-toggle"
-          class="flex items-center space-x-2 px-3 py-1.5 rounded-md text-xs font-medium border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-text-muted hover:text-white transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-blue"
+          class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-text-muted hover:text-white transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-blue"
           aria-label="Toggle history sidebar"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -139,10 +144,10 @@ const {
     </header>
 
     <!-- Mobile Scrollable Sub-Nav -->
-    <div class="md:hidden border-b border-brand-border bg-brand-black/90 py-2 px-4 flex items-center space-x-2 overflow-x-auto scrollbar-none">
+    <div class="md:hidden border-b border-brand-border bg-brand-black/90 py-2 px-3 flex items-center space-x-1.5 overflow-x-auto scrollbar-none">
       <a
         href="/"
-        class={`whitespace-nowrap px-3 py-1 rounded text-xs font-medium transition-colors ${
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'scientific' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
@@ -150,49 +155,49 @@ const {
       </a>
       <a
         href="/matrix"
-        class={`whitespace-nowrap px-3 py-1 rounded text-xs font-medium transition-colors ${
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'matrix' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Matrix Suite
+        Matrix
       </a>
       <a
         href="/calculus"
-        class={`whitespace-nowrap px-3 py-1 rounded text-xs font-medium transition-colors ${
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'calculus' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Calculus & Algebra
+        Calculus
       </a>
       <a
         href="/graphing"
-        class={`whitespace-nowrap px-3 py-1 rounded text-xs font-medium transition-colors ${
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'graphing' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Graphing Studio
+        Graphing
       </a>
       <a
         href="/programming"
-        class={`whitespace-nowrap px-3 py-1 rounded text-xs font-medium transition-colors ${
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'programming' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Base-N Programmer
+        Programmer
       </a>
     </div>
 
     <!-- Main Workspace Layout -->
     <div class="flex-1 flex relative overflow-hidden">
       <!-- Main Content Area -->
-      <main class="flex-1 flex flex-col items-center justify-start p-4 sm:p-6 overflow-y-auto max-w-5xl mx-auto w-full">
+      <main class="flex-1 flex flex-col items-center justify-start p-3 sm:p-4 lg:p-6 overflow-y-auto max-w-5xl mx-auto w-full">
         <slot />
       </main>
 
       <!-- History Sidebar -->
       <aside
         id="history-sidebar"
-        class="fixed inset-y-16 right-0 w-80 bg-brand-gray-dark border-l border-brand-border transform translate-x-full transition-transform duration-300 ease-in-out z-30 flex flex-col shadow-2xl md:shadow-none"
+        class="fixed inset-y-14 right-0 w-full sm:w-80 bg-brand-gray-dark border-l border-brand-border transform translate-x-full transition-transform duration-300 ease-in-out z-30 flex flex-col shadow-2xl md:shadow-none"
       >
         <div class="p-4 border-b border-brand-border flex items-center justify-between">
           <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5">
@@ -216,12 +221,12 @@ const {
     </div>
 
     <!-- Vercel Style Footer -->
-    <footer class="border-t border-brand-border bg-brand-black py-8 px-6 text-center text-xs text-brand-text-dim">
-      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+    <footer class="border-t border-brand-border bg-brand-black py-6 px-3 sm:px-6 text-center text-xs sm:text-sm text-brand-text-dim">
+      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
         <div>
           &copy; {new Date().getFullYear()} SciCalcX. Open-source scientific computational system.
         </div>
-        <div class="flex space-x-4">
+        <div class="flex flex-wrap justify-center space-x-3 sm:space-x-4">
           <a href="#" class="hover:text-brand-text transition-colors">Documentation</a>
           <span>&bull;</span>
           <a href="#" class="hover:text-brand-text transition-colors">Keyboard Shortcuts</a>
