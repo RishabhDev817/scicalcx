@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="500 - System Failure | SciCalcX" description="An unexpected computation failure occurred on SciCalcX online scientific computational suite.">
+  <div class="w-full max-w-md mx-auto py-16 text-center space-y-6 sm:space-y-8 font-sans">
+    <!-- Eyebrow status code -->
+    <div class="inline-flex px-3 py-1 border border-brand-border bg-brand-gray-light/60 text-red-500 rounded-full font-mono text-xs font-bold tracking-wider animate-pulse">
+      STATUS CODE: 500
+    </div>
+
+    <!-- Main Message -->
+    <div class="space-y-3">
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-brand-text font-mono">
+        SYSTEM BREAKDOWN<span class="text-red-500">.</span>
+      </h1>
+      <p class="text-xs sm:text-sm text-brand-text-dim max-w-sm mx-auto leading-relaxed">
+        An unexpected arithmetic exception or server-level failure interrupted the logic engine. Please retry or contact support if the issue persists.
+      </p>
+    </div>
+
+    <!-- Visual Divider -->
+    <div class="border-t border-brand-border/40 w-16 mx-auto"></div>
+
+    <!-- CTA Button -->
+    <div>
+      <a 
+        href="/"
+        class="inline-flex h-11 px-6 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_15px_rgba(0,112,243,0.4)] active:bg-brand-blue/80 transition-all cursor-pointer items-center justify-center text-xs tracking-wider uppercase font-mono"
+      >
+        Reset &amp; Return Home
+      </a>
+    </div>
+  </div>
+</Layout>
