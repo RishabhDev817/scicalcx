@@ -1,0 +1,6 @@
+# Robots.txt file for SciCalcX.com
+User-agent: *
+Allow: /
+
+# Sitemap Link
+Sitemap: https://scicalcx.com/sitemap.xml
