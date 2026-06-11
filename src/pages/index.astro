@@ -13,9 +13,17 @@ import Layout from '../layouts/Layout.astro';
       <div class="text-[9px] sm:text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
         System Mode: Core Compute
       </div>
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-brand-text">
-        Scientific Calculator<span class="text-brand-blue">.</span>
-      </h1>
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-3">
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-brand-text">
+          Scientific Calculator<span class="text-brand-blue">.</span>
+        </h1>
+        <div class="flex flex-wrap justify-center md:justify-end gap-2 text-[9px] sm:text-[10px] font-mono">
+          <a href="/about" class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">About Us</a>
+          <a href="/contact" class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">Contact Us</a>
+          <a href="/terms" class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">Terms</a>
+          <a href="/privacy" class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">Privacy</a>
+        </div>
+      </div>
     </div>
 
     <!-- Live Engine Status Bar -->
