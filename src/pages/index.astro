@@ -73,6 +73,7 @@ import Layout from '../layouts/Layout.astro';
         autocorrect="off" 
         autocapitalize="off" 
         spellcheck="false"
+        inputmode="none"
         autofocus
       />
 
@@ -1159,7 +1160,9 @@ import Layout from '../layouts/Layout.astro';
     const btnParenClose = document.getElementById('btn-paren-close')!;
 
     displayContainer.addEventListener('click', () => {
-      rawInput.focus();
+      if (!window.matchMedia('(pointer: coarse)').matches) {
+        rawInput.focus();
+      }
     });
 
     function sanitizeInput(currentVal: string, nextChar: string) {
@@ -1546,7 +1549,9 @@ import Layout from '../layouts/Layout.astro';
       btn.addEventListener('click', () => {
         const key = btn.getAttribute('data-key')!;
         processKey(key);
-        rawInput.focus();
+        if (!window.matchMedia('(pointer: coarse)').matches) {
+          rawInput.focus();
+        }
       });
     });
 
