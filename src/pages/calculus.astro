@@ -161,12 +161,12 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-base font-semibold text-white tracking-tight">Understanding Definite Integrals and Polynomial Roots</h3>
+        <h3 class="text-base font-semibold text-white tracking-tight">### Understanding Definite Integrals and Polynomial Roots</h3>
         <p>
-          Definite integration represents the analytical process of accumulating continuous quantities to determine the net signed area bounded by mathematical curves. In formal calculus, the definite integral of a function f(x) over the interval [a, b] is defined as the limit of Riemann sums as the width of the partitioning subintervals approaches zero. Finding polynomial roots—which are the values of x for which f(x) = 0—serves as the foundational step in identifying boundary conditions, determining critical local extrema, and solving higher-order differential systems.
+          Definite integration represents the mathematical process of accumulating continuous quantities to calculate the net signed area bounded by a curve and the horizontal axis over a specified range. Mathematically, the definite integral of a continuous function \( f(x) \) over the closed interval \( [a, b] \) is constructed as the limit of Riemann sums as the width of the subdivision intervals approaches zero. Finding polynomial roots—defined as the set of values for which \( f(x) = 0 \)—serves as a critical step in setting up integration boundaries, identifying critical extrema points, and solving higher-order differential equation systems.
         </p>
         <p>
-          The interface between integration and root-finding is significant. The roots of a polynomial define the exact points where the function crosses the abscissa (x-axis), representing transition points between positive and negative functional values. When integrating a polynomial over an arbitrary interval, positive and negative regions can counteract one another, resulting in a net area of zero despite non-zero function behaviors. Consequently, engineers must solve for roots and segment the integration domains to compute true geometric areas.
+          The intersection between integration and root-finding is highly significant. The roots of a polynomial define the exact spatial positions where the function crosses the horizontal abscissa, representing transition points where functional output switches signs. When integrating a polynomial over an arbitrary domain, positive and negative regional areas can cancel each other out, resulting in a net integral of zero despite complex non-zero behavior. Consequently, practical engineering problems require solving for polynomial roots first to segment the domains into sub-intervals, allowing for the calculation of true absolute geometric areas.
         </p>
       </div>
 
@@ -188,12 +188,12 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="space-y-4">
-        <h3 class="text-base font-semibold text-white tracking-tight">Tracking Algebraic Limits via Numerical Methods</h3>
+        <h3 class="text-base font-semibold text-white tracking-tight">### Tracking Algebraic Limits via Numerical Methods</h3>
         <p>
-          While symbolic limit evaluation leverages algebraic strategies like factorization, conjugate multiplication, and L'H&ocirc;pital's Rule, practical engineering systems often utilize transcendental equations that cannot be simplified analytically. In these contexts, tracking limits via numerical approximation methods provides a consistent and computationally feasible path forward.
+          While analytical limit evaluation utilizes symbolic manipulation techniques such as algebraic factorization, conjugate multiplication, and L'Hôpital's Rule, practical engineering systems often incorporate complex transcendental equations that cannot be factored or simplified. In these scenarios, tracking limits via numerical approximation methods provides a consistent and computationally robust method to study functional convergence.
         </p>
         <p>
-          The numerical calculation of a limit as x approaches c involves evaluating f(x) at a sequence of inputs that monotonically converge to c from both the left (x &lt; c) and the right (x &gt; c). For numerical integration algorithms like Simpson's rule, the definite integral is computed as a weighted sum of functional evaluations over uniform subdivisions. By modeling limits numerically, computational engines can bypass removable singularities, identify asymptote thresholds, and evaluate bounded integrals with high double-precision fidelity.
+          The numerical calculation of a limit as \( x \) approaches a value \( c \) involves evaluating \( f(x) \) at a sequence of inputs that monotonically converge to \( c \) from both the left side (\( x &lt; c \)) and the right side (\( x &gt; c \)). For numerical integration algorithms like Simpson's rule, the definite integral is computed as a weighted sum of functional evaluations over uniform subdivisions. By tracking and modeling limits numerically, computational engines can identify asymptote thresholds, bypass removable singularities (such as \( \frac&#123;\sin x&#125;&#123;x&#125; \) at \( x = 0 \ )), and compute definite integrals with high double-precision floating-point accuracy.
         </p>
       </div>
     </section>
