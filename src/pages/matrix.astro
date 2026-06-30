@@ -93,6 +93,55 @@ import Layout from '../layouts/Layout.astro';
         <span class="text-brand-text-dim text-xs">Awaiting calculation input...</span>
       </div>
     </div>
+
+    <!-- SEO Educational Documentation Block -->
+    <section class="border border-brand-border bg-brand-gray-dark/20 rounded-xl p-6 sm:p-8 space-y-6 text-brand-text-muted leading-relaxed text-sm">
+      <div class="border-b border-brand-border pb-3">
+        <h2 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+          <span class="text-brand-blue-neon font-mono">#</span> Linear Algebra & Matrix Math Handbook
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-base font-semibold text-white tracking-tight">How to Calculate a 3x3 Matrix Determinant</h3>
+        <p>
+          The determinant of a 3x3 matrix is a fundamental scalar value that encapsulates many properties of the linear transformation defined by the matrix. Geometrically, it represents the signed volume scaling factor of a parallelepiped formed by the matrix's column vectors. To compute the determinant of a 3x3 matrix A, denoted as |A| or det(A), we employ Laplace's cofactor expansion along the first row. The general matrix representation is:
+        </p>
+        <div class="bg-brand-black/50 border border-brand-border p-4 rounded-lg font-mono text-xs text-center text-brand-text overflow-x-auto">
+          A = [ [a, b, c], [d, e, f], [g, h, i] ]
+        </div>
+        <p>
+          The formula is expressed as: <code class="font-mono text-brand-blue-neon font-semibold bg-brand-black px-1.5 py-0.5 rounded">det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)</code>. Each term in the expansion is a product of a first-row element and the determinant of the 2x2 submatrix (minor) remaining after crossing out the row and column of that element. Specifically, we multiply a by the determinant of the 2x2 matrix remaining (ei - fh), subtract b multiplied by its corresponding 2x2 determinant (di - fg), and add c multiplied by its corresponding 2x2 determinant (dh - eg). If the resulting determinant is non-zero, the matrix is non-singular and invertible, indicating that the system of equations has a unique solution.
+        </p>
+      </div>
+
+      <!-- DSA Guide Affiliate Recommendation Box -->
+      <div class="p-4 sm:p-5 rounded-xl border border-brand-border bg-brand-gray-light/60 backdrop-blur-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-border-strong transition-colors duration-200">
+        <div class="space-y-1">
+          <div class="text-[10px] font-mono uppercase tracking-wider text-brand-blue-neon">Student Resource Recommendation</div>
+          <h4 class="text-sm font-semibold text-white">Data Structures and Algorithms (DSA) Master Guide</h4>
+          <p class="text-xs text-brand-text-muted">Master advanced matrix representations, graphs, and optimization algorithms essential for top-tier software engineering interviews.</p>
+        </div>
+        <a 
+          href="https://scicalcx.com/affiliate-dsa" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="shrink-0 text-xs font-mono font-semibold px-4 py-2.5 rounded border border-brand-blue-neon/40 hover:border-brand-blue-neon bg-brand-blue/10 hover:bg-brand-blue text-brand-blue-neon hover:text-white transition-all duration-200"
+        >
+          Get Guide &rarr;
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-base font-semibold text-white tracking-tight">Step-by-Step Matrix Inversion Method</h3>
+        <p>
+          Inverting a square matrix A yields a matrix A<sup>-1</sup> such that AA<sup>-1</sup> = A<sup>-1</sup>A = I, where I is the identity matrix. For a 3x3 matrix, the inversion process can be systematically performed using the adjugate matrix method, which relies on determinants of submatrices.
+        </p>
+        <p>
+          The process consists of the following phases: First, compute the determinant to verify that <code class="font-mono text-brand-blue-neon bg-brand-black px-1.5 py-0.5 rounded">det(A) &ne; 0</code>. If the determinant is zero, the matrix is singular and cannot be inverted. Second, construct the matrix of minors by calculating the determinant of the 2x2 matrix remaining for each of the 9 elements when its row and column are removed. Third, apply a checkerboard of signs to create the cofactor matrix: multiply each element M<sub>i,j</sub> by (-1)<sup>i+j</sup>. Fourth, transpose the cofactor matrix to obtain the adjugate matrix, denoted as adj(A) = C<sup>T</sup>. Finally, divide the adjugate matrix by the determinant to obtain the inverse matrix: <code class="font-mono text-brand-blue-neon bg-brand-black px-1.5 py-0.5 rounded">A^-1 = adj(A) / det(A)</code>. This analytical method provides an exact closed-form solution, which in digital computer systems is preferred for small dimensions to maintain precision.
+        </p>
+      </div>
+    </section>
   </div>
 
   <style>

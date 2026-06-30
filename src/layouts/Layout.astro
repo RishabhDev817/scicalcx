@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Footer from '../components/Footer.astro';
 
 interface Props {
   title?: string;
@@ -236,23 +237,8 @@ const {
       </aside>
     </div>
 
-    <!-- Vercel Style Footer -->
-    <footer class="border-t border-brand-border bg-brand-black py-6 px-3 sm:px-6 text-center text-xs sm:text-sm text-brand-text-dim">
-      <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-        <div>
-          &copy; {new Date().getFullYear()} SciCalcX. Open-source scientific computational system.
-        </div>
-        <div class="flex flex-wrap justify-center space-x-3 sm:space-x-4">
-          <a href="/about" class="hover:text-brand-text transition-colors">About Us</a>
-          <span>&bull;</span>
-          <a href="/contact" class="hover:text-brand-text transition-colors">Contact Us</a>
-          <span>&bull;</span>
-          <a href="/terms" class="hover:text-brand-text transition-colors">Terms &amp; Conditions</a>
-          <span>&bull;</span>
-          <a href="/privacy" class="hover:text-brand-text transition-colors">Privacy Policy</a>
-        </div>
-      </div>
-    </footer>
+    <!-- Ko-fi Integrated Footer -->
+    <Footer />
 
     <!-- Client Script for UI Controls -->
     <script>

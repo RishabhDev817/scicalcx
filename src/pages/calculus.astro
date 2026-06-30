@@ -151,6 +151,52 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
     </div>
+
+    <!-- SEO Educational Documentation Block -->
+    <section class="border border-brand-border bg-brand-gray-dark/20 rounded-xl p-6 sm:p-8 space-y-6 text-brand-text-muted leading-relaxed text-sm">
+      <div class="border-b border-brand-border pb-3">
+        <h2 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+          <span class="text-brand-blue-neon font-mono">#</span> Calculus & Integration Handbook
+        </h2>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-base font-semibold text-white tracking-tight">Understanding Definite Integrals and Polynomial Roots</h3>
+        <p>
+          Definite integration represents the analytical process of accumulating continuous quantities to determine the net signed area bounded by mathematical curves. In formal calculus, the definite integral of a function f(x) over the interval [a, b] is defined as the limit of Riemann sums as the width of the partitioning subintervals approaches zero. Finding polynomial roots—which are the values of x for which f(x) = 0—serves as the foundational step in identifying boundary conditions, determining critical local extrema, and solving higher-order differential systems.
+        </p>
+        <p>
+          The interface between integration and root-finding is significant. The roots of a polynomial define the exact points where the function crosses the abscissa (x-axis), representing transition points between positive and negative functional values. When integrating a polynomial over an arbitrary interval, positive and negative regions can counteract one another, resulting in a net area of zero despite non-zero function behaviors. Consequently, engineers must solve for roots and segment the integration domains to compute true geometric areas.
+        </p>
+      </div>
+
+      <!-- Engineering Math Handbook Recommendation Box -->
+      <div class="p-4 sm:p-5 rounded-xl border border-brand-border bg-brand-gray-light/60 backdrop-blur-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-border-strong transition-colors duration-200">
+        <div class="space-y-1">
+          <div class="text-[10px] font-mono uppercase tracking-wider text-brand-blue-neon">Recommended Reference</div>
+          <h4 class="text-sm font-semibold text-white">Engineering Mathematics Reference Handbook</h4>
+          <p class="text-xs text-brand-text-muted">A comprehensive desktop guide covering advanced calculus, linear algebra, differential equations, and numerical analysis.</p>
+        </div>
+        <a 
+          href="https://scicalcx.com/affiliate-math-handbook" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="shrink-0 text-xs font-mono font-semibold px-4 py-2.5 rounded border border-brand-blue-neon/40 hover:border-brand-blue-neon bg-brand-blue/10 hover:bg-brand-blue text-brand-blue-neon hover:text-white transition-all duration-200"
+        >
+          View Handbook &rarr;
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        <h3 class="text-base font-semibold text-white tracking-tight">Tracking Algebraic Limits via Numerical Methods</h3>
+        <p>
+          While symbolic limit evaluation leverages algebraic strategies like factorization, conjugate multiplication, and L'H&ocirc;pital's Rule, practical engineering systems often utilize transcendental equations that cannot be simplified analytically. In these contexts, tracking limits via numerical approximation methods provides a consistent and computationally feasible path forward.
+        </p>
+        <p>
+          The numerical calculation of a limit as x approaches c involves evaluating f(x) at a sequence of inputs that monotonically converge to c from both the left (x &lt; c) and the right (x &gt; c). For numerical integration algorithms like Simpson's rule, the definite integral is computed as a weighted sum of functional evaluations over uniform subdivisions. By modeling limits numerically, computational engines can bypass removable singularities, identify asymptote thresholds, and evaluate bounded integrals with high double-precision fidelity.
+        </p>
+      </div>
+    </section>
   </div>
 
   <script>
