@@ -186,7 +186,7 @@
           </div>
           <div 
             id="fullscreen-terminal-content" 
-            class="flex-1 p-3 text-xs overflow-y-auto whitespace-pre-wrap select-text leading-relaxed bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-300"
+            class="flex-1 p-3 text-sm font-mono overflow-y-auto whitespace-pre-wrap select-text leading-tight bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-300"
           >
             <!-- Synced content -->
           </div>
@@ -245,11 +245,10 @@
               Clear
             </button>
           </div>
-          
           <!-- Output logs viewport -->
           <div 
             id="terminal-content" 
-            class="flex-1 p-4 font-mono text-xs overflow-y-auto whitespace-pre-wrap leading-relaxed select-text bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-300"
+            class="flex-1 p-4 font-mono text-sm overflow-y-auto whitespace-pre-wrap leading-tight select-text bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-300"
           >
             <span class="text-gray-400 dark:text-gray-500">// Click "Run Code" above to execute and check your solution.</span>
           </div>
@@ -2100,16 +2099,16 @@
     
     // Print the prompt with a clean seamless inline input box
     const html = `
-      <div id="wrapper-${inputId}" class="flex items-center space-x-1 font-mono text-xs mt-1 text-slate-600 dark:text-slate-300">
+      <span id="wrapper-${inputId}" class="inline-flex items-center space-x-1 font-mono text-sm text-slate-600 dark:text-slate-300">
         <span>${escapeHTML(promptText)}</span>
         <input 
           type="text" 
           id="${inputId}" 
-          class="flex-1 bg-transparent border-none outline-none text-brand-blue dark:text-brand-blue-neon focus:ring-0 p-0 m-0 font-mono text-xs caret-slate-800 dark:caret-white" 
+          class="bg-transparent border-none outline-none text-brand-blue dark:text-brand-blue-neon focus:ring-0 p-0 m-0 font-mono text-sm caret-slate-800 dark:caret-white w-24" 
           style="border: none !important; outline: none !important; box-shadow: none !important;"
           autocomplete="off"
         />
-      </div>
+      </span>
     `;
     
     activeTerminal.insertAdjacentHTML('beforeend', html);
@@ -2129,7 +2128,7 @@
           
           const wrapper = document.getElementById(`wrapper-${inputId}`);
           if (wrapper) {
-            wrapper.outerHTML = `<div class="font-mono text-xs mt-1 text-slate-600 dark:text-slate-300"><span>${escapeHTML(promptText)}</span><span class="text-brand-blue dark:text-brand-blue-neon ml-1 font-bold">${escapeHTML(value)}</span></div>`;
+            wrapper.outerHTML = `<span>${escapeHTML(promptText)}</span><span class="text-brand-blue dark:text-brand-blue-neon ml-1 font-bold">${escapeHTML(value)}</span>\n`;
           }
           
           onComplete(value);
@@ -2192,12 +2191,87 @@
         const sim = runLocalSimulation(code, activeLanguage, activeLessonId, activeSubId);
         stdout = sim.stdout;
         stderr = sim.stderr;
-        
-        printToTerminal(`<span class="text-brand-blue-neon font-mono">// [LOCAL DIAGNOSTIC SIMULATOR ACTIVE]</span>\n`, false);
       }
       
+      let prefixHTML = "";
+      if (simulated) {
+        prefixHTML = `<span class="text-brand-blue-neon font-mono">// [LOCAL DIAGNOSTIC SIMULATOR ACTIVE]</span>\n`;
+      }
+
+      // Reconstruct the exact chronological log (Prompt -> User Input -> Prompt -> User Input -> Final Result) without duplication
+      let reconstructedHTML = prefixHTML;
+      let remainingStdout = stdout;
+      
+      for (let i = 0; i < gatheredInputs.length; i++) {
+        const userVal = gatheredInputs[i];
+        
+        // Search for the first matching prompt among all remaining prompts starting from i
+        let firstFoundPromptIdx = -1;
+        let firstFoundMatchPos = -1;
+        let firstFoundMatchLength = 0;
+        let matchedPromptText = "";
+        
+        for (let k = i; k < gatheredInputs.length; k++) {
+          const prompt = getPromptForInput(code, activeLanguage, k);
+          const isFallback = prompt.startsWith("Enter input [") && prompt.endsWith("]: ");
+          if (isFallback) continue;
+          
+          let pos = remainingStdout.indexOf(prompt);
+          let len = prompt.length;
+          
+          if (pos === -1) {
+            const trimmed = prompt.trim();
+            if (trimmed) {
+              pos = remainingStdout.indexOf(trimmed);
+              len = trimmed.length;
+            }
+          }
+          
+          if (pos !== -1) {
+            if (firstFoundMatchPos === -1 || pos < firstFoundMatchPos) {
+              firstFoundMatchPos = pos;
+              firstFoundPromptIdx = k;
+              firstFoundMatchLength = len;
+              matchedPromptText = prompt;
+            }
+          }
+        }
+        
+        if (firstFoundPromptIdx !== -1) {
+          if (firstFoundPromptIdx === i) {
+            // The prompt belongs to the current input
+            const beforePrompt = remainingStdout.substring(0, firstFoundMatchPos);
+            if (beforePrompt) {
+              reconstructedHTML += `<span>${escapeHTML(beforePrompt)}</span>`;
+            }
+            reconstructedHTML += `<span>${escapeHTML(matchedPromptText)}</span><span class="text-brand-blue dark:text-brand-blue-neon font-bold">${escapeHTML(userVal)}</span>\n`;
+            remainingStdout = remainingStdout.substring(firstFoundMatchPos + firstFoundMatchLength);
+          } else {
+            // The prompt belongs to a future input k.
+            // This means everything in remainingStdout up to firstFoundMatchPos belongs to the current input i.
+            const promptForCurrent = remainingStdout.substring(0, firstFoundMatchPos);
+            reconstructedHTML += `<span>${escapeHTML(promptForCurrent)}</span><span class="text-brand-blue dark:text-brand-blue-neon font-bold">${escapeHTML(userVal)}</span>\n`;
+            remainingStdout = remainingStdout.substring(firstFoundMatchPos);
+          }
+        } else {
+          // No prompts found in remainingStdout.
+          if (remainingStdout) {
+            reconstructedHTML += `<span>${escapeHTML(remainingStdout)}</span><span class="text-brand-blue dark:text-brand-blue-neon font-bold">${escapeHTML(userVal)}</span>\n`;
+            remainingStdout = "";
+          } else {
+            const fallbackPrompt = getPromptForInput(code, activeLanguage, i);
+            reconstructedHTML += `<span>${escapeHTML(fallbackPrompt)}</span><span class="text-brand-blue dark:text-brand-blue-neon font-bold">${escapeHTML(userVal)}</span>\n`;
+          }
+        }
+      }
+      
+      if (remainingStdout) {
+        reconstructedHTML += `<span>${escapeHTML(remainingStdout)}</span>`;
+      }
+
       if (stderr) {
-        printToTerminal(`<span class="text-red-500">${escapeHTML(stderr)}</span>`, false);
+        reconstructedHTML += `<span class="text-red-500">${escapeHTML(stderr)}</span>`;
+        printToTerminal(reconstructedHTML, true);
         const errorDetail = translateError(stderr, activeLanguage);
         if (errorDetail) {
           showBugCard(errorDetail.explanation, errorDetail.solution);
@@ -2205,25 +2279,10 @@
           showBugCard("Execution Error", "Your script encountered a runtime crash. Please check the logs.");
         }
       } else {
-        let cleanedStdout = stdout;
-        for (let i = 0; i < gatheredInputs.length; i++) {
-          const prompt = getPromptForInput(code, activeLanguage, i);
-          const trimmedPrompt = prompt.trim();
-          if (cleanedStdout.startsWith(prompt)) {
-            cleanedStdout = cleanedStdout.substring(prompt.length);
-          } else if (cleanedStdout.trim().startsWith(trimmedPrompt)) {
-            const idx = cleanedStdout.indexOf(trimmedPrompt);
-            cleanedStdout = cleanedStdout.substring(idx + trimmedPrompt.length);
-          }
-        }
-        
-        if (cleanedStdout) {
-          if (!cleanedStdout.startsWith('\n')) {
-            cleanedStdout = '\n' + cleanedStdout;
-          }
-          printToTerminal(`<span>${escapeHTML(cleanedStdout)}</span>`, false);
+        if (reconstructedHTML) {
+          printToTerminal(reconstructedHTML, true);
         } else {
-          printToTerminal(`<span class="text-brand-text-dim">// Script ran successfully but generated empty output.</span>`, false);
+          printToTerminal(`<span class="text-brand-text-dim">// Script ran successfully but generated empty output.</span>`, true);
         }
         resetBugCard();
         
@@ -2317,7 +2376,7 @@
             collectNextInput();
           } else {
             const stdinBuffer = gatheredInputs.join("\n");
-            printToTerminal(`<div id="terminal-loading" class="text-brand-blue-neon font-mono mt-2">// Sandbox compiling and executing script...</div>`, false);
+            printToTerminal(`\n<span id="terminal-loading" class="text-brand-blue-neon font-mono">// Sandbox compiling and executing script...</span>\n`, false);
             executeCodeWithInputs(code, stdinBuffer, gatheredInputs);
           }
         });
@@ -2325,7 +2384,7 @@
       
       collectNextInput();
     } else {
-      printToTerminal(`<div id="terminal-loading" class="text-brand-blue-neon font-mono">// Sandbox compiling and executing script...</div>`, false);
+      printToTerminal(`<span id="terminal-loading" class="text-brand-blue-neon font-mono">// Sandbox compiling and executing script...</span>\n`, false);
       executeCodeWithInputs(code, "", []);
     }
   });
