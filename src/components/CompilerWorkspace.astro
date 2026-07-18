@@ -196,15 +196,27 @@
       <!-- Execution Panel: Run Code trigger & Output Console -->
       <div class="flex flex-col space-y-3">
         <div class="flex items-center justify-between select-none">
-          <!-- Glowing Run Button -->
-          <button 
-            id="btn-run-code"
-            class="relative h-11 px-6 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_15px_rgba(0,112,243,0.4)] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 overflow-hidden"
-          >
-            <span id="btn-run-icon">▶</span>
-            <span id="btn-run-text" class="font-mono text-xs tracking-wider font-bold">RUN CODE</span>
-            <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-shimmer pointer-events-none"></span>
-          </button>
+          <div class="flex items-center gap-3">
+            <!-- Glowing Run Button -->
+            <button 
+              id="btn-run-code"
+              class="relative h-11 px-6 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_15px_rgba(0,112,243,0.4)] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 overflow-hidden"
+            >
+              <span id="btn-run-icon">▶</span>
+              <span id="btn-run-text" class="font-mono text-xs tracking-wider font-bold">RUN CODE</span>
+              <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-shimmer pointer-events-none"></span>
+            </button>
+
+            <!-- Export Assignment Button -->
+            <button 
+              id="btn-export-assignment"
+              class="relative h-11 px-4 rounded-md border border-slate-300 dark:border-slate-700 bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-mono text-xs font-bold active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 overflow-hidden shadow-sm"
+              title="Export assignment report"
+            >
+              <span>📸</span>
+              <span>Export Assignment</span>
+            </button>
+          </div>
           
           <span class="text-[9px] text-brand-text-dim font-mono tracking-wide uppercase">
             Powered by Wandbox Sandbox API
@@ -280,6 +292,63 @@
         <p class="italic text-slate-400 dark:text-slate-500">No errors detected. Write code and run it!</p>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Export Assignment Modal -->
+<div id="export-modal" class="fixed inset-0 z-[300] hidden items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300">
+  <div id="export-modal-panel" class="w-full max-w-md p-6 bg-white dark:bg-[#151b23] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl mx-4 transform transition-all duration-300 scale-95 opacity-0">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800/80 mb-4">
+      <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100 flex items-center gap-2">
+        <span>📸</span> Export Assignment Info
+      </h3>
+      <button id="btn-close-export-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer focus:outline-none transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <form id="export-form" class="space-y-4 font-mono text-xs">
+      <div class="space-y-1.5">
+        <label for="export-student-name" class="block text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400">Student Name</label>
+        <input 
+          type="text" 
+          id="export-student-name" 
+          required 
+          placeholder="e.g., Rishabh Dev"
+          class="w-full px-3 py-2 bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-gray-800 rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none focus:border-brand-blue"
+        />
+      </div>
+      
+      <div class="space-y-1.5">
+        <label for="export-student-roll" class="block text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400">Roll Number</label>
+        <input 
+          type="text" 
+          id="export-student-roll" 
+          required 
+          placeholder="e.g., CS-2026-89"
+          class="w-full px-3 py-2 bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-gray-800 rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none focus:border-brand-blue"
+        />
+      </div>
+
+      <div class="pt-2 flex justify-end gap-3">
+        <button 
+          type="button" 
+          id="btn-cancel-export"
+          class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-[#21262d] dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg font-bold cursor-pointer transition-colors"
+        >
+          Cancel
+        </button>
+        <button 
+          type="submit" 
+          id="btn-generate-image"
+          class="px-4 py-2 bg-brand-blue hover:bg-brand-blue-hover text-white rounded-lg font-bold cursor-pointer transition-all flex items-center gap-1.5"
+        >
+          <span id="btn-generate-text">Generate Image</span>
+        </button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -1101,6 +1170,18 @@
   const editorCard = document.getElementById('editor-card')!;
   const fullscreenTerminalPane = document.getElementById('fullscreen-terminal-pane')!;
   const fullscreenTerminalContent = document.getElementById('fullscreen-terminal-content')!;
+
+  // Export Assignment DOM elements
+  const btnExportAssignment = document.getElementById('btn-export-assignment') as HTMLButtonElement;
+  const exportModal = document.getElementById('export-modal')!;
+  const exportModalPanel = document.getElementById('export-modal-panel')!;
+  const btnCloseExportModal = document.getElementById('btn-close-export-modal')!;
+  const btnCancelExport = document.getElementById('btn-cancel-export')!;
+  const exportForm = document.getElementById('export-form') as HTMLFormElement;
+  const studentNameInput = document.getElementById('export-student-name') as HTMLInputElement;
+  const studentRollInput = document.getElementById('export-student-roll') as HTMLInputElement;
+  const btnGenerateImage = document.getElementById('btn-generate-image') as HTMLButtonElement;
+  const btnGenerateText = document.getElementById('btn-generate-text')!;
 
   // Initialize workspace on load
   function initWorkspace() {
@@ -2253,6 +2334,322 @@
   window.addEventListener('load-expression', (e: any) => {
     if (e.detail.mode === 'compiler') {
       printToTerminal(`<span class="text-brand-text-dim">// Loaded history log. Select roadmap steps above to continue.</span>`, true);
+    }
+  });
+
+  // --- Assignment Export Feature Logic ---
+
+  // Dynamic html2canvas loader
+  function loadHtml2Canvas(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if ((window as any).html2canvas) {
+        resolve((window as any).html2canvas);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      script.crossOrigin = 'anonymous';
+      script.onload = () => {
+        if ((window as any).html2canvas) {
+          resolve((window as any).html2canvas);
+        } else {
+          reject(new Error('html2canvas failed to initialize'));
+        }
+      };
+      script.onerror = () => reject(new Error('Failed to load html2canvas CDN'));
+      document.head.appendChild(script);
+    });
+  }
+
+  function openExportModal() {
+    exportModal.classList.remove('hidden');
+    exportModal.classList.add('flex');
+    studentNameInput.value = localStorage.getItem('scicalcx_student_name') || '';
+    studentRollInput.value = localStorage.getItem('scicalcx_student_roll') || '';
+    setTimeout(() => {
+      exportModalPanel.classList.remove('scale-95', 'opacity-0');
+      exportModalPanel.classList.add('scale-100', 'opacity-100');
+    }, 10);
+  }
+
+  function closeExportModal() {
+    exportModalPanel.classList.remove('scale-100', 'opacity-100');
+    exportModalPanel.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+      exportModal.classList.remove('flex');
+      exportModal.classList.add('hidden');
+    }, 300);
+  }
+
+  btnExportAssignment.addEventListener('click', openExportModal);
+  btnCloseExportModal.addEventListener('click', closeExportModal);
+  btnCancelExport.addEventListener('click', closeExportModal);
+  exportModal.addEventListener('click', (e) => {
+    if (e.target === exportModal) closeExportModal();
+  });
+
+  exportForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const studentName = studentNameInput.value.trim();
+    const rollNumber = studentRollInput.value.trim();
+
+    if (!studentName || !rollNumber) return;
+
+    localStorage.setItem('scicalcx_student_name', studentName);
+    localStorage.setItem('scicalcx_student_roll', rollNumber);
+
+    btnGenerateImage.disabled = true;
+    const originalText = btnGenerateText.innerHTML;
+    btnGenerateText.innerHTML = `
+      <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      Generating...
+    `;
+
+    let tempContainer: HTMLDivElement | null = null;
+    const disabledSheets: { sheet: HTMLLinkElement | HTMLStyleElement; wasEnabled: boolean }[] = [];
+
+    try {
+      const html2canvasLib = await loadHtml2Canvas();
+
+      let activeChallengeTitle = "";
+      let activeLessonTitle = "";
+      if (isSandboxMode) {
+        activeLessonTitle = "Practice Playground";
+        activeChallengeTitle = `Sandbox Mode (${activeLanguage.toUpperCase()})`;
+      } else {
+        const activeLesson = lessons.find(l => l.id === activeLessonId);
+        if (activeLesson) {
+          activeLessonTitle = activeLesson.title;
+          const activeChallenge = activeLesson.challenges.find(c => c.subId === activeSubId);
+          if (activeChallenge) {
+            activeChallengeTitle = activeChallenge.title;
+          }
+        }
+      }
+
+      const now = new Date();
+      const formattedDateTime = now.toLocaleString('en-US', {
+        dateStyle: 'medium',
+        timeStyle: 'short'
+      });
+
+      const codeLines = codeEditor.value.split('\n');
+      const formattedCodeLines = codeLines.map((line, idx) => {
+        return `<div style="display: flex; line-height: 1.5; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; margin-bottom: 2px;">
+          <div style="width: 40px; text-align: right; padding-right: 12px; color: #94a3b8; user-select: none; border-right: 1px solid #e2e8f0; margin-right: 12px; font-weight: 500;">${idx + 1}</div>
+          <div style="flex: 1; white-space: pre-wrap; word-break: break-all;">${escapeHTML(line || ' ')}</div>
+        </div>`;
+      }).join('');
+
+      const terminalHTML = terminalContent.innerHTML.trim();
+
+      tempContainer = document.createElement('div');
+      tempContainer.id = 'temp-export-container';
+      
+      // Inline styling to render it off-screen as specified
+      tempContainer.style.position = 'absolute';
+      tempContainer.style.left = '-9999px';
+      tempContainer.style.top = '0';
+      tempContainer.style.width = '800px';
+      tempContainer.style.background = 'white';
+      tempContainer.style.zIndex = '-1';
+
+      tempContainer.innerHTML = `
+        <style>
+          #temp-export-container {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #ffffff;
+            color: #111827;
+            padding: 40px;
+            box-sizing: border-box;
+            width: 800px;
+          }
+          #temp-export-container .header {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+          }
+          #temp-export-container .header-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #2563eb;
+            margin-bottom: 4px;
+          }
+          #temp-export-container .header-subtitle {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            font-weight: 600;
+          }
+          #temp-export-container .meta-grid {
+            display: grid;
+            grid-template-cols: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+            font-size: 13px;
+          }
+          #temp-export-container .meta-item {
+            display: flex;
+            flex-direction: column;
+          }
+          #temp-export-container .meta-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            font-weight: 700;
+            margin-bottom: 2px;
+          }
+          #temp-export-container .meta-value {
+            font-weight: 600;
+            color: #1f2937;
+          }
+          #temp-export-container .section-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+            color: #374151;
+            margin-top: 24px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 6px;
+          }
+          #temp-export-container .code-block {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #334155;
+            margin-bottom: 24px;
+          }
+          #temp-export-container .terminal-block {
+            background-color: #0f172a;
+            color: #f1f5f9;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+          }
+          #temp-export-container .terminal-block span { color: #f1f5f9; }
+          #temp-export-container .terminal-block .text-brand-blue-neon { color: #38bdf8 !important; }
+          #temp-export-container .terminal-block .text-emerald-400 { color: #34d399 !important; font-weight: bold; }
+          #temp-export-container .terminal-block .text-amber-400 { color: #fbbf24 !important; font-weight: bold; }
+          #temp-export-container .terminal-block .text-red-500 { color: #f87171 !important; font-weight: bold; }
+          #temp-export-container .terminal-block .text-brand-text-dim { color: #94a3b8 !important; }
+        </style>
+        <div class="header">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div class="header-title">Generated by SciCalcX</div>
+              <div class="header-subtitle">Verified Code & Output Execution</div>
+            </div>
+            <div style="text-align: right; font-size: 10px; color: #94a3b8; font-family: monospace; font-weight: bold; border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 4px;">
+              SECURE ACADEMIC EXPORT
+            </div>
+          </div>
+          
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">Student Name</span>
+              <span class="meta-value">${escapeHTML(studentName)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Roll Number</span>
+              <span class="meta-value">${escapeHTML(rollNumber)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Topic / Challenge</span>
+              <span class="meta-value">${escapeHTML(activeLessonTitle)} &mdash; ${escapeHTML(activeChallengeTitle)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Date & Time</span>
+              <span class="meta-value">${formattedDateTime}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="section-title">Source Code (${activeLanguage.toUpperCase()})</div>
+        <div class="code-block">
+          ${formattedCodeLines}
+        </div>
+        
+        <div class="section-title">Terminal Console Output</div>
+        <div class="terminal-block">
+          ${terminalHTML || '<span class="text-brand-text-dim">// No execution logs available.</span>'}
+        </div>
+        
+        <div style="margin-top: 30px; text-align: center; font-size: 10px; color: #94a3b8; font-family: monospace; border-top: 1px dashed #e2e8f0; padding-top: 15px;">
+          This document was automatically generated by SciCalcX Compiler Sandbox. All executions simulated on Wandbox.
+        </div>
+      `;
+
+      // 1. Attach to DOM
+      document.body.appendChild(tempContainer);
+
+      // Temporarily disable global/cross-origin stylesheets to prevent html2canvas crashes on modern CSS parsing
+      try {
+        const stylesAndLinks = document.querySelectorAll('link[rel="stylesheet"], style');
+        stylesAndLinks.forEach((el) => {
+          if (el.parentNode === tempContainer || el.closest('#temp-export-container')) {
+            return;
+          }
+          const sheetEl = el as HTMLLinkElement | HTMLStyleElement;
+          disabledSheets.push({
+            sheet: sheetEl,
+            wasEnabled: !sheetEl.disabled
+          });
+          sheetEl.disabled = true;
+        });
+      } catch (styleErr) {
+        console.warn('Style pre-processing warning:', styleErr);
+      }
+
+      // 3. Await Capture
+      const canvas = await html2canvasLib(tempContainer, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      const safeName = studentName.replace(/[^a-zA-Z0-9_-]/g, '_');
+      link.download = `${safeName}_Assignment.png`;
+      link.href = imgData;
+      link.click();
+
+      closeExportModal();
+    } catch (err: any) {
+      console.error(err);
+      alert('Error rendering assignment image: ' + (err.message || err));
+    } finally {
+      // Restore disabled stylesheets
+      try {
+        disabledSheets.forEach(({ sheet, wasEnabled }) => {
+          sheet.disabled = !wasEnabled;
+        });
+      } catch (restoreErr) {
+        console.error('Style post-processing restore warning:', restoreErr);
+      }
+
+      if (tempContainer && tempContainer.parentNode) {
+        document.body.removeChild(tempContainer);
+      }
+      btnGenerateImage.disabled = false;
+      btnGenerateText.innerHTML = originalText;
     }
   });
 
