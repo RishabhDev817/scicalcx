@@ -1,0 +1,2296 @@
+---
+// CompilerWorkspace.astro
+// Advanced Gamified Step-by-Step Learning Track, Compiler, and AI Tutor for SciCalcX
+---
+
+<div class="w-full max-w-6xl mx-auto space-y-6 animate-fade-in">
+  <!-- Workspace Header -->
+  <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
+    <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon flex items-center justify-center md:justify-start gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon animate-pulse"></span>
+      Interactive Learning Playground
+    </div>
+    <h1 class="text-3xl font-bold tracking-tight text-brand-text">
+      AI Coding Tutor & Compiler<span class="text-brand-blue">.</span>
+    </h1>
+    <p class="text-xs text-brand-text-muted">
+      Select a lesson, write your solution in Python, C, or C++, and execute instantly using our sandbox executor.
+    </p>
+  </div>
+
+  <!-- Dual-Panel Grid layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+    <!-- Left Panel: Learning Track -->
+    <div class="lg:col-span-4 flex flex-col space-y-4">
+      <div class="border border-slate-200 dark:border-slate-800 bg-white dark:bg-brand-gray-dark/40 rounded-xl p-5 shadow-xl flex flex-col flex-1">
+        
+        <!-- Workspace Mode Segment Control Toggle -->
+        <div class="flex bg-slate-100 dark:bg-brand-black/60 p-1 rounded-lg border border-slate-200 dark:border-brand-border/80 mb-4 font-mono text-[10px] select-none">
+          <button 
+            id="btn-mode-lessons" 
+            class="flex-1 py-1.5 text-center rounded-md font-bold transition-all cursor-pointer bg-brand-blue/10 dark:bg-brand-blue/20 text-brand-blue dark:text-brand-blue-neon border border-brand-blue/30"
+          >
+            Guided Lessons
+          </button>
+          <button 
+            id="btn-mode-sandbox" 
+            class="flex-1 py-1.5 text-center rounded-md font-bold transition-all cursor-pointer text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-brand-gray-hover"
+          >
+            Practice Playground
+          </button>
+        </div>
+
+        <!-- Roadmap nodes tree container -->
+        <div id="progress-map-container" class="flex flex-col flex-1">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-4">
+            <div class="space-y-0.5">
+              <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                Course Roadmap
+              </h2>
+              <span class="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-mono">Click unlocked nodes</span>
+            </div>
+            
+            <!-- Streak Indicator -->
+            <div class="flex items-center space-x-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg px-2.5 py-1">
+              <span class="text-[11px] font-mono font-bold text-amber-500 dark:text-amber-400" id="streak-count-text">0 Days 🔥</span>
+            </div>
+          </div>
+
+          <!-- Node Map Area -->
+          <div class="relative pl-1 py-2 flex-1">
+            <!-- Central connecting line -->
+            <div class="absolute left-[15px] top-6 bottom-6 w-[2px] bg-slate-200 dark:bg-brand-border/60 z-0"></div>
+            
+            <!-- Progress Tree Nodes -->
+            <div class="space-y-5 relative z-10" id="progress-map">
+              <!-- Rendered dynamically by Client-Side JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Current Active Lesson Instructions -->
+        <div class="border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-brand-black/40 rounded-lg p-4 space-y-3 font-mono text-xs mt-4">
+          <div class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800/40 pb-1.5 flex justify-between items-center">
+            <span>Lesson Target</span>
+            <span id="lesson-criteria" class="text-brand-blue dark:text-brand-blue-neon font-semibold text-[9px] lowercase bg-brand-blue/5 dark:bg-brand-blue/10 border border-brand-blue/20 dark:border-brand-blue/30 px-1.5 py-0.5 rounded">Criteria</span>
+          </div>
+          
+          <!-- Sub-challenge Selector Tabs -->
+          <div class="flex flex-wrap gap-1 bg-slate-100 dark:bg-brand-black/60 p-1 rounded border border-slate-200 dark:border-slate-800 mb-2" id="sub-challenge-tabs">
+            <!-- Populated dynamically by script -->
+          </div>
+          
+          <h3 id="lesson-title" class="text-sm font-bold text-slate-800 dark:text-slate-200">
+            Loading Lesson...
+          </h3>
+          <p id="lesson-instruction" class="text-slate-600 dark:text-slate-400 leading-relaxed text-[11px] whitespace-pre-line">
+            Instructions loading...
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Code Workspace -->
+    <div class="lg:col-span-8 flex flex-col space-y-4">
+      <!-- Editor Card -->
+      <div 
+        id="editor-card" 
+        class="border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#090d13] rounded-xl overflow-hidden flex flex-col h-[400px] shadow-xl transition-all duration-300 relative"
+      >
+        <!-- Editor Header Tab -->
+        <div class="bg-slate-50 dark:bg-slate-900 border-b border-gray-300 dark:border-gray-700 px-4 py-2 flex items-center justify-between select-none">
+          <div class="flex items-center space-x-3">
+            <span class="w-2 h-2 rounded-full bg-brand-blue-neon animate-pulse"></span>
+            <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 uppercase font-mono tracking-wider">Source Editor</span>
+            <span id="save-indicator" class="text-[9px] text-emerald-400 font-mono transition-opacity duration-300 opacity-0 select-none">● Saved draft</span>
+          </div>
+          
+          <div class="flex items-center space-x-2">
+            <!-- Header Run Button -->
+            <button 
+              id="btn-run-code-header" 
+              class="px-2.5 py-1 text-[10px] bg-brand-blue hover:bg-brand-blue-hover text-white rounded font-mono font-bold transition-all focus:outline-none cursor-pointer flex items-center gap-1 select-none"
+              title="Run code output"
+            >
+              <span>▶</span>
+              <span>RUN</span>
+            </button>
+
+            <!-- Reset Button -->
+            <button 
+              id="btn-reset-code" 
+              class="text-[10px] px-2.5 py-1 border border-gray-300 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-800 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 dark:hover:text-white rounded font-mono transition-colors focus:outline-none cursor-pointer"
+              title="Reset template back to default code"
+            >
+              Reset Code
+            </button>
+            
+            <!-- Language Dropdown -->
+            <select 
+              id="select-language" 
+              class="bg-white border border-gray-300 text-gray-800 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-200 text-xs rounded px-2.5 py-1 font-mono focus:outline-none focus:border-brand-blue cursor-pointer"
+            >
+              <option value="python">Python 3</option>
+              <option value="c">C (GCC)</option>
+              <option value="cpp">C++ (GCC)</option>
+            </select>
+
+            <!-- Fullscreen Enlarge Toggle Icon Button -->
+            <button 
+              id="btn-toggle-fullscreen" 
+              class="p-1.5 border border-gray-300 dark:border-gray-700 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 dark:hover:text-white rounded-md transition-all focus:outline-none cursor-pointer flex items-center justify-center hover:scale-105 active:scale-95"
+              title="Toggle Fullscreen Editor"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path id="fullscreen-path" stroke-linecap="round" stroke-linejoin="round" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Editor Body: Side-by-Side Gutter + Textarea -->
+        <div class="flex-1 flex overflow-hidden relative font-mono text-sm">
+          <!-- Gutter Column -->
+          <div 
+            id="editor-gutter" 
+            class="w-10 bg-slate-50 dark:bg-slate-900 border-r border-gray-300 dark:border-gray-700 text-slate-400 dark:text-slate-500 text-right pr-2.5 select-none py-3 overflow-hidden text-xs flex flex-col font-mono"
+            style="line-height: 20px;"
+          >
+            <!-- Generated dynamically -->
+          </div>
+          
+          <!-- Textarea Input Area -->
+          <textarea 
+            id="code-editor" 
+            class="flex-1 bg-white dark:bg-[#0d1117] text-gray-900 dark:text-gray-300 px-3 py-3 resize-none focus:outline-none overflow-auto text-xs h-full font-mono whitespace-pre"
+            style="line-height: 20px;"
+            placeholder="Write your code solution here..."
+            spellcheck="false"
+            wrap="off"
+          ></textarea>
+        </div>
+
+        <!-- Fullscreen Terminal Pane (only visible in fullscreen overlay mode) -->
+        <div id="fullscreen-terminal-pane" class="hidden border-t border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-black h-[180px] flex-col font-mono relative">
+          <!-- Fullscreen resize handle separator -->
+          <div id="fullscreen-terminal-resizer" class="h-1 bg-gray-200 dark:bg-gray-700 hover:bg-brand-blue cursor-row-resize transition-colors w-full absolute top-0 left-0 z-20" title="Drag to Resize Terminal"></div>
+          
+          <div class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 px-4 py-1.5 flex items-center justify-between select-none h-[31px] mt-1">
+            <span class="text-[10px] text-gray-800 dark:text-gray-300 uppercase font-bold tracking-wider">Terminal Output</span>
+            <button 
+              id="btn-clear-fullscreen-terminal" 
+              class="text-[9px] px-2 py-0.5 border border-gray-300 dark:border-gray-700 bg-white hover:bg-gray-100 dark:bg-brand-black/40 dark:hover:bg-brand-gray-hover text-gray-800 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white rounded transition-colors cursor-pointer"
+            >
+              Clear
+            </button>
+          </div>
+          <div 
+            id="fullscreen-terminal-content" 
+            class="flex-1 p-3 text-xs overflow-y-auto whitespace-pre-wrap select-text leading-relaxed bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-300"
+          >
+            <!-- Synced content -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Execution Panel: Run Code trigger & Output Console -->
+      <div class="flex flex-col space-y-3">
+        <div class="flex items-center justify-between select-none">
+          <!-- Glowing Run Button -->
+          <button 
+            id="btn-run-code"
+            class="relative h-11 px-6 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_15px_rgba(0,112,243,0.4)] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 overflow-hidden"
+          >
+            <span id="btn-run-icon">▶</span>
+            <span id="btn-run-text" class="font-mono text-xs tracking-wider font-bold">RUN CODE</span>
+            <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-shimmer pointer-events-none"></span>
+          </button>
+          
+          <span class="text-[9px] text-brand-text-dim font-mono tracking-wide uppercase">
+            Powered by Wandbox Sandbox API
+          </span>
+        </div>
+
+        <!-- Resizer Separator -->
+        <div id="normal-terminal-resizer" class="h-1 bg-gray-200 dark:bg-gray-700 hover:bg-brand-blue cursor-row-resize transition-colors w-full rounded-t-lg" title="Drag to Resize Terminal"></div>
+
+        <!-- Terminal Output Div -->
+        <div id="normal-terminal-container" class="border-x border-b border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-black rounded-b-xl overflow-hidden flex flex-col h-[200px] shadow-lg">
+          <!-- Terminal Header -->
+          <div class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 px-4 py-2 flex items-center justify-between select-none">
+            <div class="flex items-center space-x-1.5">
+              <!-- Console lights decoration -->
+              <span class="w-2.5 h-2.5 rounded-full bg-[#ea4335]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#fbbc05]"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#34a853]"></span>
+              <span class="text-[10px] font-mono text-gray-800 dark:text-gray-300 ml-3 uppercase font-bold tracking-wider">Console Output</span>
+            </div>
+            
+            <button 
+              id="btn-clear-terminal" 
+              class="text-[10px] px-2 py-0.5 border border-gray-300 dark:border-gray-700 bg-white hover:bg-gray-100 text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded font-mono transition-colors cursor-pointer"
+            >
+              Clear
+            </button>
+          </div>
+          
+          <!-- Output logs viewport -->
+          <div 
+            id="terminal-content" 
+            class="flex-1 p-4 font-mono text-xs overflow-y-auto whitespace-pre-wrap leading-relaxed select-text bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-300"
+          >
+            <span class="text-gray-400 dark:text-gray-500">// Click "Run Code" above to execute and check your solution.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Panel: Dynamic AI Tutor Dashboard -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-2">
+    <!-- Logic Breakdown -->
+    <div class="border border-slate-200 dark:border-slate-800 bg-white dark:bg-brand-gray-dark/40 rounded-xl p-5 shadow-xl flex flex-col">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 pb-2 mb-3 select-none">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue dark:bg-brand-blue-neon"></span>
+        Logic Breakdown
+      </h3>
+      <p id="tutor-breakdown" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-mono flex-1 whitespace-pre-line">
+        Select a lesson to see syntax explanations.
+      </p>
+    </div>
+    
+    <!-- Real-Life Analogy -->
+    <div class="border border-slate-200 dark:border-slate-800 bg-white dark:bg-brand-gray-dark/40 rounded-xl p-5 shadow-xl flex flex-col">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 pb-2 mb-3 select-none">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue dark:bg-brand-blue-neon"></span>
+        Real-Life Analogy
+      </h3>
+      <p id="tutor-analogy" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
+        Select a lesson to see context analogies.
+      </p>
+    </div>
+    
+    <!-- Fix My Bug / Smart Debugger -->
+    <div id="tutor-bug-card" class="border border-slate-200 dark:border-slate-800 bg-white dark:bg-brand-gray-dark/40 rounded-xl p-5 shadow-xl flex flex-col transition-all duration-300">
+      <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 pb-2 mb-3 select-none" id="tutor-bug-header">
+        <span class="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-brand-text-dim" id="tutor-bug-dot"></span>
+        Smart Debugger
+      </h3>
+      <div id="tutor-bug-content" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
+        <p class="italic text-slate-400 dark:text-slate-500">No errors detected. Write code and run it!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Shimmer glowing transition overlay */
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  .animate-shimmer {
+    animation: shimmer 2.5s infinite;
+  }
+
+  /* Native CSS Toggle expand/collapse icon based on editor-fullscreen class */
+  #btn-toggle-fullscreen #collapse-icon {
+    display: none !important;
+  }
+  #btn-toggle-fullscreen #expand-icon {
+    display: block !important;
+  }
+  :global(.editor-fullscreen) #btn-toggle-fullscreen #collapse-icon {
+    display: block !important;
+  }
+  :global(.editor-fullscreen) #btn-toggle-fullscreen #expand-icon {
+    display: none !important;
+  }
+
+  /* Fullscreen editor layout styles mapping */
+  :global(.editor-fullscreen) {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 200 !important;
+    border-radius: 0 !important;
+    padding: 12px !important;
+    transition: background-color 0.2s ease;
+  }
+  :global(.light .editor-fullscreen) {
+    background-color: #f1f5f9 !important;
+  }
+  :global(.dark .editor-fullscreen) {
+    background-color: #0b0c0f !important;
+  }
+</style>
+
+<script>
+  // Expanded step-by-step roadmap lessons structure containing 10 sub-challenges each (40 total)
+  const lessons = [
+    {
+      id: 0,
+      title: "Hello World",
+      shortTitle: "Hello World",
+      challenges: [
+        {
+          subId: 0,
+          title: "Print Hello World",
+          instruction: "Write a program that outputs the exact text 'Hello, World!' to the screen.",
+          successCriteria: "output contains 'Hello, World!'",
+          validate: (output) => /Hello,\s*World/i.test(output),
+          templates: {
+            python: `print("Hello, World!")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("Hello, World!\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Hello, World!" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: {
+            python: "In Python, the `print()` function displays text. Text values must be wrapped inside double or single quotes.",
+            c: "In C, `#include <stdio.h>` imports standard input/output declarations. `printf()` outputs strings. Semicolons `;` terminate statements, and `main()` must return an integer `0`.",
+            cpp: "In C++, `#include <iostream>` imports stream output utilities. `std::cout` represents the output, and `<<` streams characters into it. `std::endl` adds a newline and flushes buffers."
+          },
+          analogy: {
+            python: "Like writing 'Hello, World!' on a post-it note and sticking it on the board. One simple step.",
+            c: "Like writing a formal letter. You must include the formal letterhead (#include), declare the sender's address (int main), write the body of the message (printf), sign off (return 0), and seal it with a stamp (;).",
+            cpp: "Similar to C, but using a conveyor belt (<<) to push your words down a pipeline into a large megaphone (std::cout)."
+          }
+        },
+        {
+          subId: 1,
+          title: "Print Welcome Message",
+          instruction: "Write a program that outputs the exact text 'Welcome, Developer!' to the screen.",
+          successCriteria: "output contains 'Welcome, Developer!'",
+          validate: (output) => /Welcome,\s*Developer/i.test(output),
+          templates: {
+            python: `print("Welcome, Developer!")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("Welcome, Developer!\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Welcome, Developer!" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Outputs the customized string 'Welcome, Developer!' using Python's standard `print()` call.",
+            c: "Outputs the welcome string in C using `printf(\"Welcome, Developer!\\n\");`.",
+            cpp: "Streams the string 'Welcome, Developer!' into standard output `std::cout`."
+          },
+          analogy: {
+            python: "Like hanging a customized 'Welcome' sign at the entrance door.",
+            c: "A formal lobby reception screen announcement.",
+            cpp: "Pushing a custom welcome marquee down the streaming conveyor belt."
+          }
+        },
+        {
+          subId: 2,
+          title: "Learn Code Academy",
+          instruction: "Write a program that outputs 'Learn Code Academy' to the screen.",
+          successCriteria: "output contains 'Learn Code Academy'",
+          validate: (output) => /Learn\s*Code\s*Academy/i.test(output),
+          templates: {
+            python: `print("Learn Code Academy")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("Learn Code Academy\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Learn Code Academy" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Print 'Learn Code Academy' to standard output stream.",
+            c: "Standard printf statement mapping 'Learn Code Academy'.",
+            cpp: "cout stream formatting 'Learn Code Academy'."
+          },
+          analogy: {
+            python: "Like printing academy letters on a study board.",
+            c: "Registering the academy title card.",
+            cpp: "Conveying academy message stream."
+          }
+        },
+        {
+          subId: 3,
+          title: "Astro Is Awesome",
+          instruction: "Write a program that outputs 'Astro is awesome' to the screen.",
+          successCriteria: "output contains 'Astro is awesome'",
+          validate: (output) => /Astro\s*is\s*awesome/i.test(output),
+          templates: {
+            python: `print("Astro is awesome")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("Astro is awesome\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Astro is awesome" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Print Astro status feedback.",
+            c: "C compiler output string formatting.",
+            cpp: "C++ stream output display."
+          },
+          analogy: {
+            python: "Shouting Astro praises.",
+            c: "Signing off Astro evaluation headers.",
+            cpp: "Piping Astro text down stream conveyor."
+          }
+        },
+        {
+          subId: 4,
+          title: "Tailwind CSS Styling",
+          instruction: "Write a program that outputs 'Tailwind CSS styling' to the screen.",
+          successCriteria: "output contains 'Tailwind CSS styling'",
+          validate: (output) => /Tailwind\s*CSS\s*styling/i.test(output),
+          templates: {
+            python: `print("Tailwind CSS styling")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("Tailwind CSS styling\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Tailwind CSS styling" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: { python: "Display styling log.", c: "C printf statement mapping CSS logs.", cpp: "C++ stream output CSS log." },
+          analogy: { python: "Painting custom style details on the note.", c: "Formal stylesheet loading prints.", cpp: "Streaming style labels down to console." }
+        },
+        {
+          subId: 5,
+          title: "Multi-Language compiler",
+          instruction: "Write a program that outputs 'C, C++, and Python compiler' to the screen.",
+          successCriteria: "output contains 'C, C++, and Python compiler'",
+          validate: (output) => /C,\s*C\+\+,\s*and\s*Python\s*compiler/i.test(output),
+          templates: {
+            python: `print("C, C++, and Python compiler")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("C, C++, and Python compiler\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "C, C++, and Python compiler" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: { python: "Prints multi-language capability logs.", c: "C printf formatted string.", cpp: "C++ output stream representation." },
+          analogy: { python: "A post-it containing the list of compiler engines.", c: "C-formal log statement checklist.", cpp: "Megaphone announcement of multi-language options." }
+        },
+        {
+          subId: 6,
+          title: "AI Tutor Chatbot",
+          instruction: "Write a program that outputs 'AI Tutor chatbot' to the screen.",
+          successCriteria: "output contains 'AI Tutor chatbot'",
+          validate: (output) => /AI\s*Tutor\s*chatbot/i.test(output),
+          templates: {
+            python: `print("AI Tutor chatbot")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("AI Tutor chatbot\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "AI Tutor chatbot" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: { python: "Displays tutor labels.", c: "Prints AI reference.", cpp: "C++ stdout pipe for AI label." },
+          analogy: { python: "An AI greeting tag.", c: "Formal registrar verification header.", cpp: "Pushing chatbot identifiers down conveyor." }
+        },
+        {
+          subId: 7,
+          title: "Gamified Tracking Nodes",
+          instruction: "Write a program that outputs 'Gamified tracking nodes' to the screen.",
+          successCriteria: "output contains 'Gamified tracking nodes'",
+          validate: (output) => /Gamified\s*tracking\s*nodes/i.test(output),
+          templates: {
+            python: `print("Gamified tracking nodes")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("Gamified tracking nodes\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Gamified tracking nodes" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: { python: "Log roadmaps details.", c: "C printf roadmap tags.", cpp: "C++ streams roadmap identifiers." },
+          analogy: { python: "Checking off a stage on the progress node chart.", c: "Logging map nodes.", cpp: "Streaming node identifiers down stdout." }
+        },
+        {
+          subId: 8,
+          title: "Offline Persistence Drafts",
+          instruction: "Write a program that outputs 'Offline persistence drafts' to the screen.",
+          successCriteria: "output contains 'Offline persistence drafts'",
+          validate: (output) => /Offline\s*persistence\s*drafts/i.test(output),
+          templates: {
+            python: `print("Offline persistence drafts")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("Offline persistence drafts\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Offline persistence drafts" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: { python: "Prints offline database labels.", c: "Formal C print logs.", cpp: "C++ streams offline logs." },
+          analogy: { python: "Saving drafts local cached copies.", c: "C storage confirmation.", cpp: "Megaphone notification on drafts updates." }
+        },
+        {
+          subId: 9,
+          title: "Level Completed Successfully",
+          instruction: "Write a program that outputs 'Level completed successfully' to the screen.",
+          successCriteria: "output contains 'Level completed successfully'",
+          validate: (output) => /Level\s*completed\s*successfully/i.test(output),
+          templates: {
+            python: `print("Level completed successfully")`,
+            c: `#include <stdio.h>\n\nint main() {\n    printf("Level completed successfully\\n");\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    std::cout << "Level completed successfully" << std::endl;\n    return 0;\n}`
+          },
+          breakdown: { python: "Print the final success confirmation.", c: "C output confirmation.", cpp: "C++ stream output final label." },
+          analogy: { python: "Raising the victory flag on the finish line.", c: "Registering final success in timekeeper database.", cpp: "Loud speaker announcement: Success!" }
+        }
+      ]
+    },
+    {
+      id: 1,
+      title: "Variables & Sums",
+      shortTitle: "Variables",
+      challenges: [
+        {
+          subId: 0,
+          title: "Variables Summation",
+          instruction: "Declare or define two variables: 'a' with a value of 5, and 'b' with a value of 10. Compute their sum and print it to output. The output must contain '15'.",
+          successCriteria: "output contains '15'",
+          validate: (output) => /\b15\b/.test(output),
+          templates: {
+            python: `a = 5\nb = 10\n# Calculate sum and print it here:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int a = 5;\n    int b = 10;\n    // Calculate sum and print it here:\n    \n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int a = 5;\n    int b = 10;\n    // Calculate sum and print it here:\n    \n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Python variables are dynamic. You define them with `a = 5`. You can calculate sums like `result = a + b` and output via `print(result)`.",
+            c: "C is strongly typed. Declare integer containers using `int a = 5;`. To print them in `printf()`, specify a decimal placeholder `%d` like: `printf(\"%d\\n\", a + b);`.",
+            cpp: "C++ requires types like `int a = 5;`. To display variables, stream them down with insertion symbols: `std::cout << a + b << std::endl;`."
+          },
+          analogy: {
+            python: "Think of variables as labeled drawers. You put 5 in drawer 'a', 10 in drawer 'b', add them up, and output the total.",
+            c: "Like drawers, but you must define what size of box fits inside the drawer (e.g. 'int' for integer size) before sliding it in. To peek, you need a placeholder template stencil (%d).",
+            cpp: "Similar to C, but you can push values out of drawers directly into the megaphone stream pipeline without using stencils."
+          }
+        },
+        {
+          subId: 1,
+          title: "Celsius to Fahrenheit",
+          instruction: "Define a temperature variable 'celsius' with a value of 30. Calculate its equivalent in Fahrenheit using the formula F = (C * 1.8) + 32, and print the result. The output must contain '86'.",
+          successCriteria: "output contains '86'",
+          validate: (output) => /\b86\b/.test(output),
+          templates: {
+            python: `celsius = 30\n# Convert to Fahrenheit and print result:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    double celsius = 30;\n    // Convert to Fahrenheit and print result:\n    \n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    double celsius = 30;\n    // Convert to Fahrenheit and print result:\n    \n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Create celsius parameter, multiply by 1.8, add 32, and print the final value.",
+            c: "Declare double type values to avoid floating-point truncations. Print double decimals with `%f` or `%.1f` placeholders.",
+            cpp: "Use float variables and stream them out cleanly: `std::cout << fahrenheit << std::endl;`."
+          },
+          analogy: {
+            python: "Like setting a temperature conversion dial on a smart thermostat.",
+            c: "Using a conversion stencil tool to read Celsius parameters and output Fahrenheit.",
+            cpp: "Passing temperature numbers down a scaling pipeline conversion belt."
+          }
+        },
+        {
+          subId: 2,
+          title: "Area of Rectangle",
+          instruction: "Define width = 8 and height = 12. Calculate area (width * height) and print it. Output must contain '96'.",
+          successCriteria: "output contains '96'",
+          validate: (output) => /\b96\b/.test(output),
+          templates: {
+            python: `width = 8\nheight = 12\n# Calculate area and print:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int width = 8;\n    int height = 12;\n    // Calculate and print:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int width = 8;\n    int height = 12;\n    // Calculate and print:\n    return 0;\n}`
+          },
+          breakdown: { python: "Create variables for dimension, multiply width * height, print result.", c: "Integer storage declarations, printf calculation.", cpp: "C++ cout area stream." },
+          analogy: { python: "Measuring room tiles.", c: "Defining space coordinates.", cpp: "Streaming calculated area results." }
+        },
+        {
+          subId: 3,
+          title: "Product of Three Numbers",
+          instruction: "Define three variables: a = 2, b = 3, c = 4. Calculate their product and print it. Output must contain '24'.",
+          successCriteria: "output contains '24'",
+          validate: (output) => /\b24\b/.test(output),
+          templates: {
+            python: `a = 2\nb = 3\nc = 4\n# Print product:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int a = 2, b = 3, c = 4;\n    // Print product:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int a = 2, b = 3, c = 4;\n    // Print product:\n    return 0;\n}`
+          },
+          breakdown: { python: "Multiply triple numeric variables.", c: "C initialization and multiplication.", cpp: "Streaming product calculations." },
+          analogy: { python: "Computing structural volumes.", c: "C scale multipliers.", cpp: "Piping calculation products." }
+        },
+        {
+          subId: 4,
+          title: "Difference Calculator",
+          instruction: "Define variables: a = 100, b = 45. Calculate difference (a - b) and print it. Output must contain '55'.",
+          successCriteria: "output contains '55'",
+          validate: (output) => /\b55\b/.test(output),
+          templates: {
+            python: `a = 100\nb = 45\n# Print difference:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int a = 100, b = 45;\n    // Print difference:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int a = 100, b = 45;\n    // Print difference:\n    return 0;\n}`
+          },
+          breakdown: { python: "Subtract integer parameters.", c: "C integer subtraction.", cpp: "C++ subtraction stream." },
+          analogy: { python: "Subtracting weights.", c: "Calculated structural offsets.", cpp: "Streaming differential values." }
+        },
+        {
+          subId: 5,
+          title: "Circle Area",
+          instruction: "Define radius = 7. Calculate circle area (3.14 * radius * radius) and print it. Output must contain '153.86' or '154'.",
+          successCriteria: "output contains '153.86' or '154'",
+          validate: (output) => /153\.86|154/.test(output),
+          templates: {
+            python: `radius = 7\n# Calculate and print circle area:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    double radius = 7;\n    // Calculate and print circle area:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    double radius = 7;\n    // Calculate and print circle area:\n    return 0;\n}`
+          },
+          breakdown: { python: "Compute pi * r * r.", c: "C double multiplier.", cpp: "C++ streams float area." },
+          analogy: { python: "Drawing perimeter boundaries.", c: "Calculating spatial sectors.", cpp: "Piping floating-point geometry areas." }
+        },
+        {
+          subId: 6,
+          title: "Average Calculator",
+          instruction: "Define three variables: x = 10, y = 20, z = 30. Calculate average ((x + y + z) / 3) and print it. Output must contain '20'.",
+          successCriteria: "output contains '20'",
+          validate: (output) => /\b20\b/.test(output),
+          templates: {
+            python: `x = 10\ny = 20\nz = 30\n# Calculate average:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int x = 10, y = 20, z = 30;\n    // Calculate average:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int x = 10, y = 20, z = 30;\n    // Calculate average:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use parentheses to group summation before dividing by 3.", c: "Compute division values in C.", cpp: "Stream computed division averages." },
+          analogy: { python: "Finding average score tally.", c: "Calculating mean load tolerances.", cpp: "Piping numerical averages." }
+        },
+        {
+          subId: 7,
+          title: "Hours to Minutes",
+          instruction: "Define hours = 3.5. Convert it to minutes (hours * 60) and print it. Output must contain '210'.",
+          successCriteria: "output contains '210'",
+          validate: (output) => /\b210\b/.test(output),
+          templates: {
+            python: `hours = 3.5\n# Convert to minutes and print:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    double hours = 3.5;\n    // Convert to minutes:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    double hours = 3.5;\n    // Convert to minutes:\n    return 0;\n}`
+          },
+          breakdown: { python: "Hours * minutes scaling factor (60).", c: "Float scaling calculations in C.", cpp: "C++ cout scaling stream." },
+          analogy: { python: "A clock converter dial.", c: "Timing offsets conversions.", cpp: "Piping scaled timer bounds." }
+        },
+        {
+          subId: 8,
+          title: "Simple Interest",
+          instruction: "Define principal = 1000, rate = 5, time = 2. Calculate simple interest (P * R * T) / 100 and print it. Output must contain '100'.",
+          successCriteria: "output contains '100'",
+          validate: (output) => /\b100\b/.test(output),
+          templates: {
+            python: `principal = 1000\nrate = 5\ntime = 2\n# Calculate simple interest:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    double principal = 1000, rate = 5, time = 2;\n    // Calculate:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    double principal = 1000, rate = 5, time = 2;\n    // Calculate:\n    return 0;\n}`
+          },
+          breakdown: { python: "Divide product of variables by 100.", c: "Perform financial arithmetic in C.", cpp: "C++ streaming interest rates results." },
+          analogy: { python: "Calculating bank interest payouts.", c: "Logging growth variables.", cpp: "Streaming rate dividends." }
+        },
+        {
+          subId: 9,
+          title: "Cube Volume",
+          instruction: "Define cube side = 6. Calculate volume (side * side * side) and print it. Output must contain '216'.",
+          successCriteria: "output contains '216'",
+          validate: (output) => /\b216\b/.test(output),
+          templates: {
+            python: `side = 6\n# Calculate volume:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int side = 6;\n    // Calculate:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int side = 6;\n    // Calculate:\n    return 0;\n}`
+          },
+          breakdown: { python: "Cube Side length parameter.", c: "Standard integer cubic logic.", cpp: "Piping cubic volumes." },
+          analogy: { python: "Measuring cargo boxes.", c: "Volume calculation grids.", cpp: "Streaming volume calculations." }
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: "Loops (1 to 5)",
+      shortTitle: "Loops",
+      challenges: [
+        {
+          subId: 0,
+          title: "Loop counting 1 to 5",
+          instruction: "Write a loop (for or while) that counts and prints the numbers 1, 2, 3, 4, and 5 sequentially, each on its own line.",
+          successCriteria: "output lists numbers 1 to 5",
+          validate: (output) => {
+            const numbers = output.split(/\s+/).map(s => s.trim()).filter(Boolean);
+            let expected = 1;
+            for (const n of numbers) {
+              if (parseInt(n, 10) === expected) {
+                expected++;
+              }
+              if (expected > 5) return true;
+            }
+            return false;
+          },
+          templates: {
+            python: `# Write a loop from 1 to 5\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Write a loop from 1 to 5\n    \n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Write a loop from 1 to 5\n    \n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Python uses `for i in range(1, 6):` to loop. The range stops before the second argument. Indentation inside defines the repeated block.",
+            c: "In C, structure loops as `for (int i = 1; i <= 5; i++) { printf(\"%d\\n\", i); }`. It tracks variable i, checks condition, runs body, and updates.",
+            cpp: "C++ loops match C syntax, outputting with stream parameters: `for (int i = 1; i <= 5; i++) { std::cout << i << std::endl; }`."
+          },
+          analogy: {
+            python: "Like a checklist machine: 'For each number from 1 to 5, print it.'",
+            c: "Like a turnstile inspector who checks count, runs the ticket (body), and increments the tally until hitting the limit.",
+            cpp: "Same turnstile inspector, but sending counts out directly onto the stream conveyor belt."
+          }
+        },
+        {
+          subId: 1,
+          title: "Even Numbers count",
+          instruction: "Write a loop that prints even numbers from 2 to 10 sequentially, each on its own line (2, 4, 6, 8, 10).",
+          successCriteria: "output contains 2, 4, 6, 8, 10",
+          validate: (output) => {
+            const numbers = output.split(/\s+/).map(s => s.trim()).filter(Boolean);
+            let expected = 2;
+            for (const n of numbers) {
+              if (parseInt(n, 10) === expected) {
+                expected += 2;
+              }
+              if (expected > 10) return true;
+            }
+            return false;
+          },
+          templates: {
+            python: `# Write a loop printing even numbers 2 to 10\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Write a loop printing even numbers 2 to 10\n    \n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Write a loop printing even numbers 2 to 10\n    \n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Use `range(2, 11, 2)` where the third argument specifies the step increment of 2.",
+            c: "Write a for loop: `for (int i = 2; i <= 10; i += 2)`. Increments counter by 2 each cycle.",
+            cpp: "Identical to C loop parameters, streaming numbers dynamically to std::cout."
+          },
+          analogy: {
+            python: "Skipping stairs: take stairs two at a time starting from flight 2.",
+            c: "An inspector checking every alternate turnstile visitor entry.",
+            cpp: "Routing every second item from the sorting shelf to the output conveyor stream."
+          }
+        },
+        {
+          subId: 2,
+          title: "Count Down 5 to 1",
+          instruction: "Write a loop that prints numbers from 5 down to 1 sequentially, each on its own line (5, 4, 3, 2, 1).",
+          successCriteria: "output contains 5, 4, 3, 2, 1 in reverse",
+          validate: (output) => {
+            const numbers = output.split(/\s+/).map(s => s.trim()).filter(Boolean);
+            let expected = 5;
+            for (const n of numbers) {
+              if (parseInt(n, 10) === expected) {
+                expected--;
+              }
+              if (expected < 1) return true;
+            }
+            return false;
+          },
+          templates: {
+            python: `# Loop downwards 5 to 1:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Loop downwards:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Loop downwards:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use `range(5, 0, -1)` to decrement.", c: "For loop counter: `i--` and check condition `i > 0`.", cpp: "C++ reverse loops stream outputs." },
+          analogy: { python: "A rocket launch countdown.", c: "Countdown clock checks.", cpp: "Streaming decrement timers." }
+        },
+        {
+          subId: 3,
+          title: "Odd Numbers 1 to 9",
+          instruction: "Write a loop that prints odd numbers from 1 to 9 sequentially, each on its own line (1, 3, 5, 7, 9).",
+          successCriteria: "output contains 1, 3, 5, 7, 9",
+          validate: (output) => {
+            const numbers = output.split(/\s+/).map(s => s.trim()).filter(Boolean);
+            let expected = 1;
+            for (const n of numbers) {
+              if (parseInt(n, 10) === expected) {
+                expected += 2;
+              }
+              if (expected > 9) return true;
+            }
+            return false;
+          },
+          templates: {
+            python: `# Loop odd numbers 1 to 9:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Loop odd numbers:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Loop odd numbers:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use `range(1, 10, 2)` to step odd indexes.", c: "Counter increment: `i += 2`.", cpp: "Streaming odd integers results." },
+          analogy: { python: "Skipping alternate stair steps.", c: "Alternate ticket processing.", cpp: "Piping odd batch indices." }
+        },
+        {
+          subId: 4,
+          title: "Sum of Numbers 1 to 5",
+          instruction: "Write a loop that computes the sum of numbers from 1 to 5 and prints only the final sum (15).",
+          successCriteria: "output contains '15'",
+          validate: (output) => /\b15\b/.test(output),
+          templates: {
+            python: `# Compute sum 1 to 5:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Compute sum 1 to 5:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Compute sum 1 to 5:\n    return 0;\n}`
+          },
+          breakdown: { python: "Create sum accumulator inside loop.", c: "Accumulator loop checks in C.", cpp: "Stream final sum total in C++." },
+          analogy: { python: "Adding weights onto a scale.", c: "Sum logs variables.", cpp: "Streaming aggregate results." }
+        },
+        {
+          subId: 5,
+          title: "Multiplication Table of 3",
+          instruction: "Write a loop that prints the multiplication table of 3 from 3 to 30 (3, 6, 9, 12, 15, 18, 21, 24, 27, 30).",
+          successCriteria: "output contains multiples of 3",
+          validate: (output) => {
+            const numbers = output.split(/\s+/).map(s => s.trim()).filter(Boolean);
+            let expected = 3;
+            for (const n of numbers) {
+              if (parseInt(n, 10) === expected) {
+                expected += 3;
+              }
+              if (expected > 30) return true;
+            }
+            return false;
+          },
+          templates: {
+            python: `# Print table of 3:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Print table of 3:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Print table of 3:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use step increments of 3 in loop ranges.", c: "C loop counting increment `i += 3`.", cpp: "C++ stream output multiples of 3." },
+          analogy: { python: "Counting batches of three objects.", c: "Batch verification logs.", cpp: "Streaming multipliers stream." }
+        },
+        {
+          subId: 6,
+          title: "Powers of 2",
+          instruction: "Write a loop that prints powers of 2 from 2 to 32 sequentially (2, 4, 8, 16, 32).",
+          successCriteria: "output contains 2, 4, 8, 16, 32",
+          validate: (output) => {
+            const numbers = output.split(/\s+/).map(s => s.trim()).filter(Boolean);
+            let expected = 2;
+            for (const n of numbers) {
+              if (parseInt(n, 10) === expected) {
+                expected *= 2;
+              }
+              if (expected > 32) return true;
+            }
+            return false;
+          },
+          templates: {
+            python: `# Loop powers of 2:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Loop powers of 2:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Loop powers of 2:\n    return 0;\n}`
+          },
+          breakdown: { python: "Multiply counter by 2 inside loop update.", c: "C counter multiply update: `i *= 2`.", cpp: "Streaming power series output." },
+          analogy: { python: "Splitting cells doubling updates.", c: "Scaling logs indices.", cpp: "Streaming exponential multipliers." }
+        },
+        {
+          subId: 7,
+          title: "Repeat Character",
+          instruction: "Write a loop that prints the asterisk character '*' 5 times on the same line, resulting in '*****'.",
+          successCriteria: "output contains '*****'",
+          validate: (output) => /\*{5}/.test(output),
+          templates: {
+            python: `# Print asterisks:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Print asterisks:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Print asterisks:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use print end='' parameters or simple iteration.", c: "Use loop printing characters.", cpp: "Stream char output stream." },
+          analogy: { python: "Drawing grid boundary icons.", c: "Standard char log checks.", cpp: "Piping status indicators." }
+        },
+        {
+          subId: 8,
+          title: "Count by 10s",
+          instruction: "Write a loop that prints numbers from 10 to 50 counting by 10s (10, 20, 30, 40, 50).",
+          successCriteria: "output contains 10, 20, 30, 40, 50",
+          validate: (output) => {
+            const numbers = output.split(/\s+/).map(s => s.trim()).filter(Boolean);
+            let expected = 10;
+            for (const n of numbers) {
+              if (parseInt(n, 10) === expected) {
+                expected += 10;
+              }
+              if (expected > 50) return true;
+            }
+            return false;
+          },
+          templates: {
+            python: `# Count by 10s:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Count by 10s:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Count by 10s:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use `range(10, 51, 10)` to step loops.", c: "C Loop update `i += 10`.", cpp: "C++ stream multiples of 10." },
+          analogy: { python: "Tallying stacks of ten coins.", c: "Tenth step bounds.", cpp: "Streaming tenth step variables." }
+        },
+        {
+          subId: 9,
+          title: "Loop Average Calculation",
+          instruction: "Write a loop that computes the average of numbers 1 to 10 and prints the result (5.5).",
+          successCriteria: "output contains '5.5'",
+          validate: (output) => /5\.5/.test(output),
+          templates: {
+            python: `# Print loop average:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    // Print loop average:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    // Print loop average:\n    return 0;\n}`
+          },
+          breakdown: { python: "Accumulate total sum and divide by 10.0.", c: "Average computations inside C.", cpp: "C++ streams float average." },
+          analogy: { python: "Calculating general performance indices.", c: "Logging mean parameters.", cpp: "Streaming decimal results." }
+        }
+      ]
+    },
+    {
+      id: 3,
+      title: "Conditionals (Odd/Even)",
+      shortTitle: "Conditionals",
+      challenges: [
+        {
+          subId: 0,
+          title: "Conditional check Odd/Even",
+          instruction: "You are given a variable 'num' with the value 7. Write an 'if-else' block to check if it's odd or even. Print 'Odd' if odd, or 'Even' if even.",
+          successCriteria: "output contains 'Odd'",
+          validate: (output) => /Odd/i.test(output) && !/Even/i.test(output),
+          templates: {
+            python: `num = 7\n# Check if odd or even and print 'Odd' or 'Even'\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int num = 7;\n    // Check if odd or even and print 'Odd' or 'Even'\n    \n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int num = 7;\n    // Check if odd or even and print 'Odd' or 'Even'\n    \n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Use modulo `%` (remainder). `num % 2 == 0` is even. Use `if` and `else` with indentation to separate branching paths.",
+            c: "Use `if (num % 2 == 0) { printf(\"Even\\n\"); } else { printf(\"Odd\\n\"); }`. Parentheses around conditional checks are required.",
+            cpp: "Matches C logic structure, outputting strings: `if (num % 2 == 0) { std::cout << \"Even\" << std::endl; } else { std::cout << \"Odd\" << std::endl; }`."
+          },
+          analogy: {
+            python: "Sorting objects: divide a stack by 2. If 1 remains, drop it in the 'Odd' bin. Otherwise, put it in the 'Even' bin.",
+            c: "A track splitter switch. If a train number is divisible by 2, flip switch to 'Even' line, else route to 'Odd' line.",
+            cpp: "Same track splitter, but announcing the routing destination over the megaphone stream."
+          }
+        },
+        {
+          subId: 1,
+          title: "Max number comparison",
+          instruction: "You are given two variables 'a = 15' and 'b = 25'. Write conditional branching statements to check which is greater, and print 'b is greater'.",
+          successCriteria: "output contains 'b is greater'",
+          validate: (output) => /b is greater/i.test(output),
+          templates: {
+            python: `a = 15\nb = 25\n# Print "b is greater" if b > a, else "a is greater"\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int a = 15;\n    int b = 25;\n    // Print "b is greater" if b > a, else "a is greater"\n    \n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int a = 15;\n    int b = 25;\n    // Print "b is greater" if b > a, else "a is greater"\n    \n    return 0;\n}`
+          },
+          breakdown: {
+            python: "Use comparison relational operator `b > a`. Align blocks under indentation.",
+            c: "Condition check `if (b > a)`. Ensure block statements are enclosed in curly braces.",
+            cpp: "Compare values and stream matching notifications directly to std::cout."
+          },
+          analogy: {
+            python: "Checking weights: if box b weighs more than box a, route b to shipping.",
+            c: "Sorting packages: split path depending on scale measurements.",
+            cpp: "Announcing the heaviest package weight class down the streaming amplifier."
+          }
+        },
+        {
+          subId: 2,
+          title: "Pass or Fail Check",
+          instruction: "Define score = 75. If score is 50 or above, print 'Pass', else print 'Fail'.",
+          successCriteria: "output contains 'Pass'",
+          validate: (output) => /Pass/i.test(output) && !/Fail/i.test(output),
+          templates: {
+            python: `score = 75\n# Check and print Pass/Fail:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int score = 75;\n    // Check and print:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int score = 75;\n    // Check and print:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use conditional block score >= 50.", c: "Write C if check logic.", cpp: "C++ stream Pass or Fail outputs." },
+          analogy: { python: "Grading test scripts.", c: "Load limit thresholds diagnostics.", cpp: "Streaming pass confirmations." }
+        },
+        {
+          subId: 3,
+          title: "Positive or Negative",
+          instruction: "Define variable val = -10. If val is less than 0, print 'Negative', else print 'Positive'.",
+          successCriteria: "output contains 'Negative'",
+          validate: (output) => /Negative/i.test(output) && !/Positive/i.test(output),
+          templates: {
+            python: `val = -10\n# Check and print Positive/Negative:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int val = -10;\n    // Check and print:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int val = -10;\n    // Check and print:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use val < 0 comparison criteria.", c: "Write C if check for negative integer.", cpp: "C++ streams negative labels." },
+          analogy: { python: "Checking bank balance limits.", c: "Direction indicator values.", cpp: "Streaming sign classifications." }
+        },
+        {
+          subId: 4,
+          title: "Age Classification",
+          instruction: "Define age = 16. If age is between 13 and 19 inclusive, print 'Teen', else print 'Other'.",
+          successCriteria: "output contains 'Teen'",
+          validate: (output) => /Teen/i.test(output) && !/Other/i.test(output),
+          templates: {
+            python: `age = 16\n# Check and print Teen or Other:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int age = 16;\n    // Check and print:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int age = 16;\n    // Check and print:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use logical AND operator `&&` (in Python `and`).", c: "Check condition: `age >= 13 && age <= 19`.", cpp: "Stream age evaluation output." },
+          analogy: { python: "Checking entry tickets bounds.", c: "Parameter verification checks.", cpp: "Piping classification updates." }
+        },
+        {
+          subId: 5,
+          title: "Leap Year check",
+          instruction: "Define year = 2024. If year is divisible by 4, print 'Leap', else print 'Normal'.",
+          successCriteria: "output contains 'Leap'",
+          validate: (output) => /Leap/i.test(output) && !/Normal/i.test(output),
+          templates: {
+            python: `year = 2024\n# Check leap year:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int year = 2024;\n    // Check leap:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int year = 2024;\n    // Check leap:\n    return 0;\n}`
+          },
+          breakdown: { python: "Check year % 4 == 0.", c: "Write C checks for leap years.", cpp: "Stream Leap year confirmations." },
+          analogy: { python: "Checking calendar offsets.", c: "Periodic index checks.", cpp: "Streaming leap updates." }
+        },
+        {
+          subId: 6,
+          title: "Absolute Value",
+          instruction: "Define num = -8. If num is negative, convert it to its positive value and print it. Output must contain '8'.",
+          successCriteria: "output contains '8'",
+          validate: (output) => /\b8\b/.test(output) && !/-\s*8/.test(output),
+          templates: {
+            python: `num = -8\n# Compute absolute value and print:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int num = -8;\n    // Compute absolute value and print:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int num = -8;\n    // Compute absolute value and print:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use condition `num < 0` to flip sign: `num = -num`.", c: "Toggle negative signs in C.", cpp: "C++ absolute value stream output." },
+          analogy: { python: "Calculating distance regardless of direction.", c: "Offset sign adjustments.", cpp: "Streaming absolute difference values." }
+        },
+        {
+          subId: 7,
+          title: "Triangle Validity",
+          instruction: "Define three angles: a = 60, b = 60, c = 60. If the sum of angles is exactly 180, print 'Valid', else print 'Invalid'.",
+          successCriteria: "output contains 'Valid'",
+          validate: (output) => /Valid/i.test(output) && !/Invalid/i.test(output),
+          templates: {
+            python: `a = 60\nb = 60\nc = 60\n# Check triangle validity:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int a = 60, b = 60, c = 60;\n    // Check validity:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int a = 60, b = 60, c = 60;\n    // Check validity:\n    return 0;\n}`
+          },
+          breakdown: { python: "Add variables and compare sum == 180.", c: "Write C conditionals for summation constraints.", cpp: "Stream Valid/Invalid parameters in C++." },
+          analogy: { python: "Verifying building structural joints.", c: "Angle verification protocols.", cpp: "Streaming check results." }
+        },
+        {
+          subId: 8,
+          title: "Discount Calculator",
+          instruction: "Define bill = 120. If bill is greater than 100, print 'Discount', else print 'Regular'.",
+          successCriteria: "output contains 'Discount'",
+          validate: (output) => /Discount/i.test(output) && !/Regular/i.test(output),
+          templates: {
+            python: `bill = 120\n# Check discount eligibility:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    int bill = 120;\n    // Check:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    int bill = 120;\n    // Check:\n    return 0;\n}`
+          },
+          breakdown: { python: "Use comparative logic bill > 100.", c: "Write C conditions for billing offsets.", cpp: "Stream discount classifications." },
+          analogy: { python: "Checking coupon requirements.", c: "System thresholds approvals.", cpp: "Streaming bill totals notification." }
+        },
+        {
+          subId: 9,
+          title: "Vowel Check",
+          instruction: "Define char val = 'e'. If val matches 'a', 'e', 'i', 'o', or 'u', print 'Vowel', else print 'Consonant'.",
+          successCriteria: "output contains 'Vowel'",
+          validate: (output) => /Vowel/i.test(output) && !/Consonant/i.test(output),
+          templates: {
+            python: `val = 'e'\n# Check if vowel and print:\n`,
+            c: `#include <stdio.h>\n\nint main() {\n    char val = 'e';\n    // Check and print:\n    return 0;\n}`,
+            cpp: `#include <iostream>\n\nint main() {\n    char val = 'e';\n    // Check and print:\n    return 0;\n}`
+          },
+          breakdown: { python: "Compare variable against vowels using `or` checks.", c: "C char checks: `val == 'a' || val == 'e' ...`.", cpp: "C++ stream vowel confirmation." },
+          analogy: { python: "Sorting letters into distinct mailbox categories.", c: "Log character matches.", cpp: "Streaming matching confirmations." }
+        }
+      ]
+    }
+  ];
+
+  // Core variables
+  let activeLessonId = 0;
+  let activeSubId = 0;
+  let activeLanguage = "python";
+  let completedSubChallenges: Record<number, number[]> = {};
+  let isSandboxMode = false;
+
+  // DOM Elements
+  const codeEditor = document.getElementById('code-editor') as HTMLTextAreaElement;
+  const editorGutter = document.getElementById('editor-gutter')!;
+  const selectLanguage = document.getElementById('select-language') as HTMLSelectElement;
+  const btnRunCode = document.getElementById('btn-run-code') as HTMLButtonElement;
+  const btnRunText = document.getElementById('btn-run-text')!;
+  const btnRunIcon = document.getElementById('btn-run-icon')!;
+  const btnClearTerminal = document.getElementById('btn-clear-terminal')!;
+  const btnResetCode = document.getElementById('btn-reset-code')!;
+  const terminalContent = document.getElementById('terminal-content')!;
+  const progressMap = document.getElementById('progress-map')!;
+  const saveIndicator = document.getElementById('save-indicator')!;
+
+  // Mode segments controls
+  const btnModeLessons = document.getElementById('btn-mode-lessons')!;
+  const btnModeSandbox = document.getElementById('btn-mode-sandbox')!;
+  const progressMapContainer = document.getElementById('progress-map-container')!;
+
+  // Fullscreen elements
+  const btnToggleFullscreen = document.getElementById('btn-toggle-fullscreen')!;
+  const editorCard = document.getElementById('editor-card')!;
+  const fullscreenTerminalPane = document.getElementById('fullscreen-terminal-pane')!;
+  const fullscreenTerminalContent = document.getElementById('fullscreen-terminal-content')!;
+
+  // Initialize workspace on load
+  function initWorkspace() {
+    try {
+      completedSubChallenges = JSON.parse(localStorage.getItem('scicalcx_completed_subs') || '{}');
+      activeLessonId = parseInt(localStorage.getItem('scicalcx_active_lesson') || '0', 10);
+      activeSubId = parseInt(localStorage.getItem('scicalcx_active_sub') || '0', 10);
+      activeLanguage = localStorage.getItem('scicalcx_active_language') || 'python';
+      isSandboxMode = localStorage.getItem('scicalcx_workspace_mode') === 'sandbox';
+      
+      // Upgrade path for older completion format
+      if (localStorage.getItem('scicalcx_completed_lessons') && Object.keys(completedSubChallenges).length === 0) {
+        const flatCompleted = JSON.parse(localStorage.getItem('scicalcx_completed_lessons') || '[]');
+        flatCompleted.forEach(id => {
+          completedSubChallenges[id] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        });
+        localStorage.setItem('scicalcx_completed_subs', JSON.stringify(completedSubChallenges));
+      }
+    } catch {
+      completedSubChallenges = {};
+      activeLessonId = 0;
+      activeSubId = 0;
+      activeLanguage = "python";
+      isSandboxMode = false;
+    }
+
+    // Safety range checks
+    const activeIndex = lessons.findIndex(l => l.id === activeLessonId);
+    if (activeIndex === -1) {
+      activeLessonId = 0;
+      activeSubId = 0;
+    } else {
+      const isUnlocked = activeIndex === 0 || isLessonCompleted(lessons[activeIndex - 1].id);
+      if (!isUnlocked) {
+        activeLessonId = 0;
+        activeSubId = 0;
+      } else {
+        const lesson = lessons[activeIndex];
+        if (!lesson.challenges.some(c => c.subId === activeSubId)) {
+          activeSubId = 0;
+        }
+      }
+    }
+
+    selectLanguage.value = activeLanguage;
+    updateModeUI();
+    checkStreak();
+  }
+
+  function isLessonCompleted(lessonId) {
+    const lesson = lessons.find(l => l.id === lessonId);
+    if (!lesson) return false;
+    const completedSubs = completedSubChallenges[lessonId] || [];
+    return lesson.challenges.every(c => completedSubs.includes(c.subId));
+  }
+
+  // Segment Mode switcher toggles
+  btnModeLessons.addEventListener('click', () => {
+    isSandboxMode = false;
+    localStorage.setItem('scicalcx_workspace_mode', 'lessons');
+    updateModeUI();
+  });
+
+  btnModeSandbox.addEventListener('click', () => {
+    isSandboxMode = true;
+    localStorage.setItem('scicalcx_workspace_mode', 'sandbox');
+    updateModeUI();
+  });
+
+  function getDefaultSandboxTemplate(lang) {
+    if (lang === 'python') {
+      return `# Python 3 Practice Playground\nprint("Hello from the Playground!")\n`;
+    } else if (lang === 'c') {
+      return `#include <stdio.h>\n\nint main() {\n    printf("Hello from the C Playground!\\n");\n    return 0;\n}\n`;
+    } else {
+      return `#include <iostream>\n\nint main() {\n    std::cout << "Hello from the C++ Playground!" << std::endl;\n    return 0;\n}\n`;
+    }
+  }
+
+  function updateModeUI() {
+    if (isSandboxMode) {
+      // Toggle button highlights
+      btnModeSandbox.classList.add('bg-brand-blue/20', 'text-brand-blue-neon', 'border', 'border-brand-blue/30');
+      btnModeSandbox.classList.remove('text-brand-text-dim', 'hover:bg-brand-gray-hover');
+      
+      btnModeLessons.classList.remove('bg-brand-blue/20', 'text-brand-blue-neon', 'border', 'border-brand-blue/30');
+      btnModeLessons.classList.add('text-brand-text-dim', 'hover:bg-brand-gray-hover');
+      
+      // Hide roadmap
+      progressMapContainer.classList.add('hidden');
+      
+      // Set text
+      document.getElementById('lesson-title')!.textContent = "Practice Playground";
+      document.getElementById('lesson-instruction')!.textContent = "Free practice sandbox active. Write and run any Python, C, or C++ code here without validation constraints. Use this space to test equations, print statements, or loops freely!";
+      document.getElementById('lesson-criteria')!.textContent = "free sandbox";
+      
+      // Hide sub challenge tabs
+      document.getElementById('sub-challenge-tabs')!.classList.add('hidden');
+      
+      // Load sandbox drafts
+      const savedCode = localStorage.getItem(`scicalcx_sandbox_draft_${activeLanguage}`) || getDefaultSandboxTemplate(activeLanguage);
+      codeEditor.value = savedCode;
+      
+      // Tutor instructions
+      document.getElementById('tutor-breakdown')!.textContent = "Practice sandbox lets you run any code. The AI tutor logic breakdown and analogies are generic guidelines to help your coding practice.";
+      document.getElementById('tutor-analogy')!.textContent = "Think of this sandbox as a scratchpad or gym where you can lift any weights (write any code) to practice and build muscle memory.";
+      
+      resetBugCard();
+      updateLineNumbers();
+      printToTerminal('<span class="text-brand-text-dim">// Switched to Practice Playground sandbox mode. Ready.</span>', true);
+    } else {
+      // Toggle button highlights
+      btnModeLessons.classList.add('bg-brand-blue/20', 'text-brand-blue-neon', 'border', 'border-brand-blue/30');
+      btnModeLessons.classList.remove('text-brand-text-dim', 'hover:bg-brand-gray-hover');
+      
+      btnModeSandbox.classList.remove('bg-brand-blue/20', 'text-brand-blue-neon', 'border', 'border-brand-blue/30');
+      btnModeSandbox.classList.add('text-brand-text-dim', 'hover:bg-brand-gray-hover');
+      
+      // Show roadmap
+      progressMapContainer.classList.remove('hidden');
+      document.getElementById('sub-challenge-tabs')!.classList.remove('hidden');
+      
+      // Load current lesson
+      switchLesson(activeLessonId, true);
+    }
+  }
+
+  // Fullscreen toggle event bindings with dynamic SVG path swapping
+  btnToggleFullscreen.addEventListener('click', () => {
+    const isFullscreen = editorCard.classList.toggle('editor-fullscreen');
+    const fullscreenPath = document.getElementById('fullscreen-path')!;
+    
+    if (isFullscreen) {
+      // Inward arrows (minimize/exit fullscreen)
+      fullscreenPath.setAttribute('d', "M4 14h6v6m10-6h-6v6M4 10h6V4m10 6h-6V4");
+      
+      fullscreenTerminalPane.classList.remove('hidden');
+      fullscreenTerminalPane.classList.add('flex');
+      fullscreenTerminalContent.innerHTML = terminalContent.innerHTML;
+    } else {
+      // Outward arrows (expand/fullscreen)
+      fullscreenPath.setAttribute('d', "M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3");
+      
+      fullscreenTerminalPane.classList.add('hidden');
+      fullscreenTerminalPane.classList.remove('flex');
+    }
+    updateLineNumbers();
+  });
+
+  const btnRunCodeHeader = document.getElementById('btn-run-code-header')!;
+  btnRunCodeHeader.addEventListener('click', () => {
+    btnRunCode.click();
+  });
+
+  // Synchronized output printer helper
+  function printToTerminal(html, replace = false) {
+    if (replace) {
+      terminalContent.innerHTML = html;
+      fullscreenTerminalContent.innerHTML = html;
+    } else {
+      terminalContent.innerHTML += html;
+      fullscreenTerminalContent.innerHTML += html;
+    }
+    terminalContent.scrollTop = terminalContent.scrollHeight;
+    fullscreenTerminalContent.scrollTop = fullscreenTerminalContent.scrollHeight;
+  }
+
+  // Day streaks persistence logic
+  function checkStreak() {
+    const streakData = JSON.parse(localStorage.getItem('scicalcx_streak_data') || '{"count":0,"lastActiveDate":""}');
+    const today = new Date().toISOString().split('T')[0];
+    
+    if (streakData.lastActiveDate) {
+      const lastDate = new Date(streakData.lastActiveDate);
+      const currentDate = new Date(today);
+      const diffTime = Math.abs(currentDate.getTime() - lastDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays > 1) {
+        streakData.count = 0;
+        streakData.lastActiveDate = "";
+        localStorage.setItem('scicalcx_streak_data', JSON.stringify(streakData));
+      }
+    }
+    
+    updateStreakUI(streakData.count);
+  }
+
+  function incrementStreak() {
+    const streakData = JSON.parse(localStorage.getItem('scicalcx_streak_data') || '{"count":0,"lastActiveDate":""}');
+    const today = new Date().toISOString().split('T')[0];
+    
+    if (streakData.lastActiveDate === today) {
+      return;
+    }
+    
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    
+    if (streakData.lastActiveDate === yesterdayStr || streakData.count === 0) {
+      streakData.count += 1;
+    } else {
+      streakData.count = 1;
+    }
+    
+    streakData.lastActiveDate = today;
+    localStorage.setItem('scicalcx_streak_data', JSON.stringify(streakData));
+    updateStreakUI(streakData.count);
+  }
+
+  function updateStreakUI(count) {
+    const streakText = document.getElementById('streak-count-text');
+    if (streakText) {
+      streakText.textContent = `${count} Day${count === 1 ? '' : 's'} 🔥`;
+    }
+  }
+
+  // Update line numbering numbers
+  function updateLineNumbers() {
+    const code = codeEditor.value;
+    const lines = code.split('\n');
+    const count = Math.max(lines.length, 1);
+    
+    let html = '';
+    for (let i = 1; i <= count; i++) {
+      html += `<div style="height: 20px;">${i}</div>`;
+    }
+    editorGutter.innerHTML = html;
+  }
+
+  // Sync Gutter scrolling
+  codeEditor.addEventListener('scroll', () => {
+    editorGutter.scrollTop = codeEditor.scrollTop;
+  });
+
+  // Debounced persistence saving
+  let saveDebounceTimer;
+  function saveDraftCode(lessonId, subId, language, code) {
+    clearTimeout(saveDebounceTimer);
+    saveDebounceTimer = setTimeout(() => {
+      if (isSandboxMode) {
+        localStorage.setItem(`scicalcx_sandbox_draft_${language}`, code);
+      } else {
+        localStorage.setItem(`scicalcx_code_draft_${lessonId}_${subId}_${language}`, code);
+      }
+      
+      saveIndicator.classList.remove('opacity-0');
+      setTimeout(() => {
+        saveIndicator.classList.add('opacity-0');
+      }, 1200);
+    }, 500);
+  }
+
+  // Escape HTML tags
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  // Error diagnostic translator
+  function translateError(stderr, language) {
+    if (!stderr) return null;
+    
+    let explanation = "";
+    let solution = "";
+    
+    if (language === 'python') {
+      if (stderr.includes("IndentationError")) {
+        explanation = "Indentation Mismatch (IndentationError)";
+        solution = "Python uses spaces or tabs to organize blocks. Make sure statements inside loops or conditionally matched blocks are indented forward (usually 4 spaces) consistently compared to their parent statements.";
+      } else if (stderr.includes("SyntaxError")) {
+        explanation = "Structural Syntax Error (SyntaxError)";
+        solution = "Python parser found structural errors. Confirm that your loops or 'if' branching blocks end with a colon (:), and check for unclosed quotes or parentheses.";
+      } else if (stderr.includes("NameError")) {
+        const match = stderr.match(/name '(\w+)' is not defined/);
+        const name = match ? match[1] : "variable";
+        explanation = `Undefined Variable (NameError): '${name}'`;
+        solution = `You are trying to read or call '${name}' before creating it. Check for spelling typos, or initialize it first.`;
+      } else if (stderr.includes("TypeError")) {
+        explanation = "Incompatible Value Operation (TypeError)";
+        solution = "You tried performing operations across conflicting datatypes (e.g. adding text strings to integers). Convert values with int() or str() first.";
+      } else {
+        explanation = "Script Runtime Crash";
+        solution = "Check the traceback logs. Ensure variables are typed correctly and confirm operations are mathematically correct.";
+      }
+    } else {
+      if (stderr.includes("expected ';'") || stderr.includes("expected ';' before")) {
+        explanation = "Missing Semicolon (';')";
+        solution = "Statements in C and C++ must terminate with a semicolon. Inspect the exact line referenced in the compiler output, or check the line right above it.";
+      } else if (stderr.includes("undeclared identifier") || stderr.includes("not declared in this scope")) {
+        explanation = "Undeclared Reference Variable";
+        solution = "You referenced a variable without establishing its data type. Ensure you declare variables with explicit types (e.g. `int num = 7;`).";
+      } else if (stderr.includes("expected '}'") || stderr.includes("expected '{'")) {
+        explanation = "Unbalanced Curly Braces ('{}')";
+        solution = "Compiler blocks do not match. Check that every opening brace '{' has a corresponding closing brace '}'.";
+      } else if (stderr.includes("No such file or directory")) {
+        explanation = "Header Library Not Found";
+        solution = "Verify the spelling of library imports. Use standard inclusions: `#include <stdio.h>` for C, or `#include <iostream>` for C++.";
+      } else if (stderr.includes("main must return int")) {
+        explanation = "Invalid main Signature";
+        solution = "The main starting method must yield an integer type. Declare it as `int main()` rather than `void main()`, and ensure it ends with `return 0;`.";
+      } else {
+        explanation = "Compilation Diagnostics Alert";
+        solution = "Check logs above. Look out for misplaced parameters, typos in keywords, or parentheses mismatches.";
+      }
+    }
+    
+    return { explanation, solution };
+  }
+
+  // Switch Sub-Challenge Exercise
+  function switchSubChallenge(subId) {
+    localStorage.setItem(`scicalcx_code_draft_${activeLessonId}_${activeSubId}_${activeLanguage}`, codeEditor.value);
+    activeSubId = subId;
+    localStorage.setItem('scicalcx_active_sub', String(subId));
+
+    const lesson = lessons.find(l => l.id === activeLessonId)!;
+    const challenge = lesson.challenges.find(c => c.subId === subId)!;
+
+    document.getElementById('lesson-title')!.textContent = challenge.title;
+    document.getElementById('lesson-instruction')!.textContent = challenge.instruction;
+    document.getElementById('lesson-criteria')!.textContent = challenge.successCriteria;
+
+    // Load draft or template
+    const savedDraft = localStorage.getItem(`scicalcx_code_draft_${activeLessonId}_${subId}_${activeLanguage}`);
+    if (savedDraft !== null) {
+      codeEditor.value = savedDraft;
+    } else {
+      codeEditor.value = challenge.templates[activeLanguage];
+    }
+
+    // Refresh tutor panels
+    document.getElementById('tutor-breakdown')!.innerHTML = challenge.breakdown[activeLanguage];
+    document.getElementById('tutor-analogy')!.textContent = challenge.analogy[activeLanguage];
+
+    resetBugCard();
+    updateLineNumbers();
+    renderSubChallengeTabs();
+
+    printToTerminal(`<span class="text-brand-text-dim">// Switched to Exercise ${subId + 1}: ${challenge.title}. Ready.</span>`, true);
+  }
+
+  // Render Sub-Challenge Tabs Selector
+  function renderSubChallengeTabs() {
+    const tabsContainer = document.getElementById('sub-challenge-tabs')!;
+    const lesson = lessons.find(l => l.id === activeLessonId)!;
+
+    let html = '';
+    lesson.challenges.forEach((ch, idx) => {
+      const isCompleted = (completedSubChallenges[activeLessonId] || []).includes(ch.subId);
+      const isActive = activeSubId === ch.subId;
+
+      let tabClass = '';
+      if (isActive) {
+        tabClass = 'bg-brand-blue/10 dark:bg-brand-blue/20 text-brand-blue dark:text-brand-blue-neon border-brand-blue';
+      } else if (isCompleted) {
+        tabClass = 'text-emerald-700 dark:text-emerald-400 border-emerald-300 dark:border-emerald-500/30 bg-emerald-500/5 hover:bg-slate-200/50 dark:hover:bg-brand-gray-hover';
+      } else {
+        tabClass = 'text-slate-500 dark:text-brand-text-dim border-slate-200 dark:border-brand-border hover:text-slate-700 dark:hover:text-brand-text-muted hover:bg-slate-200/50 dark:hover:bg-brand-gray-hover';
+      }
+
+      html += `
+        <button 
+          class="px-2 py-1 text-center text-[10px] rounded border transition-colors cursor-pointer font-mono font-bold ${tabClass}"
+          data-sub-id="${ch.subId}"
+        >
+          Ex ${idx + 1} ${isCompleted ? '✓' : ''}
+        </button>
+      `;
+    });
+
+    tabsContainer.innerHTML = html;
+
+    tabsContainer.querySelectorAll('[data-sub-id]').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const subId = parseInt(tab.getAttribute('data-sub-id')!, 10);
+        switchSubChallenge(subId);
+      });
+    });
+  }
+
+  // Switch Lesson Node
+  function switchLesson(lessonId, animate = true) {
+    activeLessonId = lessonId;
+    localStorage.setItem('scicalcx_active_lesson', String(lessonId));
+    
+    const lesson = lessons.find(l => l.id === lessonId)!;
+
+    // Load subId from cache or locate first incomplete sub
+    const completedSubs = completedSubChallenges[lessonId] || [];
+    const firstIncomplete = lesson.challenges.find(c => !completedSubs.includes(c.subId));
+    
+    let targetSubId = 0;
+    if (firstIncomplete) {
+      targetSubId = firstIncomplete.subId;
+    } else {
+      targetSubId = 0;
+    }
+
+    const savedSub = localStorage.getItem('scicalcx_active_sub');
+    if (savedSub !== null && lesson.challenges.some(c => c.subId === parseInt(savedSub, 10))) {
+      targetSubId = parseInt(savedSub, 10);
+    }
+
+    activeSubId = targetSubId;
+    localStorage.setItem('scicalcx_active_sub', String(targetSubId));
+
+    const challenge = lesson.challenges.find(c => c.subId === targetSubId)!;
+    
+    // Update labels
+    document.getElementById('lesson-title')!.textContent = challenge.title;
+    document.getElementById('lesson-instruction')!.textContent = challenge.instruction;
+    document.getElementById('lesson-criteria')!.textContent = challenge.successCriteria;
+    
+    // Populate code draft or load template
+    const savedDraft = localStorage.getItem(`scicalcx_code_draft_${lessonId}_${targetSubId}_${activeLanguage}`);
+    if (savedDraft !== null) {
+      codeEditor.value = savedDraft;
+    } else {
+      codeEditor.value = challenge.templates[activeLanguage];
+    }
+    
+    // Update tutoring
+    document.getElementById('tutor-breakdown')!.innerHTML = challenge.breakdown[activeLanguage];
+    document.getElementById('tutor-analogy')!.textContent = challenge.analogy[activeLanguage];
+    
+    // Reset bug dashboard
+    resetBugCard();
+    
+    updateLineNumbers();
+    renderProgressMap();
+    renderSubChallengeTabs();
+    
+    if (animate) {
+      printToTerminal(`<span class="text-brand-text-dim">// Switched to topic: ${lesson.title}. Ready.</span>`, true);
+    }
+  }
+
+  // Render progress Node Tree
+  function renderProgressMap() {
+    let html = '';
+    
+    lessons.forEach((lesson, index) => {
+      const isCompleted = isLessonCompleted(lesson.id);
+      const isActive = activeLessonId === lesson.id;
+      const isUnlocked = index === 0 || isLessonCompleted(lessons[index - 1].id);
+      
+      let nodeStateClass = '';
+      let nodeIcon = '';
+      let nodeTextClass = '';
+      let activeShadow = '';
+      
+      if (isActive) {
+        nodeStateClass = 'border-brand-blue dark:border-brand-blue-neon bg-white dark:bg-brand-black text-brand-blue dark:text-brand-blue-neon ring-2 ring-brand-blue/20 dark:ring-brand-blue/30 scale-105';
+        nodeIcon = `<span class="w-2.5 h-2.5 rounded-full bg-brand-blue dark:bg-brand-blue-neon animate-pulse"></span>`;
+        nodeTextClass = 'text-slate-800 dark:text-white font-semibold';
+        activeShadow = 'shadow-[0_0_12px_rgba(0,162,255,0.2)] dark:shadow-[0_0_12px_rgba(0,162,255,0.4)]';
+      } else if (isCompleted) {
+        nodeStateClass = 'border-emerald-500 bg-white dark:bg-brand-black text-emerald-600 dark:text-emerald-400';
+        nodeIcon = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`;
+        nodeTextClass = 'text-slate-500 dark:text-brand-text-muted';
+      } else if (isUnlocked) {
+        nodeStateClass = 'border-slate-200 dark:border-brand-border-strong bg-white dark:bg-brand-black text-slate-500 dark:text-brand-text-muted hover:border-slate-400 dark:hover:border-brand-text-dim';
+        nodeIcon = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"/></svg>`;
+        nodeTextClass = 'text-slate-400 dark:text-brand-text-dim';
+      } else {
+        nodeStateClass = 'border-slate-100 dark:border-brand-border bg-slate-50 dark:bg-brand-black text-slate-300 dark:text-brand-text-dim opacity-50';
+        nodeIcon = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>`;
+        nodeTextClass = 'text-slate-300 dark:text-brand-text-dim opacity-40';
+      }
+      
+      html += `
+        <div 
+          class="flex items-start space-x-4 relative group transition-all select-none ${isUnlocked ? 'cursor-pointer' : 'cursor-not-allowed'}" 
+          data-node-id="${lesson.id}"
+        >
+          <!-- Node circle -->
+          <div class="w-8 h-8 rounded-full border flex items-center justify-center shrink-0 z-10 transition-all duration-200 ${nodeStateClass} ${activeShadow}">
+            ${nodeIcon}
+          </div>
+          
+          <!-- Node Details -->
+          <div class="flex-1 min-w-0 pt-0.5">
+            <div class="text-xs uppercase tracking-wider font-mono ${nodeTextClass}">
+              ${lesson.shortTitle}
+            </div>
+            <div class="text-[10px] text-brand-text-dim truncate">
+              ${lesson.title}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    
+    progressMap.innerHTML = html;
+    
+    // Bind click listeners
+    progressMap.querySelectorAll('[data-node-id]').forEach(nodeEl => {
+      nodeEl.addEventListener('click', () => {
+        const id = parseInt(nodeEl.getAttribute('data-node-id')!, 10);
+        const idx = lessons.findIndex(l => l.id === id);
+        
+        const isUnlocked = idx === 0 || isLessonCompleted(lessons[idx - 1].id);
+        if (isUnlocked) {
+          switchLesson(id);
+        }
+      });
+    });
+  }
+
+  // Bug details card styling controls
+  function showBugCard(explanation, solution) {
+    const card = document.getElementById('tutor-bug-card')!;
+    const header = document.getElementById('tutor-bug-header')!;
+    const dot = document.getElementById('tutor-bug-dot')!;
+    const content = document.getElementById('tutor-bug-content')!;
+    
+    card.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-white', 'dark:bg-brand-gray-dark/40');
+    card.classList.add('border-red-300', 'dark:border-red-500/40', 'bg-red-50', 'dark:bg-red-950/20');
+    
+    header.classList.remove('text-slate-600', 'dark:text-slate-400');
+    header.classList.add('text-red-700', 'dark:text-red-400', 'font-bold');
+    
+    dot.classList.remove('bg-slate-400', 'dark:bg-brand-text-dim');
+    dot.classList.add('bg-red-500', 'animate-pulse');
+    
+    content.innerHTML = `
+      <div class="space-y-2">
+        <div class="font-bold text-red-700 dark:text-red-300 font-mono text-[11px]">${explanation}</div>
+        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">${solution}</p>
+      </div>
+    `;
+  }
+
+  function resetBugCard() {
+    const card = document.getElementById('tutor-bug-card')!;
+    const header = document.getElementById('tutor-bug-header')!;
+    const dot = document.getElementById('tutor-bug-dot')!;
+    const content = document.getElementById('tutor-bug-content')!;
+    
+    card.classList.add('border-slate-200', 'dark:border-slate-800', 'bg-white', 'dark:bg-brand-gray-dark/40');
+    card.classList.remove('border-red-300', 'dark:border-red-500/40', 'bg-red-50', 'dark:bg-red-950/20');
+    
+    header.classList.add('text-slate-600', 'dark:text-slate-400');
+    header.classList.remove('text-red-700', 'dark:text-red-400', 'font-bold');
+    
+    dot.classList.add('bg-slate-400', 'dark:bg-brand-text-dim');
+    dot.classList.remove('bg-red-500', 'animate-pulse');
+    
+    content.innerHTML = `
+      <p class="italic text-slate-400 dark:text-slate-500">No errors detected. Write code and run it!</p>
+    `;
+  }
+
+  // Bind textarea text modification
+  codeEditor.addEventListener('input', () => {
+    updateLineNumbers();
+    saveDraftCode(activeLessonId, activeSubId, activeLanguage, codeEditor.value);
+  });
+
+  // Language selection callback
+  selectLanguage.addEventListener('change', (e) => {
+    // Commit old draft
+    if (isSandboxMode) {
+      localStorage.setItem(`scicalcx_sandbox_draft_${activeLanguage}`, codeEditor.value);
+    } else {
+      localStorage.setItem(`scicalcx_code_draft_${activeLessonId}_${activeSubId}_${activeLanguage}`, codeEditor.value);
+    }
+    
+    activeLanguage = (e.target as HTMLSelectElement).value;
+    localStorage.setItem('scicalcx_active_language', activeLanguage);
+    
+    if (isSandboxMode) {
+      const savedDraft = localStorage.getItem(`scicalcx_sandbox_draft_${activeLanguage}`);
+      if (savedDraft !== null) {
+        codeEditor.value = savedDraft;
+      } else {
+        codeEditor.value = getDefaultSandboxTemplate(activeLanguage);
+      }
+      updateLineNumbers();
+      printToTerminal(`<span class="text-brand-text-dim">// Editor switched to ${activeLanguage.toUpperCase()} playground.</span>`, true);
+    } else {
+      const lesson = lessons.find(l => l.id === activeLessonId)!;
+      const challenge = lesson.challenges.find(c => c.subId === activeSubId)!;
+      
+      const savedDraft = localStorage.getItem(`scicalcx_code_draft_${activeLessonId}_${activeSubId}_${activeLanguage}`);
+      if (savedDraft !== null) {
+        codeEditor.value = savedDraft;
+      } else {
+        codeEditor.value = challenge.templates[activeLanguage];
+      }
+      
+      document.getElementById('tutor-breakdown')!.innerHTML = challenge.breakdown[activeLanguage];
+      document.getElementById('tutor-analogy')!.textContent = challenge.analogy[activeLanguage];
+      resetBugCard();
+      updateLineNumbers();
+      printToTerminal(`<span class="text-brand-text-dim">// Editor switched to ${activeLanguage.toUpperCase()}.</span>`, true);
+    }
+  });
+
+  // Clear output terminal console log
+  btnClearTerminal.addEventListener('click', () => {
+    printToTerminal(`<span class="text-brand-text-dim">// Terminal cleared.</span>`, true);
+  });
+
+  document.getElementById('btn-clear-fullscreen-terminal')!.addEventListener('click', () => {
+    printToTerminal(`<span class="text-brand-text-dim">// Terminal cleared.</span>`, true);
+  });
+
+  // Local Diagnostic Simulator (LDS) for when Piston API requires authentication keys
+  function runLocalSimulation(code, language, lessonId, subId) {
+    const cleanCode = code.replace(/\/\/.*$/gm, '').replace(/#.*$/gm, '').trim();
+    const lines = code.split('\n').map(l => l.trim());
+    
+    let stdout = "";
+    let stderr = "";
+    
+    // 1. Universal C and C++ validation rules
+    if (language === 'c' || language === 'cpp') {
+      if (code.includes('void main')) {
+        return {
+          stdout: "",
+          stderr: `main.cpp:2:1: error: '::main' must return 'int'`
+        };
+      }
+      
+      const rawLines = code.split('\n');
+      for (let i = 0; i < rawLines.length; i++) {
+        const line = rawLines[i].trim();
+        // Skip empty lines, preprocessors, comments, braces
+        if (line === "" || line.startsWith('#') || line.startsWith('//') || line.startsWith('/*') || line.endsWith('*/') || line.startsWith('int main') || line.startsWith('{') || line.startsWith('}')) {
+          continue;
+        }
+        if (!line.endsWith(';') && (line.includes('printf') || line.includes('cout') || line.includes('int ') || line.includes('return') || line.includes('double ') || line.includes('float '))) {
+          return {
+            stdout: "",
+            stderr: `main.cpp:${i + 1}:5: error: expected ';' before end of line`
+          };
+        }
+      }
+    }
+    
+    // 2. Universal Python validation rules
+    if (language === 'python') {
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if ((line.startsWith('if ') || line.startsWith('else') || line.startsWith('for ') || line.startsWith('while ')) && !line.endsWith(':')) {
+          return {
+            stdout: "",
+            stderr: `  File "main.py", line ${i + 1}\n    ${lines[i]}\n    SyntaxError: expected ':'`
+          };
+        }
+      }
+      
+      const originalLines = code.split('\n');
+      for (let i = 0; i < originalLines.length - 1; i++) {
+        const line = originalLines[i].trim();
+        const nextLine = originalLines[i+1];
+        if (line.endsWith(':') && nextLine.trim() !== "" && !nextLine.startsWith(' ') && !nextLine.startsWith('\t')) {
+          return {
+            stdout: "",
+            stderr: `  File "main.py", line ${i + 2}\n    ${nextLine.trim()}\nIndentationError: expected an indented block after control statement on line ${i + 1}`
+          };
+        }
+      }
+    }
+    
+    // 3. Execute arbitrary JS logic
+    let jsCode = "";
+    let logs: string[] = [];
+    const mockPrint = (...args) => {
+      logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+    };
+
+    try {
+      if (language === 'python') {
+        const preprocessed = convertPythonIndentationToBraces(code);
+        const codeLines = preprocessed.split('\n');
+        
+        for (let i = 0; i < codeLines.length; i++) {
+          let line = codeLines[i];
+          const trimmed = line.trim();
+          
+          if (trimmed === "") {
+            jsCode += "\n";
+            continue;
+          }
+          
+          // Print statements
+          if (trimmed.startsWith('print(')) {
+            line = line.replace(/print\((.*)\)/g, 'mockPrint($1)');
+          } else if (trimmed.startsWith('print ') || trimmed === 'print') {
+            line = line.replace(/print\s+(.*)/g, 'mockPrint($1)');
+          }
+          
+          // Loops
+          if (trimmed.startsWith('for ') && trimmed.includes('in range(')) {
+            const match = trimmed.match(/for\s+(\w+)\s+in\s+range\((.*)\)\s*:/);
+            if (match) {
+              const varName = match[1];
+              const rangeArgs = match[2].split(',').map(s => s.trim());
+              let start = "0";
+              let end = "0";
+              let step = "1";
+              
+              if (rangeArgs.length === 1) {
+                end = rangeArgs[0];
+              } else if (rangeArgs.length === 2) {
+                start = rangeArgs[0];
+                end = rangeArgs[1];
+              } else if (rangeArgs.length === 3) {
+                start = rangeArgs[0];
+                end = rangeArgs[1];
+                step = rangeArgs[2];
+              }
+              
+              const indent = line.length - line.trimStart().length;
+              line = " ".repeat(indent) + `for (let ${varName} = ${start}; ${varName} < ${end}; ${varName} += ${step}) {`;
+            }
+          }
+          
+          // Conditionals
+          if (trimmed.startsWith('if ') && trimmed.endsWith(':')) {
+            const cond = trimmed.slice(3, -1).replace(/\band\b/g, '&&').replace(/\bor\b/g, '||');
+            const indent = line.length - line.trimStart().length;
+            line = " ".repeat(indent) + `if (${cond}) {`;
+          }
+          if (trimmed.startsWith('elif ') && trimmed.endsWith(':')) {
+            const cond = trimmed.slice(5, -1).replace(/\band\b/g, '&&').replace(/\bor\b/g, '||');
+            const indent = line.length - line.trimStart().length;
+            line = " ".repeat(indent) + `} else if (${cond}) {`;
+          }
+          if (trimmed === 'else:') {
+            const indent = line.length - line.trimStart().length;
+            line = " ".repeat(indent) + `} else {`;
+          }
+          
+          jsCode += line + "\n";
+        }
+      } else {
+        // C and C++
+        let codeBody = code;
+        codeBody = codeBody.replace(/#include\s*<.*>/g, '');
+        
+        // cout streams
+        codeBody = codeBody.replace(/std::cout\s*<<\s*(.*?)\s*<<\s*std::endl\s*;/g, 'mockPrint($1);');
+        codeBody = codeBody.replace(/std::cout\s*<<\s*(.*?)\s*;/g, 'mockPrint($1);');
+        codeBody = codeBody.replace(/cout\s*<<\s*(.*?)\s*<<\s*(?:endl|std::endl)\s*;/g, 'mockPrint($1);');
+        codeBody = codeBody.replace(/cout\s*<<\s*(.*?)\s*;/g, 'mockPrint($1);');
+        
+        // printf formatting
+        codeBody = codeBody.replace(/printf\s*\(\s*"(.*?)"\s*(?:,\s*(.*?))?\s*\)\s*;/g, (match, format, args) => {
+          if (args) {
+            return `mockPrint(${args});`;
+          }
+          const clean = format.replace(/\\n/g, '');
+          return `mockPrint("${clean}");`;
+        });
+        
+        // Types replacement
+        codeBody = codeBody.replace(/\bint\s+(\w+)\b/g, 'let $1');
+        codeBody = codeBody.replace(/\bdouble\s+(\w+)\b/g, 'let $1');
+        codeBody = codeBody.replace(/\bfloat\s+(\w+)\b/g, 'let $1');
+        codeBody = codeBody.replace(/\bchar\s+(\w+)\b/g, 'let $1');
+        
+        codeBody = codeBody.replace(/int\s+main\s*\(\s*\)\s*\{/g, 'function main() {');
+        codeBody = codeBody.replace(/return\s+0\s*;/g, '');
+        
+        jsCode = codeBody + "\nmain();";
+      }
+      
+      const runFn = new Function('mockPrint', jsCode);
+      runFn(mockPrint);
+      
+      stdout = logs.join('\n') + (logs.length > 0 ? '\n' : '');
+    } catch (err: any) {
+      let msg = err.message;
+      stderr = msg.includes('is not defined') ? `NameError: ${msg}` : `SyntaxError: ${msg}`;
+    }
+    
+    return { stdout, stderr };
+  }
+  
+  function convertPythonIndentationToBraces(code) {
+    const lines = code.split('\n');
+    let result = "";
+    let indentStack = [0];
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmed = line.trim();
+      if (trimmed === "") {
+        result += "\n";
+        continue;
+      }
+      
+      const indent = line.length - line.trimStart().length;
+      
+      while (indent < indentStack[indentStack.length - 1]) {
+        indentStack.pop();
+        const prevIndent = indentStack[indentStack.length - 1] || 0;
+        result += " ".repeat(prevIndent) + "}\n";
+      }
+      
+      if (indent > indentStack[indentStack.length - 1]) {
+        indentStack.push(indent);
+      }
+      
+      result += line + "\n";
+    }
+    
+    while (indentStack.length > 1) {
+      indentStack.pop();
+      const prevIndent = indentStack[indentStack.length - 1] || 0;
+      result += " ".repeat(prevIndent) + "}\n";
+    }
+    
+    return result;
+  }
+
+  // Dynamic stdin parser counting input commands
+  function countInputsNeeded(code, language) {
+    let count = 0;
+    let cleanCode = code;
+    if (language === 'python') {
+      cleanCode = code.replace(/#.*$/gm, '');
+    } else {
+      cleanCode = code.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+    }
+
+    if (language === 'cpp') {
+      const cinRegex = /cin\s*(>>\s*[a-zA-Z_0-9\[\]\(\)\.\->]+)+/g;
+      let match;
+      while ((match = cinRegex.exec(cleanCode)) !== null) {
+        const extractions = match[0].match(/>>/g);
+        if (extractions) {
+          count += extractions.length;
+        }
+      }
+    } else if (language === 'c') {
+      const scanfRegex = /scanf\s*\(\s*"([^"]*)"/g;
+      let match;
+      while ((match = scanfRegex.exec(cleanCode)) !== null) {
+        const formatStr = match[1];
+        const specifiers = formatStr.match(/%[a-zA-Z]/g);
+        if (specifiers) {
+          count += specifiers.length;
+        }
+      }
+    } else if (language === 'python') {
+      const inputRegex = /\binput\s*\(/g;
+      const matches = cleanCode.match(inputRegex);
+      if (matches) {
+        count = matches.length;
+      }
+    }
+    return count;
+  }
+
+  // Guesses prompts preceding inputs
+  function getPromptForInput(code, language, inputIndex) {
+    let cleanCode = code;
+    if (language === 'python') {
+      cleanCode = code.replace(/#.*$/gm, '');
+      const inputRegex = /input\s*\(\s*(['"])(.*?)\1\s*\)/g;
+      let match;
+      let idx = 0;
+      while ((match = inputRegex.exec(cleanCode)) !== null) {
+        if (idx === inputIndex) {
+          return match[2];
+        }
+        idx++;
+      }
+    } else if (language === 'cpp') {
+      const statements = cleanCode.split(';');
+      let cinCount = 0;
+      for (let s = 0; s < statements.length; s++) {
+        if (statements[s].includes('cin')) {
+          if (cinCount === inputIndex) {
+            if (s > 0 && statements[s-1].includes('cout')) {
+              const coutStrMatch = statements[s-1].match(/"([^"]*)"/);
+              if (coutStrMatch) return coutStrMatch[1];
+            }
+          }
+          cinCount++;
+        }
+      }
+    } else if (language === 'c') {
+      const statements = cleanCode.split(';');
+      let scanfCount = 0;
+      for (let s = 0; s < statements.length; s++) {
+        if (statements[s].includes('scanf')) {
+          if (scanfCount === inputIndex) {
+            if (s > 0 && statements[s-1].includes('printf')) {
+              const printfStrMatch = statements[s-1].match(/"([^"]*)"/);
+              if (printfStrMatch) return printfStrMatch[1];
+            }
+          }
+          scanfCount++;
+        }
+      }
+    }
+    return `Enter input [${inputIndex + 1}]: `;
+  }
+
+  // Interactive Pseudo-Terminal Stdin Prompt UI
+  function promptForStdin(promptText, index, total, onComplete) {
+    const isFullscreen = editorCard.classList.contains('editor-fullscreen');
+    const activeTerminal = isFullscreen ? fullscreenTerminalContent : terminalContent;
+    const inputId = `interactive-stdin-${index}`;
+    
+    // Print the prompt with a clean seamless inline input box
+    const html = `
+      <div id="wrapper-${inputId}" class="flex items-center space-x-1 font-mono text-xs mt-1 text-slate-600 dark:text-slate-300">
+        <span>${escapeHTML(promptText)}</span>
+        <input 
+          type="text" 
+          id="${inputId}" 
+          class="flex-1 bg-transparent border-none outline-none text-brand-blue dark:text-brand-blue-neon focus:ring-0 p-0 m-0 font-mono text-xs caret-slate-800 dark:caret-white" 
+          style="border: none !important; outline: none !important; box-shadow: none !important;"
+          autocomplete="off"
+        />
+      </div>
+    `;
+    
+    activeTerminal.insertAdjacentHTML('beforeend', html);
+    activeTerminal.scrollTop = activeTerminal.scrollHeight;
+    
+    const inputEl = document.getElementById(inputId) as HTMLInputElement;
+    if (inputEl) {
+      inputEl.focus();
+      
+      const clickFocusHandler = () => inputEl.focus();
+      activeTerminal.addEventListener('click', clickFocusHandler);
+      
+      inputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const value = inputEl.value;
+          activeTerminal.removeEventListener('click', clickFocusHandler);
+          
+          const wrapper = document.getElementById(`wrapper-${inputId}`);
+          if (wrapper) {
+            wrapper.outerHTML = `<div class="font-mono text-xs mt-1 text-slate-600 dark:text-slate-300"><span>${escapeHTML(promptText)}</span><span class="text-brand-blue dark:text-brand-blue-neon ml-1 font-bold">${escapeHTML(value)}</span></div>`;
+          }
+          
+          onComplete(value);
+        }
+      });
+    }
+  }
+
+  // Execution wrapper sending code and gathered stdin buffer
+  async function executeCodeWithInputs(code, stdinValue, gatheredInputs = []) {
+    try {
+      let stdout = "";
+      let stderr = "";
+      let simulated = false;
+      
+      try {
+        let compilerName = "cpython-3.13.8";
+        if (activeLanguage === 'c') {
+          compilerName = "gcc-13.2.0-c";
+        } else if (activeLanguage === 'cpp') {
+          compilerName = "gcc-13.2.0";
+        }
+        
+        const response = await fetch("https://wandbox.org/api/compile.json", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            compiler: compilerName,
+            code: code,
+            stdin: stdinValue
+          })
+        });
+        
+        if (!response.ok) {
+          simulated = true;
+        } else {
+          const res = await response.json();
+          stdout = res.program_output || "";
+          
+          if (res.compiler_error) {
+            stderr = res.compiler_error;
+          } else if (res.program_error) {
+            stderr = res.program_error;
+          } else if (!stdout && res.compiler_message) {
+            stderr = res.compiler_message;
+          }
+        }
+      } catch (netError) {
+        simulated = true;
+      }
+      
+      // Remove loading indicator elements safely from DOM before appending results
+      const loaders = document.querySelectorAll('#terminal-loading');
+      loaders.forEach(l => l.remove());
+      
+      if (simulated) {
+        console.warn("[LDS] Wandbox API unavailable. Falling back to local diagnostic simulator.");
+        const sim = runLocalSimulation(code, activeLanguage, activeLessonId, activeSubId);
+        stdout = sim.stdout;
+        stderr = sim.stderr;
+        
+        printToTerminal(`<span class="text-brand-blue-neon font-mono">// [LOCAL DIAGNOSTIC SIMULATOR ACTIVE]</span>\n`, false);
+      }
+      
+      if (stderr) {
+        printToTerminal(`<span class="text-red-500">${escapeHTML(stderr)}</span>`, false);
+        const errorDetail = translateError(stderr, activeLanguage);
+        if (errorDetail) {
+          showBugCard(errorDetail.explanation, errorDetail.solution);
+        } else {
+          showBugCard("Execution Error", "Your script encountered a runtime crash. Please check the logs.");
+        }
+      } else {
+        let cleanedStdout = stdout;
+        for (let i = 0; i < gatheredInputs.length; i++) {
+          const prompt = getPromptForInput(code, activeLanguage, i);
+          const trimmedPrompt = prompt.trim();
+          if (cleanedStdout.startsWith(prompt)) {
+            cleanedStdout = cleanedStdout.substring(prompt.length);
+          } else if (cleanedStdout.trim().startsWith(trimmedPrompt)) {
+            const idx = cleanedStdout.indexOf(trimmedPrompt);
+            cleanedStdout = cleanedStdout.substring(idx + trimmedPrompt.length);
+          }
+        }
+        
+        if (cleanedStdout) {
+          if (!cleanedStdout.startsWith('\n')) {
+            cleanedStdout = '\n' + cleanedStdout;
+          }
+          printToTerminal(`<span>${escapeHTML(cleanedStdout)}</span>`, false);
+        } else {
+          printToTerminal(`<span class="text-brand-text-dim">// Script ran successfully but generated empty output.</span>`, false);
+        }
+        resetBugCard();
+        
+        if (isSandboxMode) {
+          printToTerminal(`\n\n<span class="text-emerald-400 font-bold font-mono">🎉 PLAYGROUND RUN COMPLETED</span>`, false);
+        } else {
+          const activeLesson = lessons.find(l => l.id === activeLessonId)!;
+          const activeChallenge = activeLesson.challenges.find(c => c.subId === activeSubId)!;
+          const passed = activeChallenge.validate(stdout);
+          
+          if (passed) {
+            if (!completedSubChallenges[activeLessonId]) {
+              completedSubChallenges[activeLessonId] = [];
+            }
+            if (!completedSubChallenges[activeLessonId].includes(activeSubId)) {
+              completedSubChallenges[activeLessonId].push(activeSubId);
+              localStorage.setItem('scicalcx_completed_subs', JSON.stringify(completedSubChallenges));
+            }
+            printToTerminal(`\n\n<span class="text-emerald-400 font-bold font-mono">🎉 SUCCESS: Exercise requirements satisfied!</span>`, false);
+            
+            const lessonCompleted = isLessonCompleted(activeLessonId);
+            if (lessonCompleted) {
+              printToTerminal(`\n<span class="text-emerald-400 font-bold font-mono">🏆 TOPIC COMPLETED: You passed all challenges for "${activeLesson.title}"!</span>`, false);
+              const nextIndex = lessons.findIndex(l => l.id === activeLessonId) + 1;
+              if (nextIndex < lessons.length) {
+                printToTerminal(`\n<span class="text-brand-blue-neon font-mono">🔓 New Topic Unlocked: "${lessons[nextIndex].shortTitle}". Click it above to continue!</span>`, false);
+              } else {
+                printToTerminal(`\n<span class="text-amber-400 font-bold font-mono">🥇 CONGRATULATIONS! You have completed all lessons in the Track!</span>`, false);
+              }
+            } else {
+              const nextIncomplete = activeLesson.challenges.find(c => !(completedSubChallenges[activeLessonId] || []).includes(c.subId));
+              if (nextIncomplete) {
+                printToTerminal(`\n<span class="text-brand-blue-neon font-mono">👉 Next Exercise: "${nextIncomplete.title}". Select it above to start!</span>`, false);
+              }
+            }
+            
+            window.dispatchEvent(
+              new CustomEvent('add-history', {
+                detail: {
+                  expr: `Learn Path: ${activeLesson.shortTitle} - ${activeChallenge.title} (${activeLanguage.toUpperCase()})`,
+                  result: `PASSED`,
+                  mode: 'compiler'
+                }
+              })
+            );
+            
+            incrementStreak();
+            renderProgressMap();
+            renderSubChallengeTabs();
+          } else {
+            printToTerminal(`\n\n<span class="text-brand-text-dim">// Check warning: Program ran but output did not match requirements.</span>\n<span class="text-brand-text-dim">Required target: ${activeChallenge.successCriteria}</span>`, false);
+          }
+        }
+      }
+    } catch (e: any) {
+      printToTerminal(`<span class="text-red-500">API Connection Failed: ${escapeHTML(e.message)}</span>`, false);
+      showBugCard("API Connection Issue", "Unable to execute code. Verify internet connection status or retry later.");
+    } finally {
+      btnRunCode.disabled = false;
+      btnRunCode.classList.remove('opacity-75', 'cursor-wait');
+      btnRunText.textContent = "RUN CODE";
+      btnRunIcon.innerHTML = "▶";
+    }
+  }
+
+  // API Execution fetch submission
+  btnRunCode.addEventListener('click', async () => {
+    const code = codeEditor.value;
+    
+    // Set loading elements
+    btnRunCode.disabled = true;
+    btnRunCode.classList.add('opacity-75', 'cursor-wait');
+    btnRunText.textContent = "RUNNING...";
+    btnRunIcon.innerHTML = `<svg class="animate-spin h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+    
+    printToTerminal("", true);
+
+    const inputsNeeded = countInputsNeeded(code, activeLanguage);
+    const gatheredInputs = [];
+
+    if (inputsNeeded > 0) {
+      let currentInputIdx = 0;
+      
+      function collectNextInput() {
+        const promptText = getPromptForInput(code, activeLanguage, currentInputIdx);
+        promptForStdin(promptText, currentInputIdx, inputsNeeded, (val) => {
+          gatheredInputs.push(val);
+          currentInputIdx++;
+          
+          if (currentInputIdx < inputsNeeded) {
+            collectNextInput();
+          } else {
+            const stdinBuffer = gatheredInputs.join("\n");
+            printToTerminal(`<div id="terminal-loading" class="text-brand-blue-neon font-mono mt-2">// Sandbox compiling and executing script...</div>`, false);
+            executeCodeWithInputs(code, stdinBuffer, gatheredInputs);
+          }
+        });
+      }
+      
+      collectNextInput();
+    } else {
+      printToTerminal(`<div id="terminal-loading" class="text-brand-blue-neon font-mono">// Sandbox compiling and executing script...</div>`, false);
+      executeCodeWithInputs(code, "", []);
+    }
+  });
+
+  // Listen to load expression (allows resetting calculator history if user clicks it)
+  window.addEventListener('load-expression', (e: any) => {
+    if (e.detail.mode === 'compiler') {
+      printToTerminal(`<span class="text-brand-text-dim">// Loaded history log. Select roadmap steps above to continue.</span>`, true);
+    }
+  });
+
+  // Vertical resizing logic for console containers
+  function makeVerticalResizable(resizerId, containerId, isBottomElement = true) {
+    const resizer = document.getElementById(resizerId);
+    const container = document.getElementById(containerId);
+    if (!resizer || !container) return;
+
+    resizer.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      const startY = e.clientY;
+      const startHeight = container.getBoundingClientRect().height;
+
+      function onMouseMove(moveEvent) {
+        const deltaY = moveEvent.clientY - startY;
+        const newHeight = isBottomElement ? startHeight - deltaY : startHeight + deltaY;
+        
+        // Boundaries: minimum height of 60px, max of 600px
+        if (newHeight >= 60 && newHeight <= 600) {
+          container.style.height = `${newHeight}px`;
+        }
+      }
+
+      function onMouseUp() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+  }
+
+  // Initialize resizable terminals
+  makeVerticalResizable('normal-terminal-resizer', 'normal-terminal-container', true);
+  makeVerticalResizable('fullscreen-terminal-resizer', 'fullscreen-terminal-pane', true);
+
+  // Run Startup
+  initWorkspace();
+</script>

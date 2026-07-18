@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
-  activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing';
+  activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler';
 }
 
 const {
@@ -59,8 +59,10 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
         const theme = localStorage.getItem('theme') || 'dark';
         if (theme === 'light') {
           document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
         } else {
           document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
         }
       })();
     </script>
@@ -128,6 +130,16 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
             }`}
           >
             Programmer
+          </a>
+          <a
+            href="/compiler"
+            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+              activeTab === 'compiler'
+                ? 'bg-brand-gray-light text-white border border-brand-border'
+                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+            }`}
+          >
+            Code Tutor
           </a>
         </nav>
       </div>
@@ -204,6 +216,14 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
         }`}
       >
         Programmer
+      </a>
+      <a
+        href="/compiler"
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
+          activeTab === 'compiler' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+        }`}
+      >
+        Code Tutor
       </a>
     </div>
 
@@ -358,6 +378,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
 
       themeToggle?.addEventListener('click', () => {
         const isLight = document.documentElement.classList.toggle('light');
+        document.documentElement.classList.toggle('dark', !isLight);
         localStorage.setItem('theme', isLight ? 'light' : 'dark');
         updateThemeUI();
         window.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: isLight ? 'light' : 'dark' } }));
