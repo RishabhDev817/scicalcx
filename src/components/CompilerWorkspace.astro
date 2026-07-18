@@ -1796,7 +1796,7 @@
   });
 
   // Local Diagnostic Simulator (LDS) for when Piston API requires authentication keys
-  function runLocalSimulation(code, language, lessonId, subId) {
+  function runLocalSimulation(code, language, lessonId, subId, gatheredInputs = []) {
     const cleanCode = code.replace(/\/\/.*$/gm, '').replace(/#.*$/gm, '').trim();
     const lines = code.split('\n').map(l => l.trim());
     
@@ -1858,6 +1858,13 @@
     let logs: string[] = [];
     const mockPrint = (...args) => {
       logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+    };
+
+    let inputIdx = 0;
+    const mockInput = () => {
+      const val = gatheredInputs[inputIdx] !== undefined ? gatheredInputs[inputIdx] : "";
+      inputIdx++;
+      return val;
     };
 
     try {
@@ -1945,6 +1952,12 @@
           return `mockPrint("${clean}");`;
         });
         
+        // scanf mock replacement
+        codeBody = codeBody.replace(/scanf\s*\(\s*"[^"]*"\s*,\s*&(\w+)\s*\)\s*;/g, '$1 = Number(mockInput());');
+        
+        // cin mock replacement
+        codeBody = codeBody.replace(/(?:std::)?cin\s*>>\s*(\w+)\s*;/g, '$1 = Number(mockInput());');
+
         // Types replacement
         codeBody = codeBody.replace(/\bint\s+(\w+)\b/g, 'let $1');
         codeBody = codeBody.replace(/\bdouble\s+(\w+)\b/g, 'let $1');
@@ -1957,8 +1970,8 @@
         jsCode = codeBody + "\nmain();";
       }
       
-      const runFn = new Function('mockPrint', jsCode);
-      runFn(mockPrint);
+      const runFn = new Function('mockPrint', 'mockInput', 'input', jsCode);
+      runFn(mockPrint, mockInput, mockInput);
       
       stdout = logs.join('\n') + (logs.length > 0 ? '\n' : '');
     } catch (err: any) {
@@ -2188,7 +2201,7 @@
       
       if (simulated) {
         console.warn("[LDS] Wandbox API unavailable. Falling back to local diagnostic simulator.");
-        const sim = runLocalSimulation(code, activeLanguage, activeLessonId, activeSubId);
+        const sim = runLocalSimulation(code, activeLanguage, activeLessonId, activeSubId, gatheredInputs);
         stdout = sim.stdout;
         stderr = sim.stderr;
       }
@@ -2602,6 +2615,7 @@
             word-break: break-all;
           }
           #temp-export-container .terminal-block span { color: #f1f5f9; }
+          #temp-export-container .terminal-block .text-brand-blue { color: #3b82f6 !important; }
           #temp-export-container .terminal-block .text-brand-blue-neon { color: #38bdf8 !important; }
           #temp-export-container .terminal-block .text-emerald-400 { color: #34d399 !important; font-weight: bold; }
           #temp-export-container .terminal-block .text-amber-400 { color: #fbbf24 !important; font-weight: bold; }
