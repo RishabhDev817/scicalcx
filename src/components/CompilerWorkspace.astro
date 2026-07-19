@@ -1786,6 +1786,26 @@
     }
   });
 
+  // Reset code to default template
+  btnResetCode.addEventListener('click', () => {
+    if (confirm('Are you sure you want to reset the code back to the default template? This will overwrite your current changes.')) {
+      let defaultCode = "";
+      if (isSandboxMode) {
+        defaultCode = getDefaultSandboxTemplate(activeLanguage);
+        localStorage.setItem(`scicalcx_sandbox_draft_${activeLanguage}`, defaultCode);
+      } else {
+        const lesson = lessons.find(l => l.id === activeLessonId)!;
+        const challenge = lesson.challenges.find(c => c.subId === activeSubId)!;
+        defaultCode = challenge.templates[activeLanguage];
+        localStorage.setItem(`scicalcx_code_draft_${activeLessonId}_${activeSubId}_${activeLanguage}`, defaultCode);
+      }
+      codeEditor.value = defaultCode;
+      resetBugCard();
+      updateLineNumbers();
+      printToTerminal('<span class="text-brand-text-dim">// Code template reset to default.</span>', false);
+    }
+  });
+
   // Clear output terminal console log
   btnClearTerminal.addEventListener('click', () => {
     printToTerminal(`<span class="text-brand-text-dim">// Terminal cleared.</span>`, true);
