@@ -1815,11 +1815,9 @@
     printToTerminal(`<span class="text-brand-text-dim">// Terminal cleared.</span>`, true);
   });
 
-  // Local Diagnostic Simulator (LDS) for when Piston API requires authentication keys
+  // Local Diagnostic Simulator (LDS) for when Piston / Wandbox API requires fallback
   function runLocalSimulation(code, language, lessonId, subId, gatheredInputs = []) {
-    const cleanCode = code.replace(/\/\/.*$/gm, '').replace(/#.*$/gm, '').trim();
-    const lines = code.split('\n').map(l => l.trim());
-    
+    const lines = code.split('\n');
     let stdout = "";
     let stderr = "";
     
@@ -1832,17 +1830,49 @@
         };
       }
       
-      const rawLines = code.split('\n');
-      for (let i = 0; i < rawLines.length; i++) {
-        const line = rawLines[i].trim();
-        // Skip empty lines, preprocessors, comments, braces
-        if (line === "" || line.startsWith('#') || line.startsWith('//') || line.startsWith('/*') || line.endsWith('*/') || line.startsWith('int main') || line.startsWith('{') || line.startsWith('}')) {
-          continue;
+      let inBlockComment = false;
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+        
+        if (inBlockComment) {
+          if (line.includes('*/')) {
+            line = line.substring(line.indexOf('*/') + 2).trim();
+            inBlockComment = false;
+          } else {
+            continue;
+          }
         }
-        if (!line.endsWith(';') && (line.includes('printf') || line.includes('cout') || line.includes('int ') || line.includes('return') || line.includes('double ') || line.includes('float '))) {
+        
+        if (line.includes('/*')) {
+          if (line.includes('*/')) {
+            line = line.replace(/\/\*[\s\S]*?\*\//g, '').trim();
+          } else {
+            line = line.substring(0, line.indexOf('/*')).trim();
+            inBlockComment = true;
+          }
+        }
+        
+        // Strip single-line comments
+        if (line.includes('//')) {
+          line = line.substring(0, line.indexOf('//')).trim();
+        }
+        
+        if (!line || line.startsWith('#')) continue;
+        
+        // Valid statement/block endings in C/C++
+        const validEndings = [';', '{', '}', ':', ',', '\\', '(', '['];
+        const lastChar = line.slice(-1);
+        if (validEndings.includes(lastChar)) continue;
+        
+        // Skip control structures and function/struct headers
+        if (/^(if|else|for|while|do|switch|case|default|struct|class|enum|namespace|using|template)\b/.test(line)) continue;
+        if (/^\w+.*\(.*\)$/.test(line) && !line.includes('=')) continue;
+        
+        // Check for statements requiring semicolons
+        if (/\b(printf|cout|cin|return|scanf)\b/.test(line) || /^\w+\s+(\w+)\s*=/.test(line) || /^(int|float|double|char|long|short|bool|auto|string|let|var)\s+\w+/.test(line)) {
           return {
             stdout: "",
-            stderr: `main.cpp:${i + 1}:5: error: expected ';' before end of line`
+            stderr: `main.cpp:${i + 1}:${Math.max(1, line.length)}: error: expected ';' before end of line`
           };
         }
       }
@@ -1851,8 +1881,11 @@
     // 2. Universal Python validation rules
     if (language === 'python') {
       for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        if ((line.startsWith('if ') || line.startsWith('else') || line.startsWith('for ') || line.startsWith('while ')) && !line.endsWith(':')) {
+        const rawLine = lines[i];
+        const lineWithoutComment = rawLine.split('#')[0].trim();
+        if (!lineWithoutComment) continue;
+        
+        if ((lineWithoutComment.startsWith('if ') || lineWithoutComment.startsWith('else') || lineWithoutComment.startsWith('for ') || lineWithoutComment.startsWith('while ')) && !lineWithoutComment.endsWith(':')) {
           return {
             stdout: "",
             stderr: `  File "main.py", line ${i + 1}\n    ${lines[i]}\n    SyntaxError: expected ':'`
@@ -1860,10 +1893,9 @@
         }
       }
       
-      const originalLines = code.split('\n');
-      for (let i = 0; i < originalLines.length - 1; i++) {
-        const line = originalLines[i].trim();
-        const nextLine = originalLines[i+1];
+      for (let i = 0; i < lines.length - 1; i++) {
+        const line = lines[i].split('#')[0].trim();
+        const nextLine = lines[i+1];
         if (line.endsWith(':') && nextLine.trim() !== "" && !nextLine.startsWith(' ') && !nextLine.startsWith('\t')) {
           return {
             stdout: "",
@@ -1873,7 +1905,7 @@
       }
     }
     
-    // 3. Execute arbitrary JS logic
+    // 3. Execute arbitrary JS logic simulation
     let jsCode = "";
     let logs: string[] = [];
     const mockPrint = (...args) => {
@@ -1953,17 +1985,27 @@
           jsCode += line + "\n";
         }
       } else {
-        // C and C++
+        // C and C++ JS conversion
         let codeBody = code;
         codeBody = codeBody.replace(/#include\s*<.*>/g, '');
+        codeBody = codeBody.replace(/using\s+namespace\s+std\s*;/g, '');
+        codeBody = codeBody.replace(/\binline\b/g, '');
         
-        // cout streams
-        codeBody = codeBody.replace(/std::cout\s*<<\s*(.*?)\s*<<\s*std::endl\s*;/g, 'mockPrint($1);');
-        codeBody = codeBody.replace(/std::cout\s*<<\s*(.*?)\s*;/g, 'mockPrint($1);');
-        codeBody = codeBody.replace(/cout\s*<<\s*(.*?)\s*<<\s*(?:endl|std::endl)\s*;/g, 'mockPrint($1);');
-        codeBody = codeBody.replace(/cout\s*<<\s*(.*?)\s*;/g, 'mockPrint($1);');
+        // Convert C/C++ function definitions to JS functions
+        codeBody = codeBody.replace(/\b(int|double|float|char|void|long|short|auto|bool|string)\s+(\w+)\s*\(([^)]*)\)\s*\{/g, (match, retType, fnName, params) => {
+          if (fnName === 'main') return 'function main() {';
+          const cleanParams = params.split(',').map(p => p.trim().replace(/^.*?\b(\w+)$/, '$1')).join(', ');
+          return `function ${fnName}(${cleanParams}) {`;
+        });
         
-        // printf formatting
+        // Convert cout streams (single or chained)
+        codeBody = codeBody.replace(/(?:std::)?cout\s*<<\s*([\s\S]*?);/g, (match, expr) => {
+          const parts = expr.split('<<').map(p => p.trim()).filter(p => p && p !== 'endl' && p !== 'std::endl');
+          if (parts.length === 0) return '';
+          return `mockPrint(${parts.join(', ')});`;
+        });
+        
+        // Convert printf formatting
         codeBody = codeBody.replace(/printf\s*\(\s*"(.*?)"\s*(?:,\s*(.*?))?\s*\)\s*;/g, (match, format, args) => {
           if (args) {
             return `mockPrint(${args});`;
@@ -1972,22 +2014,21 @@
           return `mockPrint("${clean}");`;
         });
         
-        // scanf mock replacement
+        // Convert scanf mock replacement
         codeBody = codeBody.replace(/scanf\s*\(\s*"[^"]*"\s*,\s*&(\w+)\s*\)\s*;/g, '$1 = Number(mockInput());');
         
-        // cin mock replacement
-        codeBody = codeBody.replace(/(?:std::)?cin\s*>>\s*(\w+)\s*;/g, '$1 = Number(mockInput());');
+        // Convert chained or single cin >> var1 >> var2...
+        codeBody = codeBody.replace(/(?:std::)?cin\s*((?:\s*>>\s*[a-zA-Z0-9_\[\]\.\->]+)+)\s*;/g, (match, chain) => {
+          const vars = chain.split('>>').map(v => v.trim()).filter(Boolean);
+          return vars.map(v => `${v} = Number(mockInput());`).join(' ');
+        });
 
-        // Types replacement
-        codeBody = codeBody.replace(/\bint\s+(\w+)\b/g, 'let $1');
-        codeBody = codeBody.replace(/\bdouble\s+(\w+)\b/g, 'let $1');
-        codeBody = codeBody.replace(/\bfloat\s+(\w+)\b/g, 'let $1');
-        codeBody = codeBody.replace(/\bchar\s+(\w+)\b/g, 'let $1');
+        // Convert variable declarations
+        codeBody = codeBody.replace(/\b(int|double|float|char|long|short|bool|auto)\s+([a-zA-Z_]\w*(?:\s*,\s*[a-zA-Z_]\w*)*\s*(?:=[^;]+)?);/g, 'let $2;');
         
-        codeBody = codeBody.replace(/int\s+main\s*\(\s*\)\s*\{/g, 'function main() {');
         codeBody = codeBody.replace(/return\s+0\s*;/g, '');
         
-        jsCode = codeBody + "\nmain();";
+        jsCode = codeBody + "\nif (typeof main === 'function') main();";
       }
       
       const runFn = new Function('mockPrint', 'mockInput', 'input', jsCode);
