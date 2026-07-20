@@ -1815,6 +1815,137 @@
     printToTerminal(`<span class="text-brand-text-dim">// Terminal cleared.</span>`, true);
   });
 
+  // Dynamic stdin parser counting input commands
+  function countInputsNeeded(code: string, language: string) {
+    let count = 0;
+    let cleanCode = code;
+    if (language === 'python') {
+      cleanCode = code.replace(/#.*$/gm, '');
+    } else {
+      cleanCode = code.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+    }
+
+    if (language === 'cpp') {
+      const cinRegex = /cin\s*(>>\s*[a-zA-Z_0-9\[\]\(\)\.\->]+)+/g;
+      let match;
+      while ((match = cinRegex.exec(cleanCode)) !== null) {
+        const extractions = match[0].match(/>>/g);
+        if (extractions) {
+          count += extractions.length;
+        }
+      }
+    } else if (language === 'c') {
+      const scanfRegex = /scanf\s*\(\s*"([^"]*)"/g;
+      let match;
+      while ((match = scanfRegex.exec(cleanCode)) !== null) {
+        const formatStr = match[1];
+        const specifiers = formatStr.match(/%[a-zA-Z]/g);
+        if (specifiers) {
+          count += specifiers.length;
+        }
+      }
+    } else if (language === 'python') {
+      const inputRegex = /\binput\s*\(/g;
+      const matches = cleanCode.match(inputRegex);
+      if (matches) {
+        count = matches.length;
+      }
+    }
+    return count;
+  }
+
+  // Guesses prompts preceding inputs
+  function getPromptForInput(code: string, language: string, inputIndex: number) {
+    let cleanCode = code;
+    if (language === 'python') {
+      cleanCode = code.replace(/#.*$/gm, '');
+      const inputRegex = /input\s*\(\s*(['"])(.*?)\1\s*\)/g;
+      let match;
+      let idx = 0;
+      while ((match = inputRegex.exec(cleanCode)) !== null) {
+        if (idx === inputIndex) {
+          return match[2];
+        }
+        idx++;
+      }
+    } else if (language === 'cpp') {
+      const statements = cleanCode.split(';');
+      let cinCount = 0;
+      for (let s = 0; s < statements.length; s++) {
+        if (statements[s].includes('cin')) {
+          if (cinCount === inputIndex) {
+            if (s > 0 && statements[s-1].includes('cout')) {
+              const coutStrMatch = statements[s-1].match(/"([^"]*)"/);
+              if (coutStrMatch) return coutStrMatch[1];
+            }
+          }
+          cinCount++;
+        }
+      }
+    } else if (language === 'c') {
+      const statements = cleanCode.split(';');
+      let scanfCount = 0;
+      for (let s = 0; s < statements.length; s++) {
+        if (statements[s].includes('scanf')) {
+          if (scanfCount === inputIndex) {
+            if (s > 0 && statements[s-1].includes('printf')) {
+              const printfStrMatch = statements[s-1].match(/"([^"]*)"/);
+              if (printfStrMatch) return printfStrMatch[1];
+            }
+          }
+          scanfCount++;
+        }
+      }
+    }
+    return `Enter input [${inputIndex + 1}]: `;
+  }
+
+  // Interactive Pseudo-Terminal Stdin Prompt UI
+  function promptForStdin(promptText: string, index: number, total: number, onComplete: (val: string) => void) {
+    const isFullscreen = editorCard.classList.contains('editor-fullscreen');
+    const activeTerminal = isFullscreen ? fullscreenTerminalContent : terminalContent;
+    const inputId = `interactive-stdin-${index}`;
+    
+    // Print the prompt with a clean seamless inline input box
+    const html = `
+      <span id="wrapper-${inputId}" class="inline-flex items-center space-x-1 font-mono text-sm text-slate-600 dark:text-slate-300">
+        <span>${escapeHTML(promptText)}</span>
+        <input 
+          type="text" 
+          id="${inputId}" 
+          class="bg-transparent border-none outline-none text-brand-blue dark:text-brand-blue-neon focus:ring-0 p-0 m-0 font-mono text-sm caret-slate-800 dark:caret-white w-32" 
+          style="border: none !important; outline: none !important; box-shadow: none !important;"
+          autocomplete="off"
+        />
+      </span>
+    `;
+    
+    activeTerminal.insertAdjacentHTML('beforeend', html);
+    activeTerminal.scrollTop = activeTerminal.scrollHeight;
+    
+    const inputEl = document.getElementById(inputId) as HTMLInputElement;
+    if (inputEl) {
+      setTimeout(() => inputEl.focus(), 10);
+      
+      const clickFocusHandler = () => inputEl.focus();
+      activeTerminal.addEventListener('click', clickFocusHandler);
+      
+      inputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const value = inputEl.value;
+          activeTerminal.removeEventListener('click', clickFocusHandler);
+          
+          const wrapper = document.getElementById(`wrapper-${inputId}`);
+          if (wrapper) {
+            wrapper.outerHTML = `<span>${escapeHTML(promptText)}</span><span class="text-brand-blue dark:text-brand-blue-neon ml-1 font-bold">${escapeHTML(value)}</span>\n`;
+          }
+          
+          onComplete(value);
+        }
+      });
+    }
+  }
+
   // Execution wrapper sending code and gathered stdin buffer directly to Backend Compiler API
   async function executeCodeWithInputs(code: string, stdinValue: string, gatheredInputs: string[] = []) {
     try {
@@ -2061,7 +2192,7 @@
     printToTerminal("", true);
 
     const inputsNeeded = countInputsNeeded(code, activeLanguage);
-    const gatheredInputs = [];
+    const gatheredInputs: string[] = [];
 
     if (inputsNeeded > 0) {
       let currentInputIdx = 0;
@@ -2069,8 +2200,14 @@
       function collectNextInput() {
         const promptText = getPromptForInput(code, activeLanguage, currentInputIdx);
         promptForStdin(promptText, currentInputIdx, inputsNeeded, (val) => {
-          gatheredInputs.push(val);
-          currentInputIdx++;
+          const rawVal = val.trim();
+          const tokens = rawVal ? rawVal.split(/\s+/) : [""];
+          for (const token of tokens) {
+            if (gatheredInputs.length < inputsNeeded) {
+              gatheredInputs.push(token);
+            }
+          }
+          currentInputIdx = gatheredInputs.length;
           
           if (currentInputIdx < inputsNeeded) {
             collectNextInput();
