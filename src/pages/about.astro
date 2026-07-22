@@ -2,69 +2,107 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="About Us | SciCalcX Online Computational Suite" description="Discover the mission, technology stack, and computational design behind SciCalcX—the premium open-source online scientific calculator.">
+<Layout title="About Us | SciCalcX Online Computational Suite" description="Discover the mission, features, and technology behind SciCalcX—the premium online scientific calculator and interactive AI coding tutor for students and developers.">
   <div class="w-full max-w-3xl mx-auto space-y-6 sm:space-y-8 font-sans">
     <!-- Page Header -->
     <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
       <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
-        Organization Profile
+        Platform Profile
       </div>
       <h1 class="text-3xl font-bold tracking-tight text-brand-text">
         About SciCalcX<span class="text-brand-blue">.</span>
       </h1>
       <p class="text-xs text-brand-text-muted">
-        Designing premium, high-performance web tools for calculations, matrices, calculus, and programming logic.
+        Bridging the gap between mathematical computation and interactive software compilation.
       </p>
     </div>
 
-    <!-- Core Intro Card -->
-    <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4 shadow-xl backdrop-blur-sm">
+    <!-- Core Mission Card -->
+    <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl backdrop-blur-sm">
       <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> Our Mission
       </h2>
       <p class="text-sm text-brand-text-muted leading-relaxed">
-        SciCalcX was founded with a singular purpose: to build the most accessible, high-performance, and visually elegant <strong>online scientific calculator</strong>. Standard browser calculators often suffer from clunky user interfaces, lack of support for multi-line inputs, and precision arithmetic errors. We set out to design a responsive, open-source mathematical environment addressing common engineering requirements directly on the web.
+        SciCalcX was founded with a clear, ambitious mission: to provide students, researchers, and software engineers with a premium, latency-free <strong>online scientific computational suite</strong> coupled with an <strong>interactive AI coding tutor and compiler workspace</strong>. 
+      </p>
+      <p class="text-sm text-brand-text-muted leading-relaxed">
+        Traditional online tools are often fragmented—requiring users to jump between clunky mathematical calculators and detached coding sandboxes. SciCalcX coordinates academic and engineering workflows under one unified, responsive workspace, enabling users to solve complex formulas and immediately translate those calculations into functional software algorithms.
       </p>
     </div>
 
-    <!-- Features Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-brand-text font-mono">
-          Unified Math Workspaces
-        </h3>
-        <p class="text-xs text-brand-text-muted leading-relaxed">
-          From basic parenthesized formulas to vector-matrix algebra, integration limits, cubic roots solvers, and coordinate graphing canvas overlays, SciCalcX coordinates your academic workflows under one roof.
-        </p>
-      </div>
+    <!-- Feature Ecosystem Grid -->
+    <div class="space-y-4">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5 px-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> Core Computational Ecosystem
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Scientific & Matrix -->
+        <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all">
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Calculations & Arrays</div>
+          <h3 class="text-sm font-semibold text-white">
+            Advanced Calculator & Matrix Suite
+          </h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Perform precision scientific evaluations, multi-line parenthesized formula calculations, and complex matrix operations (including determinant, inverse, transpose, and scalar arithmetic) with zero latency.
+          </p>
+        </div>
 
-      <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3">
-        <h3 class="text-sm font-semibold uppercase tracking-wider text-brand-text font-mono">
-          Interactive Bitboards
-        </h3>
-        <p class="text-xs text-brand-text-muted leading-relaxed">
-          Built with digital developers and systems engineers in mind, our programmer suite features a 32-bit visual bitboard to toggle bits interactively and convert bases in real-time.
-        </p>
+        <!-- Calculus & Graphing -->
+        <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all">
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Calculus & Geometry</div>
+          <h3 class="text-sm font-semibold text-white">
+            Calculus & Dynamic Graphing
+          </h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Evaluate integration limits, derivative approximations, sum sequences, and visualize mathematical coordinates overlays instantly using our high-performance graphing canvas system.
+          </p>
+        </div>
+
+        <!-- Bitboard & Base-N -->
+        <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all">
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Systems Programming</div>
+          <h3 class="text-sm font-semibold text-white">
+            Interactive Programmer Bitboard
+          </h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Toggle binary bits interactively on a 32-bit visual grid, run bitwise operators (AND, OR, XOR, shifts), and automatically translate values across Hexadecimal, Decimal, Octal, and Binary representations.
+          </p>
+        </div>
+
+        <!-- AI Code Tutor & Compiler -->
+        <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all">
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Code & Algorithms</div>
+          <h3 class="text-sm font-semibold text-white">
+            AI Code Tutor & Compiler Workspace
+          </h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Write, compile, and run code scripts (C++, Python, JS) directly in a pseudo-terminal console while receiving instant diagnostics, dynamic code explanations, and structured algorithm hints from our integrated AI coding tutor.
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- Tech Stack details -->
+    <!-- Tech Stack Profile -->
     <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4">
       <h2 class="text-sm font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> Built with Modern Architecture
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> Premium Web Architecture
       </h2>
       <p class="text-xs text-brand-text-muted leading-relaxed">
-        Our core computational engine utilizes state-of-the-art tokenization and Shunting-yard algorithms implemented natively in client-side TypeScript. By running calculations completely client-side, we guarantee latency-free evaluations without round-trip server overhead.
+        SciCalcX is built using the latest web standards to ensure accessibility, efficiency, and full responsive alignment. By offloading computational tasks entirely to client-side TypeScript execution, we ensure privacy and eliminate round-trip network lag.
       </p>
       <div class="grid grid-cols-3 gap-3 pt-2 font-mono text-[10px] text-center">
-        <div class="border border-brand-border bg-brand-black p-2 rounded">
-          <span class="text-brand-blue-neon block font-bold">Astro 6.0</span> Framework
+        <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
+          <span class="text-brand-blue-neon block font-bold">Astro 6.x</span>
+          Static Framework
         </div>
-        <div class="border border-brand-border bg-brand-black p-2 rounded">
-          <span class="text-brand-blue-neon block font-bold">Tailwind v4</span> Design Tokens
+        <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
+          <span class="text-brand-blue-neon block font-bold">Tailwind v4</span>
+          Design Tokens
         </div>
-        <div class="border border-brand-border bg-brand-black p-2 rounded">
-          <span class="text-brand-blue-neon block font-bold">TypeScript</span> Computations
+        <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
+          <span class="text-brand-blue-neon block font-bold">TypeScript</span>
+          Local Engines
         </div>
       </div>
     </div>

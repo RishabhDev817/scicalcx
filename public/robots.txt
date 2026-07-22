@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap Link
-Sitemap: https://scicalcx.com/sitemap.xml
+Sitemap: https://scicalcx.com/sitemap-index.xml

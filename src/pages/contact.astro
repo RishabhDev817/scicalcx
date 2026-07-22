@@ -2,8 +2,8 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Contact Us | SciCalcX Online Computational Suite" description="Have questions, suggestions, or feedback? Get in touch with the mathematical computation team at SciCalcX.">
-  <div class="w-full max-w-2xl mx-auto space-y-6 sm:space-y-8 font-sans">
+<Layout title="Contact Us | SciCalcX Online Computational Suite" description="Have questions, suggestions, or feedback about our calculators or AI code tutor? Get in touch with the support team at SciCalcX.">
+  <div class="w-full max-w-3xl mx-auto space-y-6 sm:space-y-8 font-sans">
     <!-- Page Header -->
     <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
       <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
@@ -13,80 +13,89 @@ import Layout from '../layouts/Layout.astro';
         Contact Us<span class="text-brand-blue">.</span>
       </h1>
       <p class="text-xs text-brand-text-muted">
-        Reach out to our developers for bug reports, feature requests, or mathematical feedback.
+        Reach out to our support and development team for inquiries, feedback, or bug reports.
       </p>
     </div>
 
     <!-- Contact Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Info Column -->
-      <div class="md:col-span-1 space-y-4 border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 font-mono text-[11px] text-brand-text-muted">
+      
+      <!-- Direct Contact Info Column -->
+      <div class="md:col-span-1 space-y-4 border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 font-mono text-[11px] text-brand-text-muted hover-glow transition-all">
         <h2 class="text-xs font-semibold uppercase tracking-wider text-white">Direct Connect</h2>
-        <div class="space-y-2.5">
+        <div class="space-y-4">
           <div>
-            <span class="text-brand-text-dim block uppercase text-[9px]">Email Address</span>
-            <a href="mailto:support@scicalcx.com" class="text-brand-blue-neon hover:underline">support@scicalcx.com</a>
+            <span class="text-brand-text-dim block uppercase text-[9px] tracking-wider mb-1">Support Email</span>
+            <a href="mailto:support@scicalcx.com" class="text-brand-blue-neon hover:underline font-semibold break-all">
+              support@scicalcx.com
+            </a>
           </div>
           <div>
-            <span class="text-brand-text-dim block uppercase text-[9px]">Open-Source</span>
-            <a href="#" class="text-brand-blue-neon hover:underline">GitHub Repository</a>
+            <span class="text-brand-text-dim block uppercase text-[9px] tracking-wider mb-1">Open-Source</span>
+            <a href="#" class="text-brand-blue-neon hover:underline font-semibold block">
+              GitHub Repository
+            </a>
           </div>
           <div>
-            <span class="text-brand-text-dim block uppercase text-[9px]">Location</span>
-            <span>Worldwide / Cloud</span>
+            <span class="text-brand-text-dim block uppercase text-[9px] tracking-wider mb-1">Response Time</span>
+            <span class="text-white block font-sans text-xs">Within 24-48 business hours</span>
           </div>
         </div>
       </div>
 
-      <!-- Form Column -->
-      <div class="md:col-span-2 border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 sm:p-6 shadow-xl backdrop-blur-sm relative">
-        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5 border-b border-brand-border/40 pb-2 mb-4 font-mono">
+      <!-- Contact Form Column -->
+      <div class="md:col-span-2 border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-8 shadow-xl backdrop-blur-sm relative">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-white flex items-center gap-1.5 border-b border-brand-border/40 pb-3 mb-5 font-mono">
           <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> Submit Inquiry
         </h2>
 
-        <form id="contact-form" class="space-y-4 font-mono text-xs">
+        <form id="contact-form" class="space-y-5 font-mono text-xs">
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-dim uppercase text-[10px]">Your Name</label>
+            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">Your Name</label>
             <input 
               type="text" 
+              name="name"
               required
               placeholder="e.g. John Doe"
-              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
+              class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm"
             />
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-dim uppercase text-[10px]">Email Address</label>
+            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">Email Address</label>
             <input 
               type="email" 
+              name="email"
               required
               placeholder="e.g. john@example.com"
-              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
+              class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm"
             />
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-dim uppercase text-[10px]">Your Message</label>
+            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">Your Message</label>
             <textarea 
-              rows="4"
+              name="message"
+              rows="5"
               required
-              placeholder="Type your feedback, feature suggestion, or error report..."
-              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue resize-none"
+              placeholder="Type your feedback, computational inquiry, or bug report details here..."
+              class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm resize-none"
             ></textarea>
           </div>
 
           <button 
             type="submit"
-            class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-xs"
+            class="w-full h-11 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_12px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm font-sans"
           >
             Send Message
           </button>
         </form>
         
-        <div id="form-success" class="hidden mt-4 p-3 bg-brand-blue/10 border border-brand-blue/30 text-brand-blue-neon rounded text-center text-xs font-mono">
-          Message sent successfully! Thank you for your feedback.
+        <div id="form-success" class="hidden mt-4 p-3 bg-brand-blue/10 border border-brand-blue/30 text-brand-blue-neon rounded-md text-center text-xs font-mono">
+          Message sent successfully! Thank you for contacting SciCalcX support.
         </div>
       </div>
+      
     </div>
   </div>
 
@@ -96,7 +105,7 @@ import Layout from '../layouts/Layout.astro';
 
     form?.addEventListener('submit', (e) => {
       e.preventDefault();
-      // Mock submit
+      // Simulate form submission
       form.reset();
       successMsg.classList.remove('hidden');
       setTimeout(() => {
