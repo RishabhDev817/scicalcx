@@ -5,12 +5,14 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
   activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler';
 }
 
 const {
   title = 'SciCalcX | Premium Online Scientific Calculator',
   description = 'High-performance online scientific calculator addressing common engineering issues. Real-time token parsing, input sanitization, multi-line viewports, precision float math, and Base-N views.',
+  keywords,
   activeTab = 'scientific',
 } = Astro.props;
 
@@ -42,6 +44,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
