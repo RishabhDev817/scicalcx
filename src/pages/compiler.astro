@@ -3,6 +3,53 @@ import Layout from '../layouts/Layout.astro';
 import CompilerWorkspace from '../components/CompilerWorkspace.astro';
 ---
 
-<Layout activeTab="compiler" title="SciCalcX | Interactive Code Compiler & AI Tutor" description="An interactive coding playground and tutor offering step-by-step learning track modules and instant execution for C, C++, and Python with smart debugging advice.">
+<Layout 
+  activeTab="compiler" 
+  title="AI Coding Tutor & C++ Compiler | Interactive Sandbox" 
+  description="Master Python, C, and C++ with our interactive compiler workspace and AI Coding Tutor. Features an interactive terminal for complex DSA inputs, instant AI debugging, and one-click assignment exports for students."
+>
+  <!-- FAQ Schema Markup (JSON-LD) -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What programming languages does the AI Coding Tutor support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Python, C, and C++."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use this for my university assignments?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, use our One-Click Export to download your code and terminal output as an image."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the compiler support complex inputs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, our terminal handles chained inputs and array data for DSA problems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the AI Tutor help me?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It breaks down logic, provides analogies, and debugs errors interactively."
+          }
+        }
+      ]
+    }
+  </script>
+
   <CompilerWorkspace />
 </Layout>
+
