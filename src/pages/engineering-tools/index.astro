@@ -1,0 +1,370 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { SIMULATORS, CATEGORIES } from '../../data/simulators-registry';
+
+// Group simulators by category for the carousels
+const groupedSimulators = Object.keys(CATEGORIES).reduce((acc, catId) => {
+  const list = SIMULATORS.filter(s => s.category === catId);
+  if (list.length > 0) {
+    acc[catId] = list;
+  }
+  return acc;
+}, {} as Record<string, typeof SIMULATORS>);
+---
+
+<Layout 
+  activeTab="engineering-tools"
+  title="Interactive Engineering Simulators & Diagram Tools | SciCalcX"
+  description="Free interactive simulators, calculators, and diagramming tools tailored for engineering students. Includes Vernier calipers, four-bar linkages, beam bending SFD/BMD diagrams, ER diagram designers, and flowchart builders."
+>
+  <div class="w-full space-y-8">
+    <!-- Hero Block -->
+    <div class="text-center space-y-3 pb-2 border-b border-brand-border/60">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
+        Advanced Engineering Suite
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-brand-text">
+        Engineering Tools & Simulators<span class="text-brand-blue">.</span>
+      </h1>
+      <p class="text-xs text-brand-text-muted max-w-xl mx-auto">
+        Interactive virtual trainers, visual calculators, and design boards for metrology, mechanics, thermodynamics, digital logic, database design, and software systems.
+      </p>
+    </div>
+
+    <!-- Tab Selector: Simulators vs Diagrams -->
+    <div class="flex justify-center border-b border-brand-border max-w-md mx-auto">
+      <button 
+        id="btn-hub-simulators" 
+        class="flex-1 pb-3 text-sm font-semibold border-b-2 border-brand-blue text-white focus:outline-none transition-all cursor-pointer text-center"
+      >
+        🛠️ Virtual Simulators
+      </button>
+      <button 
+        id="btn-hub-diagrams" 
+        class="flex-1 pb-3 text-sm font-semibold border-b-2 border-transparent text-brand-text-muted hover:text-white focus:outline-none transition-all cursor-pointer text-center"
+      >
+        📊 Diagram Boards
+      </button>
+    </div>
+
+    <!-- VIEW 1: SIMULATORS SUITE -->
+    <div id="hub-simulators-view" class="space-y-8">
+      <!-- Search Bar -->
+      <div class="max-w-md mx-auto relative focus-neon-blue rounded-lg overflow-hidden border border-brand-border flex items-center bg-brand-gray-dark/50">
+        <span class="pl-3.5 flex items-center pointer-events-none text-brand-text-dim text-xs">
+          🔍
+        </span>
+        <input 
+          type="text" 
+          id="simulator-search-input"
+          placeholder="Search 80+ engineering simulators..."
+          class="flex-1 pl-3 pr-2 py-3 text-xs font-mono text-white placeholder:text-brand-text-dim focus:outline-none bg-transparent"
+        />
+        <button 
+          id="search-clear-btn"
+          class="hidden pr-3 text-xs text-brand-text-muted hover:text-white cursor-pointer select-none font-mono"
+          aria-label="Clear search"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- No Match State -->
+      <div id="search-empty-state" class="hidden text-center py-12 space-y-3 max-w-md mx-auto border border-brand-border border-dashed rounded-xl bg-brand-gray-dark/20">
+        <div class="text-2xl">⚠️</div>
+        <h3 class="text-xs font-bold text-white font-mono">No Simulators Matched</h3>
+        <p class="text-[11px] text-brand-text-muted">Try a different keyword or explore one of these popular presets:</p>
+        <div class="flex flex-wrap justify-center gap-1.5 pt-2">
+          <button class="search-preset px-2 py-1 bg-brand-gray-light hover:bg-brand-gray-hover text-[10px] font-mono border border-brand-border text-brand-blue-neon rounded cursor-pointer">Vernier Caliper</button>
+          <button class="search-preset px-2 py-1 bg-brand-gray-light hover:bg-brand-gray-hover text-[10px] font-mono border border-brand-border text-brand-blue-neon rounded cursor-pointer">Beam Bending</button>
+          <button class="search-preset px-2 py-1 bg-brand-gray-light hover:bg-brand-gray-hover text-[10px] font-mono border border-brand-border text-brand-blue-neon rounded cursor-pointer">Logic Gates</button>
+        </div>
+      </div>
+
+      <!-- Category Carousels Container -->
+      <div id="carousels-container" class="space-y-8">
+        {Object.entries(groupedSimulators).map(([catId, list]) => {
+          const cat = CATEGORIES[catId];
+          return (
+            <div class="space-y-3 category-row" data-category-id={catId}>
+              <!-- Carousel Header -->
+              <div class="flex items-center justify-between px-1">
+                <div class="flex items-center space-x-2">
+                  <span class="text-base">{cat.emoji}</span>
+                  <h2 class="text-xs font-semibold uppercase tracking-wider text-white font-mono">
+                    {cat.name}
+                  </h2>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-gray-light border border-brand-border text-brand-text-muted">
+                    {list.length} {list.length === 1 ? 'tool' : 'tools'}
+                  </span>
+                </div>
+                
+                <div class="flex items-center space-x-1.5">
+                  <button 
+                    class="carousel-prev flex items-center justify-center w-7 h-7 rounded border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover text-brand-text-muted hover:text-white transition-colors cursor-pointer"
+                    data-target={catId}
+                    aria-label="Scroll left"
+                  >
+                    &larr;
+                  </button>
+                  <button 
+                    class="carousel-next flex items-center justify-center w-7 h-7 rounded border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover text-brand-text-muted hover:text-white transition-colors cursor-pointer"
+                    data-target={catId}
+                    aria-label="Scroll right"
+                  >
+                    &rarr;
+                  </button>
+                </div>
+              </div>
+
+              <!-- Carousel Cards Track -->
+              <div 
+                id={`carousel-track-${catId}`}
+                class="flex gap-4 overflow-x-auto py-2 scroll-smooth scrollbar-none snap-x snap-mandatory"
+              >
+                {list.map((sim) => (
+                  <a 
+                    href={`/engineering-tools/${sim.category}/${sim.id}`}
+                    class="simulator-card shrink-0 w-[240px] sm:w-[270px] snap-start border border-brand-border hover:border-brand-blue bg-brand-gray-dark/30 hover:bg-brand-gray-hover/30 rounded-xl p-5 flex flex-col justify-between space-y-4 hover:shadow-lg transition-all duration-200 group"
+                    data-sim-name={sim.name.toLowerCase()}
+                    data-sim-desc={sim.description.toLowerCase()}
+                  >
+                    <div class="space-y-2">
+                      <div class="flex items-center justify-between">
+                        <span class="text-xl">{sim.emoji}</span>
+                        {sim.hasVisual && (
+                          <span class="text-[8px] font-mono font-bold text-brand-blue-neon border border-brand-blue-neon/30 bg-brand-blue/10 px-1.5 py-0.5 rounded">
+                            VISUAL
+                          </span>
+                        )}
+                      </div>
+                      <h3 class="text-xs font-semibold text-white group-hover:text-brand-blue-neon transition-colors">
+                        {sim.name}
+                      </h3>
+                      <p class="text-[10px] text-brand-text-muted leading-relaxed line-clamp-2">
+                        {sim.description}
+                      </p>
+                    </div>
+                    
+                    <div class="text-[10px] font-semibold text-brand-blue-neon flex items-center gap-1">
+                      Simulate &rarr;
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <!-- About & Educational trust section -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-brand-border/60">
+        <div class="border border-brand-border bg-brand-gray-dark/20 rounded-xl p-5 space-y-2.5">
+          <h3 class="text-xs font-bold font-mono text-white flex items-center gap-1.5">
+            <span class="text-brand-blue-neon font-bold">#</span> What is SciCalcX Simulators?
+          </h3>
+          <p class="text-[11px] text-brand-text-muted leading-relaxed">
+            A comprehensive, client-side lab companion designed specifically for engineering undergraduates and diploma students. Explore complex physics limits, mechanical degrees of freedom, tolerances, and circuit operations visually.
+          </p>
+        </div>
+
+        <div class="border border-brand-border bg-brand-gray-dark/20 rounded-xl p-5 space-y-2.5">
+          <h3 class="text-xs font-bold font-mono text-white flex items-center gap-1.5">
+            <span class="text-brand-blue-neon font-bold">#</span> Learning-oriented Interactions
+          </h3>
+          <p class="text-[11px] text-brand-text-muted leading-relaxed">
+            Every simulation tool is wrapped in a reusable four-mode module: free real-time **Simulate** controls, mathematical **Explore** handbooks, targeted **Practice** tasks, and randomized, self-evaluating **Quizzes**.
+          </p>
+        </div>
+      </section>
+
+      <!-- Flat Directory for SEO and Direct Links -->
+      <div class="border border-brand-border bg-brand-gray-dark/10 rounded-xl p-5 space-y-4">
+        <h3 class="text-xs font-bold font-mono text-white border-b border-brand-border pb-2">
+          Available Virtual Lab Simulators List (SEO Index)
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5 text-[10px] font-mono">
+          {SIMULATORS.map(sim => (
+            <a href={`/engineering-tools/${sim.category}/${sim.id}`} class="text-brand-text-muted hover:text-brand-blue-neon truncate">
+              {sim.emoji} {sim.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: DIAGRAM TOOLS (ER / Flowchart) -->
+    <div id="hub-diagrams-view" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <!-- ER Diagram Card -->
+      <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 flex flex-col justify-between space-y-5 hover:border-brand-blue group transition-all duration-200">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-3xl">🗄️</span>
+            <span class="text-[8px] font-mono border border-brand-blue-neon/30 bg-brand-blue/10 px-1.5 py-0.5 rounded text-brand-blue-neon">
+              DBMS PROJECT COMPANION
+            </span>
+          </div>
+          <h3 class="text-sm font-semibold text-white group-hover:text-brand-blue-neon transition-colors">
+            Database ER Diagram Designer
+          </h3>
+          <p class="text-[11px] text-brand-text-muted leading-relaxed">
+            Model relational schemas with drag-and-drop table blocks. Paste standard SQL `CREATE TABLE` DDL queries to auto-generate diagram connectors. Customize column data types, assign primary/foreign keys, group tables in domain blocks, and export back to SQL, JSON, or images.
+          </p>
+        </div>
+        <a 
+          href="/engineering-tools/diagrams/er-diagram"
+          class="block text-center text-xs font-mono font-semibold py-2.5 rounded border border-brand-blue-neon/40 hover:border-brand-blue bg-brand-blue/10 hover:bg-brand-blue text-brand-blue-neon hover:text-white transition-all duration-200"
+        >
+          Launch ER Editor &rarr;
+        </a>
+      </div>
+
+      <!-- Flowchart & UML Card -->
+      <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 flex flex-col justify-between space-y-5 hover:border-brand-blue group transition-all duration-200">
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-3xl">📊</span>
+            <span class="text-[8px] font-mono border border-brand-blue-neon/30 bg-brand-blue/10 px-1.5 py-0.5 rounded text-brand-blue-neon">
+              SOFTWARE ENGINEERING
+            </span>
+          </div>
+          <h3 class="text-sm font-semibold text-white group-hover:text-brand-blue-neon transition-colors">
+            Flowchart & UML Class Builder
+          </h3>
+          <p class="text-[11px] text-brand-text-muted leading-relaxed">
+            Draw algorithmic flowcharts, UML Class/Sequence diagrams, local network architecture topologies, and civil room layouts. Features drag-and-drop shape palettes, auto-aligning smart connector lines, and instant node additions via flowchart action buttons.
+          </p>
+        </div>
+        <a 
+          href="/engineering-tools/diagrams/flowchart"
+          class="block text-center text-xs font-mono font-semibold py-2.5 rounded border border-brand-blue-neon/40 hover:border-brand-blue bg-brand-blue/10 hover:bg-brand-blue text-brand-blue-neon hover:text-white transition-all duration-200"
+        >
+          Launch Flowchart Builder &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client-side Interactive Controls (Search & Tab switching) -->
+  <script>
+    // Tab switching controls
+    const btnSims = document.getElementById('btn-hub-simulators');
+    const btnDiag = document.getElementById('btn-hub-diagrams');
+    const simsView = document.getElementById('hub-simulators-view');
+    const diagView = document.getElementById('hub-diagrams-view');
+
+    btnSims?.addEventListener('click', () => {
+      btnSims.classList.add('border-brand-blue', 'text-white');
+      btnSims.classList.remove('border-transparent', 'text-brand-text-muted');
+      btnDiag?.classList.remove('border-brand-blue', 'text-white');
+      btnDiag?.classList.add('border-transparent', 'text-brand-text-muted');
+
+      simsView?.classList.remove('hidden');
+      diagView?.classList.add('hidden');
+    });
+
+    btnDiag?.addEventListener('click', () => {
+      btnDiag.classList.add('border-brand-blue', 'text-white');
+      btnDiag.classList.remove('border-transparent', 'text-brand-text-muted');
+      btnSims?.classList.remove('border-brand-blue', 'text-white');
+      btnSims?.classList.add('border-transparent', 'text-brand-text-muted');
+
+      diagView?.classList.remove('hidden');
+      simsView?.classList.add('hidden');
+    });
+
+    // Horizontal Scrolling Controls
+    document.querySelectorAll('.carousel-prev').forEach((btn: any) => {
+      btn.addEventListener('click', () => {
+        const catId = btn.getAttribute('data-target');
+        const track = document.getElementById(`carousel-track-${catId}`);
+        if (track) {
+          track.scrollLeft -= 250;
+        }
+      });
+    });
+
+    document.querySelectorAll('.carousel-next').forEach((btn: any) => {
+      btn.addEventListener('click', () => {
+        const catId = btn.getAttribute('data-target');
+        const track = document.getElementById(`carousel-track-${catId}`);
+        if (track) {
+          track.scrollLeft += 250;
+        }
+      });
+    });
+
+    // Client-side Search Logic
+    const searchInput = document.getElementById('simulator-search-input') as HTMLInputElement;
+    const searchClearBtn = document.getElementById('search-clear-btn') as HTMLButtonElement;
+    const cards = document.querySelectorAll('.simulator-card');
+    const emptyState = document.getElementById('search-empty-state');
+    const categoryRows = document.querySelectorAll('.category-row');
+
+    function performSearch(query: string) {
+      const val = query.toLowerCase().trim();
+      let matchCount = 0;
+
+      if (val === '') {
+        searchClearBtn?.classList.add('hidden');
+        cards.forEach((card: any) => card.classList.remove('hidden'));
+        categoryRows.forEach((row: any) => row.classList.remove('hidden'));
+        emptyState?.classList.add('hidden');
+        return;
+      }
+
+      searchClearBtn?.classList.remove('hidden');
+
+      categoryRows.forEach((row: any) => {
+        let rowMatch = false;
+        row.querySelectorAll('.simulator-card').forEach((card: any) => {
+          const name = card.getAttribute('data-sim-name') || '';
+          const desc = card.getAttribute('data-sim-desc') || '';
+
+          if (name.includes(val) || desc.includes(val)) {
+            card.classList.remove('hidden');
+            rowMatch = true;
+            matchCount++;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        if (rowMatch) {
+          row.classList.remove('hidden');
+        } else {
+          row.classList.add('hidden');
+        }
+      });
+
+      if (matchCount === 0) {
+        emptyState?.classList.remove('hidden');
+      } else {
+        emptyState?.classList.add('hidden');
+      }
+    }
+
+    searchInput?.addEventListener('input', (e) => {
+      performSearch((e.target as HTMLInputElement).value);
+    });
+
+    searchClearBtn?.addEventListener('click', () => {
+      if (searchInput) {
+        searchInput.value = '';
+        performSearch('');
+      }
+    });
+
+    // Preset searches click event
+    document.querySelectorAll('.search-preset').forEach((btn: any) => {
+      btn.addEventListener('click', () => {
+        const txt = btn.textContent || '';
+        if (searchInput) {
+          searchInput.value = txt;
+          performSearch(txt);
+        }
+      });
+    });
+
+  </script>
+</Layout>

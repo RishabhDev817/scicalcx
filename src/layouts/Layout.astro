@@ -1,12 +1,13 @@
 ---
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 
 interface Props {
   title?: string;
   description?: string;
   keywords?: string;
-  activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler';
+  activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler' | 'engineering-tools';
 }
 
 const {
@@ -147,6 +148,16 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
           >
             Code Tutor
           </a>
+          <a
+            href="/engineering-tools"
+            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+              activeTab === 'engineering-tools'
+                ? 'bg-brand-gray-light text-white border border-brand-border'
+                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+            }`}
+          >
+            Engineering Tools
+          </a>
         </nav>
       </div>
 
@@ -231,6 +242,14 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
       >
         Code Tutor
       </a>
+      <a
+        href="/engineering-tools"
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
+          activeTab === 'engineering-tools' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+        }`}
+      >
+        Engineering Tools
+      </a>
     </div>
 
     <!-- Main Workspace Layout -->
@@ -268,6 +287,9 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
 
     <!-- Ko-fi Integrated Footer -->
     <Footer />
+
+    <!-- GDPR & AdSense Consent Banner -->
+    <CookieBanner />
 
     <!-- Client Script for UI Controls -->
     <script>

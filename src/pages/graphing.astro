@@ -2,7 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout activeTab="graphing" title="SciCalcX | Interactive Graphing Studio">
+<Layout 
+  activeTab="graphing" 
+  title="SciCalcX | Interactive Graphing Studio & Function Plotter"
+  description="Online interactive graphing calculator. Plot multiple mathematical functions, analyze roots, Y-intercepts, local extrema, and trace curve coordinates on a 2D Cartesian grid."
+>
   <div class="w-full max-w-6xl mx-auto space-y-6 flex flex-col h-full">
     <!-- Page Header -->
     <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
@@ -138,6 +142,68 @@ import Layout from '../layouts/Layout.astro';
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Educational Reference Guide & Graphing Handbook -->
+    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 sm:p-6 space-y-5 shadow-xl font-sans text-xs text-brand-text-muted leading-relaxed">
+      <div class="border-b border-brand-border/40 pb-3">
+        <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-wider block">Calculus & Geometry Guide</span>
+        <h2 class="text-lg font-bold text-white tracking-tight mt-0.5">Function Plotting & Mathematical Analytics Handbook</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="space-y-3">
+          <h3 class="text-sm font-semibold text-white font-mono uppercase">1. Cartesian Coordinate Plotting</h3>
+          <p>
+            Our graphing engine renders mathematical expressions onto a 2D Cartesian coordinate plane in real time. Input explicit functions in terms of variable <code class="text-brand-blue-neon">x</code> (such as polynomials, trigonometric functions, or exponentials).
+          </p>
+          <ul class="list-disc pl-5 space-y-1 font-mono text-[11px]">
+            <li>Polynomials: <code class="text-brand-blue-neon">x^3 - 3*x</code></li>
+            <li>Trigonometric: <code class="text-brand-blue-neon">2*sin(x)</code>, <code class="text-brand-blue-neon">cos(x)</code></li>
+            <li>Exponential decay: <code class="text-brand-blue-neon">exp(-0.2*x)</code></li>
+          </ul>
+        </div>
+
+        <div class="space-y-3">
+          <h3 class="text-sm font-semibold text-white font-mono uppercase">2. Automatic Function Analytics</h3>
+          <p>
+            The analytics pane automatically computes critical mathematical features for evaluated curves:
+          </p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li><strong class="text-white">Y-Intercept:</strong> Evaluates <code class="text-brand-blue-neon">f(0)</code> where the curve intersects the vertical axis.</li>
+            <li><strong class="text-white">X-Intercepts (Roots):</strong> Numerical roots where <code class="text-brand-blue-neon">f(x) = 0</code>.</li>
+            <li><strong class="text-white">Local Extrema:</strong> Critical points where the first derivative <code class="text-brand-blue-neon">f'(x) = 0</code> (peak maxima and valley minima).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Accordion Section -->
+    <div class="space-y-3 font-sans">
+      <h2 class="text-sm font-semibold text-white uppercase tracking-wider font-mono px-1">
+        Graphing Studio FAQ
+      </h2>
+      <div class="space-y-2">
+        <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 p-3 text-xs">
+          <summary class="font-mono font-semibold text-brand-text cursor-pointer flex justify-between items-center select-none">
+            <span>How do I trace coordinates on the graph?</span>
+            <span class="text-brand-blue-neon group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div class="mt-2 text-brand-text-muted leading-relaxed">
+            Hover your mouse or tap anywhere on the graphing canvas. A dynamic crosshair overlay displays the precise Cartesian coordinates <code class="text-brand-blue-neon">(X, Y)</code> along with evaluated function values in real-time.
+          </div>
+        </details>
+
+        <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 p-3 text-xs">
+          <summary class="font-mono font-semibold text-brand-text cursor-pointer flex justify-between items-center select-none">
+            <span>Can I plot multiple functions simultaneously?</span>
+            <span class="text-brand-blue-neon group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div class="mt-2 text-brand-text-muted leading-relaxed">
+            Yes! Enter primary function <code class="text-brand-blue-neon">f(x)</code> and secondary function <code class="text-brand-blue-neon">g(x)</code> in the controls sidebar to overlay two distinct color-coded curves simultaneously.
+          </div>
+        </details>
       </div>
     </div>
   </div>

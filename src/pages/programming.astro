@@ -2,7 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout activeTab="programming">
+<Layout 
+  activeTab="programming"
+  title="SciCalcX | Base-N Programmer Calculator & Bitboard Studio"
+  description="Interactive programmer calculator for bitwise operations, binary bitboard manipulation, and real-time conversion between Hexadecimal, Decimal, Octal, and Binary representations."
+>
   <div class="w-full max-w-2xl mx-auto space-y-6">
     <!-- Page Header -->
     <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
@@ -119,6 +123,70 @@ import Layout from '../layouts/Layout.astro';
         <button class="btn-prog key-oct" data-key="2">2</button>
         <button class="btn-prog key-oct" data-key="3">3</button>
         <button class="btn-prog col-span-1" data-key="toggle-sign" style="font-size: 10px; color: #888">+/-</button>
+      </div>
+    </div>
+
+    <!-- Educational Reference Guide & Systems Programming Handbook -->
+    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 sm:p-6 space-y-5 shadow-xl font-sans text-xs text-brand-text-muted leading-relaxed">
+      <div class="border-b border-brand-border/40 pb-3">
+        <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-wider block">Systems Architecture Reference</span>
+        <h2 class="text-lg font-bold text-white tracking-tight mt-0.5">Base-N Systems & Bitwise Operations Handbook</h2>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-white font-mono uppercase">1. Understanding Base-N Number Systems</h3>
+        <p>
+          In computer architecture and low-level systems programming, numbers are represented in four primary positional number systems:
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5 font-mono text-[11px]">
+          <li><strong class="text-white">Binary (Base-2):</strong> Uses digits 0 and 1. Standard representation for physical logic gates and register states.</li>
+          <li><strong class="text-white">Octal (Base-8):</strong> Uses digits 0 through 7. Frequently used in UNIX file permissions (e.g. <code class="text-brand-blue-neon">chmod 755</code>).</li>
+          <li><strong class="text-white">Decimal (Base-10):</strong> Standard human base-10 numerical system.</li>
+          <li><strong class="text-white">Hexadecimal (Base-16):</strong> Uses digits 0-9 and letters A-F. Used for memory addresses, color codes, and byte inspection.</li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-white font-mono uppercase">2. Bitwise Operators Breakdown</h3>
+        <p>
+          Bitwise operators manipulate individual binary bits within an integer representation:
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5">
+          <li><strong class="text-white">AND (&):</strong> Yields 1 only if both input bits are 1. Commonly used for bit-masking.</li>
+          <li><strong class="text-white">OR (|):</strong> Yields 1 if at least one input bit is 1. Used to set specific flags.</li>
+          <li><strong class="text-white">XOR (^):</strong> Yields 1 if inputs differ. Useful for toggling bits and cryptographic operations.</li>
+          <li><strong class="text-white">NOT (~):</strong> Inverts all bit values (1 becomes 0, 0 becomes 1).</li>
+          <li><strong class="text-white">Left Shift (&lt;&lt;):</strong> Shifts bits to the left, equivalent to multiplying by powers of 2.</li>
+          <li><strong class="text-white">Right Shift (&gt;&gt;):</strong> Shifts bits to the right, equivalent to integer division by powers of 2.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ Accordion Section -->
+    <div class="space-y-3 font-sans">
+      <h2 class="text-sm font-semibold text-white uppercase tracking-wider font-mono px-1">
+        Programmer Calculator FAQ
+      </h2>
+      <div class="space-y-2">
+        <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 p-3 text-xs">
+          <summary class="font-mono font-semibold text-brand-text cursor-pointer flex justify-between items-center select-none">
+            <span>How does the 32-bit visual bitboard work?</span>
+            <span class="text-brand-blue-neon group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div class="mt-2 text-brand-text-muted leading-relaxed">
+            The bitboard displays the exact 32 binary bits of the active value from Most Significant Bit (Bit 31) to Least Significant Bit (Bit 0). Clicking any individual bit toggles its value instantly and updates the HEX, DEC, and OCT displays in real-time.
+          </div>
+        </details>
+
+        <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 p-3 text-xs">
+          <summary class="font-mono font-semibold text-brand-text cursor-pointer flex justify-between items-center select-none">
+            <span>What is Two's Complement representation?</span>
+            <span class="text-brand-blue-neon group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div class="mt-2 text-brand-text-muted leading-relaxed">
+            Two's complement is the mathematical method used by modern processors to represent signed negative integers in binary. The most significant bit acts as the sign bit (1 for negative, 0 for positive).
+          </div>
+        </details>
       </div>
     </div>
   </div>
