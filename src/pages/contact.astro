@@ -54,9 +54,10 @@ import Layout from '../layouts/Layout.astro';
             <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">Your Name</label>
             <input 
               type="text" 
+              id="sender-name"
               name="name"
               required
-              placeholder="e.g. John Doe"
+              placeholder="e.g. Alex Rivera"
               class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm"
             />
           </div>
@@ -65,9 +66,22 @@ import Layout from '../layouts/Layout.astro';
             <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">Email Address</label>
             <input 
               type="email" 
+              id="sender-email"
               name="email"
               required
-              placeholder="e.g. john@example.com"
+              placeholder="e.g. alex@example.com"
+              class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">Inquiry Subject</label>
+            <input 
+              type="text" 
+              id="sender-subject"
+              name="subject"
+              required
+              placeholder="e.g. Bug report, Feature request, or Academic inquiry"
               class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm"
             />
           </div>
@@ -75,8 +89,9 @@ import Layout from '../layouts/Layout.astro';
           <div class="flex flex-col gap-1.5">
             <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">Your Message</label>
             <textarea 
+              id="sender-message"
               name="message"
-              rows="5"
+              rows="4"
               required
               placeholder="Type your feedback, computational inquiry, or bug report details here..."
               class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm resize-none"
@@ -87,12 +102,12 @@ import Layout from '../layouts/Layout.astro';
             type="submit"
             class="w-full h-11 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_12px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm font-sans"
           >
-            Send Message
+            Send Inquiry to Support Team
           </button>
         </form>
         
         <div id="form-success" class="hidden mt-4 p-3 bg-brand-blue/10 border border-brand-blue/30 text-brand-blue-neon rounded-md text-center text-xs font-mono">
-          Message sent successfully! Thank you for contacting SciCalcX support.
+          Email client initialized! If your mail app did not open automatically, please send your email directly to <a href="mailto:support@scicalcx.com" class="underline font-bold">support@scicalcx.com</a>.
         </div>
       </div>
       
@@ -105,12 +120,15 @@ import Layout from '../layouts/Layout.astro';
 
     form?.addEventListener('submit', (e) => {
       e.preventDefault();
-      // Simulate form submission
-      form.reset();
+      const name = (document.getElementById('sender-name') as HTMLInputElement).value;
+      const email = (document.getElementById('sender-email') as HTMLInputElement).value;
+      const subject = (document.getElementById('sender-subject') as HTMLInputElement).value;
+      const message = (document.getElementById('sender-message') as HTMLTextAreaElement).value;
+
+      const mailtoUrl = `mailto:support@scicalcx.com?subject=${encodeURIComponent(`[SciCalcX] ${subject}`)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+      
+      window.location.href = mailtoUrl;
       successMsg.classList.remove('hidden');
-      setTimeout(() => {
-        successMsg.classList.add('hidden');
-      }, 5000);
     });
   </script>
 </Layout>

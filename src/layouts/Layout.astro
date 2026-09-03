@@ -7,7 +7,7 @@ interface Props {
   title?: string;
   description?: string;
   keywords?: string;
-  activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler';
+  activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler' | 'blog';
 }
 
 const {
@@ -52,7 +52,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://scicalcx.com/" />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content="https://scicalcx.com/og-image.png" />
     <meta property="og:site_name" content="SciCalcX" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -90,7 +90,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
         <nav class="hidden md:flex items-center space-x-1">
           <a
             href="/"
-            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+            class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'scientific'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
@@ -100,7 +100,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
           </a>
           <a
             href="/matrix"
-            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+            class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'matrix'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
@@ -110,7 +110,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
           </a>
           <a
             href="/calculus"
-            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+            class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'calculus'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
@@ -120,7 +120,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
           </a>
           <a
             href="/graphing"
-            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+            class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'graphing'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
@@ -130,7 +130,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
           </a>
           <a
             href="/programming"
-            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+            class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'programming'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
@@ -139,14 +139,34 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
             Programmer
           </a>
           <a
+            href="/statistics"
+            class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+              activeTab === 'statistics'
+                ? 'bg-brand-gray-light text-white border border-brand-border'
+                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+            }`}
+          >
+            Statistics
+          </a>
+          <a
             href="/compiler"
-            class={`px-2.5 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+            class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'compiler'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
             Code Tutor
+          </a>
+          <a
+            href="/blog"
+            class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
+              activeTab === 'blog'
+                ? 'bg-brand-gray-light text-white border border-brand-border'
+                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+            }`}
+          >
+            Articles
           </a>
         </nav>
       </div>
@@ -225,12 +245,28 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
         Programmer
       </a>
       <a
+        href="/statistics"
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
+          activeTab === 'statistics' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+        }`}
+      >
+        Statistics
+      </a>
+      <a
         href="/compiler"
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'compiler' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         Code Tutor
+      </a>
+      <a
+        href="/blog"
+        class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
+          activeTab === 'blog' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+        }`}
+      >
+        Articles
       </a>
     </div>
 

@@ -1,0 +1,94 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog');
+// Sort by publication date descending
+posts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+function formatDate(date: Date) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(date));
+}
+---
+
+<Layout
+  activeTab="blog"
+  title="Engineering & Algorithms Blog | SciCalcX"
+  description="In-depth tutorials, algorithm deep dives, numerical mathematics guides, and systems programming breakdowns from the SciCalcX team."
+>
+  <div class="w-full max-w-4xl mx-auto space-y-8 font-sans">
+    <!-- Page Header -->
+    <div class="text-center md:text-left space-y-2 border-b border-brand-border/60 pb-6">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon flex items-center justify-center md:justify-start gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon animate-pulse"></span>
+        Knowledge Base & Tutorials
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-brand-text">
+        Engineering &amp; Algorithms Blog<span class="text-brand-blue">.</span>
+      </h1>
+      <p class="text-xs sm:text-sm text-brand-text-muted max-w-2xl">
+        Explore algorithmic complexities, compiler internals, C++ pointers, numerical methods, and data structures. Built to help students and software developers master computational fundamentals.
+      </p>
+    </div>
+
+    <!-- Blog Posts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {posts.map((post) => (
+        <article class="border border-brand-border bg-brand-gray-dark/40 hover:border-brand-border-strong rounded-xl p-6 flex flex-col justify-between space-y-4 shadow-lg backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 group">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-[11px] font-mono text-brand-text-dim">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {formatDate(post.data.pubDate)}
+              </time>
+              <span class="text-brand-blue-neon/80 group-hover:text-brand-blue-neon transition-colors">
+                {post.data.author}
+              </span>
+            </div>
+
+            <h2 class="text-base sm:text-lg font-bold text-white group-hover:text-brand-blue-neon transition-colors leading-snug">
+              <a href={`/blog/${post.id}`} class="focus:outline-none">
+                {post.data.title}
+              </a>
+            </h2>
+
+            <p class="text-xs text-brand-text-muted line-clamp-3 leading-relaxed">
+              {post.data.description}
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-brand-border/40 flex items-center justify-between">
+            <span class="text-[10px] font-mono uppercase text-brand-text-dim">
+              Technical Guide
+            </span>
+            <a
+              href={`/blog/${post.id}`}
+              class="text-xs font-mono font-semibold text-brand-blue-neon hover:text-white flex items-center gap-1 transition-colors"
+            >
+              Read Article &rarr;
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Interactive Sandboxes CTA Callout -->
+    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="space-y-1 text-center sm:text-left">
+        <h3 class="text-sm font-semibold text-white">Want to test the algorithms while reading?</h3>
+        <p class="text-xs text-brand-text-muted">
+          Our online compiler supports C++, C, and Python with interactive standard inputs and line-by-line debugging.
+        </p>
+      </div>
+      <a
+        href="/compiler"
+        class="shrink-0 text-xs font-mono font-semibold px-4 py-2.5 rounded bg-brand-blue hover:bg-brand-blue-hover text-white transition-all shadow-md"
+      >
+        Open Code Tutor &rarr;
+      </a>
+    </div>
+  </div>
+</Layout>

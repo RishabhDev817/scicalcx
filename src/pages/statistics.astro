@@ -2,8 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout activeTab="statistics">
-  <div class="w-full max-w-3xl mx-auto space-y-6">
+<Layout 
+  activeTab="statistics"
+  title="Descriptive Statistics Calculator & Dispersion Suite | SciCalcX"
+  description="Calculate mean, median, mode, sample variance, population variance, and standard deviation online. Includes complete mathematical formulas, Bessel's correction explanations, and step-by-step dataset analysis."
+>
+  <div class="w-full max-w-4xl mx-auto space-y-8 font-sans">
     <!-- Page Header -->
     <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
       <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
@@ -111,15 +115,128 @@ import Layout from '../layouts/Layout.astro';
             </div>
           </div>
 
-          <div class="pt-3 flex justify-between items-center text-[10px] font-mono text-brand-text-dim">
-            <span>SUM VALUE: <span id="stat-sum">0</span></span>
-            <button id="btn-save-stats" class="text-brand-blue hover:text-white uppercase transition-colors focus:outline-none">
+          <div class="pt-3 flex justify-between items-center text-[10px] font-mono text-brand-text-dim border-t border-brand-border/40">
+            <span>SUM VALUE (&sum; x): <span id="stat-sum" class="text-brand-text font-bold">0</span></span>
+            <button id="btn-save-stats" class="text-brand-blue hover:text-white uppercase transition-colors focus:outline-none cursor-pointer">
               [ Save analysis to history ]
             </button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Comprehensive Statistical Handbook & Documentation -->
+    <section class="border border-brand-border bg-brand-gray-dark/20 rounded-xl p-6 sm:p-8 space-y-6 text-brand-text-muted leading-relaxed text-xs sm:text-sm">
+      <div class="border-b border-brand-border/60 pb-3">
+        <h2 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+          <span class="text-brand-blue-neon font-mono">#</span> Descriptive Statistics &amp; Dispersion Handbook
+        </h2>
+        <p class="text-xs text-brand-text-dim mt-1">
+          Understanding the mathematical principles behind central tendency, variability, and sample estimators.
+        </p>
+      </div>
+
+      <!-- Section 1 -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider font-mono">
+          1. Measures of Central Tendency
+        </h3>
+        <p>
+          Measures of central tendency summarize an entire distribution of numbers into a single representative score. The three most common metrics are:
+        </p>
+        <ul class="list-disc pl-5 space-y-2 text-xs">
+          <li>
+            <strong class="text-white">Arithmetic Mean (&mu; or x&#772;):</strong> The sum of all observations divided by the total number of observations: 
+            <code class="text-brand-blue-neon font-mono bg-brand-black px-1.5 py-0.5 rounded">x&#772; = (&sum; x_i) / n</code>. While the mean incorporates every value, it is highly sensitive to extreme outliers and skewed tails.
+          </li>
+          <li>
+            <strong class="text-white">Median:</strong> The physical midpoint value when data is sorted in numerical order. For an odd number of items, it is the exact middle value; for an even number, it is the mean of the two central numbers. Because the median depends only on rank order rather than magnitudes, it is robust against outliers.
+          </li>
+          <li>
+            <strong class="text-white">Mode:</strong> The observation that occurs with the greatest frequency. Datasets can be unimodal, bimodal, multimodal, or possess no mode if all frequencies equal one.
+          </li>
+        </ul>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider font-mono">
+          2. Measures of Dispersion &amp; Bessel's Correction
+        </h3>
+        <p>
+          While central tendency identifies the location of the center, measures of dispersion describe the degree of spread or variability within the data.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div class="border border-brand-border bg-brand-black/40 rounded-lg p-4 space-y-2">
+            <h4 class="text-xs font-semibold text-white font-mono uppercase">Population Variance (&sigma;&sup2;)</h4>
+            <p class="text-[11px] leading-relaxed">
+              When analyzing an entire population of size <em>N</em>, the true population variance is computed by dividing the sum of squared deviations from the population mean by <em>N</em>:
+            </p>
+            <div class="bg-brand-black p-2 rounded text-center font-mono text-[11px] text-brand-blue-neon">
+              &sigma;&sup2; = &sum;(x_i - &mu;)&sup2; / N
+            </div>
+          </div>
+
+          <div class="border border-brand-border bg-brand-black/40 rounded-lg p-4 space-y-2">
+            <h4 class="text-xs font-semibold text-white font-mono uppercase">Sample Variance (s&sup2;) &amp; Bessel's Correction</h4>
+            <p class="text-[11px] leading-relaxed">
+              When working with a sample drawn from a larger population, using <em>n</em> in the denominator systematically underestimates the true population variance. Dividing by <code>n - 1</code> (Bessel's correction) corrects this downward bias, producing an unbiased estimator:
+            </p>
+            <div class="bg-brand-black p-2 rounded text-center font-mono text-[11px] text-brand-blue-neon">
+              s&sup2; = &sum;(x_i - x&#772;)&sup2; / (n - 1)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider font-mono">
+          3. Step-by-Step Worked Dataset Example
+        </h3>
+        <p>
+          Consider the sample dataset: <code>[4, 8, 6, 5, 3, 7]</code> (n = 6).
+        </p>
+        <ol class="list-decimal pl-5 space-y-1.5 text-xs">
+          <li><strong>Sum:</strong> 4 + 8 + 6 + 5 + 3 + 7 = 33</li>
+          <li><strong>Mean (x&#772;):</strong> 33 / 6 = 5.5</li>
+          <li><strong>Squared Deviations:</strong> (4-5.5)&sup2; = 2.25; (8-5.5)&sup2; = 6.25; (6-5.5)&sup2; = 0.25; (5-5.5)&sup2; = 0.25; (3-5.5)&sup2; = 6.25; (7-5.5)&sup2; = 2.25.</li>
+          <li><strong>Sum of Squares (&sum;SS):</strong> 2.25 + 6.25 + 0.25 + 0.25 + 6.25 + 2.25 = 17.5</li>
+          <li><strong>Sample Variance (s&sup2;):</strong> 17.5 / (6 - 1) = 17.5 / 5 = 3.5</li>
+          <li><strong>Sample Standard Deviation (s):</strong> &radic;3.5 &approx; 1.8708</li>
+          <li><strong>Population Variance (&sigma;&sup2;):</strong> 17.5 / 6 &approx; 2.9167</li>
+        </ol>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="space-y-3 pt-2">
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider font-mono">
+          Statistical Analysis FAQ
+        </h3>
+        
+        <div class="space-y-2">
+          <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 p-3 text-xs">
+            <summary class="font-mono font-semibold text-brand-text cursor-pointer flex justify-between items-center select-none">
+              <span>Why should I use Sample Standard Deviation (n-1) instead of Population?</span>
+              <span class="text-brand-blue-neon group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="mt-2 text-brand-text-muted leading-relaxed">
+              In almost all real-world laboratory, engineering, and empirical science scenarios, you are measuring a sample of observations rather than every member of the global population. Bessel's correction (dividing by n - 1) removes the statistical bias that occurs because sample observations tend to be closer to the sample mean than to the true, unknown population mean.
+            </div>
+          </details>
+
+          <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 p-3 text-xs">
+            <summary class="font-mono font-semibold text-brand-text cursor-pointer flex justify-between items-center select-none">
+              <span>What is the Empirical Rule (68-95-99.7 Rule)?</span>
+              <span class="text-brand-blue-neon group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div class="mt-2 text-brand-text-muted leading-relaxed">
+              For normally distributed (Gaussian) datasets, approximately 68.2% of all observations fall within one standard deviation of the mean (&mu; &plusmn; 1&sigma;), 95.4% fall within two standard deviations (&mu; &plusmn; 2&sigma;), and 99.7% fall within three standard deviations (&mu; &plusmn; 3&sigma;).
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
