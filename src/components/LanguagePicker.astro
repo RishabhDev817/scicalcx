@@ -1,0 +1,80 @@
+---
+import { languages, type SupportedLanguage } from '../i18n/ui';
+import { getLangFromUrl, useTranslatedPath, getBaseRoute } from '../i18n/utils';
+
+interface Props {
+  class?: string;
+  variant?: 'select' | 'list';
+}
+
+const { class: className = '', variant = 'select' } = Astro.props;
+const currentLang = getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+const baseRoute = getBaseRoute(Astro.url.pathname);
+
+const languageList = Object.entries(languages) as [SupportedLanguage, string][];
+---
+
+{variant === 'select' ? (
+  <div class={`relative inline-flex items-center ${className}`}>
+    <label for="language-select" class="sr-only">Choose language</label>
+    <div class="relative flex items-center">
+      <div class="pointer-events-none absolute left-2 text-brand-text-muted flex items-center">
+        <!-- Globe Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+          <path d="M2 12h20"></path>
+        </svg>
+      </div>
+      <select
+        id="language-select"
+        class="bg-brand-gray-light/70 hover:bg-brand-gray-hover border border-brand-border hover:border-brand-border-hover text-brand-text-muted hover:text-white text-[11px] font-mono rounded-md pl-6 sm:pl-7 pr-5 sm:pr-6 py-1.5 cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all"
+        aria-label="Select language"
+        onchange="if (this.value) window.location.href = this.value"
+      >
+        {languageList.map(([code, label]) => (
+          <option
+            value={translatePath(baseRoute, code)}
+            selected={code === currentLang}
+            class="bg-brand-black text-brand-text font-sans py-1"
+          >
+            {code.toUpperCase()} · {label}
+          </option>
+        ))}
+      </select>
+      <div class="pointer-events-none absolute right-1.5 sm:right-2 text-brand-text-dim">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </div>
+  </div>
+) : (
+  <div class={`flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] font-mono ${className}`}>
+    <span class="text-brand-text-dim flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-brand-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+        <path d="M2 12h20"></path>
+      </svg>
+      Languages:
+    </span>
+    {languageList.map(([code, label]) => {
+      const isCurrent = code === currentLang;
+      return (
+        <a
+          href={translatePath(baseRoute, code)}
+          class={`transition-colors ${
+            isCurrent
+              ? 'text-brand-blue-neon font-bold underline underline-offset-4 decoration-brand-blue'
+              : 'text-brand-text-muted hover:text-white'
+          }`}
+          hreflang={code}
+        >
+          {label}
+        </a>
+      );
+    })}
+  </div>
+)}

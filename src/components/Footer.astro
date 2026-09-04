@@ -1,6 +1,17 @@
 ---
 // src/components/Footer.astro
+import { getLangFromUrl, useTranslations, useTranslatedPath } from '../i18n/utils';
+import type { SupportedLanguage } from '../i18n/ui';
+import LanguagePicker from './LanguagePicker.astro';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
 const currentYear = new Date().getFullYear();
+const currentLang = Astro.props.lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
 ---
 
 <footer class="border-t border-brand-border bg-brand-black pt-12 pb-8 px-4 sm:px-6 text-xs sm:text-sm text-brand-text-dim relative">
@@ -11,41 +22,41 @@ const currentYear = new Date().getFullYear();
       <!-- Col 1: Computational Engines -->
       <div class="space-y-3">
         <h4 class="text-white font-mono text-[11px] uppercase tracking-wider font-semibold flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> Computations
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> {t('footer.computations')}
         </h4>
         <ul class="space-y-2 font-mono text-[11px] text-brand-text-muted">
-          <li><a href="/" class="hover:text-white transition-colors">Scientific Calculator</a></li>
-          <li><a href="/matrix" class="hover:text-white transition-colors">Matrix Suite</a></li>
-          <li><a href="/calculus" class="hover:text-white transition-colors">Calculus Engine</a></li>
-          <li><a href="/graphing" class="hover:text-white transition-colors">Graphing Studio</a></li>
-          <li><a href="/programming" class="hover:text-white transition-colors">Base-N Programmer</a></li>
-          <li><a href="/statistics" class="hover:text-white transition-colors">Statistics Suite</a></li>
+          <li><a href={translatePath('/')} class="hover:text-white transition-colors">{t('nav.scientific')}</a></li>
+          <li><a href={translatePath('/matrix')} class="hover:text-white transition-colors">{t('nav.matrix')}</a></li>
+          <li><a href={translatePath('/calculus')} class="hover:text-white transition-colors">{t('nav.calculus')}</a></li>
+          <li><a href={translatePath('/graphing')} class="hover:text-white transition-colors">{t('nav.graphing')}</a></li>
+          <li><a href={translatePath('/programming')} class="hover:text-white transition-colors">{t('nav.programming')}</a></li>
+          <li><a href={translatePath('/statistics')} class="hover:text-white transition-colors">{t('nav.statistics')}</a></li>
         </ul>
       </div>
 
       <!-- Col 2: Code & Learning -->
       <div class="space-y-3">
         <h4 class="text-white font-mono text-[11px] uppercase tracking-wider font-semibold flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> Code &amp; Algorithms
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> {t('footer.code')}
         </h4>
         <ul class="space-y-2 font-mono text-[11px] text-brand-text-muted">
-          <li><a href="/compiler" class="hover:text-white transition-colors">AI Code Tutor</a></li>
-          <li><a href="/blog" class="hover:text-white transition-colors">Engineering Blog</a></li>
-          <li><a href="/blog/sorting-cpp" class="hover:text-white transition-colors">Sorting Algorithms</a></li>
-          <li><a href="/blog/pointers-cpp" class="hover:text-white transition-colors">C++ Pointers</a></li>
-          <li><a href="/blog/time-complexity" class="hover:text-white transition-colors">Time Complexity</a></li>
+          <li><a href={translatePath('/compiler')} class="hover:text-white transition-colors">{t('nav.compiler')}</a></li>
+          <li><a href={translatePath('/blog')} class="hover:text-white transition-colors">{t('nav.blog')}</a></li>
+          <li><a href={translatePath('/blog/sorting-cpp')} class="hover:text-white transition-colors">Sorting Algorithms</a></li>
+          <li><a href={translatePath('/blog/pointers-cpp')} class="hover:text-white transition-colors">C++ Pointers</a></li>
+          <li><a href={translatePath('/blog/time-complexity')} class="hover:text-white transition-colors">Time Complexity</a></li>
         </ul>
       </div>
 
       <!-- Col 3: Knowledge & Platform -->
       <div class="space-y-3">
         <h4 class="text-white font-mono text-[11px] uppercase tracking-wider font-semibold flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> About &amp; Support
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> {t('footer.about')}
         </h4>
         <ul class="space-y-2 font-mono text-[11px] text-brand-text-muted">
-          <li><a href="/about" class="hover:text-white transition-colors">About Us</a></li>
-          <li><a href="/contact" class="hover:text-white transition-colors">Contact Support</a></li>
-          <li><a href="https://github.com/RishabhDev817/scicalcx" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">GitHub Repository</a></li>
+          <li><a href={translatePath('/about')} class="hover:text-white transition-colors">{t('footer.aboutUs')}</a></li>
+          <li><a href={translatePath('/contact')} class="hover:text-white transition-colors">{t('footer.contactSupport')}</a></li>
+          <li><a href="https://github.com/RishabhDev817/scicalcx" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">{t('footer.github')}</a></li>
           <li><a href="mailto:support@scicalcx.com" class="hover:text-white transition-colors">support@scicalcx.com</a></li>
         </ul>
       </div>
@@ -53,15 +64,20 @@ const currentYear = new Date().getFullYear();
       <!-- Col 4: Compliance & Legal -->
       <div class="space-y-3">
         <h4 class="text-white font-mono text-[11px] uppercase tracking-wider font-semibold flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Legal &amp; Policies
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> {t('footer.legal')}
         </h4>
         <ul class="space-y-2 font-mono text-[11px] text-brand-text-muted">
-          <li><a href="/privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
-          <li><a href="/terms" class="hover:text-white transition-colors">Terms of Service</a></li>
-          <li><a href="/about" class="hover:text-white transition-colors">Editorial Integrity</a></li>
-          <li><a href="/sitemap.xml" class="hover:text-white transition-colors">Sitemap XML</a></li>
+          <li><a href={translatePath('/privacy')} class="hover:text-white transition-colors">{t('footer.privacy')}</a></li>
+          <li><a href={translatePath('/terms')} class="hover:text-white transition-colors">{t('footer.terms')}</a></li>
+          <li><a href={translatePath('/about')} class="hover:text-white transition-colors">{t('footer.editorial')}</a></li>
+          <li><a href="/sitemap.xml" class="hover:text-white transition-colors">{t('footer.sitemap')}</a></li>
         </ul>
       </div>
+    </div>
+
+    <!-- Language Selector Bar (Direct HTML links for Search Engines & Users) -->
+    <div class="border-t border-brand-border/60 pt-6 pb-2">
+      <LanguagePicker variant="list" />
     </div>
 
     <!-- Divider Line -->
@@ -82,26 +98,26 @@ const currentYear = new Date().getFullYear();
         >
           <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 12.224 10.521 12.03 10.521 12.03 1.905-.008 7.02-.026 8.382-.047 3.874-.3 3.712-4.116 3.712-4.116 1.823-.008 1.942-2.915 1.942-2.915 1.487-.272 1.343-2.98 1.343-2.98.055-1.127-.145-2.002-.145-2.002zm-5.786 8.25s-.834.023-2.186.046c-1.144.02-3.864.04-3.864.04-.51 0-3.14-.08-4.787-1.742-1.721-1.737-1.688-4.996-1.688-4.996.002-.338.005-.688.007-1.048h12.518s.004.997.004 2.531c-.001 2.062-.004 5.169-.004 5.169zm4.38-2.617s-.063.957-.753.978c-.742.024-.742-.998-.742-.998v-3.056s-.065-.89.576-.906c.642-.016.92.883.92.883v3.099z"/>
         </svg>
-        <span class="tracking-wide text-xs font-sans">Support SciCalcX on Ko-fi</span>
+        <span class="tracking-wide text-xs font-sans">{t('footer.supportKofi')}</span>
       </a>
       <p class="max-w-md text-[11px] leading-relaxed text-brand-text-muted font-normal">
-        Built by student developers Rishabh and Riya. Zero tracking paywalls. If SciCalcX helped your lab session or assignments, consider supporting our server hosting costs! ☕🚀
+        {t('footer.builtBy')} ☕🚀
       </p>
     </div>
 
     <!-- Bottom Links & Brand -->
     <div class="w-full flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono pt-2 border-t border-brand-border/40">
       <div class="text-brand-text-muted text-center sm:text-left text-[11px]">
-        &copy; {currentYear} SciCalcX. Open-source client-side computational system.
+        &copy; {currentYear} {t('footer.copyright')}
       </div>
       <div class="flex flex-wrap justify-center gap-x-4 gap-y-1 text-[11px]">
-        <a href="/about" class="hover:text-brand-text transition-colors">About</a>
+        <a href={translatePath('/about')} class="hover:text-brand-text transition-colors">{t('footer.aboutUs')}</a>
         <span class="text-brand-border-strong">&bull;</span>
-        <a href="/contact" class="hover:text-brand-text transition-colors">Contact</a>
+        <a href={translatePath('/contact')} class="hover:text-brand-text transition-colors">{t('footer.contactSupport')}</a>
         <span class="text-brand-border-strong">&bull;</span>
-        <a href="/terms" class="hover:text-brand-text transition-colors">Terms</a>
+        <a href={translatePath('/terms')} class="hover:text-brand-text transition-colors">{t('footer.terms')}</a>
         <span class="text-brand-border-strong">&bull;</span>
-        <a href="/privacy" class="hover:text-brand-text transition-colors">Privacy</a>
+        <a href={translatePath('/privacy')} class="hover:text-brand-text transition-colors">{t('footer.privacy')}</a>
       </div>
     </div>
   </div>

@@ -1,0 +1,180 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
+import type { SupportedLanguage } from '../../i18n/ui';
+import { getInfoContent } from '../../i18n/content/infoPages';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+const content = getInfoContent('about', lang);
+---
+
+<Layout 
+  title={t('meta.about.title')} 
+  description={t('meta.about.desc')}
+  lang={lang}
+>
+  <div class="w-full max-w-3xl mx-auto space-y-8 font-sans">
+    <!-- Page Header -->
+    <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
+        {content.badge}
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight text-brand-text">
+        {content.heading}<span class="text-brand-blue">.</span>
+      </h1>
+      <p class="text-xs text-brand-text-muted">
+        {content.subheading}
+      </p>
+    </div>
+
+    <!-- Core Mission Card -->
+    <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl backdrop-blur-sm">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> {content.missionBadge}
+      </h2>
+      <p class="text-sm text-brand-text-muted leading-relaxed">
+        {content.missionP1}
+      </p>
+      <p class="text-sm text-brand-text-muted leading-relaxed">
+        {content.missionP2}
+      </p>
+    </div>
+
+    <!-- Maintainers & Author Profiles (E-E-A-T) -->
+    <div class="space-y-4">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5 px-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> {content.teamTitle}
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-white">Rishabh Raj Mahato</span>
+            <span class="text-[10px] font-mono text-brand-blue-neon uppercase">Lead Developer</span>
+          </div>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Computer science student specializing in systems programming, compiler toolchains, and numerical computing. Lead architect of SciCalcX's token tokenizer, IEEE-754 precision sanitizer, and interactive bitboard simulator.
+          </p>
+          <div class="pt-2 border-t border-brand-border/40 font-mono text-[10px]">
+            <a href="https://github.com/RishabhDev817" target="_blank" rel="noopener noreferrer" class="text-brand-blue-neon hover:underline">
+              GitHub Profile &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold text-white">Riya</span>
+            <span class="text-[10px] font-mono text-emerald-400 uppercase">Algorithm Research &amp; UX</span>
+          </div>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Developer focused on human-computer interaction, algorithm visualizers, and pedagogical content design. Curates our data structures curricula, descriptive statistics models, and educational tutorials.
+          </p>
+          <div class="pt-2 border-t border-brand-border/40 font-mono text-[10px] text-brand-text-dim">
+            Curriculum Lead
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editorial & Numerical Calculation Standards -->
+    <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-8 space-y-4">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> {content.standardsTitle}
+      </h2>
+      <p class="text-xs text-brand-text-muted leading-relaxed">
+        {content.standardsIntro}
+      </p>
+      <ul class="list-disc pl-5 space-y-2 text-xs text-brand-text-muted">
+        {content.standards.map((s) => (
+          <li>
+            <strong class="text-white">{s.label}:</strong> {s.text}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Feature Ecosystem Grid -->
+    <div class="space-y-4">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5 px-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> Core Computational Ecosystem
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Scientific & Matrix -->
+        <a href={translatePath('/matrix')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Calculations &amp; Arrays</div>
+          <h3 class="text-sm font-semibold text-white">
+            Advanced Calculator &amp; Matrix Suite
+          </h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Perform precision scientific evaluations, multi-line parenthesized formula calculations, and complex matrix operations.
+          </p>
+        </a>
+
+        <!-- Calculus & Graphing -->
+        <a href={translatePath('/calculus')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Calculus &amp; Geometry</div>
+          <h3 class="text-sm font-semibold text-white">
+            Calculus &amp; Dynamic Graphing
+          </h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Evaluate integration limits, derivative approximations, and visualize coordinate overlays.
+          </p>
+        </a>
+
+        <!-- Bitboard & Base-N -->
+        <a href={translatePath('/programming')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Systems Programming</div>
+          <h3 class="text-sm font-semibold text-white">
+            Interactive Programmer Bitboard
+          </h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Toggle binary bits interactively on a 32-bit visual grid and run bitwise operators.
+          </p>
+        </a>
+
+        <!-- AI Code Tutor & Compiler -->
+        <a href={translatePath('/compiler')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Code &amp; Algorithms</div>
+          <h3 class="text-sm font-semibold text-white">
+            AI Code Tutor &amp; Compiler Workspace
+          </h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">
+            Write, compile, and run code scripts (C++, Python, JS) in a pseudo-terminal console.
+          </p>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tech Stack Profile -->
+    <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4">
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> {content.architectureTitle}
+      </h2>
+      <p class="text-xs text-brand-text-muted leading-relaxed">
+        {content.architectureDesc}
+      </p>
+      <div class="grid grid-cols-3 gap-3 pt-2 font-mono text-[10px] text-center">
+        <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
+          <span class="text-brand-blue-neon block font-bold">Astro 6.x</span>
+          Static Framework
+        </div>
+        <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
+          <span class="text-brand-blue-neon block font-bold">Tailwind v4</span>
+          Design Tokens
+        </div>
+        <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
+          <span class="text-brand-blue-neon block font-bold">TypeScript</span>
+          Local Engines
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

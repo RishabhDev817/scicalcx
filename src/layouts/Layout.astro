@@ -2,18 +2,27 @@
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
+import LanguagePicker from '../components/LanguagePicker.astro';
+import { getLangFromUrl, useTranslations, useTranslatedPath, getAlternateLanguageLinks } from '../i18n/utils';
+import type { SupportedLanguage } from '../i18n/ui';
 
 interface Props {
   title?: string;
   description?: string;
   keywords?: string;
   activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler' | 'blog';
+  lang?: SupportedLanguage;
 }
 
+const currentLang = Astro.props.lang || getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const translatePath = useTranslatedPath(currentLang);
+const alternateLinks = getAlternateLanguageLinks(Astro.url);
+
 const {
-  title = 'SciCalcX | Premium Online Scientific Calculator',
-  description = 'High-performance online scientific calculator addressing common engineering issues. Real-time token parsing, input sanitization, multi-line viewports, precision float math, and Base-N views.',
-  keywords,
+  title = t('meta.scientific.title'),
+  description = t('meta.scientific.desc'),
+  keywords = t('meta.scientific.keywords'),
   activeTab = 'scientific',
 } = Astro.props;
 
@@ -21,7 +30,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLang}>
   <head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XSYVYWTGTS"></script>
@@ -37,6 +46,9 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
      crossorigin="anonymous"></script>
     <meta charset="UTF-8" />
     <link rel="canonical" href={canonicalURL} />
+    {alternateLinks.map((alt) => (
+      <link rel="alternate" hreflang={alt.lang} href={alt.href} />
+    ))}
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -81,7 +93,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
     <!-- Sticky Header -->
     <header class="sticky top-0 z-40 bg-brand-black/80 backdrop-blur-md border-b border-brand-border h-14 flex items-center justify-between px-3 sm:px-6">
       <div class="flex items-center space-x-3 sm:space-x-6">
-        <a href="/" class="flex items-center space-x-2 group focus:outline-none">
+        <a href={translatePath('/')} class="flex items-center space-x-2 group focus:outline-none">
           <span class="text-lg sm:text-xl font-bold tracking-tight text-brand-text flex items-center gap-1.5">
             <span class="text-brand-blue transition-transform group-hover:scale-110">▲</span>
             SciCalc<span class="text-brand-blue-neon">X</span>
@@ -89,94 +101,97 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
         </a>
         <nav class="hidden md:flex items-center space-x-1">
           <a
-            href="/"
+            href={translatePath('/')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'scientific'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Scientific
+            {t('nav.scientific')}
           </a>
           <a
-            href="/matrix"
+            href={translatePath('/matrix')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'matrix'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Matrix
+            {t('nav.matrix')}
           </a>
           <a
-            href="/calculus"
+            href={translatePath('/calculus')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'calculus'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Calculus
+            {t('nav.calculus')}
           </a>
           <a
-            href="/graphing"
+            href={translatePath('/graphing')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'graphing'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Graphing
+            {t('nav.graphing')}
           </a>
           <a
-            href="/programming"
+            href={translatePath('/programming')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'programming'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Programmer
+            {t('nav.programming')}
           </a>
           <a
-            href="/statistics"
+            href={translatePath('/statistics')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'statistics'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Statistics
+            {t('nav.statistics')}
           </a>
           <a
-            href="/compiler"
+            href={translatePath('/compiler')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'compiler'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Code Tutor
+            {t('nav.compiler')}
           </a>
           <a
-            href="/blog"
+            href={translatePath('/blog')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'blog'
                 ? 'bg-brand-gray-light text-white border border-brand-border'
                 : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
             }`}
           >
-            Articles
+            {t('nav.blog')}
           </a>
         </nav>
       </div>
 
       <div class="flex items-center space-x-2">
+        <!-- Language Picker Dropdown -->
+        <LanguagePicker variant="select" />
+
         <!-- Theme Toggle Button -->
         <button
           id="theme-toggle"
           class="flex items-center justify-center p-1.5 rounded-md text-brand-text-muted hover:text-white border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover hover:border-brand-border-hover transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-blue"
-          aria-label="Toggle light/dark theme"
+          aria-label={t('header.theme')}
         >
           <!-- Sun Icon (Visible in dark mode) -->
           <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -197,7 +212,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <span class="hidden sm:inline">History</span>
+          <span class="hidden sm:inline">{t('header.history')}</span>
         </button>
       </div>
     </header>
@@ -205,68 +220,68 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
     <!-- Mobile Scrollable Sub-Nav -->
     <div class="md:hidden border-b border-brand-border bg-brand-black/90 py-2 px-3 flex items-center space-x-1.5 overflow-x-auto scrollbar-none">
       <a
-        href="/"
+        href={translatePath('/')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'scientific' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Scientific
+        {t('nav.scientific')}
       </a>
       <a
-        href="/matrix"
+        href={translatePath('/matrix')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'matrix' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Matrix
+        {t('nav.matrix')}
       </a>
       <a
-        href="/calculus"
+        href={translatePath('/calculus')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'calculus' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Calculus
+        {t('nav.calculus')}
       </a>
       <a
-        href="/graphing"
+        href={translatePath('/graphing')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'graphing' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Graphing
+        {t('nav.graphing')}
       </a>
       <a
-        href="/programming"
+        href={translatePath('/programming')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'programming' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Programmer
+        {t('nav.programming')}
       </a>
       <a
-        href="/statistics"
+        href={translatePath('/statistics')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'statistics' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Statistics
+        {t('nav.statistics')}
       </a>
       <a
-        href="/compiler"
+        href={translatePath('/compiler')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'compiler' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Code Tutor
+        {t('nav.compiler')}
       </a>
       <a
-        href="/blog"
+        href={translatePath('/blog')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
           activeTab === 'blog' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
-        Articles
+        {t('nav.blog')}
       </a>
     </div>
 
@@ -285,26 +300,26 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
         <div class="p-4 border-b border-brand-border flex items-center justify-between">
           <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
-            Calculation History
+            {t('history.title')}
           </h2>
           <button
             id="clear-history"
             class="text-[10px] text-brand-text-dim hover:text-red-500 font-mono transition-colors uppercase cursor-pointer focus:outline-none"
           >
-            [ Clear All ]
+            {t('history.clear')}
           </button>
         </div>
 
         <!-- History Content -->
-        <div id="history-list" class="flex-1 overflow-y-auto p-4 space-y-3 font-mono text-xs">
+        <div id="history-list" class="flex-1 overflow-y-auto p-4 space-y-3 font-mono text-xs" data-empty-msg={t('history.empty')}>
           <!-- Populated by client JS -->
-          <div class="text-brand-text-dim text-center py-8">No calculations recorded.</div>
+          <div class="text-brand-text-dim text-center py-8">{t('history.empty')}</div>
         </div>
       </aside>
     </div>
 
     <!-- Ko-fi Integrated Footer -->
-    <Footer />
+    <Footer lang={currentLang} />
 
     <!-- GDPR & AdSense Consent Banner -->
     <CookieBanner />
@@ -340,9 +355,10 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
       function renderHistory() {
         if (!historyList) return;
         const history = getHistory();
+        const emptyMsg = historyList.getAttribute('data-empty-msg') || 'No calculations recorded.';
         
         if (history.length === 0) {
-          historyList.innerHTML = `<div class="text-brand-text-dim text-center py-8">No calculations recorded.</div>`;
+          historyList.innerHTML = `<div class="text-brand-text-dim text-center py-8">${emptyMsg}</div>`;
           return;
         }
 

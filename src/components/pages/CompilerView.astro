@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CompilerWorkspace from '../CompilerWorkspace.astro';
+import { useTranslations } from '../../i18n/utils';
+import type { SupportedLanguage } from '../../i18n/ui';
+import { getFaqs } from '../../i18n/content/faq';
+import FaqSection from '../FaqSection.astro';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+const faqs = getFaqs('compiler', lang);
+
+const faqHeadingMap: Record<SupportedLanguage, string> = {
+  en: 'Frequently Asked Questions',
+  es: 'Preguntas Frecuentes',
+  ja: 'よくある質問（FAQ）',
+  fr: 'Foire Aux Questions',
+  de: 'Häufig gestellte Fragen',
+  nl: 'Veelgestelde Vragen',
+  pt: 'Perguntas Frequentes',
+  ko: '자주 묻는 질문 (FAQ)',
+  it: 'Domande Frequenti',
+};
+---
+
+<Layout 
+  activeTab="compiler" 
+  lang={lang}
+  title={t('meta.compiler.title')} 
+  description={t('meta.compiler.desc')}
+  keywords={t('meta.compiler.keywords')}
+>
+  <CompilerWorkspace />
+
+  <!-- Educational Reference Guide & Sandbox Architecture -->
+  <div class="w-full max-w-6xl mx-auto mt-8 border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 sm:p-6 space-y-5 shadow-xl font-sans text-xs text-brand-text-muted leading-relaxed">
+    <div class="border-b border-brand-border/40 pb-3">
+      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-wider block">{t('compiler.eyebrow')}</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-0.5">{t('compiler.heading')}</h2>
+      <p class="text-xs text-brand-text-muted mt-1">{t('compiler.subheading')}</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-white font-mono uppercase">Multi-Language Sandbox</h3>
+        <p>
+          Write, test, and debug code in <strong class="text-white">Python 3</strong>, <strong class="text-white">C (GCC)</strong>, and <strong class="text-white">C++20</strong>. Our sandbox executes user logic in real-time with instant execution diagnostics.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-white font-mono uppercase">Interactive Terminal</h3>
+        <p>
+          Pass dynamic standard inputs (<code class="text-brand-blue-neon">stdin</code>) into your algorithms to test array sorting, matrix transformations, graph traversals, and Data Structures &amp; Algorithms (DSA) problems.
+        </p>
+      </div>
+
+      <div class="space-y-2">
+        <h3 class="text-sm font-semibold text-white font-mono uppercase">AI Assistant &amp; Export</h3>
+        <p>
+          Get instant line-by-line code explanations and syntax error resolution. Use <strong class="text-white">One-Click Export</strong> to generate formatted assignment submission snapshots for lab reports.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Localized FAQ Accordion & JSON-LD Schema -->
+  <div class="w-full max-w-6xl mx-auto">
+    <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />
+  </div>
+</Layout>

@@ -1,0 +1,30 @@
+---
+import BlogPostView from '../../../components/pages/BlogPostView.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { supportedLanguages, type SupportedLanguage } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const basePosts = allPosts.filter((p) => !p.id.includes('/'));
+  const nonDefaultLangs = supportedLanguages.filter((l) => l !== 'en');
+
+  return nonDefaultLangs.flatMap((lang) =>
+    basePosts.map((basePost) => {
+      const localizedPost = allPosts.find((p) => p.id === `${lang}/${basePost.id}`);
+      return {
+        params: { lang, slug: basePost.id },
+        props: { post: localizedPost || basePost, lang },
+      };
+    })
+  );
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  lang: SupportedLanguage;
+}
+
+const { post, lang } = Astro.props;
+---
+
+<BlogPostView post={post} lang={lang} />

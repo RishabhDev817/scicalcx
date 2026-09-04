@@ -1,0 +1,149 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { useTranslations } from '../../i18n/utils';
+import type { SupportedLanguage } from '../../i18n/ui';
+import { getInfoContent } from '../../i18n/content/infoPages';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+const content = getInfoContent('contact', lang);
+---
+
+<Layout 
+  title={t('meta.contact.title')} 
+  description={t('meta.contact.desc')}
+  lang={lang}
+>
+  <div class="w-full max-w-3xl mx-auto space-y-6 sm:space-y-8 font-sans">
+    <!-- Page Header -->
+    <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
+        {content.badge}
+      </div>
+      <h1 class="text-3xl font-bold tracking-tight text-brand-text">
+        {content.heading}<span class="text-brand-blue">.</span>
+      </h1>
+      <p class="text-xs text-brand-text-muted">
+        {content.subheading}
+      </p>
+    </div>
+
+    <!-- Contact Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Direct Contact Info Column -->
+      <div class="md:col-span-1 space-y-4 border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 font-mono text-[11px] text-brand-text-muted hover-glow transition-all">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-white">{content.directTitle}</h2>
+        <div class="space-y-4">
+          <div>
+            <span class="text-brand-text-dim block uppercase text-[9px] tracking-wider mb-1">{content.emailLabel}</span>
+            <a href="mailto:support@scicalcx.com" class="text-brand-blue-neon hover:underline font-semibold break-all">
+              support@scicalcx.com
+            </a>
+          </div>
+          <div>
+            <span class="text-brand-text-dim block uppercase text-[9px] tracking-wider mb-1">{content.repoLabel}</span>
+            <a href="https://github.com/RishabhDev817/scicalcx" target="_blank" rel="noopener noreferrer" class="text-brand-blue-neon hover:underline font-semibold block">
+              GitHub Repository
+            </a>
+          </div>
+          <div>
+            <span class="text-brand-text-dim block uppercase text-[9px] tracking-wider mb-1">{content.responseLabel}</span>
+            <span class="text-white block font-sans text-xs">{content.responseTime}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form Column -->
+      <div class="md:col-span-2 border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-8 shadow-xl backdrop-blur-sm relative">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-white flex items-center gap-1.5 border-b border-brand-border/40 pb-3 mb-5 font-mono">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> {content.formTitle}
+        </h2>
+
+        <form id="contact-form" class="space-y-5 font-mono text-xs">
+          <div class="flex flex-col gap-1.5">
+            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.nameLabel}</label>
+            <input 
+              type="text" 
+              id="sender-name"
+              name="name"
+              required
+              placeholder="e.g. Alex Rivera"
+              class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.emailInputLabel}</label>
+            <input 
+              type="email" 
+              id="sender-email"
+              name="email"
+              required
+              placeholder="e.g. alex@example.com"
+              class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.subjectLabel}</label>
+            <input 
+              type="text" 
+              id="sender-subject"
+              name="subject"
+              required
+              placeholder="e.g. Bug report, Feature request, or Academic inquiry"
+              class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.messageLabel}</label>
+            <textarea 
+              id="sender-message"
+              name="message"
+              rows="4"
+              required
+              placeholder="Type your feedback, computational inquiry, or bug report details here..."
+              class="w-full bg-brand-black border border-brand-border rounded-md px-3.5 py-2.5 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30 transition-all font-sans text-sm resize-none"
+            ></textarea>
+          </div>
+
+          <button 
+            type="submit"
+            class="w-full h-11 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_12px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm font-sans"
+          >
+            {content.submitBtn}
+          </button>
+        </form>
+        
+        <div id="form-success" class="hidden mt-4 p-3 bg-brand-blue/10 border border-brand-blue/30 text-brand-blue-neon rounded-md text-center text-xs font-mono">
+          {content.successNotice}
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement;
+    const successMsg = document.getElementById('form-success')!;
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = (document.getElementById('sender-name') as HTMLInputElement).value;
+      const email = (document.getElementById('sender-email') as HTMLInputElement).value;
+      const subject = (document.getElementById('sender-subject') as HTMLInputElement).value;
+      const message = (document.getElementById('sender-message') as HTMLTextAreaElement).value;
+
+      const mailtoUrl = `mailto:support@scicalcx.com?subject=${encodeURIComponent(`[SciCalcX] ${subject}`)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
+      
+      window.location.href = mailtoUrl;
+      successMsg.classList.remove('hidden');
+    });
+  </script>
+</Layout>

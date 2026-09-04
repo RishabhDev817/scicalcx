@@ -1,0 +1,48 @@
+---
+import type { FAQItem } from '../i18n/content/faq';
+
+interface Props {
+  faqs: FAQItem[];
+  heading?: string;
+}
+
+const { faqs, heading = 'Frequently Asked Questions' } = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer.replace(/<[^>]*>?/gm, ''), // strip html tags for clean schema
+    },
+  })),
+};
+---
+
+{faqs.length > 0 && (
+  <section class="border-t border-brand-border/40 pt-8 mt-12 text-brand-text-muted font-sans text-xs sm:text-sm leading-relaxed space-y-6">
+    <h2 class="text-lg font-bold text-brand-text tracking-tight uppercase font-mono text-brand-blue-neon">
+      {heading}
+    </h2>
+    
+    <div class="space-y-3">
+      {faqs.map((item) => (
+        <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 light:bg-neutral-100 hover:border-brand-border-hover transition-colors overflow-hidden">
+          <summary class="flex justify-between items-center p-3.5 font-semibold text-brand-text cursor-pointer list-none select-none font-mono text-[11px] sm:text-xs tracking-tight">
+            <span>{item.question}</span>
+            <span class="text-brand-blue-neon transition-transform group-open:rotate-180">▼</span>
+          </summary>
+          <div class="px-3.5 pb-3.5 pt-1 border-t border-brand-border/20 text-xs text-brand-text-muted leading-relaxed font-sans">
+            {item.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <!-- Structured FAQPage Schema Markup (JSON-LD) -->
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  </section>
+)}

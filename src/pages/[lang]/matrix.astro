@@ -1,0 +1,14 @@
+---
+import MatrixView from '../../components/pages/MatrixView.astro';
+import { supportedLanguages, type SupportedLanguage } from '../../i18n/ui';
+
+export function getStaticPaths() {
+  return supportedLanguages.filter((l) => l !== 'en').map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params as { lang: SupportedLanguage };
+---
+
+<MatrixView lang={lang} />
