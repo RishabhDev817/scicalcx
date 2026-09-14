@@ -7,7 +7,7 @@ import { getHandbook } from '../../i18n/content/handbooks';
 import FaqSection from '../FaqSection.astro';
 import HandbookSection from '../HandbookSection.astro';
 import CalculatorPedagogy from '../CalculatorPedagogy.astro';
-import { calculatorData } from '../../data/calculatorData';
+import { getCalculatorPedagogy } from '../../data/calculatorData';
 
 interface Props {
   lang?: SupportedLanguage;
@@ -17,6 +17,7 @@ const { lang = 'en' } = Astro.props;
 const t = useTranslations(lang);
 const faqs = getFaqs('matrix', lang);
 const handbook = getHandbook('matrix', lang);
+const pedagogy = getCalculatorPedagogy('matrix', lang);
 
 const faqHeadingMap: Record<SupportedLanguage, string> = {
   en: 'Frequently Asked Questions',
@@ -141,7 +142,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     <HandbookSection handbook={handbook} lang={lang} />
 
     <!-- Comprehensive Educational Pedagogy & Architecture -->
-    <CalculatorPedagogy {...calculatorData.matrix} lang={lang} />
+    <CalculatorPedagogy {...pedagogy} lang={lang} />
 
     <!-- FAQ Accordion Section & JSON-LD -->
     <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />

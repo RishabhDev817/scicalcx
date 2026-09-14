@@ -8,7 +8,7 @@ import FaqSection from '../FaqSection.astro';
 import CalculatorPedagogy from '../CalculatorPedagogy.astro';
 import HomepageDirectory from '../HomepageDirectory.astro';
 import HandbookSection from '../HandbookSection.astro';
-import { calculatorData } from '../../data/calculatorData';
+import { getCalculatorPedagogy } from '../../data/calculatorData';
 
 interface Props {
   lang?: SupportedLanguage;
@@ -19,6 +19,7 @@ const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const faqs = getFaqs('scientific', lang);
 const handbook = getHandbook('scientific', lang);
+const pedagogy = getCalculatorPedagogy('scientific', lang);
 
 const faqHeadingMap: Record<SupportedLanguage, string> = {
   en: 'Frequently Asked Questions',
@@ -211,7 +212,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     <HandbookSection handbook={handbook} lang={lang} />
 
     <!-- Comprehensive Educational Pedagogy & Architecture -->
-    <CalculatorPedagogy {...calculatorData.scientific} lang={lang} />
+    <CalculatorPedagogy {...pedagogy} lang={lang} />
 
     <!-- Platform Directory & Homepage Overview -->
     <HomepageDirectory lang={lang} />

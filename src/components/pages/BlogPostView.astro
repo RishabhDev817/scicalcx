@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { render, type CollectionEntry } from 'astro:content';
-import { useTranslatedPath } from '../../i18n/utils';
+import { useTranslations, useTranslatedPath } from '../../i18n/utils';
 import type { SupportedLanguage } from '../../i18n/ui';
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 
 const { post, lang = 'en' } = Astro.props;
 const { Content } = await render(post);
+const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
 function formatDate(date: Date) {
@@ -31,9 +32,9 @@ function formatDate(date: Date) {
   <article class="w-full max-w-3xl mx-auto space-y-8 font-sans pb-12">
     <!-- Breadcrumbs -->
     <nav class="flex items-center space-x-2 text-xs font-mono text-brand-text-dim border-b border-brand-border/40 pb-3">
-      <a href={translatePath('/')} class="hover:text-brand-blue-neon transition-colors">Home</a>
+      <a href={translatePath('/')} class="hover:text-brand-blue-neon transition-colors">{t('blog.breadcrumbHome')}</a>
       <span>/</span>
-      <a href={translatePath('/blog')} class="hover:text-brand-blue-neon transition-colors">Blog</a>
+      <a href={translatePath('/blog')} class="hover:text-brand-blue-neon transition-colors">{t('blog.breadcrumbBlog')}</a>
       <span>/</span>
       <span class="text-brand-text-muted truncate max-w-[200px] sm:max-w-xs">{post.data.title}</span>
     </nav>
@@ -47,7 +48,7 @@ function formatDate(date: Date) {
         <span>&bull;</span>
         <span>By {post.data.author}</span>
         <span>&bull;</span>
-        <span class="text-emerald-400">Technical Tutorial</span>
+        <span class="text-emerald-400">{t('blog.badgeTutorial')}</span>
       </div>
 
       <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
@@ -70,13 +71,13 @@ function formatDate(date: Date) {
         href={translatePath('/blog')}
         class="inline-flex items-center gap-1.5 text-brand-blue-neon hover:text-white transition-colors"
       >
-        &larr; Back to all articles
+        &larr; {t('blog.backToArticles')}
       </a>
       <a
         href={translatePath('/compiler')}
         class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-brand-border bg-brand-black hover:border-brand-border-strong text-white transition-colors"
       >
-        Open Code Sandbox &rarr;
+        {t('blog.openSandbox')} &rarr;
       </a>
     </div>
   </article>
