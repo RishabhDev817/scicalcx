@@ -101,16 +101,16 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Where is my program code executed?',
-        answer: 'All code simulation and interactive algorithmic execution runs safely inside an isolated client-side browser sandbox without transmitting your source code to external servers.',
+        question: 'How and where is my program code executed?',
+        answer: 'Code submitted through the Code Tutor is sent securely over encrypted HTTPS to external containerized sandbox execution services (primary: Judge0 CE API at ce.judge0.com, with automatic fallback to Wandbox API at wandbox.org). The program executes inside an isolated, temporary sandbox and returns output (stdout and stderr) back to your browser. SciCalcX does not permanently store your code on remote servers.',
       },
       {
-        question: 'Which programming languages are supported in the AI Code Tutor?',
-        answer: 'SciCalcX provides code execution and interactive tutoring for C++, C, Python, and JavaScript, with real-time error diagnostics and line-by-line algorithmic feedback.',
+        question: 'Which programming languages are supported in the Code Tutor?',
+        answer: 'SciCalcX provides execution support and interactive curriculum tracks for Python 3, C (GCC 14), and C++20 (GCC 14), featuring automated syntax diagnostics and error explanations.',
       },
       {
         question: 'Can I provide custom standard input (stdin) to my programs?',
-        answer: 'Yes! The interactive console features a dedicated stdin stream input field, allowing you to simulate user prompts, command-line arguments, and piped data structures.',
+        answer: 'Yes. The interactive terminal console features a dedicated stdin stream input field, allowing you to pass dynamic inputs to test array sorting, matrix traversals, and algorithms.',
       },
     ],
   },
@@ -194,7 +194,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: '¿Qué operaciones lógicas bitwise admite?',
-        answer: 'Admite AND, OR, XOR, NOT y desplazamientos de bits (shl/shr) en enteros con signo de hasta 64 bits.',
+        answer: 'Admite AND, OR, XOR, NOT y desplazamientos de bits (shl/shr) en enteros con signo de 32 bits (int32).',
       },
     ],
     statistics: [
@@ -209,12 +209,16 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: '¿Cómo funciona la plataforma de tutor de código de IA para C++, C y Python?',
-        answer: 'Nuestra plataforma de tutor de código de IA ejecuta y compila código de forma segura en el navegador, ofreciendo diagnósticos inteligentes de errores y explicaciones algorítmicas paso a paso.',
+        question: '¿Cómo y dónde se ejecuta el código del programa?',
+        answer: 'El código enviado a través del Tutor de Código se transmite de forma segura mediante HTTPS cifrado a servicios externos de ejecución en contenedores aislados (Judge0 CE y respaldo en Wandbox). El programa se ejecuta en un entorno efímero y seguro con límites de recursos, devolviendo la salida a su navegador sin almacenar su código de forma persistente.',
+      },
+      {
+        question: '¿Qué lenguajes de programación son compatibles?',
+        answer: 'SciCalcX admite ejecución y lecciones interactivas para Python 3, C (GCC 14) y C++20 (GCC 14) con diagnósticos automáticos de errores.',
       },
       {
         question: '¿Puedo enviar datos al flujo estándar (stdin)?',
-        answer: '¡Sí! La consola interactiva cuenta con un campo dedicado de entrada estándar para simular entradas de usuario en tiempo real.',
+        answer: '¡Sí! La consola interactiva cuenta con un campo dedicado de entrada estándar (stdin) para simular entradas de usuario y evaluar algoritmos en tiempo real.',
       },
     ],
   },
@@ -266,7 +270,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     programming: [
       {
         question: 'Comment utiliser la calculatrice de base-n pour programmeurs ?',
-        answer: 'La calculatrice de base-n pour programmeurs convertit instantanément entre Hex, Déc, Oct et Bin avec logique de bits 64 bits et complément à deux.',
+        answer: 'La calculatrice de base-n pour programmeurs convertit instantanément entre Hex, Déc, Oct et Bin avec logique de bits entiers signés 32 bits (int32) et complément à deux.',
       },
     ],
     statistics: [
@@ -277,8 +281,12 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Comment fonctionne la plateforme de tuteur de code IA pour C++ et Python ?',
-        answer: 'La plateforme de tuteur de code IA exécute votre code en toute sécurité dans le navigateur avec des explications d\'erreurs et des conseils guidés.',
+        question: 'Comment et où mon code est-il exécuté ?',
+        answer: 'Le code soumis via Code Tutor est transmis de manière sécurisée via HTTPS chiffré à des services d\'exécution externes isolés dans des conteneurs (Judge0 CE et Wandbox). Le programme s\'exécute dans un bac à sable temporaire et renvoie la sortie standard (stdout/stderr) à votre navigateur sans stockage persistant.',
+      },
+      {
+        question: 'Quels langages de programmation sont pris en charge ?',
+        answer: 'SciCalcX prend en charge l\'exécution et l\'apprentissage interactif pour Python 3, C (GCC 14) et C++20 (GCC 14) avec diagnostics d\'erreurs et gestion de l\'entrée standard (stdin).',
       },
     ],
   },
@@ -345,8 +353,12 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Wo wird mein Programmcode ausgeführt?',
-        answer: 'Alle Codesimulationen laufen direkt in einer sicheren lokalen Sandbox in Ihrem Browser ab. Es werden keine privaten Daten auf unseren Servern gespeichert.',
+        question: 'Wie und wo wird mein Programmcode ausgeführt?',
+        answer: 'Der über den Code Tutor eingereichte Code wird verschlüsselt über HTTPS an externe Sandbox-Ausführungsdienste (Judge0 CE und Wandbox) übertragen. Das Programm wird dort in einer isolierten, temporären Container-Umgebung ausgeführt und die Ausgabe (stdout/stderr) wird an Ihren Browser zurückgesendet. SciCalcX speichert Ihren Quellcode nicht dauerhaft auf externen Servern.',
+      },
+      {
+        question: 'Welche Programmiersprachen werden unterstützt?',
+        answer: 'SciCalcX unterstützt Python 3, C (GCC 14) und C++20 (GCC 14) mit automatischer Fehleranalyse und Unterstützung für Standard-Eingabeströme (stdin).',
       },
     ],
   },
@@ -429,12 +441,12 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Hoe werkt het AI-codetutorplatform voor C++, C en Python?',
-        answer: 'Het AI-codetutorplatform stelt u in staat om programmacode rechtstreeks in de browser te schrijven, uit te voeren en te debuggen met directe feedback en intelligente uitleg.',
+        question: 'Hoe en waar wordt mijn programmacode uitgevoerd?',
+        answer: 'Code die via de Code Tutor wordt ingediend, wordt veilig via versleutelde HTTPS-verbindingen verzonden naar externe sandbox-uitvoeringsdiensten (Judge0 CE en Wandbox). De code draait in een geïsoleerde tijdelijke containeromgeving en retourneert uitvoer (stdout en stderr) naar uw browser. SciCalcX bewaart uw broncode niet permanent op externe servers.',
       },
       {
-        question: 'Wordt de code lokaal en veilig uitgevoerd?',
-        answer: 'Ja, alle simulaties en code-uitvoeringen vinden plaats in een geïsoleerde browser-sandbox zonder dat uw code naar externe servers wordt verzonden.',
+        question: 'Welke programmeertalen worden ondersteund?',
+        answer: 'SciCalcX ondersteunt Python 3, C (GCC 14) en C++20 (GCC 14) met interactieve diagnose en invoermogelijkheid via standaardinvoer (stdin).',
       },
     ],
   },
@@ -486,7 +498,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     programming: [
       {
         question: 'Como usar a calculadora de base-n para programadores?',
-        answer: 'A calculadora de base-n para programadores permite conversões diretas entre Hex, Dec, Oct e Bin com lógica bitwise de 64 bits.',
+        answer: 'A calculadora de base-n para programadores permite conversões diretas entre Hex, Dec, Oct e Bin com lógica bitwise de inteiros com sinal de 32 bits (int32).',
       },
     ],
     statistics: [
@@ -497,8 +509,12 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Como funciona a plataforma de tutoria de código de IA?',
-        answer: 'A plataforma de tutoria de código de IA compila C, C++ e Python diretamente no navegador com feedback explicativo de bugs.',
+        question: 'Como e onde o código do programa é executado?',
+        answer: 'O código enviado pelo Code Tutor é transmitido com segurança via HTTPS criptografado para serviços externos de execução em sandbox isolados (Judge0 CE e Wandbox). O programa é executado em contêineres temporários protegidos e o resultado (stdout/stderr) retorna ao navegador. O SciCalcX não armazena seu código-fonte permanentemente em servidores externos.',
+      },
+      {
+        question: 'Quais linguagens de programação são suportadas?',
+        answer: 'O SciCalcX suporta Python 3, C (GCC 14) e C++20 (GCC 14) com diagnóstico sintático e suporte a fluxo de entrada padrão (stdin).',
       },
     ],
   },
@@ -550,7 +566,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     programming: [
       {
         question: 'Come opera la calcolatrice base-n per programmatori?',
-        answer: 'La calcolatrice base-n per programmatori converte tra Hex, Dec, Oct e Bin supportando operatori logici a 64 bit.',
+        answer: 'La calcolatrice base-n per programmatori converte tra Hex, Dec, Oct e Bin supportando operatori logici su interi con segno a 32 bit (int32).',
       },
     ],
     statistics: [
@@ -561,8 +577,12 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Come funziona la piattaforma di tutor di codice IA?',
-        answer: 'La piattaforma di tutor di codice IA compila ed esegue C, C++ e Python direttamente nel browser con suggerimenti intelligenti.',
+        question: 'Come e dove viene eseguito il codice del programma?',
+        answer: 'Il codice inviato tramite Code Tutor viene trasmesso in modo sicuro tramite HTTPS crittografato a servizi di esecuzione sandbox esterni (Judge0 CE e Wandbox). Il programma viene eseguito in un ambiente container temporaneo e isolato, restituendo l\'output (stdout/stderr) al browser. SciCalcX non archivia in modo permanente il codice sorgente su server esterni.',
+      },
+      {
+        question: 'Quali linguaggi di programmazione sono supportati?',
+        answer: 'SciCalcX supporta Python 3, C (GCC 14) e C++20 (GCC 14) con diagnostica degli errori e supporto per lo stream di input standard (stdin).',
       },
     ],
   },
@@ -610,7 +630,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     programming: [
       {
         question: 'プログラマー向けN進数計算機で基数変換を行うには？',
-        answer: 'プログラマー向けN進数計算機は16進数、10進数、8進数、2進数を相互変換し、64ビットのビット演算をサポートします。',
+        answer: 'プログラマー向けN進数計算機は16進数、10進数、8進数、2進数を相互変換し、32ビット符号付き整数のビット演算をサポートします。',
       },
     ],
     statistics: [
@@ -621,8 +641,12 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'AIコードチュータープラットフォームの機能は何ですか？',
-        answer: 'AIコードチュータープラットフォームはブラウザ上でC++、C、Pythonを安全に実行し、AIによるアルゴリズム指導を提供します。',
+        question: 'プログラムコードはどこでどのように実行されますか？',
+        answer: 'Code Tutorを通じて送信されたコードは、暗号化されたHTTPSを介して外部の分離されたサンドボックス実行サービス（Judge0 CEおよびWandbox）へ安全に送信されます。プログラムは一時的なコンテナ環境内で実行され、標準出力（stdout/stderr）がブラウザに返送されます。SciCalcXがユーザーのソースコードを外部サーバーに永続保存することはありません。',
+      },
+      {
+        question: 'サポートされているプログラミング言語は何ですか？',
+        answer: 'SciCalcXはPython 3、C (GCC 14)、およびC++20 (GCC 14) の実行と構文診断、標準入力（stdin）に対応しています。',
       },
     ],
   },
@@ -670,7 +694,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     programming: [
       {
         question: '프로그래머 N진수 계산기로 진법 변환과 비트 연산을 하려면 어떻게 하나요?',
-        answer: '프로그래머 N진수 계산기는 16진수, 10진수, 8진수, 2진수를 즉시 상호 변환하고 64비트 비트 논리 연산을 지원합니다.',
+        answer: '프로그래머 N진수 계산기는 16진수, 10진수, 8진수, 2진수를 즉시 상호 변환하고 32비트 부호 있는 정수 비트 논리 연산을 지원합니다.',
       },
     ],
     statistics: [
@@ -681,8 +705,12 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'AI 코드 튜터 플랫폼은 어떤 언어를 지원하나요?',
-        answer: 'AI 코드 튜터 플랫폼은 C++, C, Python, JavaScript를 브라우저 샌드박스에서 직접 실행하고 지능형 튜터링을 제공합니다.',
+        question: '프로그램 코드는 어디에서 어떻게 실행되나요?',
+        answer: 'Code Tutor를 통해 제출된 코드는 암호화된 HTTPS를 통해 외부 격리 샌드박스 실행 서비스(Judge0 CE 및 Wandbox API)로 안전하게 전송되어 실행됩니다. 프로그램은 독립된 임시 컨테이너에서 실행된 후 표준 출력(stdout/stderr)을 브라우저로 반환하며, 소스 코드가 원격 서버에 영구 저장되지 않습니다.',
+      },
+      {
+        question: '지원되는 프로그래밍 언어는 무엇인가요?',
+        answer: 'SciCalcX는 Python 3, C (GCC 14), C++20 (GCC 14)을 지원하며 표준 입력(stdin) 및 구문 진단 기능을 제공합니다.',
       },
     ],
   },
@@ -692,3 +720,4 @@ export function getFaqs(pageKey: string, lang: SupportedLanguage = 'en'): FAQIte
   const langFaqs = faqs[lang] || faqs.en;
   return langFaqs[pageKey] || faqs.en[pageKey] || [];
 }
+
