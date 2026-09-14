@@ -10,6 +10,50 @@ interface Props {
 
 const { lang = 'en' } = Astro.props;
 const translatePath = useTranslatedPath(lang);
+
+const cookieTranslations: Record<SupportedLanguage, {
+  title: string;
+  body: string;
+  privacyLinkText: string;
+  bodyAfter: string;
+  learnMore: string;
+  accept: string;
+}> = {
+  en: {
+    title: 'Cookie & Privacy Notice',
+    body: 'SciCalcX uses cookies and third-party vendor services (including Google AdSense) to serve personalized ads, analyze site traffic, and optimize performance. You can view our',
+    privacyLinkText: 'Privacy Policy',
+    bodyAfter: 'to learn more about our data handling and opt-out options.',
+    learnMore: 'Learn More',
+    accept: 'Accept & Continue',
+  },
+  es: {
+    title: 'Aviso de Cookies y Privacidad',
+    body: 'SciCalcX utiliza cookies y servicios de proveedores externos (incluido Google AdSense) para mostrar anuncios personalizados, analizar el tráfico y optimizar el rendimiento. Consulta nuestra',
+    privacyLinkText: 'Política de Privacidad',
+    bodyAfter: 'para conocer nuestras prácticas y opciones de exclusión.',
+    learnMore: 'Más Información',
+    accept: 'Aceptar y Continuar',
+  },
+  fr: {
+    title: 'Avis de Confidentialité et Cookies',
+    body: 'SciCalcX utilise des cookies et des services tiers (y compris Google AdSense) pour diffuser des annonces personnalisées, analyser le trafic et optimiser les performances. Consultez notre',
+    privacyLinkText: 'Politique de Confidentialité',
+    bodyAfter: 'pour en savoir plus sur la gestion de vos données.',
+    learnMore: 'En Savoir Plus',
+    accept: 'Accepter et Continuer',
+  },
+  de: {
+    title: 'Cookie- & Datenschutzhinweis',
+    body: 'SciCalcX verwendet Cookies und Drittanbieter-Dienste (einschließlich Google AdSense), um personalisierte Anzeigen bereitzustellen, den Datenverkehr zu analysieren und die Leistung zu optimieren. Weitere Informationen finden Sie in unserer',
+    privacyLinkText: 'Datenschutzerklärung',
+    bodyAfter: 'zu Datenverarbeitung und Deaktivierungsoptionen.',
+    learnMore: 'Mehr Erfahren',
+    accept: 'Akzeptieren & Fortfahren',
+  },
+};
+
+const c = cookieTranslations[lang] || cookieTranslations.en;
 ---
 
 <div
@@ -22,7 +66,7 @@ const translatePath = useTranslatedPath(lang);
   <div class="flex flex-col gap-3">
     <div class="flex items-start justify-between gap-2 border-b border-brand-border/40 pb-2">
       <div class="flex items-center gap-2">
-        <span class="text-brand-blue-neon font-mono text-[10px] uppercase font-bold tracking-wider">Cookie & Privacy Notice</span>
+        <span class="text-brand-blue-neon font-mono text-[10px] uppercase font-bold tracking-wider">{c.title}</span>
       </div>
       <button
         id="cookie-close-btn"
@@ -34,7 +78,7 @@ const translatePath = useTranslatedPath(lang);
     </div>
 
     <p class="text-brand-text-muted leading-relaxed text-[11px]">
-      SciCalcX uses cookies and third-party vendor services (including Google AdSense) to serve personalized ads, analyze site traffic, and optimize performance. You can view our <a href={translatePath('/privacy')} class="text-brand-blue-neon hover:underline">Privacy Policy</a> to learn more about our data handling and opt-out options.
+      {c.body} <a href={translatePath('/privacy')} class="text-brand-blue-neon hover:underline">{c.privacyLinkText}</a> {c.bodyAfter}
     </p>
 
     <div class="flex items-center justify-end gap-2 pt-1 font-mono text-[11px]">
@@ -42,13 +86,13 @@ const translatePath = useTranslatedPath(lang);
         href={translatePath('/privacy')}
         class="px-3 py-1.5 rounded border border-brand-border hover:border-brand-border-hover text-brand-text-muted hover:text-white transition-colors"
       >
-        Learn More
+        {c.learnMore}
       </a>
       <button
         id="cookie-accept-btn"
         class="px-4 py-1.5 rounded bg-brand-blue hover:bg-brand-blue-hover text-white font-semibold shadow-md transition-all cursor-pointer"
       >
-        Accept &amp; Continue
+        {c.accept}
       </button>
     </div>
   </div>
