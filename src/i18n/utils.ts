@@ -77,7 +77,7 @@ export function getAlternateLanguageLinks(url: URL, site = 'https://scicalcx.com
     });
 
     if (translatedSlugs.has(slug)) {
-      const langsWithTranslations: SupportedLanguage[] = ['es', 'fr', 'de'];
+      const langsWithTranslations: SupportedLanguage[] = ['es', 'ja', 'fr', 'de', 'nl', 'pt', 'ko', 'it'];
       for (const l of langsWithTranslations) {
         links.push({
           lang: l,
