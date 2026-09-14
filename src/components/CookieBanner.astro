@@ -1,6 +1,15 @@
 ---
 // CookieBanner.astro
 // Reusable cookie consent and ad disclosure banner for SciCalcX
+import { useTranslatedPath } from '../i18n/utils';
+import type { SupportedLanguage } from '../i18n/ui';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = 'en' } = Astro.props;
+const translatePath = useTranslatedPath(lang);
 ---
 
 <div
@@ -25,12 +34,12 @@
     </div>
 
     <p class="text-brand-text-muted leading-relaxed text-[11px]">
-      SciCalcX uses cookies and third-party vendor services (including Google AdSense) to serve personalized ads, analyze site traffic, and optimize performance. You can view our <a href="/privacy" class="text-brand-blue-neon hover:underline">Privacy Policy</a> to learn more about our data handling and opt-out options.
+      SciCalcX uses cookies and third-party vendor services (including Google AdSense) to serve personalized ads, analyze site traffic, and optimize performance. You can view our <a href={translatePath('/privacy')} class="text-brand-blue-neon hover:underline">Privacy Policy</a> to learn more about our data handling and opt-out options.
     </p>
 
     <div class="flex items-center justify-end gap-2 pt-1 font-mono text-[11px]">
       <a
-        href="/privacy"
+        href={translatePath('/privacy')}
         class="px-3 py-1.5 rounded border border-brand-border hover:border-brand-border-hover text-brand-text-muted hover:text-white transition-colors"
       >
         Learn More

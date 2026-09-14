@@ -83,6 +83,10 @@ print(f"Sprinter Peak Velocity: {peak_v} m/s")
 
 ---
 
-## Test This Code Live!
+## Mathematical & Computational Tools on SciCalcX
 
-Reading about this concept is one thing, but running the code yourself is how you truly learn. **[Click here to open the SciCalcX AI Code Tutor](/compiler/)** and paste the code blocks above directly into the terminal to see how the output changes in real-time!
+Biomechanics merges mathematical kinematics with empirical statistics. Explore these concepts interactively using SciCalcX:
+
+- **Numerical Derivatives:** Verify continuous velocity $v(t) = s'(t)$ and acceleration $a(t) = v'(t)$ curves using the **[SciCalcX Calculus Suite](/calculus/)**, which implements symmetric difference quotients.
+- **Biometric Variance & Dispersion:** To evaluate trial consistency, standard deviations, and athlete performance ranges across multiple sprints, use the **[SciCalcX Descriptive Statistics Engine](/statistics/)**.
+- **Kinematic Curves:** Visualize position, velocity, and acceleration curves simultaneously with the **[SciCalcX 2D Graphing Calculator](/graphing/)**.

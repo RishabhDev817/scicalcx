@@ -1,9 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const toolLinks = [
+  { name: 'Scientific Calculator', href: '/', icon: 'fx' },
+  { name: 'Matrix Algebra', href: '/matrix', icon: '⊞' },
+  { name: 'Calculus Suite', href: '/calculus', icon: '∫' },
+  { name: '2D Graphing Plotter', href: '/graphing', icon: '📈' },
+  { name: 'Descriptive Statistics', href: '/statistics', icon: 'x̄' },
+  { name: 'Programmer Bitboard', href: '/programming', icon: '01' },
+  { name: 'Code Tutor & Compiler', href: '/compiler', icon: '</>' },
+  { name: 'Engineering Blog', href: '/blog', icon: '📖' },
+];
 ---
 
 <Layout title="404 - Page Not Found | SciCalcX" description="The page you are looking for does not exist on SciCalcX online scientific computational suite.">
-  <div class="w-full max-w-md mx-auto py-16 text-center space-y-6 sm:space-y-8 font-sans">
+  <div class="w-full max-w-xl mx-auto py-12 px-4 text-center space-y-8 font-sans">
     <!-- Eyebrow status code -->
     <div class="inline-flex px-3 py-1 border border-brand-border bg-brand-gray-light/60 text-brand-blue-neon rounded-full font-mono text-xs font-bold tracking-wider animate-pulse">
       STATUS CODE: 404
@@ -11,25 +22,41 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- Main Message -->
     <div class="space-y-3">
-      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-brand-text font-mono">
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-brand-text font-mono">
         PAGE NOT FOUND<span class="text-brand-blue">.</span>
       </h1>
-      <p class="text-xs sm:text-sm text-brand-text-dim max-w-sm mx-auto leading-relaxed">
-        The mathematical coordinate or route you requested does not exist in our computational system. Let's redirect you back to base.
+      <p class="text-xs sm:text-sm text-brand-text-dim max-w-md mx-auto leading-relaxed">
+        The requested URL coordinate was not found on the SciCalcX platform. Choose one of our core computational tools or engineering resources below:
       </p>
     </div>
 
-    <!-- Visual Divider -->
-    <div class="border-t border-brand-border/40 w-16 mx-auto"></div>
+    <!-- Navigation Hub Grid -->
+    <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 text-left space-y-3">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-text-muted pb-1 border-b border-brand-border/40">
+        Available Tools & Resources
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+        {toolLinks.map((link) => (
+          <a
+            href={link.href}
+            class="flex items-center space-x-2.5 p-2 rounded-lg border border-brand-border/60 bg-brand-black/40 hover:bg-brand-gray-dark hover:border-brand-blue/50 transition-all text-xs text-brand-text group"
+          >
+            <span class="w-6 h-6 rounded bg-brand-gray-light/30 border border-brand-border flex items-center justify-center font-mono font-bold text-[10px] text-brand-blue-neon">
+              {link.icon}
+            </span>
+            <span class="group-hover:text-white transition-colors">{link.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
 
-    <!-- CTA Button -->
-    <div>
-      <a 
-        href="/"
-        class="inline-flex h-11 px-6 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_15px_rgba(0,112,243,0.4)] active:bg-brand-blue/80 transition-all cursor-pointer items-center justify-center text-xs tracking-wider uppercase font-mono"
-      >
-        Return to Home Page
-      </a>
+    <!-- Additional Help Links -->
+    <div class="flex items-center justify-center gap-4 text-xs font-mono text-brand-text-muted">
+      <a href="/" class="text-brand-blue hover:text-white transition-colors">Home Page &rarr;</a>
+      <span>&bull;</span>
+      <a href="/contact" class="text-brand-blue hover:text-white transition-colors">Contact Support &rarr;</a>
+      <span>&bull;</span>
+      <a href="/editorial-integrity" class="text-brand-blue hover:text-white transition-colors">Editorial Integrity &rarr;</a>
     </div>
   </div>
 </Layout>

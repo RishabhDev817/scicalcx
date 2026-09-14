@@ -1,0 +1,234 @@
+---
+import { useTranslations, useTranslatedPath } from '../i18n/utils';
+import type { SupportedLanguage } from '../i18n/ui';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+const tools = [
+  {
+    title: 'Scientific Calculator',
+    badge: '100% Client-Side',
+    badgeColor: 'text-brand-blue-neon border-brand-blue/30 bg-brand-blue/10',
+    desc: 'Multi-line expression evaluation, DEG/RAD sexagesimal trigonometry, powers, roots, factorials, and real-time syntax checking.',
+    href: translatePath('/'),
+    icon: 'fx',
+  },
+  {
+    title: 'Matrix & Linear Algebra',
+    badge: '100% Client-Side',
+    badgeColor: 'text-brand-blue-neon border-brand-blue/30 bg-brand-blue/10',
+    desc: 'Determinants via recursive Laplace cofactor expansion, matrix inversion via adjugate matrices, matrix products, and transpose operations up to 4×4.',
+    href: translatePath('/matrix'),
+    icon: '⊞',
+  },
+  {
+    title: 'Calculus Suite',
+    badge: '100% Client-Side',
+    badgeColor: 'text-brand-blue-neon border-brand-blue/30 bg-brand-blue/10',
+    desc: 'Numerical differentiation using symmetric central difference quotients (O(h²)) and definite integration via composite Simpson\'s 1/3 rule (N=1000).',
+    href: translatePath('/calculus'),
+    icon: '∫',
+  },
+  {
+    title: '2D Function Graphing',
+    badge: '100% Client-Side',
+    badgeColor: 'text-brand-blue-neon border-brand-blue/30 bg-brand-blue/10',
+    desc: 'Hardware-accelerated HTML5 Canvas Cartesian plotter with dynamic grid scaling, trigonometric mapping, and mouse cursor coordinate tracking.',
+    href: translatePath('/graphing'),
+    icon: '📈',
+  },
+  {
+    title: 'Descriptive Statistics',
+    badge: '100% Client-Side',
+    badgeColor: 'text-brand-blue-neon border-brand-blue/30 bg-brand-blue/10',
+    desc: 'Comprehensive statistical distributions: arithmetic mean, median, multi-modal analysis, Bessel-corrected sample variance, and population dispersion.',
+    href: translatePath('/statistics'),
+    icon: 'x̄',
+  },
+  {
+    title: 'Programmer Bitboard',
+    badge: '100% Client-Side',
+    badgeColor: 'text-brand-blue-neon border-brand-blue/30 bg-brand-blue/10',
+    desc: 'Synchronized 32-bit signed integer registers (HEX, DEC, OCT, BIN) with an interactive 32-bit visual bitboard for bitwise shift and mask simulation.',
+    href: translatePath('/programming'),
+    icon: '01',
+  },
+  {
+    title: 'Code Tutor & Compiler',
+    badge: 'Encrypted Remote Sandbox',
+    badgeColor: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
+    desc: 'C and C++ code execution powered by ephemeral, containerized Judge0 CE sandboxes with Wandbox fallback, featuring real-time diagnostics and syntax highlighting.',
+    href: translatePath('/compiler'),
+    icon: '</>',
+  },
+  {
+    title: 'Engineering & Algorithm Blog',
+    badge: 'Educational',
+    badgeColor: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
+    desc: 'Peer-reviewed technical tutorials on C++ memory management, sorting algorithm asymptotics, numerical methods, and systems engineering.',
+    href: translatePath('/blog'),
+    icon: '📖',
+  },
+];
+
+const audiences = [
+  {
+    title: 'STEM & University Students',
+    desc: 'Verify homework derivations, cross-check calculus integrals, test matrix inversions, and understand step-by-step mathematical algorithms without paywalls or subscriptions.',
+    icon: '🎓',
+  },
+  {
+    title: 'Mechanical & Electrical Engineers',
+    desc: 'Compute complex impedances, solve small system state-matrices, evaluate rate-of-change derivatives, and verify sensor calibration curve equations on the fly.',
+    icon: '⚡',
+  },
+  {
+    title: 'Systems & Embedded Developers',
+    desc: 'Inspect 32-bit hardware register masks, translate endianness and base notations, toggle individual bit flags, and compile C/C++ verification routines right from the browser.',
+    icon: '💻',
+  },
+  {
+    title: 'Data & Quantitative Analysts',
+    desc: 'Perform instant exploratory data analysis, calculate unbiased sample variances, inspect multimodal datasets, and confirm mathematical properties before writing scripts.',
+    icon: '📊',
+  },
+];
+---
+
+<div class="w-full space-y-12 pt-8">
+  <!-- Core Tools Directory Grid -->
+  <section class="space-y-6">
+    <div class="border-b border-brand-border/60 pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+      <div>
+        <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">Platform Navigation</div>
+        <h2 class="text-2xl font-bold tracking-tight text-brand-text">Core Tools Directory</h2>
+      </div>
+      <p class="text-xs text-brand-text-muted font-mono">8 Specialized Scientific Suites</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {tools.map((tool) => (
+        <a 
+          href={tool.href}
+          class="group p-5 rounded-xl border border-brand-border bg-brand-gray-dark/40 hover:bg-brand-gray-dark/70 hover:border-brand-blue/50 transition-all flex flex-col justify-between space-y-3"
+        >
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2.5">
+                <span class="w-7 h-7 rounded-lg bg-brand-black border border-brand-border flex items-center justify-center font-mono font-bold text-xs text-brand-text group-hover:border-brand-blue/60 group-hover:text-brand-blue-neon transition-colors">
+                  {tool.icon}
+                </span>
+                <h3 class="text-base font-semibold text-brand-text group-hover:text-white transition-colors">
+                  {tool.title}
+                </h3>
+              </div>
+              <span class={`text-[9px] font-mono px-2 py-0.5 rounded-full border ${tool.badgeColor}`}>
+                {tool.badge}
+              </span>
+            </div>
+            <p class="text-xs text-brand-text-muted leading-relaxed">
+              {tool.desc}
+            </p>
+          </div>
+          <div class="text-[11px] font-mono text-brand-blue flex items-center gap-1 group-hover:translate-x-0.5 transition-transform pt-1">
+            Launch tool <span>&rarr;</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- What is SciCalcX? (Comprehensive Architectural Overview) -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-2xl p-6 sm:p-8 space-y-6">
+    <div class="space-y-2">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">Mission & Architecture</div>
+      <h2 class="text-2xl font-bold tracking-tight text-brand-text">What is SciCalcX?</h2>
+    </div>
+    
+    <div class="text-sm text-brand-text-muted leading-relaxed space-y-4">
+      <p>
+        <strong class="text-brand-text">SciCalcX</strong> is a high-performance, open educational engineering platform built to deliver instantaneous, zero-latency mathematical and computational analysis directly in the modern web browser. Traditional online scientific calculators and computing websites are frequently compromised by intrusive pop-up advertisements, paid subscription walls, sluggish server-side round trips, and non-transparent proprietary algorithms. SciCalcX was architected from the ground up to solve these deficiencies by combining browser-native evaluation engines with transparent numerical methodologies.
+      </p>
+      <p>
+        Every mathematical suite on SciCalcX—including the Scientific Calculator, Matrix Algebra Suite, Calculus Engine, 2D Function Grapher, Descriptive Statistics Analyzer, and 32-Bit Programmer Bitboard—operates <strong class="text-brand-text">100% client-side</strong>. Using standard IEEE-754 double-precision floating-point arithmetic, composite numerical integration (Simpson's rule), Laplace cofactor expansion, and native bitwise manipulation, calculations execute in sub-millisecond timeframes without a single byte of your equations or datasets being sent to external servers.
+      </p>
+      <p>
+        For computer science students and software engineers, SciCalcX extends beyond pure mathematics with an integrated <strong class="text-brand-text">Code Tutor & Online Compiler</strong>. Code execution is handled through secure, ephemeral, containerized cloud sandboxes (Judge0 CE and Wandbox), enabling users to write, compile, and debug standard C and C++ algorithms directly alongside their mathematical models. SciCalcX remains completely free, private, and accessible to anyone with an internet connection.
+      </p>
+    </div>
+  </section>
+
+  <!-- Who Can Use SciCalcX? -->
+  <section class="space-y-6">
+    <div class="space-y-1">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">Target Disciplines</div>
+      <h2 class="text-2xl font-bold tracking-tight text-brand-text">Who Can Use SciCalcX?</h2>
+      <p class="text-xs text-brand-text-muted">Designed for precision across academic, industrial, and software engineering domains.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {audiences.map((aud) => (
+        <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 space-y-2.5">
+          <div class="text-2xl">{aud.icon}</div>
+          <h3 class="text-sm font-semibold text-brand-text">{aud.title}</h3>
+          <p class="text-xs text-brand-text-muted leading-relaxed">{aud.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- How SciCalcX Works (Execution Pipeline) -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-2xl p-6 sm:p-8 space-y-6">
+    <div class="space-y-1">
+      <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">Technical Pipeline</div>
+      <h2 class="text-2xl font-bold tracking-tight text-brand-text">How SciCalcX Works</h2>
+      <p class="text-xs text-brand-text-muted">An inside look at the three-stage computational lifecycle powering our engines.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+      <div class="border border-brand-border bg-brand-black/60 rounded-xl p-4 space-y-2">
+        <div class="text-xs font-mono font-bold text-brand-blue-neon">STAGE 1: INPUT & TOKENIZATION</div>
+        <h4 class="text-sm font-semibold text-brand-text">Lexical Parsing & Validation</h4>
+        <p class="text-xs text-brand-text-muted leading-relaxed">
+          Input formulas, matrix elements, and data arrays are parsed locally into discrete tokens. Parentheses balancing, syntax validation, and boundary verification occur in real time as you type.
+        </p>
+      </div>
+      <div class="border border-brand-border bg-brand-black/60 rounded-xl p-4 space-y-2">
+        <div class="text-xs font-mono font-bold text-brand-blue-neon">STAGE 2: EVALUATION</div>
+        <h4 class="text-sm font-semibold text-brand-text">Deterministic Algorithms</h4>
+        <p class="text-xs text-brand-text-muted leading-relaxed">
+          Math calculations run in the browser's JavaScript V8/JavaScriptCore engine via Shunting-Yard RPN, Simpson's quadrature, or Bessel correction. Code execution is routed via HTTPS to isolated sandbox containers.
+        </p>
+      </div>
+      <div class="border border-brand-border bg-brand-black/60 rounded-xl p-4 space-y-2">
+        <div class="text-xs font-mono font-bold text-brand-blue-neon">STAGE 3: NORMALIZATION</div>
+        <h4 class="text-sm font-semibold text-brand-text">Epsilon Cleanup & Formatting</h4>
+        <p class="text-xs text-brand-text-muted leading-relaxed">
+          Raw float64 results undergo precision normalization to prevent IEEE-754 binary representation artifacts (e.g. 0.1 + 0.2 = 0.30000000000000004), displaying clean, mathematically rigorous results.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Commitment & Educational Integrity -->
+  <section class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4">
+    <div class="flex items-center space-x-2">
+      <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+      <h3 class="text-sm font-semibold text-brand-text">Our Strict Privacy & Editorial Commitment</h3>
+    </div>
+    <p class="text-xs text-brand-text-muted leading-relaxed">
+      SciCalcX does not monetize, record, or track your mathematical equations, matrix datasets, or statistical samples. Calculation history is stored strictly in your browser's private <code class="text-brand-blue-neon font-mono text-[11px]">localStorage</code> and never uploaded to any remote database. All educational articles and technical documentation are independently authored and peer-verified against university-standard textbooks.
+    </p>
+    <div class="flex flex-wrap gap-4 pt-2 text-xs font-mono">
+      <a href={translatePath('/privacy')} class="text-brand-blue hover:text-white transition-colors">Read Privacy Policy &rarr;</a>
+      <a href={translatePath('/terms')} class="text-brand-blue hover:text-white transition-colors">Read Terms of Service &rarr;</a>
+      <a href={translatePath('/editorial-integrity')} class="text-brand-blue hover:text-white transition-colors">Read Editorial Guidelines &rarr;</a>
+    </div>
+  </section>
+</div>

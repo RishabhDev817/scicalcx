@@ -6,6 +6,8 @@ import { getFaqs } from '../../i18n/content/faq';
 import { getHandbook } from '../../i18n/content/handbooks';
 import FaqSection from '../FaqSection.astro';
 import HandbookSection from '../HandbookSection.astro';
+import CalculatorPedagogy from '../CalculatorPedagogy.astro';
+import { calculatorData } from '../../data/calculatorData';
 
 interface Props {
   lang?: SupportedLanguage;
@@ -48,6 +50,14 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <p class="text-xs text-brand-text-muted">
         {t('matrix.subheading')}
       </p>
+      <div class="text-xs sm:text-sm text-brand-text-muted leading-relaxed space-y-2 pt-2 border-t border-brand-border/30">
+        <p>
+          The SciCalcX Matrix Calculator is a dedicated linear algebra workstation built for university engineering courses, computer graphics, and physics modeling. It supports 2×2 and 3×3 matrix systems, computing determinants, multiplicative inverses, transposes, scalar additions, and row-by-column matrix multiplications.
+        </p>
+        <p>
+          All matrix operations execute locally inside your browser using client-side JavaScript. Matrices are checked for dimensional compatibility and singularity (|det| = 0) in real time before computation, delivering instant step-by-step verification without server requests.
+        </p>
+      </div>
     </div>
 
     <!-- Live Status -->
@@ -127,8 +137,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </div>
     </div>
 
-    <!-- SEO Educational Documentation Block -->
-    <HandbookSection handbook={handbook} lang={lang} />
+    <!-- Comprehensive Educational Pedagogy & Architecture -->
+    <CalculatorPedagogy {...calculatorData.matrix} lang={lang} />
 
     <!-- FAQ Accordion Section & JSON-LD -->
     <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />

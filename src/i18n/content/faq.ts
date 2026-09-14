@@ -86,7 +86,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: 'Which bitwise logic operations can I execute?',
-        answer: 'SciCalcX supports 64-bit word sizing with bitwise AND, OR, XOR, NOT, Left Bitshift (<<), and Right Bitshift (>>), updated dynamically across Hex, Dec, Oct, and Bin viewports.',
+        answer: 'SciCalcX supports 32-bit signed integer (int32) word sizing with bitwise AND, OR, XOR, NOT, Left Bitshift (<<), and Right Bitshift (>>), updated dynamically across Hex, Dec, Oct, and Bin viewports.',
       },
     ],
     statistics: [
@@ -410,7 +410,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     programming: [
       {
         question: 'Hoe werkt de programmeren base-n calculator voor hexadecimale en binaire conversies?',
-        answer: 'De programmeren base-n calculator zet getallen direct om tussen Hex, Dec, Oct en Bin. U kunt ook bitsgewijze bewerkingen uitvoeren zoals AND, OR, XOR, NOT en bitshifts in 64-bits precisie.',
+        answer: 'De programmeren base-n calculator zet getallen direct om tussen Hex, Dec, Oct en Bin. U kunt ook bitsgewijze bewerkingen uitvoeren zoals AND, OR, XOR, NOT en bitshifts in 32-bits precisie.',
       },
       {
         question: 'Ondersteunt de calculator twee-complement?',

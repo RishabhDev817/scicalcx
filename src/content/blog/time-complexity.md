@@ -133,6 +133,11 @@ int main() {
 
 ---
 
-## Test This Code Live!
+## Visualize & Benchmark Complexity Curves
 
-Reading about this concept is one thing, but running the code yourself is how you truly learn. **[Click here to open the SciCalcX AI Code Tutor](/compiler/)** and paste the code blocks above directly into the terminal to see how the output changes in real-time!
+Asymptotic notation is best understood when observed both computationally and graphically:
+
+- **Benchmark in the Sandbox:** Open the **[SciCalcX C/C++ Code Tutor](/compiler/)** to run the timing demonstration above with different vector sizes ($N=100, 200, 400$) to observe execution times firsthand.
+- **Plot Growth Curves Interactively:** Use the **[SciCalcX 2D Graphing Calculator](/graphing/)** to plot $y = x$, $y = x \log_2(x)$, and $y = x^2$ on a shared Cartesian grid to visualize the dramatic divergence of quadratic scaling.
+- **Applied Case Study — Sorting:** See Big-O in action in our guide to **[Sorting Algorithms in C++ (Bubble Sort & Selection Sort)](/blog/sorting-cpp/)**.
+- **Data Structure Trade-Offs:** Compare lookup vs. insertion asymptotic complexities in **[Linked Lists vs Arrays in Modern Software Development](/blog/linked-lists-arrays/)**.

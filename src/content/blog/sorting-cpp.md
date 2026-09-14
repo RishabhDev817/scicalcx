@@ -125,6 +125,10 @@ int main() {
 
 ---
 
-## Test This Code Live!
+## Practice & Compare Performance
 
-Reading about this concept is one thing, but running the code yourself is how you truly learn. **[Click here to open the SciCalcX AI Code Tutor](/compiler/)** and paste the code blocks above directly into the terminal to see how the output changes in real-time!
+Deepen your algorithmic intuition with these interactive resources:
+
+- **Run in the Cloud Sandbox:** Open the **[SciCalcX C/C++ Code Tutor](/compiler/)** to paste this code, compile it immediately, and trace array swaps element by element.
+- **Analyze Asymptotic Growth:** Review our in-depth companion guide on **[Understanding Time Complexity & Big-O Notation](/blog/time-complexity/)** to understand why bubble sort degrades quadratically ($O(n^2)$) compared to $O(n \log n)$ mergesort.
+- **Plot Complexity Curves:** Plot $y = x^2$ versus $y = x \cdot \log_2(x)$ side-by-side using the **[SciCalcX 2D Graphing Calculator](/graphing/)** to visualize algorithmic scaling.

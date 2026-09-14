@@ -5,7 +5,9 @@ import type { SupportedLanguage } from '../../i18n/ui';
 import { getFaqs } from '../../i18n/content/faq';
 import { getHandbook } from '../../i18n/content/handbooks';
 import FaqSection from '../FaqSection.astro';
-import HandbookSection from '../HandbookSection.astro';
+import CalculatorPedagogy from '../CalculatorPedagogy.astro';
+import HomepageDirectory from '../HomepageDirectory.astro';
+import { calculatorData } from '../../data/calculatorData';
 
 interface Props {
   lang?: SupportedLanguage;
@@ -53,6 +55,14 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           <a href={translatePath('/terms')} class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">{t('footer.terms')}</a>
           <a href={translatePath('/privacy')} class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">{t('footer.privacy')}</a>
         </div>
+      </div>
+      <div class="text-xs sm:text-sm text-brand-text-muted leading-relaxed space-y-2 pt-2 border-t border-brand-border/30">
+        <p>
+          The SciCalcX Scientific Calculator provides a high-precision, multi-line mathematical evaluation environment designed for students, engineering majors, and STEM professionals. It features real-time parenthetical syntax validation, instant trigonometric evaluation across sexagesimal degrees (DEG) and circular radians (RAD), logarithms, powers, and roots.
+        </p>
+        <p>
+          All operations run entirely client-side in your web browser using double-precision IEEE-754 registers with custom epsilon normalization. Your formulas, datasets, and calculations are evaluated locally with zero latency and never transmitted to remote servers.
+        </p>
       </div>
     </div>
 
@@ -196,8 +206,11 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </div>
     </div>
 
-    <!-- SEO Educational Documentation Block -->
-    <HandbookSection handbook={handbook} lang={lang} />
+    <!-- Comprehensive Educational Pedagogy & Architecture -->
+    <CalculatorPedagogy {...calculatorData.scientific} lang={lang} />
+
+    <!-- Platform Directory & Homepage Overview -->
+    <HomepageDirectory lang={lang} />
 
     <!-- FAQ Accordion Section & JSON-LD -->
     <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />

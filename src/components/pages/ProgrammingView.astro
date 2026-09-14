@@ -5,7 +5,8 @@ import type { SupportedLanguage } from '../../i18n/ui';
 import { getFaqs } from '../../i18n/content/faq';
 import { getHandbook } from '../../i18n/content/handbooks';
 import FaqSection from '../FaqSection.astro';
-import HandbookSection from '../HandbookSection.astro';
+import CalculatorPedagogy from '../CalculatorPedagogy.astro';
+import { calculatorData } from '../../data/calculatorData';
 
 interface Props {
   lang?: SupportedLanguage;
@@ -14,7 +15,6 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 const t = useTranslations(lang);
 const faqs = getFaqs('programming', lang);
-const handbook = getHandbook('programming', lang);
 
 const faqHeadingMap: Record<SupportedLanguage, string> = {
   en: 'Frequently Asked Questions',
@@ -38,7 +38,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 >
   <div class="w-full max-w-2xl mx-auto space-y-6">
     <!-- Page Header -->
-    <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
+    <div class="text-center md:text-left space-y-3 border-b border-brand-border/60 pb-5">
       <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
         {t('programming.eyebrow')}
       </div>
@@ -48,6 +48,14 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <p class="text-xs text-brand-text-muted">
         {t('programming.subheading')}
       </p>
+      <div class="text-xs text-brand-text-dim leading-relaxed space-y-2 pt-1">
+        <p>
+          The SciCalcX Programmer's Calculator provides an interactive, real-time environment for low-level software engineering, binary arithmetic, and hardware register manipulation. All calculations, bitwise transformations, and base conversions run entirely client-side using JavaScript bitwise operators constrained to standard 32-bit signed integers (<code class="text-brand-blue-neon font-mono text-[11px]">int32</code>, two's complement format spanning &minus;2,147,483,648 to 2,147,483,647).
+        </p>
+        <p>
+          With four synchronized representation registers—Hexadecimal (Base 16), Decimal (Base 10), Octal (Base 8), and Binary (Base 2)—every numeric input or bit toggle instantly propagates across all systems. The interactive 32-bit visual bitboard exposes each discrete bit (indices 0 through 31), allowing systems engineers, embedded developers, and computer science students to inspect memory masks, simulate bitwise operations (<code class="text-brand-blue-neon font-mono text-[11px]">AND</code>, <code class="text-brand-blue-neon font-mono text-[11px]">OR</code>, <code class="text-brand-blue-neon font-mono text-[11px]">XOR</code>, <code class="text-brand-blue-neon font-mono text-[11px]">NOT</code>, shifts), and debug flag registers without leaving the browser.
+        </p>
+      </div>
     </div>
 
     <!-- Mode Selector & Value Inputs -->
@@ -155,8 +163,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </div>
     </div>
 
-    <!-- SEO Educational Documentation Block -->
-    <HandbookSection handbook={handbook} lang={lang} />
+    <!-- Deep Mathematical & Technical Documentation Block -->
+    <CalculatorPedagogy {...calculatorData.programming} lang={lang} />
 
     <!-- FAQ Accordion Section & JSON-LD -->
     <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />

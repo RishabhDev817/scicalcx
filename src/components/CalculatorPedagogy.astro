@@ -1,0 +1,236 @@
+---
+import type { SupportedLanguage } from '../i18n/ui';
+import { useTranslatedPath } from '../i18n/utils';
+
+export interface WorkedStep {
+  label: string;
+  expression: string;
+  note: string;
+}
+
+export interface RelatedTool {
+  title: string;
+  desc: string;
+  href: string;
+  badge: string;
+}
+
+interface Props {
+  lang?: SupportedLanguage;
+  conceptTitle: string;
+  conceptBadge: string;
+  conceptDescription: string[];
+  howToSteps: string[];
+  formulas: { title: string; math: string; explanation: string }[];
+  workedExample: {
+    title: string;
+    input: string;
+    steps: WorkedStep[];
+    result: string;
+    explanation: string;
+  };
+  howItWorks: {
+    title: string;
+    paragraphs: string[];
+  };
+  limitations: {
+    title: string;
+    points: string[];
+  };
+  commonMistakes: {
+    mistake: string;
+    fix: string;
+  }[];
+  useCases: {
+    title: string;
+    desc: string;
+  }[];
+  relatedTools: RelatedTool[];
+}
+
+const {
+  lang = 'en',
+  conceptTitle,
+  conceptBadge,
+  conceptDescription,
+  howToSteps,
+  formulas,
+  workedExample,
+  howItWorks,
+  limitations,
+  commonMistakes,
+  useCases,
+  relatedTools,
+} = Astro.props;
+
+const translatePath = useTranslatedPath(lang);
+---
+
+<div class="w-full space-y-8 font-sans text-xs sm:text-sm text-brand-text-muted mt-8">
+  
+  <!-- 1. What is Concept & Mathematical Foundation -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl backdrop-blur-sm">
+    <div class="border-b border-brand-border/40 pb-3">
+      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">{conceptBadge}</span>
+      <h2 class="text-lg sm:text-xl font-bold text-white tracking-tight mt-1">{conceptTitle}</h2>
+    </div>
+    <div class="space-y-3 leading-relaxed">
+      {conceptDescription.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+  </section>
+
+  <!-- 2. Step-by-Step How-To Guide -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
+    <div class="border-b border-brand-border/40 pb-3">
+      <span class="text-emerald-400 font-mono text-[10px] uppercase tracking-widest block">Step-by-Step Instructions</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">How to Use This Calculator</h2>
+    </div>
+    <ol class="space-y-3 pl-2">
+      {howToSteps.map((step, idx) => (
+        <li class="flex items-start gap-3">
+          <span class="shrink-0 w-6 h-6 rounded-full bg-brand-blue/15 border border-brand-blue/30 text-brand-blue-neon font-mono font-bold text-xs flex items-center justify-center">
+            {idx + 1}
+          </span>
+          <span class="pt-0.5 leading-relaxed">{step}</span>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- 3. Mathematical Formulas & Notation -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-5 shadow-xl">
+    <div class="border-b border-brand-border/40 pb-3">
+      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">Formal Methodology</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">Underlying Mathematical Formulas</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {formulas.map((f) => (
+        <div class="border border-brand-border/80 bg-brand-black/60 rounded-lg p-4 space-y-2.5">
+          <h3 class="text-xs font-semibold uppercase font-mono text-white tracking-wider">{f.title}</h3>
+          <div class="p-3 bg-brand-gray-dark/80 border border-brand-border/60 rounded font-mono text-xs text-brand-blue-neon text-center overflow-x-auto select-all">
+            {f.math}
+          </div>
+          <p class="text-xs text-brand-text-dim leading-relaxed">{f.explanation}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 4. Worked Numerical Example -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
+    <div class="border-b border-brand-border/40 pb-3">
+      <span class="text-amber-400 font-mono text-[10px] uppercase tracking-widest block">Practical Application</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">{workedExample.title}</h2>
+    </div>
+    <div class="space-y-4">
+      <div class="p-3.5 bg-brand-black/80 border border-brand-border rounded font-mono text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <div><span class="text-brand-text-dim">INPUT:</span> <span class="text-white font-bold">{workedExample.input}</span></div>
+        <div><span class="text-brand-text-dim">RESULT:</span> <span class="text-emerald-400 font-bold">{workedExample.result}</span></div>
+      </div>
+      
+      <div class="space-y-2">
+        <h3 class="text-xs font-mono uppercase tracking-wider text-white">Step-by-Step Execution:</h3>
+        <div class="border border-brand-border/60 rounded-lg overflow-hidden font-mono text-xs">
+          {workedExample.steps.map((st, i) => (
+            <div class={`p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 ${i % 2 === 0 ? 'bg-brand-black/40' : 'bg-brand-gray-dark/20'} border-b border-brand-border/30 last:border-b-0`}>
+              <span class="text-brand-blue-neon font-semibold text-[11px]">{st.label}</span>
+              <span class="text-white font-bold">{st.expression}</span>
+              <span class="text-brand-text-dim text-[11px]">{st.note}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p class="text-xs text-brand-text-muted leading-relaxed italic border-l-2 border-brand-blue/50 pl-3">
+        {workedExample.explanation}
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. How the Calculation Works in SciCalcX -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
+    <div class="border-b border-brand-border/40 pb-3">
+      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">Implementation Mechanics</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">{howItWorks.title}</h2>
+    </div>
+    <div class="space-y-3 leading-relaxed">
+      {howItWorks.paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
+  </section>
+
+  <!-- 6. Accuracy, Limitations & Common Pitfalls Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Limitations -->
+    <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 space-y-3 shadow-xl">
+      <h3 class="text-sm font-semibold uppercase font-mono text-amber-400 flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> {limitations.title}
+      </h3>
+      <ul class="space-y-2 text-xs text-brand-text-muted list-disc pl-4 leading-relaxed">
+        {limitations.points.map((pt) => (
+          <li>{pt}</li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- Common Mistakes -->
+    <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 space-y-3 shadow-xl">
+      <h3 class="text-sm font-semibold uppercase font-mono text-rose-400 flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> Common User Traps &amp; Fixes
+      </h3>
+      <div class="space-y-2.5 text-xs">
+        {commonMistakes.map((cm) => (
+          <div class="border-b border-brand-border/40 pb-2 last:border-b-0 last:pb-0 space-y-0.5">
+            <div class="text-white font-semibold flex items-center gap-1">
+              <span class="text-rose-400">✕</span> {cm.mistake}
+            </div>
+            <div class="text-brand-text-dim pl-3 flex items-center gap-1">
+              <span class="text-emerald-400">✓</span> {cm.fix}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <!-- 7. Real-World Engineering & Academic Use Cases -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
+    <div class="border-b border-brand-border/40 pb-3">
+      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">Applications</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">Real-World Engineering &amp; Science Applications</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {useCases.map((uc) => (
+        <div class="border border-brand-border/60 bg-brand-black/40 rounded-lg p-4 space-y-1.5">
+          <h3 class="text-xs font-semibold text-white font-mono uppercase">{uc.title}</h3>
+          <p class="text-xs text-brand-text-dim leading-relaxed">{uc.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 8. Connected SciCalcX Ecosystem Tools -->
+  <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
+    <div class="border-b border-brand-border/40 pb-3">
+      <span class="text-brand-blue font-mono text-[10px] uppercase tracking-widest block">Tool Ecosystem</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">Related Computational Tools &amp; Guides</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {relatedTools.map((tool) => (
+        <a 
+          href={translatePath(tool.href)} 
+          class="border border-brand-border bg-brand-black/50 hover:bg-brand-gray-hover/60 hover:border-brand-border-hover rounded-xl p-4 space-y-2 transition-all block group"
+        >
+          <span class="text-[10px] font-mono text-brand-blue-neon uppercase tracking-wider block">{tool.badge}</span>
+          <h3 class="text-sm font-semibold text-white group-hover:text-brand-blue-neon transition-colors">{tool.title}</h3>
+          <p class="text-xs text-brand-text-dim line-clamp-2 leading-relaxed">{tool.desc}</p>
+          <span class="text-[11px] font-mono text-brand-blue-neon pt-1 block font-semibold">Open Tool &rarr;</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+</div>

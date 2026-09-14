@@ -66,6 +66,29 @@ export function getAlternateLanguageLinks(url: URL, site = 'https://scicalcx.com
     },
   ];
 
+  // If this is an individual blog post, only link languages that genuinely have this post
+  if (basePath.startsWith('/blog/') && basePath !== '/blog') {
+    const slug = basePath.replace('/blog/', '').replace(/\/$/, '');
+    const translatedSlugs = new Set(['time-complexity', 'pointers-cpp', 'calculator-cpp']);
+    
+    links.push({
+      lang: 'en',
+      href: `${cleanSite}${basePath}`,
+    });
+
+    if (translatedSlugs.has(slug)) {
+      const langsWithTranslations: SupportedLanguage[] = ['es', 'ja', 'fr', 'de', 'pt', 'ko', 'it'];
+      for (const l of langsWithTranslations) {
+        links.push({
+          lang: l,
+          href: `${cleanSite}/${l}${basePath}`,
+        });
+      }
+    }
+
+    return links;
+  }
+
   for (const l of supportedLanguages) {
     if (!showDefaultLang && l === defaultLang) {
       links.push({

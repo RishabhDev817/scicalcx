@@ -82,7 +82,7 @@ export const ui = {
     'graphing.subheading': 'Plot multi-curve functions, inspect local extrema, analyze asymptotes, and evaluate parametric intersections dynamically.',
     // Meta & SEO - Programming
     'meta.programming.title': 'Base-N Calculator for Programmers | Hex, Dec, Oct, Bin & Bitwise | SciCalcX',
-    'meta.programming.desc': 'Base-N calculator for programmers supporting Hexadecimal, Decimal, Octal, and Binary conversions with 64-bit bitwise logic operations (AND, OR, XOR, NOT, shifts).',
+    'meta.programming.desc': 'Base-N calculator for programmers supporting Hexadecimal, Decimal, Octal, and Binary conversions with 32-bit signed bitwise logic operations (AND, OR, XOR, NOT, shifts).',
     'meta.programming.keywords': 'base-n calculator for programmers, programmer calculator, hex calculator, binary calculator, octal converter, bitwise calculator',
     'programming.eyebrow': 'System Mode: Binary & Bitwise Logic',
     'programming.heading': 'Base-N Calculator for Programmers',
@@ -379,7 +379,7 @@ export const ui = {
     'graphing.subheading': 'Plotte Funktionskurven, analysiere lokale Extrema und Schnittpunkte dynamisch.',
     // Meta & SEO - Programming
     'meta.programming.title': 'Programmierer Rechner | Hex, Dez, Okt, Bin & Bitweise | SciCalcX',
-    'meta.programming.desc': 'Base-N Programmierer-Rechner für Hexadezimal-, Dezimal-, Oktal- und Binärkonvertierungen mit bitweisen 64-Bit-Logikoperatoren.',
+    'meta.programming.desc': 'Base-N Programmierer-Rechner für Hexadezimal-, Dezimal-, Oktal- und Binärkonvertierungen mit bitweisen 32-Bit-Logikoperatoren.',
     'meta.programming.keywords': 'programmierer rechner, hex umrechner, binaerrechner, bitweise operatoren, base n',
     'programming.eyebrow': 'Systemmodus: Binäre & Bitweise Logik',
     'programming.heading': 'Base-N Programmierer-Rechner',
@@ -478,11 +478,11 @@ export const ui = {
     'graphing.subheading': 'Plot meervoudige functiecurven en inspecteer afgeleiden en extremen dynamisch.',
     // Meta & SEO - Programming (Targeting: programmeren base-n calculator)
     'meta.programming.title': 'Programmeren Base-N Calculator | Hex, Dec, Oct, Bin & Bitwise | SciCalcX',
-    'meta.programming.desc': 'Programmeren base-n calculator voor snelle conversies tussen hexadecimaal, decimaal, octaal en binair met bitsgewijze 64-bits logica.',
+    'meta.programming.desc': 'Programmeren base-n calculator voor snelle conversies tussen hexadecimaal, decimaal, octaal en binair met bitsgewijze 32-bits logica.',
     'meta.programming.keywords': 'programmeren base-n calculator, binaire calculator, hex omrekenen, bitwise bewerkingen, programmeur rekenmachine',
     'programming.eyebrow': 'Binaire & Bitsgewijze Logica',
     'programming.heading': 'Programmeren Base-N Calculator',
-    'programming.subheading': 'Converteer naadloos tussen Hex, Dec, Oct en Bin met 64-bits precisie en twee-complement.',
+    'programming.subheading': 'Converteer naadloos tussen Hex, Dec, Oct en Bin met 32-bits precisie en twee-complement.',
     // Meta & SEO - Statistics
     'meta.statistics.title': 'Statistiek Suite | Gemiddelde, Standaarddeviatie & Regressie | SciCalcX',
     'meta.statistics.desc': 'Statistische calculator voor gemiddelde, mediaan, modus, variantie, standaarddeviatie en lineaire regressie.',

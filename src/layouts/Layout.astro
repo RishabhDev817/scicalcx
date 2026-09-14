@@ -27,6 +27,45 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
+
+const siteSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': 'https://scicalcx.com/#website',
+      'url': 'https://scicalcx.com/',
+      'name': 'SciCalcX',
+      'description': 'Free online scientific computational platform offering high-precision calculators, statistics analysis, matrix algebra, graphing, and code compilation.',
+      'publisher': {
+        '@type': 'Organization',
+        '@id': 'https://scicalcx.com/#organization',
+        'name': 'SciCalcX',
+        'url': 'https://scicalcx.com/',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': 'https://scicalcx.com/favicon-96x96.png',
+        },
+      },
+      'inLanguage': currentLang,
+    },
+    {
+      '@type': 'WebApplication',
+      '@id': `${canonicalURL.href}#webapp`,
+      'url': canonicalURL.href,
+      'name': title,
+      'description': description,
+      'applicationCategory': 'EducationalApplication',
+      'operatingSystem': 'Any modern web browser',
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'USD',
+      },
+      'browserRequirements': 'Requires JavaScript. Requires HTML5 Canvas for graphing.',
+    }
+  ],
+};
 ---
 
 <!doctype html>
@@ -85,6 +124,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
         }
       })();
     </script>
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(siteSchema)} />
   </head>
   <body class="bg-brand-black text-brand-text min-h-screen flex flex-col font-sans selection:bg-brand-blue selection:text-white">
     <!-- Atmospheric Mesh Grid Background -->
@@ -322,7 +362,7 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
     <Footer lang={currentLang} />
 
     <!-- GDPR & AdSense Consent Banner -->
-    <CookieBanner />
+    <CookieBanner lang={currentLang} />
 
     <!-- Client Script for UI Controls -->
     <script>

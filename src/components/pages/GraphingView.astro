@@ -6,6 +6,8 @@ import { getFaqs } from '../../i18n/content/faq';
 import { getHandbook } from '../../i18n/content/handbooks';
 import FaqSection from '../FaqSection.astro';
 import HandbookSection from '../HandbookSection.astro';
+import CalculatorPedagogy from '../CalculatorPedagogy.astro';
+import { calculatorData } from '../../data/calculatorData';
 
 interface Props {
   lang?: SupportedLanguage;
@@ -48,6 +50,14 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <p class="text-xs text-brand-text-muted">
         {t('graphing.subheading')}
       </p>
+      <div class="text-xs sm:text-sm text-brand-text-muted leading-relaxed space-y-2 pt-2 border-t border-brand-border/30">
+        <p>
+          The SciCalcX 2D Graphing Calculator is an interactive mathematical visualization studio built on HTML5 Canvas. It renders single or multi-variable continuous curves f(x) and g(x), automatically detecting Cartesian roots (x-intercepts), y-intercepts, and critical local extrema.
+        </p>
+        <p>
+          Plotting is performed using adaptive subpixel numerical sampling with automated vertical asymptote suppression. The coordinate viewport supports dynamic panning and zooming, executing 100% locally in your browser with zero latency or external dependencies.
+        </p>
+      </div>
     </div>
 
     <!-- Layout Wrapper -->
@@ -177,8 +187,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </div>
     </div>
 
-    <!-- SEO Educational Documentation Block -->
-    <HandbookSection handbook={handbook} lang={lang} />
+    <!-- Comprehensive Educational Pedagogy & Architecture -->
+    <CalculatorPedagogy {...calculatorData.graphing} lang={lang} />
 
     <!-- FAQ Accordion Section & JSON-LD -->
     <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />

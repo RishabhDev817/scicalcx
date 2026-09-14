@@ -6,6 +6,8 @@ import { getFaqs } from '../../i18n/content/faq';
 import { getHandbook } from '../../i18n/content/handbooks';
 import FaqSection from '../FaqSection.astro';
 import HandbookSection from '../HandbookSection.astro';
+import CalculatorPedagogy from '../CalculatorPedagogy.astro';
+import { calculatorData } from '../../data/calculatorData';
 
 interface Props {
   lang?: SupportedLanguage;
@@ -48,6 +50,14 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <p class="text-xs text-brand-text-muted">
         {t('calculus.subheading')}
       </p>
+      <div class="text-xs sm:text-sm text-brand-text-muted leading-relaxed space-y-2 pt-2 border-t border-brand-border/30">
+        <p>
+          The SciCalcX Calculus Calculator provides rigorous numerical analysis tools to evaluate definite integrals, compute instantaneous derivative slopes, and find real or complex polynomial roots. It is engineered for students and STEM practitioners solving rates of change and area accumulations where elementary analytical antiderivatives do not exist.
+        </p>
+        <p>
+          Definite integration utilizes fourth-order Composite Simpson's 1/3 Rule with 1,000 discrete subintervals, while numerical differentiation applies symmetric central difference quotients with step size h = 10⁻⁶. All evaluations execute locally in your web browser with zero server roundtrips.
+        </p>
+      </div>
     </div>
 
     <!-- Interface Grid -->
@@ -188,8 +198,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </div>
     </div>
 
-    <!-- SEO Educational Documentation Block -->
-    <HandbookSection handbook={handbook} lang={lang} />
+    <!-- Comprehensive Educational Pedagogy & Architecture -->
+    <CalculatorPedagogy {...calculatorData.calculus} lang={lang} />
 
     <!-- FAQ Accordion Section & JSON-LD -->
     <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />

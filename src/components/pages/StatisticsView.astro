@@ -5,7 +5,8 @@ import type { SupportedLanguage } from '../../i18n/ui';
 import { getFaqs } from '../../i18n/content/faq';
 import { getHandbook } from '../../i18n/content/handbooks';
 import FaqSection from '../FaqSection.astro';
-import HandbookSection from '../HandbookSection.astro';
+import CalculatorPedagogy from '../CalculatorPedagogy.astro';
+import { calculatorData } from '../../data/calculatorData';
 
 interface Props {
   lang?: SupportedLanguage;
@@ -14,7 +15,6 @@ interface Props {
 const { lang = 'en' } = Astro.props;
 const t = useTranslations(lang);
 const faqs = getFaqs('statistics', lang);
-const handbook = getHandbook('statistics', lang);
 
 const faqHeadingMap: Record<SupportedLanguage, string> = {
   en: 'Frequently Asked Questions',
@@ -48,6 +48,14 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <p class="text-xs text-brand-text-muted">
         {t('statistics.subheading')}
       </p>
+      <div class="text-xs sm:text-sm text-brand-text-muted leading-relaxed space-y-2 pt-2 border-t border-brand-border/30">
+        <p>
+          The SciCalcX Statistics Suite is a descriptive data analysis workstation designed for lab scientists, engineering students, and data researchers. It processes numerical datasets separated by commas, spaces, or newlines, immediately computing central tendency measures (mean, median, mode) and dispersion metrics.
+        </p>
+        <p>
+          Crucially, the suite distinguishes between Sample Variance (s²) using Bessel\'s correction (dividing sum of squares by n - 1) and Population Variance (σ² dividing by n), alongside their respective standard deviations. All calculations run client-side in your web browser with zero telemetry.
+        </p>
+      </div>
     </div>
 
     <!-- Live Status -->
@@ -154,8 +162,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </div>
     </div>
 
-    <!-- SEO Educational Documentation Block -->
-    <HandbookSection handbook={handbook} lang={lang} />
+    <!-- Deep Mathematical & Technical Documentation Block -->
+    <CalculatorPedagogy {...calculatorData.statistics} lang={lang} />
 
     <!-- FAQ Accordion Section & JSON-LD -->
     <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />

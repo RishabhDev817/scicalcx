@@ -442,7 +442,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: 'Zweierkomplement und Bitmanipulation',
           paragraphs: [
-            'Vorzeichenbehaftete Ganzzahlen und Bitshifts in 64-Bit-Gleitkommaarchitekturen.',
+            'Vorzeichenbehaftete Ganzzahlen und Bitshifts in 32-Bit-Architekturen.',
           ],
         },
       ],
@@ -549,7 +549,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: 'Twee-complement en Bitsgewijze Logica',
           paragraphs: [
-            'De programmeren base-n calculator ondersteunt 64-bits bewerkingen en directe conversies tussen Hex, Dec, Oct en Bin.',
+            'De programmeren base-n calculator ondersteunt 32-bits bewerkingen en directe conversies tussen Hex, Dec, Oct en Bin.',
           ],
         },
       ],

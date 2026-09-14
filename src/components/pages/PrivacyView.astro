@@ -39,7 +39,11 @@ const content = getInfoContent('privacy', lang);
           <h2 class="text-base font-semibold text-white font-mono uppercase tracking-wider">
             {sec.title}
           </h2>
-          <p>{sec.body}</p>
+          {sec.paragraphs ? (
+            sec.paragraphs.map((p) => <p class="leading-relaxed">{p}</p>)
+          ) : (
+            <p class="leading-relaxed">{sec.body}</p>
+          )}
         </section>
       ))}
 
