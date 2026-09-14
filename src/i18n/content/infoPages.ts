@@ -70,9 +70,9 @@ export const infoPages: Record<SupportedLanguage, InfoPageContent> = {
       standardsTitle: 'Calculation Accuracy & Editorial Standards',
       standardsIntro: 'Accuracy is paramount in academic and scientific computing. We adhere to rigorous computational validation standards:',
       standards: [
-        { label: 'Precision Normalization', text: 'IEEE 754 precision artifacts are eliminated via custom decimal-normalization algorithms to guarantee human-readable representations up to 12 decimal places.' },
-        { label: 'Standardized Verification', text: 'Matrix transformations and Simpson\'s numerical quadrature are tested against symbolic reference solutions and linear algebra benchmark datasets.' },
-        { label: 'Client-Side Mathematical Privacy', text: 'Mathematical calculations, formulas, and matrices execute 100% locally in your web browser. Code Tutor executions are processed securely in isolated external sandboxes.' },
+        { label: 'Precision Normalization', text: 'Common IEEE-754 floating-point display artifacts are reduced through decimal normalization algorithms for clearer human-readable representations up to 12 decimal places.' },
+        { label: 'Standardized Verification', text: 'Matrix transformations and Simpson\'s numerical quadrature are tested against known reference solutions and linear algebra test cases.' },
+        { label: 'Differentiated Execution Model', text: 'SciCalcX distinguishes between computation types: mathematical calculators (Scientific, Matrix, Calculus, Graphing, Statistics, Programmer) evaluate locally in your browser. Code Tutor is different: code execution communicates securely over HTTPS with external isolated sandbox services (Judge0 CE and Wandbox), as detailed in our Privacy Policy.' },
       ],
       architectureBadge: 'Web Architecture',
       architectureTitle: 'High-Performance Web Architecture',
@@ -199,9 +199,13 @@ export const infoPages: Record<SupportedLanguage, InfoPageContent> = {
           title: '5. Browser Local Storage (localStorage)', 
           paragraphs: [
             'SciCalcX uses your browser\'s native localStorage solely to enhance your user experience locally on your device:',
-            '• Theme Preference: Storing your selection of "dark" or "light" mode so the interface remains consistent between visits.',
-            '• Calculation History: Storing your recent calculation results (capped at the most recent 50 entries) in a local stack. You can clear this history anytime using the "[ Clear All ]" button in the history sidebar.',
-            '• Cookie Consent Acknowledgment: Remembering when you have dismissed or accepted our cookie and privacy notice banner.'
+            '• Theme Preference (theme): Storing your selection of "dark" or "light" mode so the interface remains consistent between visits.',
+            '• Calculation History (scicalcx_history): Storing your recent calculation results (capped at the most recent 50 entries) in a local stack. You can clear this history anytime using the "[ Clear All ]" button in the history sidebar.',
+            '• Cookie Notice Acknowledgment (scicalcx_cookie_consent): Remembering when you have dismissed or accepted our cookie and privacy notice banner.',
+            '• Calculator Memory Register (scicalcx_memory): Retaining the active numeric value stored in the scientific calculator\'s memory register (M+ / M- / MR).',
+            '• Code Tutor Drafts & Progress (scicalcx_code_draft_*, scicalcx_sandbox_draft_*, scicalcx_completed_subs): Saving your in-progress code and lesson completion status locally so your work is not lost on page reload.',
+            '• Assignment Export Inputs (scicalcx_student_name, scicalcx_student_roll): Caching optional student name and roll number inputs locally on your device to pre-populate the assignment report generator. This information is processed strictly within browser memory to render a downloadable PNG and is never transmitted to our servers or any third-party API.',
+            'All localStorage keys remain solely on your local device and can be cleared at any time through your browser\'s storage settings or via our interface controls.'
           ]
         },
         { 
@@ -272,7 +276,7 @@ export const infoPages: Record<SupportedLanguage, InfoPageContent> = {
         {
           title: 'Policy on AI-Assisted Content & Tools',
           paragraphs: [
-            'Any computational models or assistive coding tools used internally undergo strict human peer review by our lead engineering team. No code or article is published without human verification of mathematical accuracy, grammatical clarity, and practical utility.',
+            'Any computational models or assistive coding tools used internally undergo review by the SciCalcX development team. No code or article is published without human verification of mathematical accuracy, grammatical clarity, and practical utility.',
             'We do not deploy automated mass-generated content farms. Every tutorial on SciCalcX is authored to provide genuine pedagogical value.'
           ]
         },

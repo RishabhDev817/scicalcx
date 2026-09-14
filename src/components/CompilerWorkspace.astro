@@ -219,8 +219,16 @@
           </div>
           
           <span class="text-[9px] text-brand-text-dim font-mono tracking-wide uppercase">
-            Powered by Wandbox Sandbox API
+            Execution via Judge0 CE &amp; Wandbox Sandboxes
           </span>
+        </div>
+
+        <!-- Visible Pre-Execution Privacy Notice -->
+        <div class="px-3.5 py-2.5 rounded-lg border border-brand-border/70 bg-brand-gray-dark/40 text-[11px] text-brand-text-muted leading-relaxed font-sans flex items-start gap-2.5">
+          <span class="text-brand-blue-neon font-bold text-xs mt-0.5 select-none">🔒</span>
+          <div>
+            <strong class="text-brand-text font-medium">Privacy Notice:</strong> Running code sends your source code, language choice, and optional input (<code class="text-brand-blue-neon font-mono text-[10px]">stdin</code>) over encrypted HTTPS to external sandbox execution services (Judge0 CE / Wandbox) for isolated compilation and execution. Please do not submit passwords, API keys, private credentials, personal data, or confidential code.
+          </div>
         </div>
 
         <!-- Resizer Separator -->
@@ -383,6 +391,11 @@
           placeholder="e.g., CS-2026-89"
           class="w-full px-3 py-2 bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-gray-800 rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none focus:border-brand-blue"
         />
+      </div>
+
+      <!-- Local Processing Privacy Transparency -->
+      <div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-black/40 text-[10px] text-slate-500 dark:text-slate-400 font-sans leading-relaxed">
+        <strong class="text-slate-700 dark:text-slate-300">Local Privacy:</strong> Student Name and Roll Number are processed 100% locally in your browser memory to render your assignment snapshot image. For convenience, they are cached in your device's <code class="text-brand-blue dark:text-brand-blue-neon font-mono">localStorage</code> (<code class="font-mono">scicalcx_student_name</code>, <code class="font-mono">scicalcx_student_roll</code>) and are never sent to any server or external API.
       </div>
 
       <div class="pt-2 flex justify-end gap-3">

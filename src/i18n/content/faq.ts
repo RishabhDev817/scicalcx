@@ -29,8 +29,8 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
         answer: 'AC (All Clear) purges the current formula buffer and resets the accumulator. DEL functions as a backspace, deleting only the immediate last token or character. CE (Clear Entry) removes only the most recent numeric term or operator without clearing the entire formula history.',
       },
       {
-        question: 'How does this advanced web calculator eliminate floating-point inaccuracies (like 0.1 + 0.2)?',
-        answer: 'Standard JavaScript engines execute numeric calculations using double-precision binary floats (IEEE 754), which cannot represent base-10 fractions like 0.1 or 0.2 without binary round-off errors. SciCalcX implements custom epsilon-threshold sanitization and precision normalization to ensure calculations like 0.1 + 0.2 evaluate cleanly to 0.3.',
+        question: 'How does this advanced web calculator reduce common floating-point display artifacts (like 0.1 + 0.2)?',
+        answer: 'Standard JavaScript engines execute numeric calculations using double-precision binary floats (IEEE 754), which cannot represent base-10 fractions like 0.1 or 0.2 without binary round-off errors. SciCalcX implements epsilon-threshold sanitization and decimal precision normalization to ensure calculations like 0.1 + 0.2 format cleanly to 0.3.',
       },
     ],
     matrix: [

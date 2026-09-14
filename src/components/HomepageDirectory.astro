@@ -63,7 +63,7 @@ const tools = [
     title: 'Code Tutor & Compiler',
     badge: 'Encrypted Remote Sandbox',
     badgeColor: 'text-amber-400 border-amber-500/30 bg-amber-500/10',
-    desc: 'C and C++ code execution powered by ephemeral, containerized Judge0 CE sandboxes with Wandbox fallback, featuring real-time diagnostics and syntax highlighting.',
+    desc: 'Python, C, and C++ code execution powered by ephemeral, containerized Judge0 CE sandboxes with Wandbox fallback, featuring execution diagnostics and syntax highlighting.',
     href: translatePath('/compiler'),
     icon: '</>',
   },
@@ -71,7 +71,7 @@ const tools = [
     title: 'Engineering & Algorithm Blog',
     badge: 'Educational',
     badgeColor: 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10',
-    desc: 'Peer-reviewed technical tutorials on C++ memory management, sorting algorithm asymptotics, numerical methods, and systems engineering.',
+    desc: 'Technical tutorials authored and reviewed by the SciCalcX team on C++ memory management, sorting algorithm asymptotics, numerical methods, and systems engineering.',
     href: translatePath('/blog'),
     icon: '📖',
   },
@@ -153,13 +153,13 @@ const audiences = [
     
     <div class="text-sm text-brand-text-muted leading-relaxed space-y-4">
       <p>
-        <strong class="text-brand-text">SciCalcX</strong> is a high-performance, open educational engineering platform built to deliver instantaneous, zero-latency mathematical and computational analysis directly in the modern web browser. Traditional online scientific calculators and computing websites are frequently compromised by intrusive pop-up advertisements, paid subscription walls, sluggish server-side round trips, and non-transparent proprietary algorithms. SciCalcX was architected from the ground up to solve these deficiencies by combining browser-native evaluation engines with transparent numerical methodologies.
+        <strong class="text-brand-text">SciCalcX</strong> is a high-performance, open educational engineering platform built to deliver fast, browser-based mathematical and computational analysis directly in the modern web browser. Traditional online scientific calculators and computing websites are frequently compromised by intrusive pop-up advertisements, paid subscription walls, sluggish server-side round trips, and non-transparent proprietary algorithms. SciCalcX was architected from the ground up to solve these deficiencies by combining browser-native evaluation engines with transparent numerical methodologies.
       </p>
       <p>
-        Every mathematical suite on SciCalcX—including the Scientific Calculator, Matrix Algebra Suite, Calculus Engine, 2D Function Grapher, Descriptive Statistics Analyzer, and 32-Bit Programmer Bitboard—operates <strong class="text-brand-text">100% client-side</strong>. Using standard IEEE-754 double-precision floating-point arithmetic, composite numerical integration (Simpson's rule), Laplace cofactor expansion, and native bitwise manipulation, calculations execute in sub-millisecond timeframes without a single byte of your equations or datasets being sent to external servers.
+        Every mathematical suite on SciCalcX—including the Scientific Calculator, Matrix Algebra Suite, Calculus Engine, 2D Function Grapher, Descriptive Statistics Analyzer, and 32-Bit Programmer Bitboard—operates <strong class="text-brand-text">100% client-side</strong>. Using standard IEEE-754 double-precision floating-point arithmetic, composite numerical integration (Simpson's rule), Laplace cofactor expansion, and native bitwise manipulation, calculations execute locally in your browser without a single byte of your equations or datasets being sent to external servers.
       </p>
       <p>
-        For computer science students and software engineers, SciCalcX extends beyond pure mathematics with an integrated <strong class="text-brand-text">Code Tutor & Online Compiler</strong>. Code execution is handled through secure, ephemeral, containerized cloud sandboxes (Judge0 CE and Wandbox), enabling users to write, compile, and debug standard C and C++ algorithms directly alongside their mathematical models. SciCalcX remains completely free, private, and accessible to anyone with an internet connection.
+        For computer science students and software engineers, SciCalcX extends beyond pure mathematics with an integrated <strong class="text-brand-text">Code Tutor & Online Compiler</strong>. Code execution is handled through secure, ephemeral, containerized cloud sandboxes (Judge0 CE and Wandbox), enabling users to write, compile, and debug Python, C, and C++ algorithms directly alongside their mathematical models. SciCalcX remains completely free, private, and accessible to anyone with an internet connection.
       </p>
     </div>
   </section>
@@ -223,7 +223,7 @@ const audiences = [
       <h3 class="text-sm font-semibold text-brand-text">Our Strict Privacy & Editorial Commitment</h3>
     </div>
     <p class="text-xs text-brand-text-muted leading-relaxed">
-      SciCalcX does not monetize, record, or track your mathematical equations, matrix datasets, or statistical samples. Calculation history is stored strictly in your browser's private <code class="text-brand-blue-neon font-mono text-[11px]">localStorage</code> and never uploaded to any remote database. All educational articles and technical documentation are independently authored and peer-verified against university-standard textbooks.
+      SciCalcX does not monetize, record, or track your mathematical equations, matrix datasets, or statistical samples. Calculation history is stored strictly in your browser's private <code class="text-brand-blue-neon font-mono text-[11px]">localStorage</code> and never uploaded to any remote database. All educational articles and technical documentation are independently authored and verified against university-standard textbooks.
     </p>
     <div class="flex flex-wrap gap-4 pt-2 text-xs font-mono">
       <a href={translatePath('/privacy')} class="text-brand-blue hover:text-white transition-colors">Read Privacy Policy &rarr;</a>

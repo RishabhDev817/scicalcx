@@ -197,7 +197,7 @@ export const calculatorData: Record<string, CalculatorPedagogyData> = {
       paragraphs: [
         'SciCalcX executes all matrix operations directly within the client browser using typed JavaScript arrays. Grid inputs are validated for numeric type correctness, handling negative values and decimal floating-point numbers seamlessly.',
         'For determinant calculations, 2×2 matrices use the closed-form ad - bc relation, while 3×3 systems evaluate Laplace expansion along the first row. Inversion uses the adjugate matrix method with strict zero-determinant checks (|det| < 1e-12) to catch singular matrices before division occurs.',
-        'Resulting values undergo epsilon normalization to eliminate binary round-off errors, ensuring integer results (like det = 0) do not display as artifacts like 1e-16.'
+        'Resulting values undergo epsilon normalization to reduce common binary floating-point round-off display artifacts, ensuring near-integer results (like det = 0) do not display as artifacts like 1e-16.'
       ]
     },
     limitations: {
@@ -602,7 +602,7 @@ export const calculatorData: Record<string, CalculatorPedagogyData> = {
       paragraphs: [
         'JavaScript bitwise operators (such as |, &, ^, ~, <<, >>) automatically convert operands into signed 32-bit integers in Two\'s Complement format prior to operation.',
         'SciCalcX maintains an internal int32 state integer. Whenever a bit is clicked or an operator is pressed, the integer is transformed, and bitwise masks ((val >>> bit) & 1) dynamically update the 32 individual button states from bit 31 (sign bit) to bit 0 (least significant bit).',
-        'Conversions to Hexadecimal, Decimal, Octal, and Binary strings are evaluated locally with zero latency, providing an immediate hardware-level visualization of bit manipulations.'
+        'Conversions to Hexadecimal, Decimal, Octal, and Binary strings are evaluated locally for fast browser-based interaction, providing an immediate hardware-level visualization of bit manipulations.'
       ]
     },
     limitations: {
