@@ -31,11 +31,12 @@ const languageList = Object.entries(languages) as [SupportedLanguage, string][];
         id="language-select"
         class="bg-brand-gray-light/70 hover:bg-brand-gray-hover border border-brand-border hover:border-brand-border-hover text-brand-text-muted hover:text-white text-[11px] font-mono rounded-md pl-6 sm:pl-7 pr-5 sm:pr-6 py-1.5 cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all"
         aria-label="Select language"
-        onchange="if (this.value) window.location.href = this.value"
+        onchange="if (this.value) { const opt = this.options[this.selectedIndex]; const l = opt.getAttribute('data-code'); if (l) { try { localStorage.setItem('scicalcx_lang', l); document.cookie = 'scicalcx_lang=' + l + '; path=/; max-age=31536000; SameSite=Lax'; } catch(e){} } window.location.href = this.value; }"
       >
         {languageList.map(([code, label]) => (
           <option
             value={translatePath(baseRoute, code)}
+            data-code={code}
             selected={code === currentLang}
             class="bg-brand-black text-brand-text font-sans py-1"
           >
@@ -65,6 +66,8 @@ const languageList = Object.entries(languages) as [SupportedLanguage, string][];
       return (
         <a
           href={translatePath(baseRoute, code)}
+          data-code={code}
+          onclick="try { localStorage.setItem('scicalcx_lang', this.getAttribute('data-code')); document.cookie = 'scicalcx_lang=' + this.getAttribute('data-code') + '; path=/; max-age=31536000; SameSite=Lax'; } catch(e){}"
           class={`transition-colors ${
             isCurrent
               ? 'text-brand-blue-neon font-bold underline underline-offset-4 decoration-brand-blue'

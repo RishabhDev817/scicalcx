@@ -103,10 +103,6 @@ export const calculatorData: Record<string, CalculatorPedagogyData> = {
         'Trigonometric Singularity: Functions such as tan(90°) or tan(270°) evaluate to extremely large finite values or undefined due to floating-point representation of π/2.'
       ]
     },
-    commonMistakes: {
-      mistake: 'Using DEG mode when formulas expect Radians (or vice-versa)',
-      fix: 'Always verify the DEG/RAD indicator in the top status bar before computing trigonometric ratios.'
-    },
     commonMistakes: [
       {
         mistake: 'Unbalanced Parentheses: e.g. Entering "(2 + 3 * (4 - 1)"',

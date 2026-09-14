@@ -52,10 +52,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </p>
       <div class="text-xs sm:text-sm text-brand-text-muted leading-relaxed space-y-2 pt-2 border-t border-brand-border/30">
         <p>
-          The SciCalcX 2D Graphing Calculator is an interactive mathematical visualization studio built on HTML5 Canvas. It renders single or multi-variable continuous curves f(x) and g(x), automatically detecting Cartesian roots (x-intercepts), y-intercepts, and critical local extrema.
+          {t('graphing.intro.p1')}
         </p>
         <p>
-          Plotting is performed using adaptive numerical sampling with vertical asymptote suppression. The coordinate viewport supports dynamic panning and zooming, executing 100% locally in your browser for fast interactive rendering without external server dependencies.
+          {t('graphing.intro.p2')}
         </p>
       </div>
     </div>
@@ -186,6 +186,9 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         </div>
       </div>
     </div>
+
+    <!-- Localized Technical Handbook -->
+    <HandbookSection handbook={handbook} lang={lang} />
 
     <!-- Comprehensive Educational Pedagogy & Architecture -->
     <CalculatorPedagogy {...calculatorData.graphing} lang={lang} />

@@ -1,6 +1,242 @@
 ---
 // CompilerWorkspace.astro
 // Advanced Gamified Step-by-Step Learning Track, Compiler, and AI Tutor for SciCalcX
+import type { SupportedLanguage } from '../i18n/ui';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = 'en' } = Astro.props;
+
+const ui: Record<SupportedLanguage, {
+  headerBadge: string;
+  headerTitle: string;
+  headerSub: string;
+  btnLessons: string;
+  btnSandbox: string;
+  roadmapTitle: string;
+  roadmapSub: string;
+  streakDays: string;
+  lessonTarget: string;
+  criteria: string;
+  loadingLesson: string;
+  instructionsLoading: string;
+  sourceEditor: string;
+  savedDraft: string;
+  runHeader: string;
+  resetCode: string;
+  fullscreenTitle: string;
+  editorPlaceholder: string;
+  terminalOutput: string;
+  clear: string;
+  runCode: string;
+  exportAssignment: string;
+  sandboxNotice: string;
+  privacyNoticeTitle: string;
+  privacyNoticeP1: string;
+  privacyNoticeP2: string;
+  consoleOutput: string;
+  terminalHint: string;
+  logicTitle: string;
+  logicPlaceholder: string;
+  analogyTitle: string;
+  analogyPlaceholder: string;
+  debuggerTitle: string;
+  debuggerPlaceholder: string;
+  exportModalTitle: string;
+  studentNameLabel: string;
+  studentNamePlaceholder: string;
+  studentRollLabel: string;
+  studentRollPlaceholder: string;
+  localPrivacyTitle: string;
+  localPrivacyText: string;
+  cancel: string;
+  generateImage: string;
+}> = {
+  en: {
+    headerBadge: "Interactive Learning Playground",
+    headerTitle: "AI Coding Tutor & Compiler",
+    headerSub: "Select a lesson, write your solution in Python, C, or C++, and execute instantly using our sandbox executor.",
+    btnLessons: "Guided Lessons",
+    btnSandbox: "Practice Playground",
+    roadmapTitle: "Course Roadmap",
+    roadmapSub: "Click unlocked nodes",
+    streakDays: "0 Days 🔥",
+    lessonTarget: "Lesson Target",
+    criteria: "Criteria",
+    loadingLesson: "Loading Lesson...",
+    instructionsLoading: "Instructions loading...",
+    sourceEditor: "Source Editor",
+    savedDraft: "● Saved draft",
+    runHeader: "RUN",
+    resetCode: "Reset Code",
+    fullscreenTitle: "Toggle Fullscreen Editor",
+    editorPlaceholder: "Write your code solution here...",
+    terminalOutput: "Terminal Output",
+    clear: "Clear",
+    runCode: "RUN CODE",
+    exportAssignment: "Export Assignment",
+    sandboxNotice: "Execution via Judge0 CE & Wandbox Sandboxes",
+    privacyNoticeTitle: "Privacy Notice:",
+    privacyNoticeP1: "Running code sends your source code, language choice, and optional input (",
+    privacyNoticeP2: ") over encrypted HTTPS to external sandbox execution services (Judge0 CE / Wandbox) for isolated compilation and execution. Please do not submit passwords, API keys, private credentials, personal data, or confidential code.",
+    consoleOutput: "Console Output",
+    terminalHint: "// Click \"Run Code\" above to execute and check your solution.",
+    logicTitle: "Logic Breakdown",
+    logicPlaceholder: "Select a lesson to see syntax explanations.",
+    analogyTitle: "Real-Life Analogy",
+    analogyPlaceholder: "Select a lesson to see context analogies.",
+    debuggerTitle: "Smart Debugger",
+    debuggerPlaceholder: "No errors detected. Write code and run it!",
+    exportModalTitle: "Export Assignment Info",
+    studentNameLabel: "Student Name",
+    studentNamePlaceholder: "e.g., Rishabh Dev",
+    studentRollLabel: "Roll Number",
+    studentRollPlaceholder: "e.g., CS-2026-89",
+    localPrivacyTitle: "Local Privacy:",
+    localPrivacyText: "Student Name and Roll Number are processed 100% locally in your browser memory to render your assignment snapshot image. For convenience, they are cached in your device's localStorage (scicalcx_student_name, scicalcx_student_roll) and are never sent to any server or external API.",
+    cancel: "Cancel",
+    generateImage: "Generate Image",
+  },
+  es: {
+    headerBadge: "Entorno de Aprendizaje Interactivo",
+    headerTitle: "Tutor de Programación IA y Compilador",
+    headerSub: "Selecciona una lección, escribe tu solución en Python, C o C++, y ejecútala al instante mediante nuestro ejecutor en sandbox.",
+    btnLessons: "Lecciones Guiadas",
+    btnSandbox: "Área de Práctica",
+    roadmapTitle: "Ruta del Curso",
+    roadmapSub: "Haz clic en nodos desbloqueados",
+    streakDays: "0 Días 🔥",
+    lessonTarget: "Objetivo de la Lección",
+    criteria: "Criterios",
+    loadingLesson: "Cargando lección...",
+    instructionsLoading: "Cargando instrucciones...",
+    sourceEditor: "Editor de Código",
+    savedDraft: "● Borrador guardado",
+    runHeader: "EJECUTAR",
+    resetCode: "Restablecer Código",
+    fullscreenTitle: "Alternar pantalla completa",
+    editorPlaceholder: "Escribe tu solución de código aquí...",
+    terminalOutput: "Salida de Terminal",
+    clear: "Limpiar",
+    runCode: "EJECUTAR CÓDIGO",
+    exportAssignment: "Exportar Tarea",
+    sandboxNotice: "Ejecución mediante sandboxes Judge0 CE y Wandbox",
+    privacyNoticeTitle: "Aviso de Privacidad:",
+    privacyNoticeP1: "La ejecución envía tu código fuente, lenguaje y entrada opcional (",
+    privacyNoticeP2: ") mediante HTTPS cifrado a servicios externos de sandbox (Judge0 CE / Wandbox) para compilación y ejecución aislada. No envíes contraseñas, claves API, credenciales privadas, datos personales ni código confidencial.",
+    consoleOutput: "Salida de Consola",
+    terminalHint: "// Haz clic en «Ejecutar Código» arriba para ejecutar y verificar tu solución.",
+    logicTitle: "Desglose Lógico",
+    logicPlaceholder: "Selecciona una lección para ver explicaciones de sintaxis.",
+    analogyTitle: "Analogía Práctica",
+    analogyPlaceholder: "Selecciona una lección para ver analogías de contexto.",
+    debuggerTitle: "Depurador Inteligente",
+    debuggerPlaceholder: "No se detectaron errores. ¡Escribe código y ejecútalo!",
+    exportModalTitle: "Exportar Información de Tarea",
+    studentNameLabel: "Nombre del Estudiante",
+    studentNamePlaceholder: "ej., Carlos Gómez",
+    studentRollLabel: "Matrícula / ID",
+    studentRollPlaceholder: "ej., CS-2026-89",
+    localPrivacyTitle: "Privacidad Local:",
+    localPrivacyText: "El nombre y la matrícula del estudiante se procesan 100% localmente en la memoria de tu navegador para generar la imagen de tu tarea. Se almacenan en el localStorage de tu dispositivo (scicalcx_student_name, scicalcx_student_roll) y nunca se envían a ningún servidor o API externa.",
+    cancel: "Cancelar",
+    generateImage: "Generar Imagen",
+  },
+  fr: {
+    headerBadge: "Environnement d'Apprentissage Interactif",
+    headerTitle: "Tuteur de Code IA & Compilateur",
+    headerSub: "Sélectionnez une leçon, rédigez votre solution en Python, C ou C++, et exécutez-la instantanément via notre exécuteur sandbox.",
+    btnLessons: "Leçons Guidées",
+    btnSandbox: "Espace de Pratique",
+    roadmapTitle: "Plan de Formation",
+    roadmapSub: "Cliquez sur les nœuds débloqués",
+    streakDays: "0 Jours 🔥",
+    lessonTarget: "Objectif de la Leçon",
+    criteria: "Critères",
+    loadingLesson: "Chargement de la leçon...",
+    instructionsLoading: "Chargement des instructions...",
+    sourceEditor: "Éditeur de Code",
+    savedDraft: "● Brouillon enregistré",
+    runHeader: "EXÉCUTER",
+    resetCode: "Réinitialiser le Code",
+    fullscreenTitle: "Basculer plein écran",
+    editorPlaceholder: "Rédigez votre solution ici...",
+    terminalOutput: "Sortie Terminal",
+    clear: "Effacer",
+    runCode: "EXÉCUTER LE CODE",
+    exportAssignment: "Exporter le Devoir",
+    sandboxNotice: "Exécution via les bacs à sable Judge0 CE & Wandbox",
+    privacyNoticeTitle: "Avis de Confidentialité :",
+    privacyNoticeP1: "L'exécution transmet votre code source, le langage et l'entrée optionnelle (",
+    privacyNoticeP2: ") via HTTPS chiffré à des services de bac à sable externes (Judge0 CE / Wandbox) pour compilation et exécution isolées. Veuillez ne pas soumettre de mots de passe, clés d'API, données personnelles ou codes confidentiels.",
+    consoleOutput: "Sortie Console",
+    terminalHint: "// Cliquez sur « Exécuter le Code » ci-dessus pour exécuter et tester votre solution.",
+    logicTitle: "Décomposition Logique",
+    logicPlaceholder: "Sélectionnez une leçon pour voir les explications de syntaxe.",
+    analogyTitle: "Analogie Concrète",
+    analogyPlaceholder: "Sélectionnez une leçon pour voir les analogies contextuelles.",
+    debuggerTitle: "Débogueur Intelligent",
+    debuggerPlaceholder: "Aucune erreur détectée. Écrivez du code et lancez-le !",
+    exportModalTitle: "Exporter les Détails du Devoir",
+    studentNameLabel: "Nom de l'Étudiant",
+    studentNamePlaceholder: "ex., Marie Dubois",
+    studentRollLabel: "Numéro d'Étudiant / ID",
+    studentRollPlaceholder: "ex., CS-2026-89",
+    localPrivacyTitle: "Confidentialité Locale :",
+    localPrivacyText: "Le nom et le matricule de l'étudiant sont traités à 100 % localement dans la mémoire de votre navigateur pour générer l'image du devoir. Ils sont conservés dans le localStorage de votre appareil (scicalcx_student_name, scicalcx_student_roll) et ne sont jamais transmis à un serveur ou une API tierce.",
+    cancel: "Annuler",
+    generateImage: "Générer l'Image",
+  },
+  de: {
+    headerBadge: "Interaktive Lernumgebung",
+    headerTitle: "KI-Code-Tutor & Compiler",
+    headerSub: "Wählen Sie eine Lektion, schreiben Sie Ihre Lösung in Python, C oder C++ und führen Sie sie sofort in unserer Sandbox aus.",
+    btnLessons: "Geführte Lektionen",
+    btnSandbox: "Übungsbereich",
+    roadmapTitle: "Kurs-Roadmap",
+    roadmapSub: "Freigeschaltete Knoten anklicken",
+    streakDays: "0 Tage 🔥",
+    lessonTarget: "Lektionsziel",
+    criteria: "Kriterien",
+    loadingLesson: "Lektion wird geladen...",
+    instructionsLoading: "Anweisungen werden geladen...",
+    sourceEditor: "Quelltext-Editor",
+    savedDraft: "● Entwurf gespeichert",
+    runHeader: "AUSFÜHREN",
+    resetCode: "Code Zurücksetzen",
+    fullscreenTitle: "Vollbildmodus umschalten",
+    editorPlaceholder: "Schreiben Sie Ihren Code hier...",
+    terminalOutput: "Terminal-Ausgabe",
+    clear: "Löschen",
+    runCode: "CODE AUSFÜHREN",
+    exportAssignment: "Aufgabe Exportieren",
+    sandboxNotice: "Ausführung über Judge0 CE & Wandbox Sandboxes",
+    privacyNoticeTitle: "Datenschutzhinweis:",
+    privacyNoticeP1: "Die Codeausführung sendet Ihren Quellcode, die Sprachauswahl und optionale Eingaben (",
+    privacyNoticeP2: ") über verschlüsseltes HTTPS an externe Sandbox-Ausführungsdienste (Judge0 CE / Wandbox) zur isolierten Kompilierung und Ausführung. Bitte übermitteln Sie keine Passwörter, API-Schlüssel, vertraulichen Anmeldedaten, personenbezogenen Daten oder geschützten Code.",
+    consoleOutput: "Konsolenausgabe",
+    terminalHint: "// Klicken Sie oben auf „Code Ausführen“, um Ihre Lösung zu testen.",
+    logicTitle: "Logik-Aufschlüsselung",
+    logicPlaceholder: "Wählen Sie eine Lektion, um Syntax-Erklärungen zu sehen.",
+    analogyTitle: "Praxisnahe Analogie",
+    analogyPlaceholder: "Wählen Sie eine Lektion, um Kontext-Analogien zu sehen.",
+    debuggerTitle: "Intelligenter Debugger",
+    debuggerPlaceholder: "Keine Fehler erkannt. Schreiben Sie Code und führen Sie ihn aus!",
+    exportModalTitle: "Aufgabeninformationen Exportieren",
+    studentNameLabel: "Name des Studierenden",
+    studentNamePlaceholder: "z.B. Max Mustermann",
+    studentRollLabel: "Matrikelnummer / Kennung",
+    studentRollPlaceholder: "z.B. CS-2026-89",
+    localPrivacyTitle: "Lokaler Datenschutz:",
+    localPrivacyText: "Name und Matrikelnummer des Studierenden werden zu 100 % lokal im Speicher Ihres Browsers verarbeitet, um das Bild der Aufgabe zu rendern. Zur Bequemlichkeit werden sie im localStorage Ihres Geräts (scicalcx_student_name, scicalcx_student_roll) gespeichert und niemals an Server oder externe APIs übermittelt.",
+    cancel: "Abbrechen",
+    generateImage: "Bild Generieren",
+  }
+};
+
+const w = ui[lang] || ui.en;
 ---
 
 <div class="w-full max-w-6xl mx-auto space-y-6 animate-fade-in">
@@ -8,13 +244,13 @@
   <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
     <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon flex items-center justify-center md:justify-start gap-1.5">
       <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon animate-pulse"></span>
-      Interactive Learning Playground
+      {w.headerBadge}
     </div>
     <h1 class="text-3xl font-bold tracking-tight text-brand-text">
-      AI Coding Tutor & Compiler<span class="text-brand-blue">.</span>
+      {w.headerTitle}<span class="text-brand-blue">.</span>
     </h1>
     <p class="text-xs text-brand-text-muted">
-      Select a lesson, write your solution in Python, C, or C++, and execute instantly using our sandbox executor.
+      {w.headerSub}
     </p>
   </div>
 
@@ -30,13 +266,13 @@
             id="btn-mode-lessons" 
             class="flex-1 py-1.5 text-center rounded-md font-bold transition-all cursor-pointer bg-brand-blue/10 dark:bg-brand-blue/20 text-brand-blue dark:text-brand-blue-neon border border-brand-blue/30"
           >
-            Guided Lessons
+            {w.btnLessons}
           </button>
           <button 
             id="btn-mode-sandbox" 
             class="flex-1 py-1.5 text-center rounded-md font-bold transition-all cursor-pointer text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-brand-gray-hover"
           >
-            Practice Playground
+            {w.btnSandbox}
           </button>
         </div>
 
@@ -45,14 +281,14 @@
           <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-4">
             <div class="space-y-0.5">
               <h2 class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-                Course Roadmap
+                {w.roadmapTitle}
               </h2>
-              <span class="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-mono">Click unlocked nodes</span>
+              <span class="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-mono">{w.roadmapSub}</span>
             </div>
             
             <!-- Streak Indicator -->
             <div class="flex items-center space-x-1.5 bg-amber-500/10 border border-amber-500/30 rounded-lg px-2.5 py-1">
-              <span class="text-[11px] font-mono font-bold text-amber-500 dark:text-amber-400" id="streak-count-text">0 Days 🔥</span>
+              <span class="text-[11px] font-mono font-bold text-amber-500 dark:text-amber-400" id="streak-count-text">{w.streakDays}</span>
             </div>
           </div>
 
@@ -71,8 +307,8 @@
         <!-- Current Active Lesson Instructions -->
         <div class="border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-brand-black/40 rounded-lg p-4 space-y-3 font-mono text-xs mt-4">
           <div class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-wider border-b border-slate-200 dark:border-slate-800/40 pb-1.5 flex justify-between items-center">
-            <span>Lesson Target</span>
-            <span id="lesson-criteria" class="text-brand-blue dark:text-brand-blue-neon font-semibold text-[9px] lowercase bg-brand-blue/5 dark:bg-brand-blue/10 border border-brand-blue/20 dark:border-brand-blue/30 px-1.5 py-0.5 rounded">Criteria</span>
+            <span>{w.lessonTarget}</span>
+            <span id="lesson-criteria" class="text-brand-blue dark:text-brand-blue-neon font-semibold text-[9px] lowercase bg-brand-blue/5 dark:bg-brand-blue/10 border border-brand-blue/20 dark:border-brand-blue/30 px-1.5 py-0.5 rounded">{w.criteria}</span>
           </div>
           
           <!-- Sub-challenge Selector Tabs -->
@@ -81,10 +317,10 @@
           </div>
           
           <h3 id="lesson-title" class="text-sm font-bold text-slate-800 dark:text-slate-200">
-            Loading Lesson...
+            {w.loadingLesson}
           </h3>
           <p id="lesson-instruction" class="text-slate-600 dark:text-slate-400 leading-relaxed text-[11px] whitespace-pre-line">
-            Instructions loading...
+            {w.instructionsLoading}
           </p>
         </div>
       </div>
@@ -101,8 +337,8 @@
         <div class="bg-slate-50 dark:bg-slate-900 border-b border-gray-300 dark:border-gray-700 px-4 py-2 flex items-center justify-between select-none">
           <div class="flex items-center space-x-3">
             <span class="w-2 h-2 rounded-full bg-brand-blue-neon animate-pulse"></span>
-            <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 uppercase font-mono tracking-wider">Source Editor</span>
-            <span id="save-indicator" class="text-[9px] text-emerald-400 font-mono transition-opacity duration-300 opacity-0 select-none">● Saved draft</span>
+            <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 uppercase font-mono tracking-wider">{w.sourceEditor}</span>
+            <span id="save-indicator" class="text-[9px] text-emerald-400 font-mono transition-opacity duration-300 opacity-0 select-none">{w.savedDraft}</span>
           </div>
           
           <div class="flex items-center space-x-2">
@@ -113,7 +349,7 @@
               title="Run code output"
             >
               <span>▶</span>
-              <span>RUN</span>
+              <span>{w.runHeader}</span>
             </button>
 
             <!-- Reset Button -->
@@ -122,7 +358,7 @@
               class="text-[10px] px-2.5 py-1 border border-gray-300 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-800 dark:border-gray-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 dark:hover:text-white rounded font-mono transition-colors focus:outline-none cursor-pointer"
               title="Reset template back to default code"
             >
-              Reset Code
+              {w.resetCode}
             </button>
             
             <!-- Language Dropdown -->
@@ -139,7 +375,7 @@
             <button 
               id="btn-toggle-fullscreen" 
               class="p-1.5 border border-gray-300 dark:border-gray-700 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 dark:hover:text-white rounded-md transition-all focus:outline-none cursor-pointer flex items-center justify-center hover:scale-105 active:scale-95"
-              title="Toggle Fullscreen Editor"
+              title={w.fullscreenTitle}
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path id="fullscreen-path" stroke-linecap="round" stroke-linejoin="round" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
@@ -164,7 +400,7 @@
             id="code-editor" 
             class="flex-1 bg-white dark:bg-[#0d1117] text-gray-900 dark:text-gray-300 px-3 py-3 resize-none focus:outline-none overflow-auto text-xs h-full font-mono whitespace-pre"
             style="line-height: 20px;"
-            placeholder="Write your code solution here..."
+            placeholder={w.editorPlaceholder}
             spellcheck="false"
             wrap="off"
           ></textarea>
@@ -176,12 +412,12 @@
           <div id="fullscreen-terminal-resizer" class="h-1 bg-gray-200 dark:bg-gray-700 hover:bg-brand-blue cursor-row-resize transition-colors w-full absolute top-0 left-0 z-20" title="Drag to Resize Terminal"></div>
           
           <div class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 px-4 py-1.5 flex items-center justify-between select-none h-[31px] mt-1">
-            <span class="text-[10px] text-gray-800 dark:text-gray-300 uppercase font-bold tracking-wider">Terminal Output</span>
+            <span class="text-[10px] text-gray-800 dark:text-gray-300 uppercase font-bold tracking-wider">{w.terminalOutput}</span>
             <button 
               id="btn-clear-fullscreen-terminal" 
               class="text-[9px] px-2 py-0.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded transition-colors cursor-pointer"
             >
-              Clear
+              {w.clear}
             </button>
           </div>
           <div 
@@ -203,7 +439,7 @@
               class="relative h-11 px-6 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_15px_rgba(0,112,243,0.4)] active:scale-[0.98] transition-all cursor-pointer flex items-center justify-center gap-2 overflow-hidden"
             >
               <span id="btn-run-icon">▶</span>
-              <span id="btn-run-text" class="font-mono text-xs tracking-wider font-bold">RUN CODE</span>
+              <span id="btn-run-text" class="font-mono text-xs tracking-wider font-bold">{w.runCode}</span>
               <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-shimmer pointer-events-none"></span>
             </button>
 
@@ -214,12 +450,12 @@
               title="Export assignment report"
             >
               <span>📸</span>
-              <span>Export Assignment</span>
+              <span>{w.exportAssignment}</span>
             </button>
           </div>
           
           <span class="text-[9px] text-brand-text-dim font-mono tracking-wide uppercase">
-            Execution via Judge0 CE &amp; Wandbox Sandboxes
+            {w.sandboxNotice}
           </span>
         </div>
 
@@ -227,7 +463,7 @@
         <div class="px-3.5 py-2.5 rounded-lg border border-brand-border/70 bg-brand-gray-dark/40 text-[11px] text-brand-text-muted leading-relaxed font-sans flex items-start gap-2.5">
           <span class="text-brand-blue-neon font-bold text-xs mt-0.5 select-none">🔒</span>
           <div>
-            <strong class="text-brand-text font-medium">Privacy Notice:</strong> Running code sends your source code, language choice, and optional input (<code class="text-brand-blue-neon font-mono text-[10px]">stdin</code>) over encrypted HTTPS to external sandbox execution services (Judge0 CE / Wandbox) for isolated compilation and execution. Please do not submit passwords, API keys, private credentials, personal data, or confidential code.
+            <strong class="text-brand-text font-medium">{w.privacyNoticeTitle}</strong> {w.privacyNoticeP1}<code class="text-brand-blue-neon font-mono text-[10px]">stdin</code>{w.privacyNoticeP2}
           </div>
         </div>
 
@@ -243,14 +479,14 @@
               <span class="w-2.5 h-2.5 rounded-full bg-[#ea4335]"></span>
               <span class="w-2.5 h-2.5 rounded-full bg-[#fbbc05]"></span>
               <span class="w-2.5 h-2.5 rounded-full bg-[#34a853]"></span>
-              <span class="text-[10px] font-mono text-gray-800 dark:text-gray-300 ml-3 uppercase font-bold tracking-wider">Console Output</span>
+              <span class="text-[10px] font-mono text-gray-800 dark:text-gray-300 ml-3 uppercase font-bold tracking-wider">{w.consoleOutput}</span>
             </div>
             
             <button 
               id="btn-clear-terminal" 
               class="text-[10px] px-2 py-0.5 border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded font-mono transition-colors cursor-pointer"
             >
-              Clear
+              {w.clear}
             </button>
           </div>
           <!-- Output logs viewport -->
@@ -258,7 +494,7 @@
             id="terminal-content" 
             class="flex-1 p-4 font-mono text-sm overflow-y-auto whitespace-pre-wrap leading-tight select-text bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-300"
           >
-            <span class="text-gray-400 dark:text-gray-500">// Click "Run Code" above to execute and check your solution.</span>
+            <span class="text-gray-400 dark:text-gray-500">{w.terminalHint}</span>
           </div>
         </div>
       </div>
@@ -271,10 +507,10 @@
     <div class="border border-slate-200 dark:border-slate-800 bg-white dark:bg-brand-gray-dark/40 rounded-xl p-5 shadow-xl flex flex-col">
       <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 pb-2 mb-3 select-none">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-blue dark:bg-brand-blue-neon"></span>
-        Logic Breakdown
+        {w.logicTitle}
       </h3>
       <p id="tutor-breakdown" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-mono flex-1 whitespace-pre-line">
-        Select a lesson to see syntax explanations.
+        {w.logicPlaceholder}
       </p>
     </div>
     
@@ -282,10 +518,10 @@
     <div class="border border-slate-200 dark:border-slate-800 bg-white dark:bg-brand-gray-dark/40 rounded-xl p-5 shadow-xl flex flex-col">
       <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 pb-2 mb-3 select-none">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-blue dark:bg-brand-blue-neon"></span>
-        Real-Life Analogy
+        {w.analogyTitle}
       </h3>
       <p id="tutor-analogy" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
-        Select a lesson to see context analogies.
+        {w.analogyPlaceholder}
       </p>
     </div>
     
@@ -293,66 +529,13 @@
     <div id="tutor-bug-card" class="border border-slate-200 dark:border-slate-800 bg-white dark:bg-brand-gray-dark/40 rounded-xl p-5 shadow-xl flex flex-col transition-all duration-300">
       <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400 flex items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 pb-2 mb-3 select-none" id="tutor-bug-header">
         <span class="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-brand-text-dim" id="tutor-bug-dot"></span>
-        Smart Debugger
+        {w.debuggerTitle}
       </h3>
       <div id="tutor-bug-content" class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed flex-1">
-        <p class="italic text-slate-400 dark:text-slate-500">No errors detected. Write code and run it!</p>
+        <p class="italic text-slate-400 dark:text-slate-500">{w.debuggerPlaceholder}</p>
       </div>
     </div>
   </div>
-
-  <!-- FAQ Accordion Section -->
-  <section class="border-t border-brand-border/40 pt-8 mt-12 text-brand-text-muted font-sans text-xs sm:text-sm leading-relaxed space-y-6">
-    <h2 class="text-lg font-bold text-brand-text tracking-tight uppercase font-mono text-brand-blue-neon">
-      Frequently Asked Questions (FAQ)
-    </h2>
-    
-    <div class="space-y-3">
-      <!-- 1 -->
-      <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 light:bg-neutral-100 hover:border-brand-border-hover transition-colors overflow-hidden">
-        <summary class="flex justify-between items-center p-3 font-semibold text-brand-text cursor-pointer list-none select-none font-mono text-[11px] sm:text-xs tracking-tight">
-          <span>What programming languages does the AI Coding Tutor support?</span>
-          <span class="text-brand-blue-neon transition-transform group-open:rotate-180">▼</span>
-        </summary>
-        <div class="px-3 pb-3 pt-1 border-t border-brand-border/20 text-xs text-brand-text-muted leading-relaxed font-sans">
-          Python, C, and C++.
-        </div>
-      </details>
-
-      <!-- 2 -->
-      <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 light:bg-neutral-100 hover:border-brand-border-hover transition-colors overflow-hidden">
-        <summary class="flex justify-between items-center p-3 font-semibold text-brand-text cursor-pointer list-none select-none font-mono text-[11px] sm:text-xs tracking-tight">
-          <span>Can I use this for my university assignments?</span>
-          <span class="text-brand-blue-neon transition-transform group-open:rotate-180">▼</span>
-        </summary>
-        <div class="px-3 pb-3 pt-1 border-t border-brand-border/20 text-xs text-brand-text-muted leading-relaxed font-sans">
-          Yes, use our One-Click Export to download your code and terminal output as an image.
-        </div>
-      </details>
-
-      <!-- 3 -->
-      <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 light:bg-neutral-100 hover:border-brand-border-hover transition-colors overflow-hidden">
-        <summary class="flex justify-between items-center p-3 font-semibold text-brand-text cursor-pointer list-none select-none font-mono text-[11px] sm:text-xs tracking-tight">
-          <span>Does the compiler support complex inputs?</span>
-          <span class="text-brand-blue-neon transition-transform group-open:rotate-180">▼</span>
-        </summary>
-        <div class="px-3 pb-3 pt-1 border-t border-brand-border/20 text-xs text-brand-text-muted leading-relaxed font-sans">
-          Yes, our terminal handles chained inputs and array data for DSA problems.
-        </div>
-      </details>
-
-      <!-- 4 -->
-      <details class="group border border-brand-border rounded-lg bg-brand-gray-light/20 light:bg-neutral-100 hover:border-brand-border-hover transition-colors overflow-hidden">
-        <summary class="flex justify-between items-center p-3 font-semibold text-brand-text cursor-pointer list-none select-none font-mono text-[11px] sm:text-xs tracking-tight">
-          <span>How does the AI Tutor help me?</span>
-          <span class="text-brand-blue-neon transition-transform group-open:rotate-180">▼</span>
-        </summary>
-        <div class="px-3 pb-3 pt-1 border-t border-brand-border/20 text-xs text-brand-text-muted leading-relaxed font-sans">
-          It breaks down logic, provides analogies, and debugs errors interactively.
-        </div>
-      </details>
-    </div>
-  </section>
 </div>
 
 
@@ -361,7 +544,7 @@
   <div id="export-modal-panel" class="w-full max-w-md p-6 bg-white dark:bg-[#151b23] border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl mx-4 transform transition-all duration-300 scale-95 opacity-0">
     <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800/80 mb-4">
       <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100 flex items-center gap-2">
-        <span>📸</span> Export Assignment Info
+        <span>📸</span> {w.exportModalTitle}
       </h3>
       <button id="btn-close-export-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer focus:outline-none transition-colors">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -372,30 +555,30 @@
     
     <form id="export-form" class="space-y-4 font-mono text-xs">
       <div class="space-y-1.5">
-        <label for="export-student-name" class="block text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400">Student Name</label>
+        <label for="export-student-name" class="block text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400">{w.studentNameLabel}</label>
         <input 
           type="text" 
           id="export-student-name" 
           required 
-          placeholder="e.g., Rishabh Dev"
+          placeholder={w.studentNamePlaceholder}
           class="w-full px-3 py-2 bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-gray-800 rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none focus:border-brand-blue"
         />
       </div>
       
       <div class="space-y-1.5">
-        <label for="export-student-roll" class="block text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400">Roll Number</label>
+        <label for="export-student-roll" class="block text-[10px] uppercase font-bold tracking-wider text-slate-500 dark:text-slate-400">{w.studentRollLabel}</label>
         <input 
           type="text" 
           id="export-student-roll" 
           required 
-          placeholder="e.g., CS-2026-89"
+          placeholder={w.studentRollPlaceholder}
           class="w-full px-3 py-2 bg-slate-50 dark:bg-black/60 border border-slate-200 dark:border-gray-800 rounded-lg text-slate-800 dark:text-slate-200 focus:outline-none focus:border-brand-blue"
         />
       </div>
 
       <!-- Local Processing Privacy Transparency -->
       <div class="p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-black/40 text-[10px] text-slate-500 dark:text-slate-400 font-sans leading-relaxed">
-        <strong class="text-slate-700 dark:text-slate-300">Local Privacy:</strong> Student Name and Roll Number are processed 100% locally in your browser memory to render your assignment snapshot image. For convenience, they are cached in your device's <code class="text-brand-blue dark:text-brand-blue-neon font-mono">localStorage</code> (<code class="font-mono">scicalcx_student_name</code>, <code class="font-mono">scicalcx_student_roll</code>) and are never sent to any server or external API.
+        <strong class="text-slate-700 dark:text-slate-300">{w.localPrivacyTitle}</strong> {w.localPrivacyText}
       </div>
 
       <div class="pt-2 flex justify-end gap-3">
@@ -404,14 +587,14 @@
           id="btn-cancel-export"
           class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-[#21262d] dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-lg font-bold cursor-pointer transition-colors"
         >
-          Cancel
+          {w.cancel}
         </button>
         <button 
           type="submit" 
           id="btn-generate-image"
           class="px-4 py-2 bg-brand-blue hover:bg-brand-blue-hover text-white rounded-lg font-bold cursor-pointer transition-all flex items-center gap-1.5"
         >
-          <span id="btn-generate-text">Generate Image</span>
+          <span id="btn-generate-text">{w.generateImage}</span>
         </button>
       </div>
     </form>

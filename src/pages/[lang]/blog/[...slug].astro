@@ -1,12 +1,16 @@
 ---
 import BlogPostView from '../../../components/pages/BlogPostView.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
-import type { SupportedLanguage } from '../../../i18n/ui';
+import { supportedLanguages, type SupportedLanguage } from '../../../i18n/ui';
 
 export async function getStaticPaths() {
   const allPosts = await getCollection('blog');
-  // Only generate paths for posts that genuinely exist in this language
-  const localizedPosts = allPosts.filter((p) => p.id.includes('/'));
+  // Only generate paths for posts that genuinely exist in our active supported languages
+  const localizedPosts = allPosts.filter((p) => {
+    if (!p.id.includes('/')) return false;
+    const lang = p.id.split('/')[0];
+    return supportedLanguages.includes(lang as SupportedLanguage);
+  });
 
   return localizedPosts.map((post) => {
     const [lang, ...slugParts] = post.id.split('/');

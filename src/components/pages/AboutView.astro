@@ -12,6 +12,129 @@ const { lang = 'en' } = Astro.props;
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 const content = getInfoContent('about', lang);
+const aboutExtras: Record<SupportedLanguage, {
+  teamRishabhRole: string;
+  teamRishabhBio: string;
+  githubProfile: string;
+  teamRiyaRole: string;
+  teamRiyaBio: string;
+  curriculumLead: string;
+  ecosystemTitle: string;
+  cardScientificTag: string;
+  cardScientificTitle: string;
+  cardScientificDesc: string;
+  cardCalculusTag: string;
+  cardCalculusTitle: string;
+  cardCalculusDesc: string;
+  cardBitwiseTag: string;
+  cardBitwiseTitle: string;
+  cardBitwiseDesc: string;
+  cardCompilerTag: string;
+  cardCompilerTitle: string;
+  cardCompilerDesc: string;
+  staticFramework: string;
+  designTokens: string;
+  localEngines: string;
+}> = {
+  en: {
+    teamRishabhRole: "Lead Developer",
+    teamRishabhBio: "Computer science student specializing in systems programming, compiler toolchains, and numerical computing. Lead architect of SciCalcX's token tokenizer, IEEE-754 precision sanitizer, and interactive bitboard simulator.",
+    githubProfile: "GitHub Profile →",
+    teamRiyaRole: "Algorithm Research & UX",
+    teamRiyaBio: "Developer focused on human-computer interaction, algorithm visualizers, and pedagogical content design. Curates our data structures curricula, descriptive statistics models, and educational tutorials.",
+    curriculumLead: "Curriculum Lead",
+    ecosystemTitle: "Core Computational Ecosystem",
+    cardScientificTag: "Client-Side Mathematics",
+    cardScientificTitle: "Advanced Calculator & Matrix Suite",
+    cardScientificDesc: "Perform precision scientific evaluations, multi-line parenthesized formula calculations, and complex matrix operations locally in your browser.",
+    cardCalculusTag: "Client-Side Analysis",
+    cardCalculusTitle: "Calculus & Dynamic Graphing",
+    cardCalculusDesc: "Evaluate integration limits, derivative approximations, and visualize coordinate overlays client-side via HTML5 Canvas.",
+    cardBitwiseTag: "Client-Side Bitwise Simulation",
+    cardBitwiseTitle: "Interactive Programmer Bitboard",
+    cardBitwiseDesc: "Toggle binary bits interactively on a 32-bit visual grid and run bitwise operators entirely in client JavaScript.",
+    cardCompilerTag: "Remote Cloud Sandbox",
+    cardCompilerTitle: "Code Tutor & Compiler Workspace",
+    cardCompilerDesc: "Write and execute programs (Python 3, C, C++20) via isolated remote sandbox services (Judge0 CE / Wandbox) with automated diagnostics.",
+    staticFramework: "Static Framework",
+    designTokens: "Design Tokens",
+    localEngines: "Local Engines",
+  },
+  es: {
+    teamRishabhRole: "Desarrollador Principal",
+    teamRishabhBio: "Estudiante de ciencias de la computación especializado en programación de sistemas, cadenas de herramientas de compiladores y cálculo numérico. Arquitecto principal del tokenizador de SciCalcX, el saneador de precisión IEEE-754 y el simulador de bitboards.",
+    githubProfile: "Perfil de GitHub →",
+    teamRiyaRole: "Investigación de Algoritmos y UX",
+    teamRiyaBio: "Desarrolladora enfocada en interacción humano-computadora, visualizadores de algoritmos y diseño de contenido pedagógico. Supervisa los planes de estudio de estructuras de datos y modelos estadísticos.",
+    curriculumLead: "Líder Curricular",
+    ecosystemTitle: "Ecosistema Computacional Principal",
+    cardScientificTag: "Matemáticas en el Navegador",
+    cardScientificTitle: "Suite de Calculadora Científica y Matrices",
+    cardScientificDesc: "Realiza evaluaciones científicas de precisión, cálculos con fórmulas entre paréntesis y operaciones matriciales complejas localmente en tu navegador.",
+    cardCalculusTag: "Análisis en el Navegador",
+    cardCalculusTitle: "Cálculo y Gráficos Dinámicos",
+    cardCalculusDesc: "Evalúa límites de integración, aproximaciones de derivadas y visualiza curvas y funciones directamente mediante Canvas HTML5.",
+    cardBitwiseTag: "Simulación Bit a Bit",
+    cardBitwiseTitle: "Bitboard Interactivo de Programador",
+    cardBitwiseDesc: "Alterna bits binarios interactivamente en una cuadrícula de 32 bits y ejecuta operadores a nivel de bits en JavaScript.",
+    cardCompilerTag: "Sandbox Remoto en la Nube",
+    cardCompilerTitle: "Tutor de Código y Entorno de Compilación",
+    cardCompilerDesc: "Escribe y ejecuta programas (Python 3, C, C++20) mediante sandboxes remotos aislados (Judge0 CE / Wandbox) con diagnósticos automáticos.",
+    staticFramework: "Framework Estático",
+    designTokens: "Tokens de Diseño",
+    localEngines: "Motores Locales",
+  },
+  fr: {
+    teamRishabhRole: "Développeur Principal",
+    teamRishabhBio: "Étudiant en informatique spécialisé dans la programmation système, les chaînes de compilation et le calcul numérique. Concepteur principal du tokenizer de SciCalcX, du correcteur de précision IEEE-754 et du simulateur de bitboards.",
+    githubProfile: "Profil GitHub →",
+    teamRiyaRole: "Recherche Algorithmique & UX",
+    teamRiyaBio: "Développeuse spécialisée dans l'interaction homme-machine, les visualisateurs d'algorithmes et la pédagogie numérique. Supervise les modules d'apprentissage des structures de données et de statistiques.",
+    curriculumLead: "Responsable Pédagogique",
+    ecosystemTitle: "Écosystème Computationnel Fondamental",
+    cardScientificTag: "Mathématiques Côté Client",
+    cardScientificTitle: "Calculatrice Scientifique & Suite Matricielle",
+    cardScientificDesc: "Effectuez des calculs scientifiques de précision, des expressions parenthésées et des opérations matricielles directement dans votre navigateur.",
+    cardCalculusTag: "Analyse Côté Client",
+    cardCalculusTitle: "Calcul Infinitésimal & Tracé Dynamique",
+    cardCalculusDesc: "Évaluez des intégrales définies, des approximations dérivées et visualisez vos courbes sur Canvas HTML5 sans latence.",
+    cardBitwiseTag: "Simulation Binaire Côté Client",
+    cardBitwiseTitle: "Bitboard Binaire pour Développeurs",
+    cardBitwiseDesc: "Basculez des bits binaires sur une grille interactive 32 bits et exécutez des opérateurs logiques directement en JavaScript.",
+    cardCompilerTag: "Bac à Sable Cloud Distant",
+    cardCompilerTitle: "Tuteur de Code & Espace Compilateur",
+    cardCompilerDesc: "Rédigez et exécutez vos programmes (Python 3, C, C++20) via des environnements sandbox sécurisés (Judge0 CE / Wandbox) avec diagnostics automatisés.",
+    staticFramework: "Framework Statique",
+    designTokens: "Jetons de Design",
+    localEngines: "Moteurs Locaux",
+  },
+  de: {
+    teamRishabhRole: "Chefentwickler",
+    teamRishabhBio: "Informatikstudent mit Schwerpunkt auf Systemprogrammierung, Compiler-Toolchains und numerischer Datenverarbeitung. Hauptarchitekt des Tokenizers, der IEEE-754-Präzisionsbereinigung und des interaktiven Bitboard-Simulators von SciCalcX.",
+    githubProfile: "GitHub-Profil →",
+    teamRiyaRole: "Algorithmenforschung & UX",
+    teamRiyaBio: "Entwicklerin mit Fokus auf Mensch-Computer-Interaktion, Algorithmen-Visualisierung und didaktische Inhaltsgestaltung. Betreut unsere Lehrinhalte für Datenstrukturen und deskriptive Statistik.",
+    curriculumLead: "Didaktische Leitung",
+    ecosystemTitle: "Zentrales Rechenökosystem",
+    cardScientificTag: "Clientseitige Mathematik",
+    cardScientificTitle: "Wissenschaftliche Rechner- & Matrix-Suite",
+    cardScientificDesc: "Führen Sie hochpräzise wissenschaftliche Auswertungen, mehrzeilige Klammerrechnungen und komplexe Matrixoperationen lokal im Browser aus.",
+    cardCalculusTag: "Clientseitige Analysis",
+    cardCalculusTitle: "Analysis & Dynamisches Funktionsgraphen",
+    cardCalculusDesc: "Berechnen Sie Integralgrenzen, Ableitungsnäherungen und visualisieren Sie Funktionsgraphen direkt per HTML5-Canvas.",
+    cardBitwiseTag: "Clientseitige Bitanalyse",
+    cardBitwiseTitle: "Interaktives Programmierer-Bitboard",
+    cardBitwiseDesc: "Schalten Sie Binärbits interaktiv auf einem 32-Bit-Raster um und führen Sie bitweise Operatoren vollständig in JavaScript aus.",
+    cardCompilerTag: "Isolierte Remote-Cloud-Sandbox",
+    cardCompilerTitle: "Code-Tutor & Compiler-Arbeitsbereich",
+    cardCompilerDesc: "Schreiben und führen Sie Programme (Python 3, C, C++20) über isolierte Remote-Sandbox-Dienste (Judge0 CE / Wandbox) mit automatisierten Diagnosen aus.",
+    staticFramework: "Statisches Framework",
+    designTokens: "Design-Token",
+    localEngines: "Lokale Berechnungsmodule",
+  }
+};
+
+const extra = aboutExtras[lang] || aboutExtras.en;
 ---
 
 <Layout 
@@ -56,14 +179,14 @@ const content = getInfoContent('about', lang);
         <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-mono font-bold text-white">Rishabh Raj Mahato</span>
-            <span class="text-[10px] font-mono text-brand-blue-neon uppercase">Lead Developer</span>
+            <span class="text-[10px] font-mono text-brand-blue-neon uppercase">{extra.teamRishabhRole}</span>
           </div>
           <p class="text-xs text-brand-text-muted leading-relaxed">
-            Computer science student specializing in systems programming, compiler toolchains, and numerical computing. Lead architect of SciCalcX's token tokenizer, IEEE-754 precision sanitizer, and interactive bitboard simulator.
+            {extra.teamRishabhBio}
           </p>
           <div class="pt-2 border-t border-brand-border/40 font-mono text-[10px]">
             <a href="https://github.com/RishabhDev817" target="_blank" rel="noopener noreferrer" class="text-brand-blue-neon hover:underline">
-              GitHub Profile &rarr;
+              {extra.githubProfile}
             </a>
           </div>
         </div>
@@ -71,13 +194,13 @@ const content = getInfoContent('about', lang);
         <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3">
           <div class="flex items-center justify-between">
             <span class="text-xs font-mono font-bold text-white">Riya</span>
-            <span class="text-[10px] font-mono text-emerald-400 uppercase">Algorithm Research &amp; UX</span>
+            <span class="text-[10px] font-mono text-emerald-400 uppercase">{extra.teamRiyaRole}</span>
           </div>
           <p class="text-xs text-brand-text-muted leading-relaxed">
-            Developer focused on human-computer interaction, algorithm visualizers, and pedagogical content design. Curates our data structures curricula, descriptive statistics models, and educational tutorials.
+            {extra.teamRiyaBio}
           </p>
           <div class="pt-2 border-t border-brand-border/40 font-mono text-[10px] text-brand-text-dim">
-            Curriculum Lead
+            {extra.curriculumLead}
           </div>
         </div>
       </div>
@@ -103,51 +226,51 @@ const content = getInfoContent('about', lang);
     <!-- Feature Ecosystem Grid -->
     <div class="space-y-4">
       <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5 px-1">
-        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> Core Computational Ecosystem
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> {extra.ecosystemTitle}
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Scientific & Matrix -->
         <a href={translatePath('/matrix')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
-          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Client-Side Mathematics</div>
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">{extra.cardScientificTag}</div>
           <h3 class="text-sm font-semibold text-white">
-            Advanced Calculator &amp; Matrix Suite
+            {extra.cardScientificTitle}
           </h3>
           <p class="text-xs text-brand-text-muted leading-relaxed">
-            Perform precision scientific evaluations, multi-line parenthesized formula calculations, and complex matrix operations locally in your browser.
+            {extra.cardScientificDesc}
           </p>
         </a>
 
         <!-- Calculus & Graphing -->
         <a href={translatePath('/calculus')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
-          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Client-Side Analysis</div>
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">{extra.cardCalculusTag}</div>
           <h3 class="text-sm font-semibold text-white">
-            Calculus &amp; Dynamic Graphing
+            {extra.cardCalculusTitle}
           </h3>
           <p class="text-xs text-brand-text-muted leading-relaxed">
-            Evaluate integration limits, derivative approximations, and visualize coordinate overlays client-side via HTML5 Canvas.
+            {extra.cardCalculusDesc}
           </p>
         </a>
 
         <!-- Bitboard & Base-N -->
         <a href={translatePath('/programming')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
-          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">Client-Side Bitwise Simulation</div>
+          <div class="text-brand-blue-neon font-mono text-[10px] uppercase">{extra.cardBitwiseTag}</div>
           <h3 class="text-sm font-semibold text-white">
-            Interactive Programmer Bitboard
+            {extra.cardBitwiseTitle}
           </h3>
           <p class="text-xs text-brand-text-muted leading-relaxed">
-            Toggle binary bits interactively on a 32-bit visual grid and run bitwise operators entirely in client JavaScript.
+            {extra.cardBitwiseDesc}
           </p>
         </a>
 
         <!-- Code Tutor & Compiler -->
         <a href={translatePath('/compiler')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
-          <div class="text-amber-400 font-mono text-[10px] uppercase">Remote Cloud Sandbox</div>
+          <div class="text-amber-400 font-mono text-[10px] uppercase">{extra.cardCompilerTag}</div>
           <h3 class="text-sm font-semibold text-white">
-            Code Tutor &amp; Compiler Workspace
+            {extra.cardCompilerTitle}
           </h3>
           <p class="text-xs text-brand-text-muted leading-relaxed">
-            Write and execute programs (Python 3, C, C++20) via isolated remote sandbox services (Judge0 CE / Wandbox) with automated diagnostics.
+            {extra.cardCompilerDesc}
           </p>
         </a>
       </div>
@@ -164,15 +287,15 @@ const content = getInfoContent('about', lang);
       <div class="grid grid-cols-3 gap-3 pt-2 font-mono text-[10px] text-center">
         <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
           <span class="text-brand-blue-neon block font-bold">Astro 6.x</span>
-          Static Framework
+          {extra.staticFramework}
         </div>
         <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
           <span class="text-brand-blue-neon block font-bold">Tailwind v4</span>
-          Design Tokens
+          {extra.designTokens}
         </div>
         <div class="border border-brand-border bg-brand-black p-2.5 rounded hover-glow transition-all">
           <span class="text-brand-blue-neon block font-bold">TypeScript</span>
-          Local Engines
+          {extra.localEngines}
         </div>
       </div>
     </div>

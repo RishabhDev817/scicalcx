@@ -82,13 +82,13 @@ function formatDate(date: Date) {
 
             <div class="pt-3 border-t border-brand-border/40 flex items-center justify-between">
               <span class="text-[10px] font-mono uppercase text-brand-text-dim">
-                Technical Guide
+                {t('btn.technicalGuide')}
               </span>
               <a
                 href={postHref}
                 class="text-xs font-mono font-semibold text-brand-blue-neon hover:text-white flex items-center gap-1 transition-colors"
               >
-                Read Article &rarr;
+                {t('btn.readArticle')} &rarr;
               </a>
             </div>
           </article>
@@ -99,16 +99,16 @@ function formatDate(date: Date) {
     <!-- Interactive Sandboxes CTA Callout -->
     <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="space-y-1 text-center sm:text-left">
-        <h3 class="text-sm font-semibold text-white">Want to test the algorithms while reading?</h3>
+        <h3 class="text-sm font-semibold text-white">{t('cta.tutorTitle')}</h3>
         <p class="text-xs text-brand-text-muted">
-          Our online compiler supports C++, C, and Python with interactive standard inputs and line-by-line debugging.
+          {t('cta.tutorDesc')}
         </p>
       </div>
       <a
         href={translatePath('/compiler')}
         class="shrink-0 text-xs font-mono font-semibold px-4 py-2.5 rounded bg-brand-blue hover:bg-brand-blue-hover text-white transition-all shadow-md"
       >
-        Open Code Tutor &rarr;
+        {t('btn.openTutor')} &rarr;
       </a>
     </div>
   </div>

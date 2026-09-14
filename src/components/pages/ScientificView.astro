@@ -7,6 +7,7 @@ import { getHandbook } from '../../i18n/content/handbooks';
 import FaqSection from '../FaqSection.astro';
 import CalculatorPedagogy from '../CalculatorPedagogy.astro';
 import HomepageDirectory from '../HomepageDirectory.astro';
+import HandbookSection from '../HandbookSection.astro';
 import { calculatorData } from '../../data/calculatorData';
 
 interface Props {
@@ -58,10 +59,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </div>
       <div class="text-xs sm:text-sm text-brand-text-muted leading-relaxed space-y-2 pt-2 border-t border-brand-border/30">
         <p>
-          The SciCalcX Scientific Calculator provides a high-precision, multi-line mathematical evaluation environment designed for students, engineering majors, and STEM professionals. It features real-time parenthetical syntax validation, instant trigonometric evaluation across sexagesimal degrees (DEG) and circular radians (RAD), logarithms, powers, and roots.
+          {t('scientific.intro.p1')}
         </p>
         <p>
-          All operations run entirely client-side in your web browser using double-precision IEEE-754 registers with decimal normalization. Your formulas, datasets, and calculations are evaluated locally for fast interaction, and your equations are never transmitted to remote servers.
+          {t('scientific.intro.p2')}
         </p>
       </div>
     </div>
@@ -70,7 +71,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-3 py-1.5 bg-brand-gray-light/40 border border-brand-border rounded text-[9px] sm:text-[10px] font-mono text-brand-text-muted">
       <div class="flex items-center gap-1.5">
         <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-        <span>ENGINE STATUS: ACTIVE</span>
+        <span>{t('engine.status')}</span>
         <span id="memory-indicator" class="hidden ml-2 px-1.5 py-0.5 bg-brand-blue/10 border border-brand-blue/30 text-brand-blue-neon rounded text-[8px] font-bold tracking-wider animate-pulse">
           M
         </span>
@@ -205,6 +206,9 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <button class="key-action active-glow" data-key="equals">=</button>
       </div>
     </div>
+
+    <!-- Localized Technical Handbook -->
+    <HandbookSection handbook={handbook} lang={lang} />
 
     <!-- Comprehensive Educational Pedagogy & Architecture -->
     <CalculatorPedagogy {...calculatorData.scientific} lang={lang} />

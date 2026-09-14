@@ -64,6 +64,93 @@ const {
 } = Astro.props;
 
 const translatePath = useTranslatedPath(lang);
+
+const labels = {
+  en: {
+    howToBadge: 'Step-by-Step Instructions',
+    howToTitle: 'How to Use This Calculator',
+    formulaBadge: 'Formal Methodology',
+    formulaTitle: 'Underlying Mathematical Formulas',
+    exampleBadge: 'Practical Application',
+    stepExecution: 'Step-by-Step Execution:',
+    inputLabel: 'INPUT:',
+    resultLabel: 'RESULT:',
+    mechanicsBadge: 'Implementation Mechanics',
+    trapsTitle: 'Common User Traps & Fixes',
+    useCasesBadge: 'Applications',
+    useCasesTitle: 'Real-World Engineering & Science Applications',
+    toolsBadge: 'Tool Ecosystem',
+    toolsTitle: 'Related Computational Tools & Guides',
+    openTool: 'Open Tool',
+  },
+  es: {
+    howToBadge: 'Instrucciones Paso a Paso',
+    howToTitle: 'Cómo Usar Esta Calculadora',
+    formulaBadge: 'Metodología Formal',
+    formulaTitle: 'Fórmulas Matemáticas Subyacentes',
+    exampleBadge: 'Aplicación Práctica',
+    stepExecution: 'Ejecución Paso a Paso:',
+    inputLabel: 'ENTRADA:',
+    resultLabel: 'RESULTADO:',
+    mechanicsBadge: 'Mecánica de Implementación',
+    trapsTitle: 'Errores Habituales y Soluciones',
+    useCasesBadge: 'Aplicaciones',
+    useCasesTitle: 'Aplicaciones en Ingeniería y Ciencia',
+    toolsBadge: 'Ecosistema de Herramientas',
+    toolsTitle: 'Herramientas y Guías Relacionadas',
+    openTool: 'Abrir Herramienta',
+  },
+  fr: {
+    howToBadge: 'Instructions Étape par Étape',
+    howToTitle: 'Comment Utiliser Cette Calculatrice',
+    formulaBadge: 'Méthodologie Formelle',
+    formulaTitle: 'Formules Mathématiques Sous-jacentes',
+    exampleBadge: 'Application Pratique',
+    stepExecution: 'Exécution Étape par Étape :',
+    inputLabel: 'ENTRÉE :',
+    resultLabel: 'RÉSULTAT :',
+    mechanicsBadge: 'Mécanique d\'Implémentation',
+    trapsTitle: 'Erreurs Courantes et Solutions',
+    useCasesBadge: 'Applications',
+    useCasesTitle: 'Applications en Ingénierie et Sciences',
+    toolsBadge: 'Écosystème d\'Outils',
+    toolsTitle: 'Outils et Guides Connexes',
+    openTool: 'Ouvrir l\'Outil',
+  },
+  de: {
+    howToBadge: 'Schritt-für-Schritt-Anleitung',
+    howToTitle: 'Bedienung dieses Rechners',
+    formulaBadge: 'Formale Methodik',
+    formulaTitle: 'Zugrunde liegende mathematische Formeln',
+    exampleBadge: 'Praktische Anwendung',
+    stepExecution: 'Schritt-für-Schritt-Berechnung:',
+    inputLabel: 'EINGABE:',
+    resultLabel: 'ERGEBNIS:',
+    mechanicsBadge: 'Implementierungsdetails',
+    trapsTitle: 'Häufige Fehler und Lösungen',
+    useCasesBadge: 'Anwendungsbereiche',
+    useCasesTitle: 'Praktische Anwendungen in Technik & Wissenschaft',
+    toolsBadge: 'Werkzeug-Ökosystem',
+    toolsTitle: 'Verwandte Rechenwerkzeuge & Anleitungen',
+    openTool: 'Werkzeug öffnen',
+  },
+}[lang] || {
+  howToBadge: 'Step-by-Step Instructions',
+  howToTitle: 'How to Use This Calculator',
+  formulaBadge: 'Formal Methodology',
+  formulaTitle: 'Underlying Mathematical Formulas',
+  exampleBadge: 'Practical Application',
+  stepExecution: 'Step-by-Step Execution:',
+  inputLabel: 'INPUT:',
+  resultLabel: 'RESULT:',
+  mechanicsBadge: 'Implementation Mechanics',
+  trapsTitle: 'Common User Traps & Fixes',
+  useCasesBadge: 'Applications',
+  useCasesTitle: 'Real-World Engineering & Science Applications',
+  toolsBadge: 'Tool Ecosystem',
+  toolsTitle: 'Related Computational Tools & Guides',
+  openTool: 'Open Tool',
+};
 ---
 
 <div class="w-full space-y-8 font-sans text-xs sm:text-sm text-brand-text-muted mt-8">
@@ -84,8 +171,8 @@ const translatePath = useTranslatedPath(lang);
   <!-- 2. Step-by-Step How-To Guide -->
   <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
     <div class="border-b border-brand-border/40 pb-3">
-      <span class="text-emerald-400 font-mono text-[10px] uppercase tracking-widest block">Step-by-Step Instructions</span>
-      <h2 class="text-lg font-bold text-white tracking-tight mt-1">How to Use This Calculator</h2>
+      <span class="text-emerald-400 font-mono text-[10px] uppercase tracking-widest block">{labels.howToBadge}</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">{labels.howToTitle}</h2>
     </div>
     <ol class="space-y-3 pl-2">
       {howToSteps.map((step, idx) => (
@@ -102,8 +189,8 @@ const translatePath = useTranslatedPath(lang);
   <!-- 3. Mathematical Formulas & Notation -->
   <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-5 shadow-xl">
     <div class="border-b border-brand-border/40 pb-3">
-      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">Formal Methodology</span>
-      <h2 class="text-lg font-bold text-white tracking-tight mt-1">Underlying Mathematical Formulas</h2>
+      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">{labels.formulaBadge}</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">{labels.formulaTitle}</h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       {formulas.map((f) => (
@@ -121,17 +208,17 @@ const translatePath = useTranslatedPath(lang);
   <!-- 4. Worked Numerical Example -->
   <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
     <div class="border-b border-brand-border/40 pb-3">
-      <span class="text-amber-400 font-mono text-[10px] uppercase tracking-widest block">Practical Application</span>
+      <span class="text-amber-400 font-mono text-[10px] uppercase tracking-widest block">{labels.exampleBadge}</span>
       <h2 class="text-lg font-bold text-white tracking-tight mt-1">{workedExample.title}</h2>
     </div>
     <div class="space-y-4">
       <div class="p-3.5 bg-brand-black/80 border border-brand-border rounded font-mono text-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-        <div><span class="text-brand-text-dim">INPUT:</span> <span class="text-white font-bold">{workedExample.input}</span></div>
-        <div><span class="text-brand-text-dim">RESULT:</span> <span class="text-emerald-400 font-bold">{workedExample.result}</span></div>
+        <div><span class="text-brand-text-dim">{labels.inputLabel}</span> <span class="text-white font-bold">{workedExample.input}</span></div>
+        <div><span class="text-brand-text-dim">{labels.resultLabel}</span> <span class="text-emerald-400 font-bold">{workedExample.result}</span></div>
       </div>
       
       <div class="space-y-2">
-        <h3 class="text-xs font-mono uppercase tracking-wider text-white">Step-by-Step Execution:</h3>
+        <h3 class="text-xs font-mono uppercase tracking-wider text-white">{labels.stepExecution}</h3>
         <div class="border border-brand-border/60 rounded-lg overflow-hidden font-mono text-xs">
           {workedExample.steps.map((st, i) => (
             <div class={`p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1 ${i % 2 === 0 ? 'bg-brand-black/40' : 'bg-brand-gray-dark/20'} border-b border-brand-border/30 last:border-b-0`}>
@@ -152,7 +239,7 @@ const translatePath = useTranslatedPath(lang);
   <!-- 5. How the Calculation Works in SciCalcX -->
   <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
     <div class="border-b border-brand-border/40 pb-3">
-      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">Implementation Mechanics</span>
+      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">{labels.mechanicsBadge}</span>
       <h2 class="text-lg font-bold text-white tracking-tight mt-1">{howItWorks.title}</h2>
     </div>
     <div class="space-y-3 leading-relaxed">
@@ -179,7 +266,7 @@ const translatePath = useTranslatedPath(lang);
     <!-- Common Mistakes -->
     <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 space-y-3 shadow-xl">
       <h3 class="text-sm font-semibold uppercase font-mono text-rose-400 flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> Common User Traps &amp; Fixes
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span> {labels.trapsTitle}
       </h3>
       <div class="space-y-2.5 text-xs">
         {commonMistakes.map((cm) => (
@@ -199,8 +286,8 @@ const translatePath = useTranslatedPath(lang);
   <!-- 7. Real-World Engineering & Academic Use Cases -->
   <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
     <div class="border-b border-brand-border/40 pb-3">
-      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">Applications</span>
-      <h2 class="text-lg font-bold text-white tracking-tight mt-1">Real-World Engineering &amp; Science Applications</h2>
+      <span class="text-brand-blue-neon font-mono text-[10px] uppercase tracking-widest block">{labels.useCasesBadge}</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">{labels.useCasesTitle}</h2>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {useCases.map((uc) => (
@@ -215,8 +302,8 @@ const translatePath = useTranslatedPath(lang);
   <!-- 8. Connected SciCalcX Ecosystem Tools -->
   <section class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl">
     <div class="border-b border-brand-border/40 pb-3">
-      <span class="text-brand-blue font-mono text-[10px] uppercase tracking-widest block">Tool Ecosystem</span>
-      <h2 class="text-lg font-bold text-white tracking-tight mt-1">Related Computational Tools &amp; Guides</h2>
+      <span class="text-brand-blue font-mono text-[10px] uppercase tracking-widest block">{labels.toolsBadge}</span>
+      <h2 class="text-lg font-bold text-white tracking-tight mt-1">{labels.toolsTitle}</h2>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {relatedTools.map((tool) => (
@@ -227,7 +314,7 @@ const translatePath = useTranslatedPath(lang);
           <span class="text-[10px] font-mono text-brand-blue-neon uppercase tracking-wider block">{tool.badge}</span>
           <h3 class="text-sm font-semibold text-white group-hover:text-brand-blue-neon transition-colors">{tool.title}</h3>
           <p class="text-xs text-brand-text-dim line-clamp-2 leading-relaxed">{tool.desc}</p>
-          <span class="text-[11px] font-mono text-brand-blue-neon pt-1 block font-semibold">Open Tool &rarr;</span>
+          <span class="text-[11px] font-mono text-brand-blue-neon pt-1 block font-semibold">{labels.openTool} &rarr;</span>
         </a>
       ))}
     </div>
