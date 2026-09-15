@@ -102,16 +102,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'How and where is my program code executed?',
-        answer: 'Code submitted through the Code Tutor is sent securely over encrypted HTTPS to external containerized sandbox execution services (primary: Judge0 CE API at ce.judge0.com, with automatic fallback to Wandbox API at wandbox.org). The program executes inside an isolated, temporary sandbox and returns output (stdout and stderr) back to your browser. SciCalcX does not permanently store your code on remote servers.',
+        question: 'Where is my code executed?',
+        answer: 'Code submitted through the Code Tutor and Online Compiler is executed inside isolated, ephemeral container sandboxes provided by external execution services (primary: Judge0 CE API at ce.judge0.com, with automatic fallback to Wandbox API at wandbox.org). Unlike SciCalcX mathematical calculators which run 100% locally in your browser, Code Tutor execution does not occur inside your browser.',
       },
       {
-        question: 'Which programming languages are supported in the Code Tutor?',
-        answer: 'SciCalcX provides execution support and interactive curriculum tracks for Python 3, C (GCC 14), and C++20 (GCC 14), featuring automated syntax diagnostics and error explanations.',
+        question: 'Which programming languages are supported?',
+        answer: 'SciCalcX Code Tutor officially supports Python 3 (CPython 3.12/3.13), C (GCC 14), and C++20 (GCC 14). Each language features an interactive syntax curriculum, automated error diagnostics, and support for standard input (stdin).',
       },
       {
-        question: 'Can I provide custom standard input (stdin) to my programs?',
-        answer: 'Yes. The interactive terminal console features a dedicated stdin stream input field, allowing you to pass dynamic inputs to test array sorting, matrix traversals, and algorithms.',
+        question: 'Is my code sent to an external service?',
+        answer: 'Yes. When you click "Run Code", your source code, chosen language identifier, and any optional standard input (stdin) are sent over an encrypted HTTPS connection directly to the sandbox execution backend (Judge0 CE or Wandbox). Your program is transmitted only at the moment of execution.',
+      },
+      {
+        question: 'How does SciCalcX protect code during execution?',
+        answer: 'All code transmissions take place over encrypted HTTPS (TLS). Execution occurs within temporary, isolated Linux container environments with strict resource constraints, including tight execution time limits (timeouts) and memory ceilings, preventing unauthorized access or persistent state.',
+      },
+      {
+        question: 'Does SciCalcX permanently store my source code?',
+        answer: 'No. SciCalcX does not permanently store, log, or index your source code on our servers, nor is it stored in any remote database. Your drafts are saved exclusively in your own browser\'s local storage (localStorage) on your personal device. Once the execution service completes compilation and runs your script, the temporary container is destroyed.',
+      },
+      {
+        question: 'What happens when I click Run Code?',
+        answer: 'When you click "Run Code", SciCalcX packages your editor text and stdin stream and posts them securely via HTTPS to the primary execution service (Judge0 CE). The service compiles and runs the program in a sandbox container, captures the standard output (stdout) and standard error/diagnostic messages (stderr), and returns the results to be displayed directly in your terminal console.',
+      },
+      {
+        question: 'What happens if the primary execution service is unavailable?',
+        answer: 'SciCalcX features an automated fallback mechanism. If the primary Judge0 CE service experiences downtime, rate limits, or network unreachability, the client automatically re-routes the execution request over HTTPS to the secondary Wandbox API (wandbox.org), ensuring uninterrupted coding and learning.',
       },
     ],
   },
@@ -211,16 +227,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: '¿Cómo y dónde se ejecuta el código de mi programa?',
-        answer: 'El código enviado a través del Tutor de Código se transmite de forma segura mediante HTTPS cifrado a servicios externos de ejecución en contenedores aislados (primario: API de Judge0 CE en ce.judge0.com, con respaldo automático en la API de Wandbox en wandbox.org). El programa se ejecuta en un entorno aislado temporal y devuelve la salida (stdout y stderr) a tu navegador. SciCalcX no almacena tu código de forma permanente en servidores remotos.',
+        question: '¿Dónde se ejecuta mi código?',
+        answer: 'El código enviado a través del Tutor de Código y Compilador se ejecuta en contenedores sandbox aislados y efímeros gestionados por servicios externos (primario: API de Judge0 CE en ce.judge0.com, con respaldo automático en la API de Wandbox en wandbox.org). A diferencia de las calculadoras matemáticas de SciCalcX que funcionan 100% de forma local en el navegador, la ejecución del Tutor de Código no ocurre dentro de tu navegador.',
       },
       {
-        question: '¿Qué lenguajes de programación son compatibles con el Tutor de Código?',
-        answer: 'SciCalcX admite ejecución y módulos de aprendizaje interactivos para Python 3, C (GCC 14) y C++20 (GCC 14), con diagnósticos sintácticos automáticos y explicaciones de errores.',
+        question: '¿Qué lenguajes de programación son compatibles?',
+        answer: 'SciCalcX admite oficialmente Python 3, C (GCC 14) y C++20 (GCC 14). Cada lenguaje incluye lecciones interactivas, diagnósticos de errores automáticos y compatibilidad con el flujo de entrada estándar (stdin).',
       },
       {
-        question: '¿Puedo enviar datos al flujo de entrada estándar (stdin)?',
-        answer: 'Sí. La consola de terminal interactiva cuenta con un campo dedicado de entrada estándar (stdin), permitiendo enviar datos dinámicos para probar algoritmos, ordenamiento de arrays y matrices.',
+        question: '¿Se envía mi código a un servicio externo?',
+        answer: 'Sí. Al hacer clic en «Ejecutar Código», tu código fuente, el lenguaje seleccionado y los datos opcionales de entrada estándar (stdin) se transmiten mediante una conexión cifrada HTTPS directamente al backend de ejecución en sandbox (Judge0 CE o Wandbox). El código solo se envía en el instante en que decides ejecutarlo.',
+      },
+      {
+        question: '¿Cómo protege SciCalcX el código durante su ejecución?',
+        answer: 'Toda transmisión de datos se realiza mediante HTTPS (TLS) cifrado. La ejecución se lleva a cabo en contenedores Linux temporales y estrictamente aislados con límites definidos de tiempo de CPU y consumo de memoria, impidiendo accesos no autorizados o retención de estado.',
+      },
+      {
+        question: '¿SciCalcX almacena mi código fuente de forma permanente?',
+        answer: 'No. SciCalcX no guarda, no registra ni almacena de forma persistente tu código fuente en servidores externos ni bases de datos remotas. Tus borradores se guardan únicamente en el almacenamiento local (localStorage) de tu propio navegador. Tras finalizar la ejecución, el contenedor temporal se destruye.',
+      },
+      {
+        question: '¿Qué ocurre cuando hago clic en «Ejecutar Código»?',
+        answer: 'Al pulsar «Ejecutar Código», SciCalcX empaqueta tu código fuente y entrada (stdin) y los envía por HTTPS al servicio primario (Judge0 CE). Este compila y ejecuta el script en un contenedor sandbox, captura la salida estándar (stdout) y los mensajes de diagnóstico o error (stderr), y los devuelve inmediatamente a tu consola.',
+      },
+      {
+        question: '¿Qué sucede si el servicio de ejecución primario no está disponible?',
+        answer: 'SciCalcX cuenta con un sistema de contingencia automatizado. Si el servicio primario Judge0 CE no responde, supera límites de tasa o sufre una interrupción, el sistema redirige la solicitud de ejecución de forma transparente a la API secundaria de Wandbox (wandbox.org), garantizando la continuidad de tus prácticas.',
       },
     ],
   },
@@ -283,16 +315,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Comment et où mon code est-il exécuté ?',
-        answer: 'Le code soumis via le Tuteur de Code est transmis en toute sécurité via une connexion HTTPS chiffrée à des services sandbox d\'exécution conteneurisés externes (principal : API Judge0 CE sur ce.judge0.com, avec basculement automatique vers l\'API Wandbox sur wandbox.org). Le programme s\'exécute dans un bac à sable temporaire et isolé, puis renvoie la sortie (stdout et stderr) à votre navigateur. SciCalcX ne stocke pas votre code de façon permanente sur des serveurs distants.',
+        question: 'Où mon code est-il exécuté ?',
+        answer: 'Le code soumis via le Tuteur de Code et Compilateur est exécuté dans des conteneurs sandbox isolés et éphémères fournis par des services distants (principal : API Judge0 CE sur ce.judge0.com, avec basculement automatique vers l\'API Wandbox sur wandbox.org). Contrairement aux calculatrices mathématiques de SciCalcX qui s\'exécutent à 100 % localement dans votre navigateur, l\'exécution du Tuteur de Code n\'a pas lieu dans votre navigateur.',
       },
       {
-        question: 'Quels langages de programmation sont pris en charge dans le Tuteur de Code ?',
-        answer: 'SciCalcX prend en charge l\'exécution et les parcours d\'apprentissage interactifs pour Python 3, C (GCC 14) et C++20 (GCC 14), avec diagnostics syntaxiques automatisés et explications des erreurs.',
+        question: 'Quels langages de programmation sont pris en charge ?',
+        answer: 'SciCalcX prend officiellement en charge Python 3, C (GCC 14) et C++20 (GCC 14). Chaque langage bénéficie d\'un parcours d\'apprentissage interactif, de diagnostics d\'erreurs automatiques et de la prise en charge de l\'entrée standard (stdin).',
       },
       {
-        question: 'Puis-je fournir une entrée standard personnalisée (stdin) à mes programmes ?',
-        answer: 'Oui. La console interactive dispose d\'un champ dédié au flux d\'entrée standard (stdin), vous permettant de passer des entrées dynamiques pour tester le tri de tableaux, les parcours de matrices et divers algorithmes.',
+        question: 'Mon code est-il transmis à un service externe ?',
+        answer: 'Oui. Lorsque vous cliquez sur « Exécuter le Code », votre code source, l\'identifiant de langage et l\'éventuelle entrée standard (stdin) sont envoyés via une connexion sécurisée HTTPS chiffrée directement au backend d\'exécution sandbox (Judge0 CE ou Wandbox). Votre programme n\'est transmis qu\'au moment précis de l\'exécution.',
+      },
+      {
+        question: 'Comment SciCalcX protège-t-il le code durant l\'exécution ?',
+        answer: 'Toutes les communications s\'effectuent via HTTPS (TLS) chiffré. L\'exécution se déroule dans des conteneurs Linux temporaires et étanches avec des plafonds stricts de temps processeur et de mémoire, évitant tout accès non autorisé ou conservation d\'état.',
+      },
+      {
+        question: 'SciCalcX conserve-t-il mon code source de manière permanente ?',
+        answer: 'Non. SciCalcX ne conserve, n\'enregistre ni n\'indexe de façon permanente votre code source sur des serveurs distants ou des bases de données. Vos brouillons sont stockés uniquement dans le stockage local (localStorage) de votre navigateur sur votre appareil. Une fois l\'exécution terminée, le conteneur éphémère est détruit.',
+      },
+      {
+        question: 'Que se passe-t-il lorsque je clique sur « Exécuter le Code » ?',
+        answer: 'Lorsque vous cliquez sur « Exécuter le Code », SciCalcX transmet votre code et l\'entrée stdin via HTTPS au service principal (Judge0 CE). Celui-ci compile et exécute le programme en sandbox, capture la sortie standard (stdout) ainsi que les erreurs (stderr), puis renvoie les résultats directement sur votre console de terminal.',
+      },
+      {
+        question: 'Que se passe-t-il si le service d\'exécution principal est indisponible ?',
+        answer: 'SciCalcX intègre un mécanisme de secours automatisé. Si le service principal Judge0 CE est indisponible ou saturé, la requête d\'exécution est automatiquement redirigée via HTTPS vers l\'API secondaire Wandbox (wandbox.org), assurant un apprentissage sans interruption.',
       },
     ],
   },
@@ -359,16 +407,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Wie und wo wird mein Programmcode ausgeführt?',
-        answer: 'Der über den Code-Tutor eingereichte Programmcode wird sicher über verschlüsseltes HTTPS an externe containerisierte Sandbox-Ausführungsdienste übertragen (primär: Judge0 CE API unter ce.judge0.com, mit automatischem Fallback auf die Wandbox API unter wandbox.org). Das Programm läuft in einer isolierten, temporären Sandbox und sendet die Ausgabe (stdout und stderr) zurück an Ihren Browser. SciCalcX speichert Ihren Quellcode nicht dauerhaft auf Remote-Servern.',
+        question: 'Wo wird mein Programmcode ausgeführt?',
+        answer: 'Der über den Code-Tutor eingereichte Code wird in isolierten, temporären Container-Sandboxes externer Ausführungsdienste ausgeführt (primär: Judge0 CE API unter ce.judge0.com, mit automatischem Fallback auf die Wandbox API unter wandbox.org). Im Gegensatz zu den mathematischen Rechnern von SciCalcX, die zu 100 % lokal in Ihrem Browser rechnen, findet die Codeausführung nicht in Ihrem Browser statt.',
       },
       {
-        question: 'Welche Programmiersprachen werden im Code-Tutor unterstützt?',
-        answer: 'SciCalcX bietet Ausführungsunterstützung und interaktive Lernmodule für Python 3, C (GCC 14) und C++20 (GCC 14), inklusive automatischer Syntaxdiagnose und Fehlererklärungen.',
+        question: 'Welche Programmiersprachen werden unterstützt?',
+        answer: 'SciCalcX unterstützt offiziell Python 3, C (GCC 14) und C++20 (GCC 14). Für jede Sprache stehen strukturierte Lektionen, automatische Syntaxdiagnosen und Unterstützung für die Standardeingabe (stdin) zur Verfügung.',
       },
       {
-        question: 'Kann ich benutzerdefinierte Standardeingaben (stdin) an meine Programme übergeben?',
-        answer: 'Ja. Die interaktive Terminalkonsole verfügt über ein eigenes Eingabefeld für den Standard-Eingabestrom (stdin), mit dem Sie dynamische Testdaten für Arraysortierungen, Matrixtraversierungen und Algorithmen übergeben können.',
+        question: 'Wird mein Quellcode an einen externen Dienst gesendet?',
+        answer: 'Ja. Sobald Sie auf „Code Ausführen“ klicken, werden Ihr Quellcode, die gewählte Programmiersprache und optionale Standardeingaben (stdin) verschlüsselt über HTTPS direkt an den Sandbox-Dienst (Judge0 CE oder Wandbox) übertragen. Der Quelltext wird ausschließlich im Moment der Ausführung übermittelt.',
+      },
+      {
+        question: 'Wie schützt SciCalcX den Code während der Ausführung?',
+        answer: 'Die Übertragung erfolgt durchgehend über verschlüsseltes HTTPS (TLS). Die Ausführung findet in kurzlebigen, streng abgeschirmten Linux-Containern mit harten Ressourcenbegrenzungen (Ausführungszeit- und Speicherlimits) statt, wodurch Datenzugriffe Dritter und persistente Zustände ausgeschlossen sind.',
+      },
+      {
+        question: 'Speichert SciCalcX meinen Quellcode dauerhaft?',
+        answer: 'Nein. SciCalcX speichert, protokolliert oder archiviert Ihren Quellcode zu keinem Zeitpunkt dauerhaft auf Servern oder in entfernten Datenbanken. Ihre Entwürfe verbleiben ausschließlich im lokalen Speicher (localStorage) Ihres Browsers. Nach Abschluss der Programmausführung wird der temporäre Container sofort verworfen.',
+      },
+      {
+        question: 'Was geschieht, wenn ich auf „Code Ausführen“ klicke?',
+        answer: 'Beim Klick auf „Code Ausführen“ übermittelt SciCalcX Ihren Code und eventuelle stdin-Eingaben via HTTPS an den primären Ausführungsdienst (Judge0 CE). Dieser kompiliert und führt das Skript in einer sicheren Sandbox aus, erfasst die Standardausgabe (stdout) sowie Fehlermeldungen (stderr) und spiegelt sie direkt in Ihre Terminalkonsole zurück.',
+      },
+      {
+        question: 'Was passiert, wenn der primäre Ausführungsdienst nicht erreichbar ist?',
+        answer: 'SciCalcX verfügt über ein integriertes automatisches Fallback-System. Sollte die primäre Judge0 CE-Schnittstelle nicht erreichbar sein oder Ratenbegrenzungen unterliegen, wird die Anfrage automatisch und unterbrechungsfrei an die sekundäre Wandbox API (wandbox.org) umgeleitet.',
       },
     ],
   },
@@ -451,16 +515,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Hoe en waar wordt mijn programmacode uitgevoerd?',
-        answer: 'Code die via de Code Tutor wordt ingediend, wordt veilig via versleutelde HTTPS verzonden naar externe container-sandboxdiensten (primair: Judge0 CE API op ce.judge0.com, met automatische terugval naar de Wandbox API op wandbox.org). Het programma draait in een geïsoleerde, tijdelijke sandbox en stuurt de uitvoer (stdout en stderr) terug naar uw browser. SciCalcX slaat uw broncode niet permanent op externe servers op.',
+        question: 'Waar wordt mijn programmacode uitgevoerd?',
+        answer: 'Code die via de Code Tutor wordt ingediend, wordt uitgevoerd in geïsoleerde, tijdelijke container-sandboxes van externe uitvoeringsdiensten (primair: Judge0 CE API op ce.judge0.com, met automatische terugval naar de Wandbox API op wandbox.org). In tegenstelling tot de wiskundige rekenmachines van SciCalcX die 100% lokaal in uw browser rekenen, vindt de code-uitvoering van de Code Tutor niet plaats in uw browser.',
       },
       {
-        question: 'Welke programmeertalen worden ondersteund in de Code Tutor?',
-        answer: 'SciCalcX biedt ondersteuning voor uitvoering en interactieve leertrajecten voor Python 3, C (GCC 14) en C++20 (GCC 14), compleet met automatische foutdiagnostiek en toelichtingen.',
+        question: 'Welke programmeertalen worden ondersteund?',
+        answer: 'SciCalcX ondersteunt officieel Python 3, C (GCC 14) en C++20 (GCC 14). Elke taal beschikt over een interactief leertraject, automatische foutdiagnose en ondersteuning voor standaardinvoer (stdin).',
       },
       {
-        question: 'Kan ik aangepaste standaardinvoer (stdin) aan mijn programma\'s meegeven?',
-        answer: 'Ja. De interactieve terminalconsole beschikt over een speciaal invoerveld voor de standaardinvoerstroom (stdin), waarmee u dynamische invoer kunt doorgeven om sorteeralgoritmen en matrixberekeningen te testen.',
+        question: 'Wordt mijn code naar een externe dienst verzonden?',
+        answer: 'Ja. Wanneer u op "Code Uitvoeren" klikt, worden uw broncode, taalkeuze en eventuele standaardinvoer (stdin) via een versleutelde HTTPS-verbinding rechtstreeks naar de sandbox-backend (Judge0 CE of Wandbox) verzonden. Uw programma wordt uitsluitend verzonden op het moment van uitvoering.',
+      },
+      {
+        question: 'Hoe beveiligt SciCalcX code tijdens de uitvoering?',
+        answer: 'Alle datacommunicatie verloopt via versleutelde HTTPS-verbindingen (TLS). De uitvoering vindt plaats binnen kortlevende, streng afgeschermde Linux-containers met strikte limieten voor verwerkingstijd en geheugen, waardoor ongeautoriseerde toegang wordt voorkomen.',
+      },
+      {
+        question: 'Bewaart SciCalcX mijn broncode permanent?',
+        answer: 'Nee. SciCalcX slaat uw broncode nooit permanent op en registreert deze niet in externe databases. Uw concepten worden uitsluitend bewaard in de lokale opslag (localStorage) van uw eigen browser. Zodra de uitvoering is voltooid, wordt de tijdelijke container vernietigd.',
+      },
+      {
+        question: 'Wat gebeurt er als ik op "Code Uitvoeren" klik?',
+        answer: 'Zodra u op "Code Uitvoeren" klikt, verzendt SciCalcX uw code en stdin-invoer via HTTPS naar de primaire dienst (Judge0 CE). Deze compileert en draait het programma in een sandbox, vangt de standaarduitvoer (stdout) en foutmeldingen (stderr) op, en toont het resultaat direct in uw console.',
+      },
+      {
+        question: 'Wat gebeurt er als de primaire uitvoeringsdienst niet beschikbaar is?',
+        answer: 'SciCalcX beschikt over een automatische uitwijkprocedure (fallback). Indien de Judge0 CE-service tijdelijk onbereikbaar is of fouten vertoont, schakelt het systeem de uitvoeringsaanvraag direct en automatisch door naar de secundaire Wandbox API (wandbox.org).',
       },
     ],
   },
@@ -523,16 +603,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Como e onde o código do meu programa é executado?',
-        answer: 'O código enviado pelo Tutor de Código é transmitido com segurança via HTTPS criptografado para serviços externos de sandbox em contêineres isolados (principal: API Judge0 CE em ce.judge0.com, com fallback automático para a API Wandbox em wandbox.org). O programa executa em uma sandbox temporária e isolada, retornando a saída (stdout e stderr) ao seu navegador. O SciCalcX não armazena seu código permanentemente em servidores remotos.',
+        question: 'Onde o código do meu programa é executado?',
+        answer: 'O código enviado pelo Tutor de Código e Compilador é executado em contêineres sandbox isolados e temporários fornecidos por serviços externos (principal: API Judge0 CE em ce.judge0.com, com fallback automático para a API Wandbox em wandbox.org). Ao contrário das calculadoras matemáticas do SciCalcX que operam 100% localmente no navegador, a execução do Tutor de Código não ocorre dentro do seu navegador.',
       },
       {
-        question: 'Quais linguagens de programação são suportadas no Tutor de Código?',
-        answer: 'O SciCalcX suporta execução e trilhas interativas de aprendizado para Python 3, C (GCC 14) e C++20 (GCC 14), com diagnósticos automáticos de sintaxe e explicações de erros.',
+        question: 'Quais linguagens de programação são suportadas?',
+        answer: 'O SciCalcX suporta oficialmente Python 3, C (GCC 14) e C++20 (GCC 14). Cada linguagem inclui trilhas guiadas de aprendizado, diagnósticos automatizados de sintaxe e suporte a entrada padrão (stdin).',
       },
       {
-        question: 'Posso fornecer entrada padrão personalizada (stdin) aos meus programas?',
-        answer: 'Sim. O console de terminal interativo possui um campo dedicado para o fluxo de entrada padrão (stdin), permitindo fornecer entradas dinâmicas para testar ordenação de vetores, matrizes e algoritmos.',
+        question: 'Meu código é enviado para um serviço externo?',
+        answer: 'Sim. Ao clicar em "Executar Código", o código-fonte, a linguagem selecionada e a entrada padrão (stdin) opcional são transmitidos via conexão segura HTTPS diretamente para o backend de execução em sandbox (Judge0 CE ou Wandbox). O programa só é transmitido no momento do acionamento.',
+      },
+      {
+        question: 'Como o SciCalcX protege o código durante a execução?',
+        answer: 'Todas as transmissões utilizam criptografia HTTPS (TLS). A execução é realizada em contêineres Linux efêmeros e estritamente isolados com limites rígidos de tempo de CPU e consumo de memória, prevenindo acessos indevidos e persistência de dados.',
+      },
+      {
+        question: 'O SciCalcX armazena meu código-fonte permanentemente?',
+        answer: 'Não. O SciCalcX não armazena, não registra nem indexa permanentemente seu código em servidores remotos ou bancos de dados. Seus rascunhos ficam salvos unicamente no armazenamento local (localStorage) do seu navegador. Finalizada a execução, o contêiner temporário é destruído.',
+      },
+      {
+        question: 'O que acontece quando clico em "Executar Código"?',
+        answer: 'Ao clicar em "Executar Código", o SciCalcX envia o código do editor e o fluxo stdin via HTTPS para o executor primário (Judge0 CE). O serviço compila e executa o script na sandbox, captura a saída padrão (stdout) e mensagens de erro (stderr) e exibe os resultados no console.',
+      },
+      {
+        question: 'O que acontece se o serviço primário de execução estiver indisponível?',
+        answer: 'O SciCalcX conta com um mecanismo automático de contingência (fallback). Caso o Judge0 CE apresente instabilidade ou atinja limites de requisição, o sistema redireciona a execução de forma transparente para a API secundária Wandbox (wandbox.org).',
       },
     ],
   },
@@ -596,16 +692,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Come e dove viene eseguito il codice del mio programma?',
-        answer: 'Il codice inviato tramite il Tutor di Codice viene trasmesso in modo sicuro tramite HTTPS crittografato a servizi di esecuzione in container sandbox esterni (principale: API Judge0 CE su ce.judge0.com, con fallback automatico all\'API Wandbox su wandbox.org). Il programma viene eseguito in una sandbox temporanea e isolata, restituendo l\'output (stdout e stderr) al browser. SciCalcX non archivia permanentemente il codice su server remoti.',
+        question: 'Dove viene eseguito il codice del mio programma?',
+        answer: 'Il codice inviato tramite il Tutor di Codice e Compilatore viene eseguito all\'interno di container sandbox isolati ed effimeri gestiti da servizi remoti (principale: API Judge0 CE su ce.judge0.com, con fallback automatico all\'API Wandbox su wandbox.org). A differenza delle calcolatrici matematiche di SciCalcX che elaborano al 100% in locale nel browser, l\'esecuzione del Tutor di Codice non avviene all\'interno del browser.',
       },
       {
-        question: 'Quali linguaggi di programmazione sono supportati nel Tutor di Codice?',
-        answer: 'SciCalcX supporta l\'esecuzione e percorsi didattici interattivi per Python 3, C (GCC 14) e C++20 (GCC 14), con diagnostica sintattica automatizzata e spiegazioni degli errori.',
+        question: 'Quali linguaggi di programmazione sono supportati?',
+        answer: 'SciCalcX supporta ufficialmente Python 3, C (GCC 14) e C++20 (GCC 14). Ciascun linguaggio include percorsi guidati, diagnosi automatica degli errori di sintassi e gestione del flusso di input standard (stdin).',
       },
       {
-        question: 'Posso fornire input standard personalizzato (stdin) ai miei programmi?',
-        answer: 'Sì. La console terminale interattiva include un campo dedicato per il flusso di input standard (stdin), consentendo di passare input dinamici per testare ordinamento di array, matrici e algoritmi.',
+        question: 'Il mio codice viene inviato a un servizio esterno?',
+        answer: 'Sì. Quando si fa clic su "Esegui Codice", il codice sorgente, l\'identificatore del linguaggio e l\'eventuale input standard (stdin) vengono trasmessi tramite connessione crittografata HTTPS direttamente al backend di sandbox (Judge0 CE o Wandbox). Il programma viene inviato unicamente all\'atto dell\'esecuzione.',
+      },
+      {
+        question: 'Come protegge SciCalcX il codice durante l\'esecuzione?',
+        answer: 'Tutte le comunicazioni avvengono tramite HTTPS (TLS) crittografato. L\'elaborazione si svolge in ambienti container Linux temporanei e isolati con tetti rigidi di tempo CPU e memoria, impedendo accessi non autorizzati o ritenzione di stato.',
+      },
+      {
+        question: 'SciCalcX memorizza permanentemente il mio codice sorgente?',
+        answer: 'No. SciCalcX non archivia né registra in modo permanente il codice sorgente sui propri server o in database remoti. Le bozze rimangono salvate esclusivamente nella memoria locale (localStorage) del browser. Al termine dell\'esecuzione, il container temporaneo viene eliminato.',
+      },
+      {
+        question: 'Cosa succede quando si preme "Esegui Codice"?',
+        answer: 'Facendo clic su "Esegui Codice", SciCalcX inoltra il codice e lo stream stdin via HTTPS al fornitore primario (Judge0 CE). Il servizio compila ed esegue il programma in sandbox, intercetta l\'output standard (stdout) e gli errori (stderr), restituendoli direttamente nella console del terminale.',
+      },
+      {
+        question: 'Cosa succede se il servizio di esecuzione primario non è disponibile?',
+        answer: 'SciCalcX adotta un meccanismo di fallback automatico. Qualora il servizio principale Judge0 CE risulti temporaneamente non raggiungibile o soggetto a limitazioni, la richiesta viene deviata in modo trasparente verso l\'API secondaria Wandbox (wandbox.org).',
       },
     ],
   },
@@ -664,16 +776,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'プログラムコードはどこでどのように実行されますか？',
-        answer: 'Code Tutorを通じて送信されたコードは、暗号化されたHTTPSを介して外部のコンテナ型サンドボックス実行サービス（プライマリ：ce.judge0.com の Judge0 CE API、自動フォールバック：wandbox.org の Wandbox API）へ安全に送信されます。プログラムは隔離された一時的なサンドボックス内で実行され、出力（stdoutおよびstderr）がブラウザに返送されます。SciCalcXがソースコードを外部サーバーに永続保存することはありません。',
+        question: 'プログラムコードはどこで実行されますか？',
+        answer: 'Code Tutorおよびオンラインコンパイラで送信されたコードは、外部の実行サービスが提供する隔離された一時的なコンテナサンドボックス内で実行されます（プライマリ：ce.judge0.comのJudge0 CE API、自動フォールバック：wandbox.orgのWandbox API）。ブラウザ内で100%ローカルに計算されるSciCalcXの数学電卓とは異なり、Code Tutorのコード実行はお使いのブラウザ内部では行われません。',
       },
       {
-        question: 'Code Tutorでサポートされているプログラミング言語は何ですか？',
-        answer: 'SciCalcXはPython 3、C (GCC 14)、およびC++20 (GCC 14) の実行サポートと対話型カリキュラムを提供しており、自動構文診断およびエラー解説機能を備えています。',
+        question: 'サポートされているプログラミング言語は何ですか？',
+        answer: 'SciCalcX Code Tutorは、Python 3、C (GCC 14)、およびC++20 (GCC 14) を公式にサポートしています。各言語には対話型カリキュラム、自動構文診断、標準入力（stdin）機能が備わっています。',
       },
       {
-        question: 'プログラムにカスタムの標準入力（stdin）を指定できますか？',
-        answer: 'はい。対話型ターミナルコンソールには専用の標準入力（stdin）ストリーム入力欄があり、配列のソートや行列の走査、アルゴリズムを検証するための動的入力を渡すことができます。',
+        question: 'ソースコードは外部サービスに送信されますか？',
+        answer: 'はい。「コードを実行」ボタンをクリックすると、ソースコード、言語指定、および任意の標準入力（stdin）が、暗号化されたHTTPS通信を介してサンドボックス実行バックエンド（Judge0 CEまたはWandbox）へ直接送信されます。プログラムはお客様が実行指示を出した瞬間にのみ送信されます。',
+      },
+      {
+        question: 'SciCalcXは実行中のコードをどのように保護しますか？',
+        answer: 'すべての通信は暗号化されたHTTPS (TLS) を経由します。実行はCPU実行時間とメモリ消費量が厳格に制限された使い捨ての安全なLinuxコンテナ内で行われ、外部からの不正アクセスやデータの恒久的な残留を防止します。',
+      },
+      {
+        question: 'SciCalcXはソースコードをサーバーに永続保存しますか？',
+        answer: 'いいえ。SciCalcXがユーザーのソースコードをサーバーや外部データベースに恒久的に保存・記録・収集することはありません。作成中の下書きはお使いの端末のブラウザ内（localStorage）にのみ保存されます。実行完了後、一時的なコンテナ環境は破棄されます。',
+      },
+      {
+        question: '「コードを実行」をクリックすると何が起こりますか？',
+        answer: '「コードを実行」をクリックすると、SciCalcXはエディタのコードとstdin入力をHTTPS経由でプライマリサービス（Judge0 CE）に送信します。サービス側でコンパイルとサンドボックス実行が行われ、標準出力（stdout）やエラー診断（stderr）がターミナルコンソールにリアルタイムで返送されます。',
+      },
+      {
+        question: 'プライマリ実行サービスが利用できない場合はどうなりますか？',
+        answer: 'SciCalcXには自動フォールバック機能が実装されています。プライマリのJudge0 CEサービスがメンテナンスや一時的な障害、レート制限等で応答しない場合、システムは自動的にセカンダリのWandbox API（wandbox.org）へ実行リクエストを再ルーティングし、中断のない学習環境を維持します。',
       },
     ],
   },
@@ -732,16 +860,32 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: '프로그램 코드는 어디에서 어떻게 실행되나요?',
-        answer: 'Code Tutor를 통해 제출된 코드는 암호화된 HTTPS를 통해 외부 컨테이너 격리 샌드박스 실행 서비스(기본: ce.judge0.com의 Judge0 CE API, 자동 폴백: wandbox.org의 Wandbox API)로 안전하게 전송됩니다. 프로그램은 독립된 임시 샌드박스 내부에서 실행된 후 출력 결과(stdout 및 stderr)를 브라우저로 반환합니다. SciCalcX는 원격 서버에 사용자의 소스 코드를 영구 저장하지 않습니다.',
+        question: '프로그램 코드는 어디에서 실행되나요?',
+        answer: 'Code Tutor 및 온라인 컴파일러를 통해 제출된 코드는 외부 실행 서비스가 제공하는 격리된 임시 컨테이너 샌드박스에서 실행됩니다(기본: ce.judge0.com의 Judge0 CE API, 자동 폴백: wandbox.org의 Wandbox API). 브라우저에서 100% 로컬로 연산되는 SciCalcX의 수학 계산기와 달리, Code Tutor의 코드 실행은 브라우저 내부에서 이루어지지 않습니다.',
       },
       {
-        question: 'Code Tutor에서 지원하는 프로그래밍 언어는 무엇인가요?',
-        answer: 'SciCalcX는 Python 3, C (GCC 14), C++20 (GCC 14)에 대한 코드 실행 및 대화형 학습 커리큘럼을 지원하며, 자동 구문 진단 및 오류 설명 기능을 제공합니다.',
+        question: '지원되는 프로그래밍 언어는 무엇인가요?',
+        answer: 'SciCalcX Code Tutor는 Python 3, C (GCC 14), C++20 (GCC 14)을 공식 지원합니다. 각 언어별로 단계별 커리큘럼, 자동 구문 진단 및 표준 입력(stdin) 스트림을 지원합니다.',
       },
       {
-        question: '프로그램에 사용자 정의 표준 입력(stdin)을 전달할 수 있나요?',
-        answer: '네, 가능합니다. 대화형 터미널 콘솔에는 전용 표준 입력(stdin) 스트림 입력 필드가 마련되어 있어, 배열 정렬, 행렬 탐색 및 알고리즘 검증을 위한 동적 입력을 자유롭게 전달할 수 있습니다.',
+        question: '내 코드가 외부 서비스로 전송되나요?',
+        answer: '네, 전송됩니다. \'코드 실행\' 버튼을 클릭하면 소스 코드, 선택된 언어 식별자 및 표준 입력값(stdin)이 암호화된 HTTPS 연결을 통해 샌드박스 실행 백엔드(Judge0 CE 또는 Wandbox)로 안전하게 전송됩니다. 코드는 사용자가 실행 버튼을 누른 순간에만 전송됩니다.',
+      },
+      {
+        question: '실행 중인 코드는 어떻게 보호되나요?',
+        answer: '모든 데이터 전송은 암호화된 HTTPS(TLS) 통신을 거칩니다. 실행은 엄격한 CPU 시간 및 메모리 제한이 적용된 격리된 일회성 Linux 컨테이너 환경에서 이루어지므로 무단 접근이나 데이터 잔존 위험이 방지됩니다.',
+      },
+      {
+        question: 'SciCalcX는 소스 코드를 서버에 영구 저장하나요?',
+        answer: '아니요, 영구 저장하지 않습니다. SciCalcX는 사용자의 소스 코드를 원격 서버나 데이터베이스에 영구 보관, 기록 또는 색인하지 않습니다. 작성 중인 임시 코드는 오직 사용자의 브라우저 로컬 저장소(localStorage)에만 저장됩니다. 실행이 완료되면 임시 컨테이너는 즉시 폐기됩니다.',
+      },
+      {
+        question: '\'코드 실행\'을 클릭하면 어떤 과정이 진행되나요?',
+        answer: '\'코드 실행\'을 클릭하면 SciCalcX가 에디터의 코드와 stdin 스트림을 패키징하여 HTTPS를 통해 기본 서비스(Judge0 CE)로 전송합니다. 서비스가 샌드박스에서 프로그램을 컴파일 및 실행한 후 표준 출력(stdout)과 오류 진단(stderr)을 반환하여 터미널 콘솔에 즉시 표시합니다.',
+      },
+      {
+        question: '기본 실행 서비스를 사용할 수 없는 경우 어떻게 되나요?',
+        answer: 'SciCalcX에는 자동 폴백 메커니즘이 내장되어 있습니다. 기본 Judge0 CE 서비스가 일시적인 점검, 요청 제한 또는 네트워크 지연으로 응답하지 않을 경우, 시스템이 보조 실행 서비스인 Wandbox API(wandbox.org)로 요청을 자동으로 전환하여 중단 없이 코딩 학습을 이어갈 수 있도록 합니다.',
       },
     ],
   },

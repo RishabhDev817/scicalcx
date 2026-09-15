@@ -104,7 +104,7 @@ export const ui = {
     'statistics.subheading': 'Perform univariate and bivariate statistical analysis, calculate dispersion metrics, and fit regression equations.',
     // Meta & SEO - Compiler
     'meta.compiler.title': 'AI Code Tutor Platform & Online Compiler | C++, C, Python | SciCalcX',
-    'meta.compiler.desc': 'AI code tutor platform and browser-based online compiler for C, C++, and Python. Write code, execute safely, and get instant algorithmic explanations and bug diagnosis.',
+    'meta.compiler.desc': 'AI code tutor platform and online compiler for C, C++, and Python via secure remote sandboxes. Write code, execute safely, and get instant algorithmic explanations and bug diagnosis.',
     'meta.compiler.keywords': 'AI code tutor platform, online compiler, C++ compiler, python sandbox, ai coding tutor, code runner online',
     'compiler.eyebrow': 'System Mode: Code Execution & Tutoring',
     'compiler.heading': 'AI Code Tutor Platform & Sandbox',
@@ -299,7 +299,7 @@ export const ui = {
     'statistics.subheading': 'Realiza análisis estadístico univariable y bivariable, métricas de dispersión y ajuste de curvas de regresión.',
     // Meta & SEO - Compiler
     'meta.compiler.title': 'Tutor de Código con IA y Compilador Online | C++, C, Python | SciCalcX',
-    'meta.compiler.desc': 'Plataforma de tutor de código con IA y compilador online en el navegador para C, C++ y Python. Ejecuta código en sandbox aislado y recibe diagnósticos paso a paso.',
+    'meta.compiler.desc': 'Plataforma de tutor de código con IA y compilador online para C, C++ y Python mediante sandboxes remotos seguros. Ejecuta código en sandbox aislado y recibe diagnósticos paso a paso.',
     'meta.compiler.keywords': 'tutor de código ia, compilador online, compilador c++, sandbox python, ejecutor de código seguro',
     'compiler.eyebrow': 'Modo del Sistema: Ejecución de Código y Tutoría',
     'compiler.heading': 'Tutor de Código con IA y Compilador',
@@ -689,7 +689,7 @@ export const ui = {
     'statistics.subheading': 'Univariate und bivariate statistische Analysen durchführen, Streuungsmaße ermitteln und Regressionsgeraden anpassen.',
     // Meta & SEO - Compiler
     'meta.compiler.title': 'KI-Code-Tutor-Plattform & Online-Compiler | C++, C, Python | SciCalcX',
-    'meta.compiler.desc': 'KI-Code-Tutor-Plattform und browserbasierter Online-Compiler für C, C++ und Python. Sicherer Code-Runner mit automatischer Fehlerdiagnose.',
+    'meta.compiler.desc': 'KI-Code-Tutor-Plattform und Online-Compiler für C, C++ und Python über sichere Remote-Sandboxes. Sicherer Code-Runner mit automatischer Fehlerdiagnose.',
     'meta.compiler.keywords': 'ki code tutor, online compiler, c++ compiler online, python sandbox, programmieren lernen',
     'compiler.eyebrow': 'Systemmodus: Code-Ausführung & Nachhilfe',
     'compiler.heading': 'KI-Code-Tutor-Plattform & Sandbox',
@@ -884,7 +884,7 @@ export const ui = {
     'statistics.subheading': '1変数および2変数の統計解析を実行し、散布度指標の算出や線形回帰式を適合。',
     // Meta & SEO - Compiler
     'meta.compiler.title': 'AIコードチューター＆オンラインコンパイラ | C++, C, Python | SciCalcX',
-    'meta.compiler.desc': 'AIコードチューター搭載のブラウザ内オンラインコンパイラ。Python、C、C++をセキュアな隔離サンドボックスで即座に実行・構文解説。',
+    'meta.compiler.desc': 'AIコードチューター搭載のオンラインコンパイラ。Python、C、C++をセキュアなリモート隔離サンドボックスで即座に実行・構文解説。',
     'meta.compiler.keywords': 'AIコードチューター, オンラインコンパイラ, C++コンパイラ, Python実行環境, プログラミング学習',
     'compiler.eyebrow': 'システムモード: コード実行＆学習支援',
     'compiler.heading': 'AIコードチューター＆サンドボックス',
@@ -1079,7 +1079,7 @@ export const ui = {
     'statistics.subheading': 'Voer univariate en bivariate statistische analyses uit, bereken spreidingsmaten en lineaire regressielijnen.',
     // Meta & SEO - Compiler
     'meta.compiler.title': 'AI Code Tutor & Online Compiler | C++, C, Python | SciCalcX',
-    'meta.compiler.desc': 'AI Code Tutor en online browsercompiler voor C, C++ en Python. Veilige sandbox-uitvoering met directe foutdiagnose en syntaxisuitleg.',
+    'meta.compiler.desc': 'AI Code Tutor en online compiler voor C, C++ en Python via veilige externe sandboxes. Veilige sandbox-uitvoering met directe foutdiagnose en syntaxisuitleg.',
     'meta.compiler.keywords': 'ai code tutor, online compiler, c++ compiler, python sandbox, leren programmeren, code uitvoeren',
     'compiler.eyebrow': 'Systeemmodus: Code Uitvoering & Studiebegeleiding',
     'compiler.heading': 'AI Code Tutor & Sandbox',
@@ -1469,7 +1469,7 @@ export const ui = {
     'statistics.subheading': '단변량 및 이변량 통계 분석, 산포도 지표 계산 및 선형 회귀식을 적합합니다.',
     // Meta & SEO - Compiler
     'meta.compiler.title': 'AI 코드 튜터 & 온라인 컴파일러 | C++, C, Python | SciCalcX',
-    'meta.compiler.desc': 'AI 코드 튜터가 탑재된 브라우저 온라인 컴파일러. C, C++, Python 코드를 격리된 샌드박스에서 즉시 실행하고 문법 및 오류를 분석합니다.',
+    'meta.compiler.desc': 'AI 코드 튜터가 탑재된 온라인 컴파일러. C, C++, Python 코드를 격리된 원격 샌드박스에서 즉시 실행하고 문法 및 오류를 분석합니다.',
     'meta.compiler.keywords': 'ai 코드 튜터, 온라인 컴파일러, c++ 컴파일러, 파이썬 실행, 코딩 학습',
     'compiler.eyebrow': '시스템 모드: 코드 실행 & 학습 지도',
     'compiler.heading': 'AI 코드 튜터 & 샌드박스',
@@ -1664,7 +1664,7 @@ export const ui = {
     'statistics.subheading': 'Esegui analisi statistiche univariate e bivariate, calcola parametri di dispersione e rette di regressione.',
     // Meta & SEO - Compiler
     'meta.compiler.title': 'AI Code Tutor & Compilatore Online | C++, C, Python | SciCalcX',
-    'meta.compiler.desc': 'Piattaforma con tutor di codice AI e compilatore browser per C, C++ e Python. Esecuzione sicura in sandbox con diagnosi immediata degli errori.',
+    'meta.compiler.desc': 'Piattaforma con tutor di codice AI e compilatore online per C, C++ e Python tramite sandbox remoti sicuri. Esecuzione sicura in sandbox con diagnosi immediata degli errori.',
     'meta.compiler.keywords': 'tutor codice ai, compilatore online, c++ online, sandbox python, impara a programmare',
     'compiler.eyebrow': 'Modalità Sistema: Esecuzione Codice & Tutorato',
     'compiler.heading': 'AI Code Tutor & Sandbox',
