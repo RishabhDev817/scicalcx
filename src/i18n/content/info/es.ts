@@ -16,7 +16,7 @@ export const esInfo: InfoPageContent = {
     standards: [
       { label: 'Normalización de Precisión', text: 'Los artefactos comunes de coma flotante IEEE-754 se reducen mediante algoritmos de normalización decimal para ofrecer representaciones legibles de hasta 12 decimales.' },
       { label: 'Verificación Estandarizada', text: 'Las transformaciones matriciales y la cuadratura numérica de Simpson se contrastan continuamente con soluciones simbólicas de referencia y casos de prueba algebraicos.' },
-      { label: 'Modelo de Ejecución Diferenciado', text: 'SciCalcX distingue entre tipos de computación: las calculadoras matemáticas (Científica, Matrices, Cálculo, Gráficas, Estadística, Programador) se evalúan localmente en tu navegador. El Tutor de Código es diferente: la ejecución del código se comunica de forma segura mediante HTTPS con servicios sandbox externos aislados (Judge0 CE y Wandbox), según se detalla en nuestra Política de Privacidad.' },
+      { label: 'Modelo de Ejecución Diferenciado', text: 'SciCalcX mantiene un estricto límite arquitectónico entre tipos de cómputo: todas las calculadoras matemáticas (Científica, Matrices, Cálculo, Gráficas, Estadística, Programador) se evalúan al 100% de forma local en tu navegador sin peticiones de red. El Tutor de Código ejecuta el código fuente enviándolo mediante HTTPS cifrado directamente a servicios de sandbox en contenedores aislados (primario: Judge0 CE en ce.judge0.com, respaldo: API de Wandbox en wandbox.org) sin almacenamiento permanente en el servidor.' },
     ],
     architectureBadge: 'Arquitectura Web',
     architectureTitle: 'Arquitectura Web de Alto Rendimiento',

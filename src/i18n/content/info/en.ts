@@ -16,7 +16,7 @@ export const enInfo: InfoPageContent = {
     standards: [
       { label: 'Precision Normalization', text: 'Common IEEE-754 floating-point display artifacts are reduced through decimal normalization algorithms for clearer human-readable representations up to 12 decimal places.' },
       { label: 'Standardized Verification', text: 'Matrix transformations and Simpson\'s numerical quadrature are tested against known reference solutions and linear algebra test cases.' },
-      { label: 'Differentiated Execution Model', text: 'SciCalcX distinguishes between computation types: mathematical calculators (Scientific, Matrix, Calculus, Graphing, Statistics, Programmer) evaluate locally in your browser. Code Tutor is different: code execution communicates securely over HTTPS with external isolated sandbox services (Judge0 CE and Wandbox), as detailed in our Privacy Policy.' },
+      { label: 'Differentiated Execution Model', text: 'SciCalcX maintains a strict architectural boundary between computation types: all mathematical calculators (Scientific, Matrix, Calculus, Graphing, Statistics, Programmer) evaluate 100% locally in your browser with zero network requests. The Code Tutor executes submitted source code by sending it over encrypted HTTPS directly to isolated container sandbox services (primary: Judge0 CE at ce.judge0.com, fallback: Wandbox API at wandbox.org) without permanent server-side storage.' },
     ],
     architectureBadge: 'Web Architecture',
     architectureTitle: 'High-Performance Web Architecture',

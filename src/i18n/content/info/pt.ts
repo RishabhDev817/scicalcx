@@ -16,7 +16,7 @@ export const ptInfo: InfoPageContent = {
     standards: [
       { label: 'Normalização Decimal', text: 'Imprecisões comuns da aritmética de ponto flutuante IEEE-754 são atenuadas por algoritmos de normalização decimal para garantir até 12 casas decimais legíveis.' },
       { label: 'Verificação Padronizada', text: 'Operações matriciais e quadratura numérica de Simpson são continuamente testadas contra soluções analíticas de referência e casos de álgebra linear.' },
-      { label: 'Modelo de Execução Diferenciado', text: 'O SciCalcX distingue seus tipos de processamento: as calculadoras matemáticas (Científica, Matrizes, Cálculo, Gráficos, Estatística, Programador) executam 100% no seu navegador. O Tutor de Código é diferente: os scripts são transmitidos de forma segura via HTTPS para serviços de sandbox externos isolados (Judge0 CE e Wandbox), conforme detalhado em nossa Política de Privacidade.' },
+      { label: 'Modelo de Execução Diferenciado', text: 'O SciCalcX mantém uma fronteira arquitetural rigorosa entre os tipos de computação: todas as calculadoras matemáticas (Científica, Matrizes, Cálculo, Gráficos, Estatística, Programador) avaliam 100% localmente no seu navegador sem requisições de rede. O Tutor de Código executa o código-fonte enviado transmitindo-o via HTTPS criptografado diretamente para serviços de sandbox isolados em contêineres (principal: Judge0 CE em ce.judge0.com, fallback: API Wandbox em wandbox.org) sem armazenamento permanente no servidor.' },
     ],
     architectureBadge: 'Arquitetura Web',
     architectureTitle: 'Arquitetura Web de Alta Performance',

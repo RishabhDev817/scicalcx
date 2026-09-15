@@ -211,16 +211,16 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: '¿Cómo y dónde se ejecuta el código del programa?',
-        answer: 'El código enviado a través del Tutor de Código se transmite de forma segura mediante HTTPS cifrado a servicios externos de ejecución en contenedores aislados (Judge0 CE y respaldo en Wandbox). El programa se ejecuta en un entorno efímero y seguro con límites de recursos, devolviendo la salida a su navegador sin almacenar su código de forma persistente.',
+        question: '¿Cómo y dónde se ejecuta el código de mi programa?',
+        answer: 'El código enviado a través del Tutor de Código se transmite de forma segura mediante HTTPS cifrado a servicios externos de ejecución en contenedores aislados (primario: API de Judge0 CE en ce.judge0.com, con respaldo automático en la API de Wandbox en wandbox.org). El programa se ejecuta en un entorno aislado temporal y devuelve la salida (stdout y stderr) a tu navegador. SciCalcX no almacena tu código de forma permanente en servidores remotos.',
       },
       {
-        question: '¿Qué lenguajes de programación son compatibles?',
-        answer: 'SciCalcX admite ejecución y lecciones interactivas para Python 3, C (GCC 14) y C++20 (GCC 14) con diagnósticos automáticos de errores.',
+        question: '¿Qué lenguajes de programación son compatibles con el Tutor de Código?',
+        answer: 'SciCalcX admite ejecución y módulos de aprendizaje interactivos para Python 3, C (GCC 14) y C++20 (GCC 14), con diagnósticos sintácticos automáticos y explicaciones de errores.',
       },
       {
-        question: '¿Puedo enviar datos al flujo estándar (stdin)?',
-        answer: '¡Sí! La consola interactiva cuenta con un campo dedicado de entrada estándar (stdin) para simular entradas de usuario y evaluar algoritmos en tiempo real.',
+        question: '¿Puedo enviar datos al flujo de entrada estándar (stdin)?',
+        answer: 'Sí. La consola de terminal interactiva cuenta con un campo dedicado de entrada estándar (stdin), permitiendo enviar datos dinámicos para probar algoritmos, ordenamiento de arrays y matrices.',
       },
     ],
   },
@@ -284,11 +284,15 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Comment et où mon code est-il exécuté ?',
-        answer: 'Le code soumis via Code Tutor est transmis de manière sécurisée via HTTPS chiffré à des services d\'exécution externes isolés dans des conteneurs (Judge0 CE et Wandbox). Le programme s\'exécute dans un bac à sable temporaire et renvoie la sortie standard (stdout/stderr) à votre navigateur sans stockage persistant.',
+        answer: 'Le code soumis via le Tuteur de Code est transmis en toute sécurité via une connexion HTTPS chiffrée à des services sandbox d\'exécution conteneurisés externes (principal : API Judge0 CE sur ce.judge0.com, avec basculement automatique vers l\'API Wandbox sur wandbox.org). Le programme s\'exécute dans un bac à sable temporaire et isolé, puis renvoie la sortie (stdout et stderr) à votre navigateur. SciCalcX ne stocke pas votre code de façon permanente sur des serveurs distants.',
       },
       {
-        question: 'Quels langages de programmation sont pris en charge ?',
-        answer: 'SciCalcX prend en charge l\'exécution et l\'apprentissage interactif pour Python 3, C (GCC 14) et C++20 (GCC 14) avec diagnostics d\'erreurs et gestion de l\'entrée standard (stdin).',
+        question: 'Quels langages de programmation sont pris en charge dans le Tuteur de Code ?',
+        answer: 'SciCalcX prend en charge l\'exécution et les parcours d\'apprentissage interactifs pour Python 3, C (GCC 14) et C++20 (GCC 14), avec diagnostics syntaxiques automatisés et explications des erreurs.',
+      },
+      {
+        question: 'Puis-je fournir une entrée standard personnalisée (stdin) à mes programmes ?',
+        answer: 'Oui. La console interactive dispose d\'un champ dédié au flux d\'entrée standard (stdin), vous permettant de passer des entrées dynamiques pour tester le tri de tableaux, les parcours de matrices et divers algorithmes.',
       },
     ],
   },
@@ -356,11 +360,15 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Wie und wo wird mein Programmcode ausgeführt?',
-        answer: 'Der über den Code Tutor eingereichte Code wird verschlüsselt über HTTPS an externe Sandbox-Ausführungsdienste (Judge0 CE und Wandbox) übertragen. Das Programm wird dort in einer isolierten, temporären Container-Umgebung ausgeführt und die Ausgabe (stdout/stderr) wird an Ihren Browser zurückgesendet. SciCalcX speichert Ihren Quellcode nicht dauerhaft auf externen Servern.',
+        answer: 'Der über den Code-Tutor eingereichte Programmcode wird sicher über verschlüsseltes HTTPS an externe containerisierte Sandbox-Ausführungsdienste übertragen (primär: Judge0 CE API unter ce.judge0.com, mit automatischem Fallback auf die Wandbox API unter wandbox.org). Das Programm läuft in einer isolierten, temporären Sandbox und sendet die Ausgabe (stdout und stderr) zurück an Ihren Browser. SciCalcX speichert Ihren Quellcode nicht dauerhaft auf Remote-Servern.',
       },
       {
-        question: 'Welche Programmiersprachen werden unterstützt?',
-        answer: 'SciCalcX unterstützt Python 3, C (GCC 14) und C++20 (GCC 14) mit automatischer Fehleranalyse und Unterstützung für Standard-Eingabeströme (stdin).',
+        question: 'Welche Programmiersprachen werden im Code-Tutor unterstützt?',
+        answer: 'SciCalcX bietet Ausführungsunterstützung und interaktive Lernmodule für Python 3, C (GCC 14) und C++20 (GCC 14), inklusive automatischer Syntaxdiagnose und Fehlererklärungen.',
+      },
+      {
+        question: 'Kann ich benutzerdefinierte Standardeingaben (stdin) an meine Programme übergeben?',
+        answer: 'Ja. Die interaktive Terminalkonsole verfügt über ein eigenes Eingabefeld für den Standard-Eingabestrom (stdin), mit dem Sie dynamische Testdaten für Arraysortierungen, Matrixtraversierungen und Algorithmen übergeben können.',
       },
     ],
   },
@@ -444,11 +452,15 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Hoe en waar wordt mijn programmacode uitgevoerd?',
-        answer: 'Code die via de Code Tutor wordt ingediend, wordt veilig via versleutelde HTTPS-verbindingen verzonden naar externe sandbox-uitvoeringsdiensten (Judge0 CE en Wandbox). De code draait in een geïsoleerde tijdelijke containeromgeving en retourneert uitvoer (stdout en stderr) naar uw browser. SciCalcX bewaart uw broncode niet permanent op externe servers.',
+        answer: 'Code die via de Code Tutor wordt ingediend, wordt veilig via versleutelde HTTPS verzonden naar externe container-sandboxdiensten (primair: Judge0 CE API op ce.judge0.com, met automatische terugval naar de Wandbox API op wandbox.org). Het programma draait in een geïsoleerde, tijdelijke sandbox en stuurt de uitvoer (stdout en stderr) terug naar uw browser. SciCalcX slaat uw broncode niet permanent op externe servers op.',
       },
       {
-        question: 'Welke programmeertalen worden ondersteund?',
-        answer: 'SciCalcX ondersteunt Python 3, C (GCC 14) en C++20 (GCC 14) met interactieve diagnose en invoermogelijkheid via standaardinvoer (stdin).',
+        question: 'Welke programmeertalen worden ondersteund in de Code Tutor?',
+        answer: 'SciCalcX biedt ondersteuning voor uitvoering en interactieve leertrajecten voor Python 3, C (GCC 14) en C++20 (GCC 14), compleet met automatische foutdiagnostiek en toelichtingen.',
+      },
+      {
+        question: 'Kan ik aangepaste standaardinvoer (stdin) aan mijn programma\'s meegeven?',
+        answer: 'Ja. De interactieve terminalconsole beschikt over een speciaal invoerveld voor de standaardinvoerstroom (stdin), waarmee u dynamische invoer kunt doorgeven om sorteeralgoritmen en matrixberekeningen te testen.',
       },
     ],
   },
@@ -511,12 +523,16 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Como e onde o código do programa é executado?',
-        answer: 'O código enviado pelo Code Tutor é transmitido com segurança via HTTPS criptografado para serviços externos de execução em sandbox isolados (Judge0 CE e Wandbox). O programa é executado em contêineres temporários protegidos e o resultado (stdout/stderr) retorna ao navegador. O SciCalcX não armazena seu código-fonte permanentemente em servidores externos.',
+        question: 'Como e onde o código do meu programa é executado?',
+        answer: 'O código enviado pelo Tutor de Código é transmitido com segurança via HTTPS criptografado para serviços externos de sandbox em contêineres isolados (principal: API Judge0 CE em ce.judge0.com, com fallback automático para a API Wandbox em wandbox.org). O programa executa em uma sandbox temporária e isolada, retornando a saída (stdout e stderr) ao seu navegador. O SciCalcX não armazena seu código permanentemente em servidores remotos.',
       },
       {
-        question: 'Quais linguagens de programação são suportadas?',
-        answer: 'O SciCalcX suporta Python 3, C (GCC 14) e C++20 (GCC 14) com diagnóstico sintático e suporte a fluxo de entrada padrão (stdin).',
+        question: 'Quais linguagens de programação são suportadas no Tutor de Código?',
+        answer: 'O SciCalcX suporta execução e trilhas interativas de aprendizado para Python 3, C (GCC 14) e C++20 (GCC 14), com diagnósticos automáticos de sintaxe e explicações de erros.',
+      },
+      {
+        question: 'Posso fornecer entrada padrão personalizada (stdin) aos meus programas?',
+        answer: 'Sim. O console de terminal interativo possui um campo dedicado para o fluxo de entrada padrão (stdin), permitindo fornecer entradas dinâmicas para testar ordenação de vetores, matrizes e algoritmos.',
       },
     ],
   },
@@ -580,12 +596,16 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     compiler: [
       {
-        question: 'Come e dove viene eseguito il codice del programma?',
-        answer: 'Il codice inviato tramite Code Tutor viene trasmesso in modo sicuro tramite HTTPS crittografato a servizi di esecuzione sandbox esterni (Judge0 CE e Wandbox). Il programma viene eseguito in un ambiente container temporaneo e isolato, restituendo l\'output (stdout/stderr) al browser. SciCalcX non archivia in modo permanente il codice sorgente su server esterni.',
+        question: 'Come e dove viene eseguito il codice del mio programma?',
+        answer: 'Il codice inviato tramite il Tutor di Codice viene trasmesso in modo sicuro tramite HTTPS crittografato a servizi di esecuzione in container sandbox esterni (principale: API Judge0 CE su ce.judge0.com, con fallback automatico all\'API Wandbox su wandbox.org). Il programma viene eseguito in una sandbox temporanea e isolata, restituendo l\'output (stdout e stderr) al browser. SciCalcX non archivia permanentemente il codice su server remoti.',
       },
       {
-        question: 'Quali linguaggi di programmazione sono supportati?',
-        answer: 'SciCalcX supporta Python 3, C (GCC 14) e C++20 (GCC 14) con diagnostica degli errori e supporto per lo stream di input standard (stdin).',
+        question: 'Quali linguaggi di programmazione sono supportati nel Tutor di Codice?',
+        answer: 'SciCalcX supporta l\'esecuzione e percorsi didattici interattivi per Python 3, C (GCC 14) e C++20 (GCC 14), con diagnostica sintattica automatizzata e spiegazioni degli errori.',
+      },
+      {
+        question: 'Posso fornire input standard personalizzato (stdin) ai miei programmi?',
+        answer: 'Sì. La console terminale interattiva include un campo dedicato per il flusso di input standard (stdin), consentendo di passare input dinamici per testare ordinamento di array, matrici e algoritmi.',
       },
     ],
   },
@@ -645,11 +665,15 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'プログラムコードはどこでどのように実行されますか？',
-        answer: 'Code Tutorを通じて送信されたコードは、暗号化されたHTTPSを介して外部の分離されたサンドボックス実行サービス（Judge0 CEおよびWandbox）へ安全に送信されます。プログラムは一時的なコンテナ環境内で実行され、標準出力（stdout/stderr）がブラウザに返送されます。SciCalcXがユーザーのソースコードを外部サーバーに永続保存することはありません。',
+        answer: 'Code Tutorを通じて送信されたコードは、暗号化されたHTTPSを介して外部のコンテナ型サンドボックス実行サービス（プライマリ：ce.judge0.com の Judge0 CE API、自動フォールバック：wandbox.org の Wandbox API）へ安全に送信されます。プログラムは隔離された一時的なサンドボックス内で実行され、出力（stdoutおよびstderr）がブラウザに返送されます。SciCalcXがソースコードを外部サーバーに永続保存することはありません。',
       },
       {
-        question: 'サポートされているプログラミング言語は何ですか？',
-        answer: 'SciCalcXはPython 3、C (GCC 14)、およびC++20 (GCC 14) の実行と構文診断、標準入力（stdin）に対応しています。',
+        question: 'Code Tutorでサポートされているプログラミング言語は何ですか？',
+        answer: 'SciCalcXはPython 3、C (GCC 14)、およびC++20 (GCC 14) の実行サポートと対話型カリキュラムを提供しており、自動構文診断およびエラー解説機能を備えています。',
+      },
+      {
+        question: 'プログラムにカスタムの標準入力（stdin）を指定できますか？',
+        answer: 'はい。対話型ターミナルコンソールには専用の標準入力（stdin）ストリーム入力欄があり、配列のソートや行列の走査、アルゴリズムを検証するための動的入力を渡すことができます。',
       },
     ],
   },
@@ -709,11 +733,15 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: '프로그램 코드는 어디에서 어떻게 실행되나요?',
-        answer: 'Code Tutor를 통해 제출된 코드는 암호화된 HTTPS를 통해 외부 격리 샌드박스 실행 서비스(Judge0 CE 및 Wandbox API)로 안전하게 전송되어 실행됩니다. 프로그램은 독립된 임시 컨테이너에서 실행된 후 표준 출력(stdout/stderr)을 브라우저로 반환하며, 소스 코드가 원격 서버에 영구 저장되지 않습니다.',
+        answer: 'Code Tutor를 통해 제출된 코드는 암호화된 HTTPS를 통해 외부 컨테이너 격리 샌드박스 실행 서비스(기본: ce.judge0.com의 Judge0 CE API, 자동 폴백: wandbox.org의 Wandbox API)로 안전하게 전송됩니다. 프로그램은 독립된 임시 샌드박스 내부에서 실행된 후 출력 결과(stdout 및 stderr)를 브라우저로 반환합니다. SciCalcX는 원격 서버에 사용자의 소스 코드를 영구 저장하지 않습니다.',
       },
       {
-        question: '지원되는 프로그래밍 언어는 무엇인가요?',
-        answer: 'SciCalcX는 Python 3, C (GCC 14), C++20 (GCC 14)을 지원하며 표준 입력(stdin) 및 구문 진단 기능을 제공합니다.',
+        question: 'Code Tutor에서 지원하는 프로그래밍 언어는 무엇인가요?',
+        answer: 'SciCalcX는 Python 3, C (GCC 14), C++20 (GCC 14)에 대한 코드 실행 및 대화형 학습 커리큘럼을 지원하며, 자동 구문 진단 및 오류 설명 기능을 제공합니다.',
+      },
+      {
+        question: '프로그램에 사용자 정의 표준 입력(stdin)을 전달할 수 있나요?',
+        answer: '네, 가능합니다. 대화형 터미널 콘솔에는 전용 표준 입력(stdin) 스트림 입력 필드가 마련되어 있어, 배열 정렬, 행렬 탐색 및 알고리즘 검증을 위한 동적 입력을 자유롭게 전달할 수 있습니다.',
       },
     ],
   },

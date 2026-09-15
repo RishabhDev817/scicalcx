@@ -16,7 +16,7 @@ export const itInfo: InfoPageContent = {
     standards: [
       { label: 'Normalizzazione di Precisione', text: 'Le consuete approssimazioni in virgola mobile IEEE-754 vengono corrette tramite algoritmi di normalizzazione decimale per garantire fino a 12 cifre decimali chiare e affidabili.' },
       { label: 'Verifica Algoritmica Standardizzata', text: 'Le operazioni su matrici e la quadratura numerica di Simpson vengono costantemente confrontate con soluzioni analitiche di riferimento e casi di test dell\'algebra lineare.' },
-      { label: 'Modello di Esecuzione Differenziato', text: 'SciCalcX distingue nettamente i tipi di calcolo: gli strumenti matematici (Scientifica, Matrici, Analisi, Grafici, Statistica, Programmatore) operano al 100% in locale nel browser. Il Tutor di Codice è differente: il codice viene trasmesso in modo sicuro tramite HTTPS a sandbox esterne isolate (Judge0 CE e Wandbox), come illustrato nella nostra Informativa sulla Privacy.' },
+      { label: 'Modello di Esecuzione Differenziato', text: 'SciCalcX mantiene un confine architetturale rigoroso tra i tipi di calcolo: tutte le calcolatrici matematiche (Scientifica, Matrici, Analisi, Grafici, Statistica, Programmatore) elaborano al 100% localmente nel browser senza richieste di rete. Il Tutor di Codice esegue il codice sorgente inviandolo tramite HTTPS crittografato direttamente a servizi sandbox isolati in container (principale: Judge0 CE su ce.judge0.com, fallback: API Wandbox su wandbox.org) senza memorizzazione permanente sui server.' },
     ],
     architectureBadge: 'Architettura Web',
     architectureTitle: 'Architettura Web ad Alte Prestazioni',

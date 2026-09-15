@@ -16,7 +16,7 @@ export const frInfo: InfoPageContent = {
     standards: [
       { label: 'Normalisation de Précision', text: 'Les artefacts usuels de virgule flottante IEEE-754 sont atténués par des algorithmes de normalisation décimale pour garantir des affichages lisibles jusqu\'à 12 décimales.' },
       { label: 'Vérification Algorithmique', text: 'Les opérations matricielles et la quadrature numérique de Simpson sont systématiquement contrôlées face à des solutions symboliques de référence et des jeux de données d\'algèbre linéaire.' },
-      { label: 'Modèle d\'Exécution Différencié', text: 'SciCalcX distingue clairement ses architectures : les calculatrices mathématiques (Scientifique, Matrices, Analyse, Graphique, Statistiques, Développeur) s\'exécutent localement dans votre navigateur. Le Tuteur de Code est différent : le code source est transmis de manière sécurisée via HTTPS vers des services sandbox distants isolés (Judge0 CE et Wandbox), comme détaillé dans notre Politique de Confidentialité.' },
+      { label: 'Modèle d\'Exécution Différencié', text: 'SciCalcX maintient une frontière architecturale stricte entre ses types de calcul : toutes les calculatrices mathématiques (Scientifique, Matrices, Analyse, Graphique, Statistiques, Développeur) s\'exécutent à 100 % localement dans votre navigateur sans aucune requête réseau. Le Tuteur de Code exécute le code source soumis en le transmettant via une connexion HTTPS chiffrée directement à des services de bac à sable conteneurisés isolés (principal : Judge0 CE sur ce.judge0.com, basculement : API Wandbox sur wandbox.org) sans stockage persistant côté serveur.' },
     ],
     architectureBadge: 'Architecture Web',
     architectureTitle: 'Architecture Web Haute Performance',

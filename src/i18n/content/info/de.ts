@@ -16,7 +16,7 @@ export const deInfo: InfoPageContent = {
     standards: [
       { label: 'Präzisions-Normalisierung', text: 'Typische Rundungsartefakte der IEEE-754-Gleitkommaarithmetik werden durch Dezimalnormalisierungsalgorithmen bereinigt, um saubere Darstellungen bis zu 12 Dezimalstellen zu gewährleisten.' },
       { label: 'Standardisierte Validierung', text: 'Matrixoperationen und Simpsons numerische Quadratur werden kontinuierlich gegen symbolische Referenzrechner und algebraische Testfälle abgeglichen.' },
-      { label: 'Differenziertes Ausführungsmodell', text: 'SciCalcX unterscheidet klar zwischen Rechenarten: Mathematische Werkzeuge (Wissenschaftlich, Matrizen, Analysis, Graphen, Statistik, Programmierer) laufen vollständig lokal in Ihrem Webbrowser. Der Code-Tutor arbeitet anders: Skripte werden verschlüsselt über HTTPS an isolierte externe Sandbox-Dienste (Judge0 CE und Wandbox) übertragen, wie in unserer Datenschutzerklärung dargelegt.' },
+      { label: 'Differenziertes Ausführungsmodell', text: 'SciCalcX wahrt eine strikte architektonische Trennung zwischen den Berechnungsarten: Alle mathematischen Rechner (Wissenschaftlich, Matrizen, Analysis, Graphen, Statistik, Programmierer) rechnen zu 100 % lokal in Ihrem Browser ohne Netzwerkanfragen. Der Code-Tutor führt eingereichten Quelltext aus, indem er verschlüsselt über HTTPS direkt an isolierte Container-Sandbox-Dienste (primär: Judge0 CE unter ce.judge0.com, Fallback: Wandbox API unter wandbox.org) ohne dauerhafte serverseitige Speicherung übertragen wird.' },
     ],
     architectureBadge: 'Web-Architektur',
     architectureTitle: 'Moderne Web-Architektur',

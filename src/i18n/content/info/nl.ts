@@ -16,7 +16,7 @@ export const nlInfo: InfoPageContent = {
     standards: [
       { label: 'Precisie Normalisatie', text: 'IEEE-754 afrondingsartefacten worden algoritmisch gecorrigeerd via decimale normalisatie voor betrouwbare en duidelijke weergaven tot 12 decimalen.' },
       { label: 'Gestandaardiseerde Verificatie', text: 'Matrixbewerkingen en de numerieke kwadratuur van Simpson worden continu gecontroleerd aan de hand van analytische referentieoplossingen.' },
-      { label: 'Gedifferentieerd Uitvoeringsmodel', text: 'SciCalcX maakt een helder onderscheid tussen rekentaken: wiskundige rekenmachines (Wetenschappelijk, Matrix, Calculus, Grafieken, Statistiek, Programmeur) draaien 100% lokaal in uw browser. De Code Tutor werkt anders: code wordt via beveiligde HTTPS verzonden naar geïsoleerde externe sandboxdiensten (Judge0 CE en Wandbox), zoals uiteengezet in ons Privacybeleid.' },
+      { label: 'Gedifferentieerd Uitvoeringsmodel', text: 'SciCalcX handhaaft een strikte architectonische grens tussen berekeningstypen: alle wiskundige rekenmachines (Wetenschappelijk, Matrix, Calculus, Grafieken, Statistiek, Programmeur) evalueren 100% lokaal in uw browser zonder netwerkaanvragen. De Code Tutor voert ingediende broncode uit door deze via versleutelde HTTPS rechtstreeks te verzenden naar geïsoleerde container-sandboxdiensten (primair: Judge0 CE op ce.judge0.com, terugval: Wandbox API op wandbox.org) zonder permanente opslag op de server.' },
     ],
     architectureBadge: 'Webarchitectuur',
     architectureTitle: 'Moderne Webarchitectuur',
