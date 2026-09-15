@@ -400,7 +400,7 @@ export const ptPedagogy: Record<string, CalculatorPedagogyData> = {
       }
     ],
     relatedTools: [
-      { title: 'Calculadora de Cálculo', desc: 'Calcule derivadas numéricas exatas e integrais de Simpson.', href: '/calculus', badge: 'Análise' },
+      { title: 'Calculadora de Cálculo', desc: 'Calcule derivadas numéricas de alta precisão e integrais de Simpson.', href: '/calculus', badge: 'Análise' },
       { title: 'Calculadora Científica', desc: 'Avalie razões trigonométricas e logaritmos.', href: '/', badge: 'Aritmética' },
       { title: 'Suite de Estatística', desc: 'Calcule variância amostral, desvio padrão e regressão linear.', href: '/statistics', badge: 'Ciência de Dados' }
     ]

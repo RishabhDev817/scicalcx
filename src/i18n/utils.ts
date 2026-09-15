@@ -39,10 +39,26 @@ export function getBaseRoute(pathname: string): string {
 export function useTranslatedPath(lang: SupportedLanguage) {
   return function translatePath(path: string, targetLang: SupportedLanguage = lang): string {
     const base = getBaseRoute(path);
-    if (!showDefaultLang && targetLang === defaultLang) {
-      return base;
+
+    // Error pages gracefully route to target language root
+    if (base === '/404' || base === '/500' || base.startsWith('/404') || base.startsWith('/500')) {
+      return !showDefaultLang && targetLang === defaultLang ? '/' : `/${targetLang}/`;
     }
-    return base === '/' ? `/${targetLang}/` : `/${targetLang}${base}`;
+
+    // Untranslated blog posts gracefully route to target language blog index
+    if (base.startsWith('/blog/') && base !== '/blog') {
+      const slug = base.replace('/blog/', '').replace(/\/$/, '');
+      const translatedSlugs = new Set(['time-complexity', 'pointers-cpp', 'calculator-cpp']);
+      if (!translatedSlugs.has(slug) && targetLang !== defaultLang) {
+        return `/${targetLang}/blog/`;
+      }
+    }
+
+    const normalizedBase = base === '/' ? '/' : (base.endsWith('/') ? base : `${base}/`);
+    if (!showDefaultLang && targetLang === defaultLang) {
+      return normalizedBase;
+    }
+    return normalizedBase === '/' ? `/${targetLang}/` : `/${targetLang}${normalizedBase}`;
   };
 }
 
@@ -52,28 +68,35 @@ export interface AlternateLink {
 }
 
 /**
- * Generates all alternate links for hreflang markup (all 8 supported languages + x-default).
+ * Generates all alternate links for hreflang markup (all supported languages + x-default).
+ * Ensures exact canonical URL trailing slash consistency and prevents nonexistent links.
  */
 export function getAlternateLanguageLinks(url: URL, site = 'https://scicalcx.com'): AlternateLink[] {
   const base = getBaseRoute(url.pathname);
+  
+  // Never emit hreflang links on error pages
+  if (base === '/404' || base === '/500' || base.startsWith('/404') || base.startsWith('/500')) {
+    return [];
+  }
+
   const cleanSite = site.endsWith('/') ? site.slice(0, -1) : site;
-  const basePath = base === '/' ? '/' : base;
+  const normalizedBasePath = base === '/' ? '/' : (base.endsWith('/') ? base : `${base}/`);
 
   const links: AlternateLink[] = [
     {
       lang: 'x-default',
-      href: `${cleanSite}${basePath}`,
+      href: `${cleanSite}${normalizedBasePath}`,
     },
   ];
 
   // If this is an individual blog post, only link languages that genuinely have this post
-  if (basePath.startsWith('/blog/') && basePath !== '/blog') {
-    const slug = basePath.replace('/blog/', '').replace(/\/$/, '');
+  if (normalizedBasePath.startsWith('/blog/') && normalizedBasePath !== '/blog/') {
+    const slug = normalizedBasePath.replace('/blog/', '').replace(/\/$/, '');
     const translatedSlugs = new Set(['time-complexity', 'pointers-cpp', 'calculator-cpp']);
     
     links.push({
       lang: 'en',
-      href: `${cleanSite}${basePath}`,
+      href: `${cleanSite}${normalizedBasePath}`,
     });
 
     if (translatedSlugs.has(slug)) {
@@ -81,7 +104,7 @@ export function getAlternateLanguageLinks(url: URL, site = 'https://scicalcx.com
       for (const l of langsWithTranslations) {
         links.push({
           lang: l,
-          href: `${cleanSite}/${l}${basePath}`,
+          href: `${cleanSite}/${l}${normalizedBasePath}`,
         });
       }
     }
@@ -93,15 +116,16 @@ export function getAlternateLanguageLinks(url: URL, site = 'https://scicalcx.com
     if (!showDefaultLang && l === defaultLang) {
       links.push({
         lang: l,
-        href: `${cleanSite}${basePath}`,
+        href: `${cleanSite}${normalizedBasePath}`,
       });
     } else {
       links.push({
         lang: l,
-        href: basePath === '/' ? `${cleanSite}/${l}/` : `${cleanSite}/${l}${basePath}`,
+        href: normalizedBasePath === '/' ? `${cleanSite}/${l}/` : `${cleanSite}/${l}${normalizedBasePath}`,
       });
     }
   }
 
   return links;
 }
+

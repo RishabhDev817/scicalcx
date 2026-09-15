@@ -400,7 +400,7 @@ export const nlPedagogy: Record<string, CalculatorPedagogyData> = {
       }
     ],
     relatedTools: [
-      { title: 'Calculus Calculator', desc: 'Bereken exacte numerieke afgeleiden en Simpson-integralen.', href: '/calculus', badge: 'Analyse' },
+      { title: 'Calculus Calculator', desc: 'Bereken numerieke afgeleiden met hoge precisie en Simpson-integralen.', href: '/calculus', badge: 'Analyse' },
       { title: 'Wetenschappelijke Rekenmachine', desc: 'Evalueer goniometrische verhoudingen en logaritmen.', href: '/', badge: 'Rekenkunde' },
       { title: 'Statistiek Suite', desc: 'Bereken steekproefvariantie, standaarddeviatie en regressie.', href: '/statistics', badge: 'Data Science' }
     ]

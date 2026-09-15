@@ -35,7 +35,7 @@ export const esPedagogy: Record<string, CalculatorPedagogyData> = {
       {
         title: 'Normalización de Precisión Épsilon',
         math: '|x - round(x)| < 1e-12 ⟹ x = round(x)',
-        explanation: 'El umbral épsilon elimina el ruido de redondeo binario IEEE-754 para mostrar expansiones decimales limpias.'
+        explanation: 'El umbral épsilon reduce el ruido de redondeo binario IEEE-754 para mostrar expansiones decimales limpias.'
       }
     ],
     workedExample: {
@@ -400,7 +400,7 @@ export const esPedagogy: Record<string, CalculatorPedagogyData> = {
       }
     ],
     relatedTools: [
-      { title: 'Calculadora de Cálculo', desc: 'Calcule derivadas numéricas exactas e integrales de Simpson.', href: '/calculus', badge: 'Análisis' },
+      { title: 'Calculadora de Cálculo', desc: 'Calcule derivadas numéricas de alta precisión e integrales de Simpson.', href: '/calculus', badge: 'Análisis' },
       { title: 'Calculadora Científica', desc: 'Evalúe razones trigonométricas y logaritmos en grados o radianes.', href: '/', badge: 'Aritmética' },
       { title: 'Suite de Estadística', desc: 'Calcule varianza muestral, desviación estándar y regresión lineal.', href: '/statistics', badge: 'Ciencia de Datos' }
     ]

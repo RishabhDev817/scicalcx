@@ -58,8 +58,9 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: 'Can SciCalcX solve both definite and indefinite integrals?',
-        answer: 'Yes. Definite integrals compute exact numerical values between boundaries [a, b] using high-order adaptive quadrature. Indefinite integration computes polynomial antiderivatives algebraically.',
+        answer: 'Yes. Definite integrals compute high-precision numerical approximations between boundaries [a, b] using high-order numerical quadrature (composite Simpson\'s 1/3 rule). Indefinite integration computes polynomial antiderivatives algebraically.',
       },
+
       {
         question: 'How does the solver calculate polynomial roots?',
         answer: 'Roots are computed using exact algebraic closed-form methods: the quadratic formula for degree 2, and Cardano’s cubic method for degree 3, returning real and complex conjugate roots.',
@@ -137,9 +138,10 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
         answer: 'AC (All Clear) borra toda la fórmula y reinicia la memoria temporal. DEL borra solo el último carácter o token ingresado (retroceso). CE (Clear Entry) elimina el término o número actual sin reiniciar todo el historial de la fórmula.',
       },
       {
-        question: '¿Cómo elimina esta calculadora web avanzada las imprecisiones de coma flotante (ej. 0.1 + 0.2)?',
-        answer: 'Los motores estándar de JavaScript usan números flotantes binarios IEEE 754 que pueden generar artefactos de redondeo. SciCalcX aplica normalización y umbrales épsilon personalizados para que cálculos como 0.1 + 0.2 den exactamente 0.3.',
+        question: '¿Cómo reduce esta calculadora web avanzada los artefactos de coma flotante (ej. 0.1 + 0.2)?',
+        answer: 'Los motores estándar de JavaScript usan números flotantes binarios IEEE 754 que pueden generar artefactos de redondeo. SciCalcX aplica normalización y umbrales épsilon personalizados para que cálculos como 0.1 + 0.2 se representen limpiamente como 0.3.',
       },
+
     ],
     matrix: [
       {
@@ -526,8 +528,9 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: 'Quali vantaggi offre questa calcolatrice web avanzata?',
-        answer: 'Questa calcolatrice web avanzata elimina gli errori di arrotondamento binario IEEE 754 ed include i formati FIX, SCI ed ENG.',
+        answer: 'Questa calcolatrice web avanzata riduce gli artefatti di arrotondamento binario IEEE 754 tramite normalizzazione decimale ed include i formati FIX, SCI ed ENG.',
       },
+
       {
         question: 'SciCalcX include una calcolatrice di frazioni gratuita online?',
         answer: 'Sì! Il tasto S-D opera come una calcolatrice di frazioni gratuita online per alternare tra decimali e frazioni irriducibili esatte.',

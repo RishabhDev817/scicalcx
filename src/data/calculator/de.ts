@@ -400,7 +400,7 @@ export const dePedagogy: Record<string, CalculatorPedagogyData> = {
       }
     ],
     relatedTools: [
-      { title: 'Analysis-Rechner', desc: 'Exakte numerische Ableitungen und Simpson-Integrale berechnen.', href: '/calculus', badge: 'Analysis' },
+      { title: 'Analysis-Rechner', desc: 'Hochpräzise numerische Ableitungen und Simpson-Integrale berechnen.', href: '/calculus', badge: 'Analysis' },
       { title: 'Wissenschaftlicher Rechner', desc: 'Winkelfunktionen und Logarithmen in Grad oder Radiant berechnen.', href: '/', badge: 'Arithmetik' },
       { title: 'Statistik-Suite', desc: 'Stichprobenvarianz, Standardabweichung und Regression berechnen.', href: '/statistics', badge: 'Datenanalyse' }
     ]

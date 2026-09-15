@@ -237,7 +237,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: 'Complemento a Dos y Operaciones Lógicas Bitwise',
           paragraphs: [
-            'La calculadora base-n para programadores permite manipular registros de 64 bits con operaciones AND, OR, XOR, NOT y conversiones entre bases.',
+            'La calculadora base-n para programadores permite manipular registros con signo de 32 bits (int32) con operaciones AND, OR, XOR, NOT y conversiones entre bases.',
           ],
         },
       ],
@@ -342,9 +342,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
       title: 'Manuel de la Calculatrice de Base-N pour Programmeurs',
       sections: [
         {
-          title: 'Complément à Deux et Opérations Bitwise',
+          title: 'Complément à Deux et Opérations Logiques',
           paragraphs: [
-            'La calculatrice de base-n pour programmeurs gère les registres 64 bits et les opérations logiques fondamentales.',
+            'La calculatrice de base-n pour programmeurs gère les registres signés 32 bits (int32) et les opérations logiques fondamentales.',
           ],
         },
       ],
@@ -654,9 +654,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
       title: 'Manual da Calculadora de Base-N para Programadores',
       sections: [
         {
-          title: 'Complemento de Dois e Lógica Bitwise',
+          title: 'Complemento de Dois e Operações Lógicas',
           paragraphs: [
-            'A calculadora de base-n para programadores processa valores de 64 bits com operadores bit a bit.',
+            'A calculadora de base-n para programadores processa valores inteiros sinalizados de 32 bits (int32) com operadores bit a bit.',
           ],
         },
       ],
@@ -761,9 +761,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
       title: 'Manuale della Calcolatrice Base-N per Programmatori',
       sections: [
         {
-          title: 'Complemento a Due e Logica Bitwise',
+          title: 'Complemento a Due e Logica Bit a Bit',
           paragraphs: [
-            'La calcolatrice base-n per programmatori esegue operazioni logiche su registri a 64 bit.',
+            'La calcolatrice base-n per programmatori esegue operazioni logiche su registri a 32 bit con segno (int32).',
           ],
         },
       ],
@@ -868,9 +868,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
       title: 'プログラマー向けN進数計算機＆ビット演算解説',
       sections: [
         {
-          title: '2の補数とビット単位論理演算',
+          title: '2の補数表現とビット演算',
           paragraphs: [
-            'プログラマー向けN進数計算機は、64ビット整数でのAND、OR、XOR演算を直感的に実行します。',
+            'プログラマー向けN進数計算機は、32ビット符号付き整数（int32）でのAND、OR、XOR演算を直感的に実行します。',
           ],
         },
       ],
@@ -975,9 +975,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
       title: '프로그래머 N진수 계산기 & 비트 연산 가이드',
       sections: [
         {
-          title: '2의 보수 및 64비트 논리 연산',
+          title: '2의 보수 및 32비트 논리 연산',
           paragraphs: [
-            '프로그래머 N진수 계산기는 64비트 정수 연산 및 AND, OR, XOR 비트 연산을 지원합니다.',
+            '프로그래머 N진수 계산기는 32비트 부호 있는 정수(int32) 연산 및 AND, OR, XOR 비트 연산을 지원합니다.',
           ],
         },
       ],

@@ -12,6 +12,7 @@ interface Props {
   keywords?: string;
   activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler' | 'blog';
   lang?: SupportedLanguage;
+  robots?: string;
 }
 
 const currentLang = Astro.props.lang || getLangFromUrl(Astro.url);
@@ -24,9 +25,12 @@ const {
   description = t('meta.scientific.desc'),
   keywords = t('meta.scientific.keywords'),
   activeTab = 'scientific',
+  robots,
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, 'https://scicalcx.com');
+const canonicalPath = Astro.url.pathname === '/' ? '/' : (Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`);
+const canonicalURL = new URL(canonicalPath, 'https://scicalcx.com');
+
 
 const siteSchema = {
   '@context': 'https://schema.org',
@@ -84,6 +88,7 @@ const siteSchema = {
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6912369602230053"
      crossorigin="anonymous"></script>
     <meta charset="UTF-8" />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="canonical" href={canonicalURL} />
     {alternateLinks.map((alt) => (
       <link rel="alternate" hreflang={alt.lang} href={alt.href} />

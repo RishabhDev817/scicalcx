@@ -400,7 +400,7 @@ export const enPedagogy: Record<string, CalculatorPedagogyData> = {
       }
     ],
     relatedTools: [
-      { title: 'Calculus Calculator', desc: 'Compute exact numerical derivatives and Simpson definite integrals.', href: '/calculus', badge: 'Analysis' },
+      { title: 'Calculus Calculator', desc: 'Compute high-precision numerical derivatives and Simpson definite integrals.', href: '/calculus', badge: 'Analysis' },
       { title: 'Scientific Calculator', desc: 'Evaluate trigonometric ratios and logarithms in degrees or radians.', href: '/', badge: 'Arithmetic' },
       { title: 'Statistics Suite', desc: 'Calculate sample variance, standard deviation, and data regression.', href: '/statistics', badge: 'Data Science' }
     ]

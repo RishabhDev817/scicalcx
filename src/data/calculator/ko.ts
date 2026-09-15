@@ -400,7 +400,7 @@ export const koPedagogy: Record<string, CalculatorPedagogyData> = {
       }
     ],
     relatedTools: [
-      { title: '미적분 계산기', desc: '도함수의 엄밀한 값과 심슨 정적분 계산.', href: '/calculus', badge: '해석학' },
+      { title: '미적분 계산기', desc: '고정밀 수치 미분과 심슨 정적분 계산.', href: '/calculus', badge: '해석학' },
       { title: '공학용 계산기', desc: '각도 단위 변환 및 지수로그 계산.', href: '/', badge: '산술' },
       { title: '통계 분석 도구', desc: '표본 분산, 표준편차 및 데이터 회귀 분석.', href: '/statistics', badge: '데이터 과학' }
     ]

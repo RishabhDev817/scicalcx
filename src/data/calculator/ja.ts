@@ -400,7 +400,7 @@ export const jaPedagogy: Record<string, CalculatorPedagogyData> = {
       }
     ],
     relatedTools: [
-      { title: '微分積分計算機', desc: '導関数の厳密値やシンプソン定積分の計算。', href: '/calculus', badge: '解析学' },
+      { title: '微分積分計算機', desc: '高精度な数値微分やシンプソン定積分の計算。', href: '/calculus', badge: '解析学' },
       { title: '関数電卓', desc: '度数法・弧度法に対応した三角関数および指数対数計算。', href: '/', badge: '算術' },
       { title: '統計解析スイート', desc: 'データの分散、標準偏差、線形回帰直線の分析。', href: '/statistics', badge: 'データ科学' }
     ]

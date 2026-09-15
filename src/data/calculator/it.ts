@@ -35,7 +35,7 @@ export const itPedagogy: Record<string, CalculatorPedagogyData> = {
       {
         title: 'Normalizzazione di Precisione Epsilon',
         math: '|x - round(x)| < 1e-12 ⟹ x = round(x)',
-        explanation: 'Il filtro con soglia epsilon elimina il rumore di arrotondamento binario IEEE-754 per mostrare espansioni decimali pulite.'
+        explanation: 'Il filtro con soglia epsilon riduce il rumore di arrotondamento binario IEEE-754 per mostrare espansioni decimali pulite.'
       }
     ],
     workedExample: {
@@ -400,7 +400,7 @@ export const itPedagogy: Record<string, CalculatorPedagogyData> = {
       }
     ],
     relatedTools: [
-      { title: 'Calcolatrice di Analisi', desc: 'Calcola derivate esatte e integrali definiti di Simpson.', href: '/calculus', badge: 'Analisi' },
+      { title: 'Calcolatrice di Analisi', desc: 'Calcola derivate numeriche ad alta precisione e integrali definiti di Simpson.', href: '/calculus', badge: 'Analisi' },
       { title: 'Calcolatrice Scientifica', desc: 'Valuta rapporti trigonometrici e logaritmi.', href: '/', badge: 'Aritmetica' },
       { title: 'Suite di Statistica', desc: 'Calcola varianza campionaria, deviazione standard e regressioni.', href: '/statistics', badge: 'Data Science' }
     ]
