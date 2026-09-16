@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# How to Debug Common Syntax Errors in C++
-
 Writing code is only half the battle; the other half is getting it to compile and run correctly. C++ is infamous for outputting long, intimidating compiler error logs. 
 
 Learning how to read these error logs and debug common syntax mistakes will save you hours of frustration.

@@ -70,7 +70,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         data-base="16"
       >
         <span class="text-xs font-mono font-semibold text-brand-text-muted light:text-neutral-500 uppercase w-12">HEX</span>
-        <input id="display-hex" class="text-lg font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-default" value="0" readonly />
+        <input id="display-hex" aria-label="Hexadecimal value" class="text-lg font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-default" value="0" readonly />
         <span class="base-indicator text-[9px] font-mono text-brand-blue-neon opacity-0 ml-3">● ACTIVE</span>
       </div>
 
@@ -81,7 +81,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         data-base="10"
       >
         <span class="text-xs font-mono font-semibold text-brand-text-muted light:text-neutral-500 uppercase w-12">DEC</span>
-        <input id="display-dec" class="text-lg font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-text" value="0" />
+        <input id="display-dec" aria-label="Decimal value" class="text-lg font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-text" value="0" />
         <span class="base-indicator text-[9px] font-mono text-brand-blue-neon ml-3">● ACTIVE</span>
       </div>
 
@@ -92,7 +92,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         data-base="8"
       >
         <span class="text-xs font-mono font-semibold text-brand-text-muted light:text-neutral-500 uppercase w-12">OCT</span>
-        <input id="display-oct" class="text-lg font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-default" value="0" readonly />
+        <input id="display-oct" aria-label="Octal value" class="text-lg font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-default" value="0" readonly />
         <span class="base-indicator text-[9px] font-mono text-brand-blue-neon opacity-0 ml-3">● ACTIVE</span>
       </div>
 
@@ -103,7 +103,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         data-base="2"
       >
         <span class="text-xs font-mono font-semibold text-brand-text-muted light:text-neutral-500 uppercase w-12">BIN</span>
-        <input id="display-bin" class="text-[10px] min-[375px]:text-xs sm:text-sm md:text-base font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-default" value="0" readonly />
+        <input id="display-bin" aria-label="Binary value" class="text-[10px] min-[375px]:text-xs sm:text-sm md:text-base font-mono font-semibold text-brand-text bg-transparent border-none text-right flex-1 select-all focus:outline-none w-full cursor-default" value="0" readonly />
         <span class="base-indicator text-[9px] font-mono text-brand-blue-neon opacity-0 ml-3">● ACTIVE</span>
       </div>
     </div>

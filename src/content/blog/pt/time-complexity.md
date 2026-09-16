@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Complexidade de Tempo Explicada: Notação Big O para Iniciantes
-
 Na ciência da computação, quase sempre existem várias abordagens para solucionar o mesmo problema de programação. Mas como definir, com rigor técnico, qual solução é a mais eficiente?
 
 Utilizamos a **Notação Big O** para analisar e comparar o desempenho de algoritmos com base em como o tempo de execução escala conforme o tamanho da entrada ($N$) cresce.

@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Puntatori in C++: Guida alla Gestione della Memoria
-
 La gestione diretta della memoria è uno dei pilastri fondamentali del C++. A differenza dei linguaggi con garbage collector, il C++ offre controllo totale sulla memoria RAM mediante i **puntatori**.
 
 ---

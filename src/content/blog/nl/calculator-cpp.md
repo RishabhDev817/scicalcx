@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Een Wetenschappelijke Rekenmachine Programmeren in C++
-
 Wetenschappelijke rekenmachines zijn onmisbare hulpmiddelen in de exacte wetenschappen en techniek. Intern parseren en evalueren ze expressies en wiskundige operatoren volgens formele algebraïsche regels.
 
 In deze tutorial bouwen we een interactieve C++ console-rekenmachine die basisbewerkingen, machten, wortels en robuuste foutafhandeling implementeert.

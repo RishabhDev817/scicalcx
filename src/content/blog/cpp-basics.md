@@ -6,8 +6,6 @@ author: "SciCalcX Team"
 tags: ["C++", "Programming", "Compilers", "Tutorial"]
 ---
 
-# How to Compile C++ Code: A Beginner's Guide
-
 C++ is a compiled language, which means that before your computer can run the code you write, it must be translated from human-readable text into machine code (binary files) by a program called a compiler. Understanding how compilers translate and link files is a fundamental milestone for any software developer.
 
 This guide covers the core compilation pipeline, compiler installation across platforms, and direct compilation commands using standard command-line tools.

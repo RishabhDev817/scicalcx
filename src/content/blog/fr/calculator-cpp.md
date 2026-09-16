@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Créer une Calculatrice Scientifique de Base en C++
-
 Les calculatrices scientifiques sont des outils indispensables dans les disciplines scientifiques et techniques. En arrière-plan, elles interprètent des opérandes et des symboles algébriques selon les règles mathématiques formelles.
 
 Dans ce tutoriel, nous allons concevoir une calculatrice interactive en console C++, gérant les quatre opérations élémentaires, les puissances, les racines carrées et la prévention des divisions par zéro.

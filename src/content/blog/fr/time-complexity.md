@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# La Complexité Temporelle Expliquée : La Notation Grand O pour Débutants
-
 En informatique, il existe souvent plusieurs façons de résoudre un même problème algorithmique. Mais comment déterminer quelle solution est la plus efficace ?
 
 Nous utilisons la **notation Grand O** (*Big O Notation*) pour analyser et comparer les performances d'un algorithme en observant comment son temps d'exécution évolue à mesure que la taille des données d'entrée augmente.

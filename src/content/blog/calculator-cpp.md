@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Building a Basic Scientific Calculator in C++
-
 Scientific calculators are essential utilities for science and engineering fields. Under the hood, they take numbers and operator symbols and evaluate them according to algebraic rules.
 
 In this tutorial, we will write a C++ console calculator that processes basic arithmetic operations alongside trigonometric and power operations.

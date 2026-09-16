@@ -150,7 +150,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           title: 'Calculadora Web Avanzada y Precisión de Coma Flotante',
           paragraphs: [
             'Esta calculadora científica online ofrece una arquitectura de alta precisión para estudiantes y profesionales. Los microprocesadores ejecutan operaciones mediante punto flotante IEEE 754, lo que puede causar pequeños artefactos de redondeo (como 0.30000000000000004).',
-            'SciCalcX implementa algoritmos de normalización por umbral épsilon y una calculadora de fracciones gratuita en línea, garantizando resultados exactos en modo decimal o fraccionario sin pérdidas de precisión.',
+            'SciCalcX implementa algoritmos de normalización por umbral épsilon y una calculadora de fracciones gratuita en línea, reduciendo artefactos comunes de representación en coma flotante en los resultados mostrados.',
           ],
         },
         {
@@ -905,7 +905,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           title: '고급 웹 계산기 및 부동 소수점 정밀도 정규화',
           paragraphs: [
             '본 온라인 공학용 계산기는 공학도와 연구원을 위한 고급 웹 계산기입니다. 엡실론 임계치 정규화 알고리즘을 적용하여 IEEE 754 부동 소수점 표현상의 미세한 표시 아티팩트를 줄입니다.',
-            '온라인 무료 분수 계산기 기능을 탑재하여 순환 소수와 기약 분수를 손실 없이 자유롭게 상호 변환할 수 있습니다.',
+            '온라인 무료 분수 계산기 기능을 탑재하여 순환 소수와 기약 분수를 자유롭게 상호 변환할 수 있습니다.',
           ],
         },
         {

@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Tijdcomplexiteit Uitgelegd: De Big-O Notatie voor Beginners
-
 In de informatica bestaan er voor vrijwel elk softwareprobleem meerdere oplossingen. Maar hoe bepalen software-ontwikkelaars welke implementatie het meest efficiënt is?
 
 We gebruiken de **Big-O notatie** om te analyseren hoe de uitvoeringstijd van een algoritme meeschaalt wanneer de hoeveelheid invoergegevens groeit.

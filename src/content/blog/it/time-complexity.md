@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Complessità Temporale Spiegata: Notazione O-Grande per Principianti
-
 Nell'informatica esistono quasi sempre molteplici modalità per risolvere uno specifico problema di programmazione. Ma come stabiliamo quale algoritmo sia effettivamente il più efficiente?
 
 Utilizziamo la **Notazione O-Grande (Big O)** per analizzare e confrontare le prestazioni degli algoritmi in base a come il tempo di esecuzione scala all'aumentare della dimensione dei dati in ingresso ($N$).

@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Zeiger in C++: Speicherverwaltung verständlich erklärt
-
 Die manuelle Speicherverwaltung gehört zu den Kernstärken von C++. Im Gegensatz zu Sprachen mit automatischer Garbage Collection ermöglicht C++ über **Zeiger (Pointer)** den direkten Zugriff auf Arbeitsspeicheradressen.
 
 ---

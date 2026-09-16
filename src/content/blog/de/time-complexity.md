@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Zeitkomplexität verständlich erklärt: Die O-Notation für Einsteiger
-
 In der Informatik existieren für fast jede Problemstellung mehrere algorithmische Lösungsansätze. Doch wie entscheidet man objektiv, welche Implementierung am effizientesten ist?
 
 Hierfür verwenden Entwickler die **O-Notation (Big-O-Notation)**: Sie beschreibt mathematisch, wie sich die Ausführungszeit eines Algorithmus verhält, wenn die Eingabemenge wächst.

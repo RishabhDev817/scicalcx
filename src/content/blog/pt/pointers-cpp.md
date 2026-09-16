@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Ponteiros em C++: Desmistificando o Gerenciamento de Memória
-
 O gerenciamento direto de memória é um dos diferenciais do C++. Por meio de **ponteiros**, os desenvolvedores interagem com os endereços físicos da memória RAM.
 
 ---

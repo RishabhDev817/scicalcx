@@ -66,7 +66,7 @@ const content = getInfoContent('contact', lang);
 
         <form id="contact-form" class="space-y-5 font-mono text-xs">
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.nameLabel}</label>
+            <label for="sender-name" class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.nameLabel}</label>
             <input 
               type="text" 
               id="sender-name"
@@ -78,7 +78,7 @@ const content = getInfoContent('contact', lang);
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.emailInputLabel}</label>
+            <label for="sender-email" class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.emailInputLabel}</label>
             <input 
               type="email" 
               id="sender-email"
@@ -90,7 +90,7 @@ const content = getInfoContent('contact', lang);
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.subjectLabel}</label>
+            <label for="sender-subject" class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.subjectLabel}</label>
             <input 
               type="text" 
               id="sender-subject"
@@ -102,7 +102,7 @@ const content = getInfoContent('contact', lang);
           </div>
 
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.messageLabel}</label>
+            <label for="sender-message" class="text-brand-text-muted uppercase text-[10px] tracking-wider font-semibold">{content.messageLabel}</label>
             <textarea 
               id="sender-message"
               name="message"

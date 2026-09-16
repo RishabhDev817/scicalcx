@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Time Complexity Explained: Big O Notation for Beginners
-
 In computer science, there are often multiple ways to solve a programming problem. How do we determine which solution is the most efficient? 
 
 We use **Big O Notation** to analyze and compare algorithmic performance based on how the running time scales as the input size grows.

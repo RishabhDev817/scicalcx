@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Les Pointeurs en C++ : Démystifier la Gestion de la Mémoire
-
 La gestion de la mémoire est l'un des aspects les plus puissants du C++. Contrairement à Java ou Python qui gèrent la mémoire automatiquement, le C++ offre un contrôle direct sur la mémoire système grâce aux **pointeurs**.
 
 ---

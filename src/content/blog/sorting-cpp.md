@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Introduction to Sorting: Bubble and Selection Sort in C++
-
 Sorting algorithms are fundamental building blocks of computer science. They rearrange elements in an array or list in a specific order (ascending or descending). 
 
 For beginners, studying simple comparison-based algorithms like **Bubble Sort** and **Selection Sort** is a great way to build algorithmic thinking.

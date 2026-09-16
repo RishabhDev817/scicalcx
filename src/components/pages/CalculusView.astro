@@ -72,7 +72,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         </h2>
         <div class="space-y-3 font-mono text-xs">
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-dim uppercase text-[10px]">{t('calculus.expr')}</label>
+            <label for="def-expr" class="text-brand-text-dim uppercase text-[10px]">{t('calculus.expr')}</label>
             <input 
               type="text" 
               id="def-expr" 
@@ -83,7 +83,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div class="flex flex-col gap-1.5">
-              <label class="text-brand-text-dim uppercase text-[10px]">{t('calculus.lowerLimit')}</label>
+              <label for="def-limit-a" class="text-brand-text-dim uppercase text-[10px]">{t('calculus.lowerLimit')}</label>
               <input 
                 type="number" 
                 id="def-limit-a" 
@@ -93,7 +93,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
               />
             </div>
             <div class="flex flex-col gap-1.5">
-              <label class="text-brand-text-dim uppercase text-[10px]">{t('calculus.upperLimit')}</label>
+              <label for="def-limit-b" class="text-brand-text-dim uppercase text-[10px]">{t('calculus.upperLimit')}</label>
               <input 
                 type="number" 
                 id="def-limit-b" 
@@ -125,7 +125,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         </h2>
         <div class="space-y-3 font-mono text-xs">
           <div class="flex flex-col gap-1.5">
-            <label class="text-brand-text-dim uppercase text-[10px]">Polynomial Expression f(x)</label>
+            <label for="indef-expr" class="text-brand-text-dim uppercase text-[10px]">Polynomial Expression f(x)</label>
             <input 
               type="text" 
               id="indef-expr" 

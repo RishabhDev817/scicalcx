@@ -1,2 +1,4 @@
 # Redirects for SciCalcX
 /sitemap.xml /sitemap-index.xml 301
+/about/editorial-integrity /editorial-integrity 301
+/about/editorial-integrity/ /editorial-integrity/ 301

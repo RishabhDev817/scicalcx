@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Come Creare una Calcolatrice Scientifica di Base in C++
-
 Le calcolatrici scientifiche sono strumenti indispensabili per le discipline scientifiche e ingegneristiche. Internamente, analizzano numeri e simboli algebrici valutandoli secondo precise regole matematiche.
 
 In questo tutorial, creeremo una calcolatrice da console interattiva in C++ in grado di eseguire le quattro operazioni fondamentali, calcolare potenze, radici quadrate e prevenire errori comuni come la divisione per zero.

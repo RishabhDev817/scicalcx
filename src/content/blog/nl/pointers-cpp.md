@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Pointers in C++: Geheugenbeheer Begrijpelijk Uitgelegd
-
 Handmatig geheugenbeheer is een van de krachtigste eigenschappen van C++. In tegenstelling tot talen met automatische garbage collection biedt C++ via **pointers (aanwijzers)** directe toegang tot fysieke geheugenadressen.
 
 ---

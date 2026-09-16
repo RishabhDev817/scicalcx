@@ -18,7 +18,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: 'How does the free online fraction calculator work via the S-D key?',
-        answer: 'The S-D key stands for Standard to Decimal conversion. Tapping it cycles calculation results between their decimal expansion, simplified improper fractions (e.g., 7/4), and mixed numbers (e.g., 1 3/4), providing exact fractional representations without precision loss.',
+        answer: 'The S-D key stands for Standard to Decimal conversion. Tapping it cycles calculation results between their decimal expansion, simplified improper fractions (e.g., 7/4), and mixed numbers (e.g., 1 3/4), providing simplified fractional representations for common rational results.',
       },
       {
         question: 'How does the multi-line engineering calculator validate expressions?',
@@ -143,7 +143,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: '¿SciCalcX incluye una calculadora de fracciones gratuita en línea con la tecla S-D?',
-        answer: '¡Sí! La tecla S-D funciona como una calculadora de fracciones gratuita en línea. Al presionarla, conmuta los resultados instantáneamente entre su valor decimal, fracción irreducible simplificada (ej. 7/4) y número mixto (ej. 1 3/4), proporcionando exactitud matemática sin pérdidas de precisión.',
+        answer: '¡Sí! La tecla S-D funciona como una calculadora de fracciones gratuita en línea. Al presionarla, conmuta los resultados instantáneamente entre su valor decimal, fracción irreducible simplificada (ej. 7/4) y número mixto (ej. 1 3/4), proporcionando representaciones fraccionarias simplificadas para resultados racionales comunes.',
       },
       {
         question: '¿Cómo opera la calculadora de ingeniería multilínea como solucionador de expresiones matemáticas?',
@@ -356,7 +356,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: 'Was bewirkt die S-D (oder S⇔D) Taste?',
-        answer: 'Die S-D-Taste wechselt zwischen Standard- und Dezimaldarstellung. Durch Drücken wird zwischen Dezimalwert, gekürztem Bruch (z. B. 7/4) und gemischter Zahl (z. B. 1 3/4) ohne Genauigkeitsverlust umgeschaltet.',
+        answer: 'Die S-D-Taste wechselt zwischen Standard- und Dezimaldarstellung. Durch Drücken wird zwischen Dezimalwert, gekürztem Bruch (z. B. 7/4) und gemischter Zahl (z. B. 1 3/4) für gängige rationale Ergebnisse umgeschaltet.',
       },
       {
         question: 'Warum erhalte ich eine Syntaxfehler- oder Klammer-Meldung?',
@@ -448,7 +448,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: 'Hoe werkt de gratis online breukencalculator via de S-D toets?',
-        answer: 'De S-D toets (Standard to Decimal) schakelt resultaten direct om tussen decimale getallen, vereenvoudigde oneigenlijke breuken (bijv. 7/4) en gemengde getallen (bijv. 1 3/4) zonder enig verlies van numerieke precisie.',
+        answer: 'De S-D toets (Standard to Decimal) schakelt resultaten direct om tussen decimale getallen, vereenvoudigde oneigenlijke breuken (bijv. 7/4) en gemengde getallen (bijv. 1 3/4) voor veelvoorkomende rationale resultaten.',
       },
       {
         question: 'Hoe verwerkt deze webcalculator drijvende-komma weergave-artefacten (zoals 0.1 + 0.2)?',
@@ -732,7 +732,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: 'オンライン無料分数計算機はどのように活用できますか？',
-        answer: 'S-Dキーを押すことで、オンライン無料分数計算機として小数表記、既約分数、帯分数を相互に損失なく変換できます。',
+        answer: 'S-Dキーを押すことで、オンライン無料分数計算機として小数表記、既約分数、帯分数を相互に変換できます。一般的な有理数結果を簡約分数で表示します。',
       },
       {
         question: 'AC、CE、DELキーの違いは何ですか？',
@@ -816,7 +816,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: '온라인 무료 분수 계산기 기능은 어떻게 전환하나요?',
-        answer: 'S-D 키를 누르면 온라인 무료 분수 계산기 기능이 활성화되어 소수점 수치와 기약 분수를 손실 없이 즉시 전환합니다.',
+        answer: 'S-D 키를 누르면 온라인 무료 분수 계산기 기능이 활성화되어 소수점 수치와 기약 분수를 즉시 전환합니다. 일반적인 유리수 결과를 기약 분수로 표시합니다.',
       },
       {
         question: 'AC, CE, DEL 버튼의 차이는 무엇인가요?',

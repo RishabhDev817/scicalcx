@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Cómo Crear una Calculadora Científica Básica en C++
-
 Las calculadoras científicas son herramientas indispensables en las áreas de ciencia e ingeniería. Internamente, procesan números y símbolos de operadores algebraicos evaluándolos según las reglas matemáticas formales.
 
 En este tutorial, programaremos una calculadora de consola interactiva en C++ capaz de procesar aritmética básica, potencias y raíces cuadradas con validaciones de errores.

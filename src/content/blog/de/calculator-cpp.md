@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Einen wissenschaftlichen Taschenrechner in C++ programmieren
-
 Wissenschaftliche Taschenrechner sind unverzichtbare Werkzeuge in Naturwissenschaften und Ingenieurwesen. Intern parsen und evaluieren sie Eingaben und mathematische Symbole nach formalen algebraischen Gesetzen.
 
 In diesem Tutorial programmieren wir einen interaktiven C++ Konsolen-Rechner, der Grundrechenarten, Potenzen, Wurzeln und Fehlerabfangroutinen implementiert.

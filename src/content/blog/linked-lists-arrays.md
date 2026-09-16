@@ -5,8 +5,6 @@ pubDate: "2026-07-22"
 author: "Rishabh Raj Mahato"
 ---
 
-# Data Structures: Linked Lists vs. Arrays in C++
-
 When organizing data in memory, two of the most fundamental data structures are **Arrays** and **Linked Lists**. 
 
 While they might seem to serve the same purpose (storing a list of elements), their memory layouts are completely different, resulting in vastly different performance characteristics for basic operations.
