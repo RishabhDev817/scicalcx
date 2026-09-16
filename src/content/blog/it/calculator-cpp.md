@@ -125,4 +125,4 @@ int main() {
 
 ## Prova questo codice online!
 
-**[Apri il Compilatore Online SciCalcX](/it/compiler/)** e incolla il codice nel terminale interattivo per testarlo all'istante nel tuo browser!
+**[Apri il Compilatore Online SciCalcX](/it/compiler/)** e incolla il codice nel terminale interattivo per testarlo direttamente nel nostro sandbox!

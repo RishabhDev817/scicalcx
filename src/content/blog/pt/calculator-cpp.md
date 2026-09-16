@@ -125,4 +125,4 @@ int main() {
 
 ## Teste Este Código ao Vivo!
 
-**[Acesse o Compilador Online SciCalcX](/pt/compiler/)** e execute este código em tempo real no seu navegador!
+**[Acesse o Compilador Online SciCalcX](/pt/compiler/)** e execute este código em tempo real em nosso sandbox!

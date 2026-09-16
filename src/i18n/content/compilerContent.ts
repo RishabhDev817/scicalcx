@@ -39,7 +39,7 @@ export const compilerContent: Record<SupportedLanguage, CompilerPageLocalizedCon
     terminalTitle: 'Terminal Interactiva y Stdin',
     terminalDesc: 'Envíe datos de entrada estándar (stdin) para evaluar algoritmos de ordenación, matrices y ejercicios de estructuras de datos.',
     curriculumTitle: 'Rutas Guiadas y Exportación Académica',
-    curriculumDesc: 'Siga lecciones estructuradas con verificación de sintaxis. Genere capturas de tareas procesadas 100% localmente en su navegador.',
+    curriculumDesc: 'Siga lecciones estructuradas con verificación de sintaxis. Genere capturas de tareas procesadas localmente en su navegador.',
   },
   ja: {
     architectureBadge: '実行アーキテクチャとセキュリティ',
@@ -78,7 +78,7 @@ export const compilerContent: Record<SupportedLanguage, CompilerPageLocalizedCon
     terminalTitle: 'Interaktives Terminal & Stdin',
     terminalDesc: 'Übergeben Sie dynamische Standardeingaben (stdin), um Sortieralgorithmen, Matrizen und Datenstrukturen zu überprüfen.',
     curriculumTitle: 'Geführter Lernpfad & Berichts-Export',
-    curriculumDesc: 'Strukturierte Lektionen mit automatischer Syntaxprüfung. Erstellen Sie Aufgabenberichte, die 100% lokal im Browser gerendert werden.',
+    curriculumDesc: 'Strukturierte Lektionen mit automatischer Syntaxprüfung. Erstellen Sie Aufgabenberichte, die lokal im Browser gerendert werden.',
   },
   nl: {
     architectureBadge: 'Uitvoeringsarchitectuur & Beveiliging',
@@ -104,7 +104,7 @@ export const compilerContent: Record<SupportedLanguage, CompilerPageLocalizedCon
     terminalTitle: 'Terminal Interativo & Stdin',
     terminalDesc: 'Envie entradas de dados padrão (stdin) para testar algoritmos de ordenação, matrizes e desafios de estruturas de dados.',
     curriculumTitle: 'Trilhas Guiadas e Exportação Acadêmica',
-    curriculumDesc: 'Acompanhe lições estruturadas com validação de código. Exporte relatórios de tarefas processados 100% no seu navegador.',
+    curriculumDesc: 'Acompanhe lições estruturadas com validação de código. Exporte relatórios de tarefas processados localmente no seu navegador.',
   },
   ko: {
     architectureBadge: '실행 아키텍처 및 보안',
@@ -117,7 +117,7 @@ export const compilerContent: Record<SupportedLanguage, CompilerPageLocalizedCon
     terminalTitle: '대화형 터미널 및 표준 입력(stdin)',
     terminalDesc: '표준 입력(stdin) 데이터를 전달하여 정렬 알고리즘, 행렬 변환, 자료구조 및 알고리즘 과제를 실시간으로 테스트하세요.',
     curriculumTitle: '단계별 로드맵 및 과제 내보내기',
-    curriculumDesc: '구문 설명이 포함된 로드맵을 학습하세요. 브라우저에서 100% 로컬로 렌더링되는 과제 스냅샷 이미지를 생성할 수 있습니다.',
+    curriculumDesc: '구문 설명이 포함된 로드맵을 학습하세요. 브라우저 메모리 내에서 로컬로 렌더링되는 과제 스냅샷 이미지를 생성할 수 있습니다.',
   },
   it: {
     architectureBadge: 'Architettura di Esecuzione e Sicurezza',
@@ -130,6 +130,6 @@ export const compilerContent: Record<SupportedLanguage, CompilerPageLocalizedCon
     terminalTitle: 'Terminale Interattivo & Stdin',
     terminalDesc: 'Invia dati di input standard (stdin) per testare algoritmi di ordinamento, matrici ed esercizi su strutture dati e algoritmi.',
     curriculumTitle: 'Percorso Guidato & Esportazione Accademica',
-    curriculumDesc: 'Segui lezioni con spiegazioni sintattiche. Genera resoconti di compiti ed esercitazioni elaborati al 100% in locale nel browser.',
+    curriculumDesc: 'Segui lezioni con spiegazioni sintattiche. Genera resoconti di compiti ed esercitazioni elaborati localmente nel browser.',
   },
 };

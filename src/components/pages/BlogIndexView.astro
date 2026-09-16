@@ -16,6 +16,16 @@ const allPosts = await getCollection('blog');
 const basePosts = allPosts.filter((p) => !p.id.includes('/'));
 basePosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
 
+const displayItems = lang === 'en'
+  ? basePosts.map((post) => ({ post, href: translatePath(`/blog/${post.id}`) }))
+  : basePosts
+      .map((basePost) => {
+        const localizedPost = allPosts.find((p) => p.id === `${lang}/${basePost.id}`);
+        if (!localizedPost) return null;
+        return { post: localizedPost, href: translatePath(`/blog/${basePost.id}`) };
+      })
+      .filter((item): item is { post: (typeof allPosts)[number]; href: string } => item !== null);
+
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat(lang === 'ja' ? 'ja-JP' : lang === 'ko' ? 'ko-KR' : lang === 'de' ? 'de-DE' : lang === 'fr' ? 'fr-FR' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : lang === 'pt' ? 'pt-PT' : 'en-US', {
     month: 'short',
@@ -48,10 +58,7 @@ function formatDate(date: Date) {
 
     <!-- Blog Posts Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      {basePosts.map((basePost) => {
-        const localizedPost = allPosts.find((p) => p.id === `${lang}/${basePost.id}`);
-        const displayPost = localizedPost || basePost;
-        const postHref = localizedPost ? translatePath(`/blog/${basePost.id}`) : `/blog/${basePost.id}`;
+      {displayItems.map(({ post: displayPost, href: postHref }) => {
         return (
           <article class="border border-brand-border bg-brand-gray-dark/40 hover:border-brand-border-strong rounded-xl p-6 flex flex-col justify-between space-y-4 shadow-lg backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 group">
             <div class="space-y-3">
@@ -60,9 +67,6 @@ function formatDate(date: Date) {
                   {formatDate(displayPost.data.pubDate)}
                 </time>
                 <div class="flex items-center gap-2">
-                  {!localizedPost && lang !== 'en' && (
-                    <span class="px-1.5 py-0.5 text-[9px] rounded bg-brand-gray-light border border-brand-border text-brand-text-muted">English</span>
-                  )}
                   <span class="text-brand-blue-neon/80 group-hover:text-brand-blue-neon transition-colors">
                     {displayPost.data.author}
                   </span>

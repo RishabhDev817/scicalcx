@@ -14,9 +14,9 @@ export const nlInfo: InfoPageContent = {
     standardsTitle: 'Rekenprecisie & Validatiestandaarden',
     standardsIntro: 'Precisie is essentieel voor wetenschappelijke en technische toepassingen:',
     standards: [
-      { label: 'Precisie Normalisatie', text: 'IEEE-754 afrondingsartefacten worden algoritmisch gecorrigeerd via decimale normalisatie voor betrouwbare en duidelijke weergaven tot 12 decimalen.' },
+      { label: 'Precisie Normalisatie', text: 'SciCalcX past epsilon-drempelnormalisatie toe om veelvoorkomende drijvende-komma weergave-artefacten in getoonde resultaten tot 12 decimalen te verminderen.' },
       { label: 'Gestandaardiseerde Verificatie', text: 'Matrixbewerkingen en de numerieke kwadratuur van Simpson worden continu gecontroleerd aan de hand van analytische referentieoplossingen.' },
-      { label: 'Gedifferentieerd Uitvoeringsmodel', text: 'SciCalcX handhaaft een strikte architectonische grens tussen berekeningstypen: alle wiskundige rekenmachines (Wetenschappelijk, Matrix, Calculus, Grafieken, Statistiek, Programmeur) evalueren 100% lokaal in uw browser zonder netwerkaanvragen. De Code Tutor voert ingediende broncode uit door deze via versleutelde HTTPS rechtstreeks te verzenden naar geïsoleerde container-sandboxdiensten (primair: Judge0 CE op ce.judge0.com, terugval: Wandbox API op wandbox.org) zonder permanente opslag op de server.' },
+      { label: 'Architectonische Scheiding', text: 'SciCalcX handhaaft een strikte architectonische scheiding: wiskundige tools voeren hun berekeningen lokaal in de browser uit waar ondersteund, zodat formule-invoer en wiskundige verwerking op het apparaat van de gebruiker blijven. De Code Tutor staat los van de wiskundige rekenmodules: wanneer een gebruiker op "Code Uitvoeren" klikt, wordt het ingediende programma veilig via HTTPS verzonden naar een geïsoleerde externe uitvoeringsdienst (primair: Judge0 CE op ce.judge0.com, uitwijkoptie: Wandbox op wandbox.org) zonder permanente serveropslag.' },
     ],
     architectureBadge: 'Webarchitectuur',
     architectureTitle: 'Moderne Webarchitectuur',
@@ -117,9 +117,9 @@ export const nlInfo: InfoPageContent = {
         ]
       },
       { 
-        title: '2. Wiskundige Berekeningen Volledig aan de Clientzijde', 
+        title: '2. Wiskundige Berekeningen aan de Clientzijde', 
         paragraphs: [
-          'De wiskundige kerntools van SciCalcX—waaronder de Wetenschappelijke Rekenmachine, Matrix Rekenmachine, Calculus Solver, Grafische Plotter, Statistiek Rekenmachine en Programmeur Bitboard—werken 100% aan de clientzijde in uw webbrowser.',
+          'De wiskundige kerntools van SciCalcX—waaronder de Wetenschappelijke Rekenmachine, Matrix Rekenmachine, Calculus Solver, Grafische Plotter, Statistiek Rekenmachine en Programmeur Bitboard—voeren hun berekeningen lokaal in uw webbrowser uit waar ondersteund.',
           'Wanneer u berekeningen invoert zoals "sin(45)", een matrix definieert of een standaarddeviatie berekent, wordt de formule lokaal geëvalueerd door de JavaScript-engine van uw browser. Uw formules, variabelen en datasets worden nooit naar onze servers verzonden en nooit opgeslagen in externe databases.'
         ]
       },

@@ -271,7 +271,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: 'Calculatrice Web Avancée et Précision Virgule Flottante',
           paragraphs: [
-            'Cette calculatrice scientifique en ligne constitue une calculatrice web avancée idéale pour étudiants et ingénieurs. Elle élimine les artefacts binaires IEEE 754 grâce à des algorithmes de normalisation epsilon.',
+            'Cette calculatrice scientifique en ligne constitue une calculatrice web avancée idéale pour étudiants et ingénieurs. Elle applique une normalisation basée sur un seuil epsilon pour réduire les artefacts d\'affichage en virgule flottante IEEE 754.',
             'Elle intègre une calculatrice de fractions gratuite en ligne pour basculer en un clic entre décimales et fractions exactes irréductibles.',
           ],
         },
@@ -378,7 +378,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: 'Präzision und Dezimalnormalisierung',
           paragraphs: [
-            'Wissenschaftliche Berechnungen verlangen absolute Verlässlichkeit. SciCalcX bereinigt IEEE 754 Gleitkomma-Ungenauigkeiten und bietet exakte Bruchumwandlungen.',
+            'Wissenschaftliche Berechnungen verlangen Verlässlichkeit. SciCalcX wendet eine Epsilon-Normalisierung an, um typische Darstellungsartefakte der Gleitkommaarithmetik nach IEEE 754 zu reduzieren, und unterstützt die Umwandlung in Brüche.',
           ],
         },
       ],
@@ -476,7 +476,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: 'Geavanceerde Webcalculator en Drijvende-Kommaberekeningen',
           paragraphs: [
-            'Deze online wetenschappelijke calculator is ontworpen als een geavanceerde webcalculator voor studenten en ingenieurs. Het voorkomt binaire afrondingsfouten van IEEE 754 door epsilon-normalisatie toe te passen.',
+            'Deze online wetenschappelijke calculator is ontworpen als een geavanceerde webcalculator voor studenten en ingenieurs. Het past epsilon-drempelnormalisatie toe om weergave-artefacten van binaire IEEE-754 berekeningen te verminderen.',
             'Inclusief een gratis online breukencalculator waarmee u met één klik schakelt tussen exacte breuken en decimale getallen.',
           ],
         },
@@ -583,7 +583,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: 'Calculadora Web Avançada e Precisão de Ponto Flutuante',
           paragraphs: [
-            'Esta calculadora científica online oferece uma calculadora web avançada sem imperfeições de ponto flutuante IEEE 754.',
+            'Esta calculadora científica online oferece uma calculadora web avançada com normalização baseada em épsilon para reduzir artefatos comuns de ponto flutuante IEEE 754.',
             'Possui uma calculadora de frações gratuita online integrada para alternar instantaneamente entre dízimas e frações irredutíveis exatas.',
           ],
         },
@@ -690,7 +690,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: 'Calcolatrice Web Avanzata e Precisione Decimale',
           paragraphs: [
-            'Questa calcolatrice scientifica online funge da calcolatrice web avanzata per studenti e ingegneri, correggendo gli errori IEEE 754.',
+            'Questa calcolatrice scientifica online funge da calcolatrice web avanzata per studenti e ingegneri, riducendo i comuni artefatti di rappresentazione IEEE 754 tramite normalizzazione decimale.',
             'Include una calcolatrice di frazioni gratuita online per convertire istantaneamente valori decimali in frazioni irriducibili esatte.',
           ],
         },
@@ -797,7 +797,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: '高度なウェブ計算機と浮動小数点正規化',
           paragraphs: [
-            '当サイトの科学用計算機は、工学および学習用途に最適化された高度なウェブ計算機です。IEEE 754の微細な丸め誤差を排除し、正確な演算結果を出力します。',
+            '当サイトの科学用計算機は、工学および学習用途に最適化された高度なウェブ計算機です。イプシロン閾値に基づく正規化を適用し、IEEE 754の表示上の微細なアーティファクトを低減します。',
             'オンライン無料分数計算機機能を備えており、小数と既約分数をワンタップで相互変換できます。',
           ],
         },
@@ -904,7 +904,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
         {
           title: '고급 웹 계산기 및 부동 소수점 정밀도 정규화',
           paragraphs: [
-            '본 온라인 공학용 계산기는 공학도와 연구원을 위한 고급 웹 계산기입니다. IEEE 754 부동 소수점 오차를 입실론 임계값 알고리즘으로 자동 교정합니다.',
+            '본 온라인 공학용 계산기는 공학도와 연구원을 위한 고급 웹 계산기입니다. 엡실론 임계치 정규화 알고리즘을 적용하여 IEEE 754 부동 소수점 표현상의 미세한 표시 아티팩트를 줄입니다.',
             '온라인 무료 분수 계산기 기능을 탑재하여 순환 소수와 기약 분수를 손실 없이 자유롭게 상호 변환할 수 있습니다.',
           ],
         },

@@ -6,7 +6,7 @@ export const nlPedagogy: Record<string, CalculatorPedagogyData> = {
     conceptTitle: 'Algebraïsche Hiërarchie & Drijvendekommaberekeningen',
     conceptDescription: [
       'Een wetenschappelijke rekenmachine evalueert samengestelde wiskundige uitdrukkingen volgens strikte bewerkingsvolgordes (PEMDAS/BODMAS: Haakjes, Machten/Wortels, Vermenigvuldigen & Delen, Optellen & Aftrekken). Bij geneste formules zoals 3 + 4 × 2 / (1 - 5)^2 stelt de berekeningsmotor optellingen uit totdat alle termen binnen haakjes, machten en vermenigvuldigingen zijn berekend.',
-      'Moderne microprocessoren voeren drijvendekommagetallen uit volgens de IEEE 754-standaard voor dubbele precisie (float64). Omdat bepaalde decimale breuken (zoals 0,1 of 0,2) oneindig repeterende binaire reeksen vormen, ontstaan bij binaire berekeningen minieme afrondingsfoutjes (bijv. 0.1 + 0.2 = 0.30000000000000004). SciCalcX past epsilon-drempelsanering toe om een zuivere decimale weergave tot 12 cijfers te behouden.',
+      'Moderne microprocessoren voeren drijvendekommagetallen uit volgens de IEEE 754-standaard voor dubbele precisie (float64). Omdat bepaalde decimale breuken (zoals 0,1 of 0,2) oneindig repeterende binaire reeksen vormen, ontstaan bij binaire berekeningen minieme afrondingsfoutjes (bijv. 0.1 + 0.2 = 0.30000000000000004). SciCalcX past epsilon-drempelnormalisatie toe om veelvoorkomende drijvende-komma weergave-artefacten in getoonde resultaten tot 12 decimalen te verminderen.',
       'Goniometrische functies (sinus, cosinus, tangens) werken op continue hoekmaten. Weten of uw invoer in radialen (waarbij 2π overeenkomt met 360°) of in graden (DEG) staat, is essentieel voor nauwkeurige berekeningen in de natuurkunde en techniek.'
     ],
     howToSteps: [

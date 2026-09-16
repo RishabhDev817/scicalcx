@@ -127,4 +127,4 @@ int main() {
 
 ## Testez ce code en direct !
 
-**[Ouvrez le Compilateur en Ligne SciCalcX](/fr/compiler/)** et copiez ce code dans la console interactive pour l'exécuter instantanément dans votre navigateur.
+**[Ouvrez le Compilateur en Ligne SciCalcX](/fr/compiler/)** et copiez ce code dans la console interactive pour l'exécuter directement dans notre environnement sandbox.

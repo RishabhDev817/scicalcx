@@ -14,9 +14,9 @@ export const enInfo: InfoPageContent = {
     standardsTitle: 'Calculation Accuracy & Editorial Standards',
     standardsIntro: 'Accuracy is paramount in academic and scientific computing. We adhere to rigorous computational validation standards:',
     standards: [
-      { label: 'Precision Normalization', text: 'Common IEEE-754 floating-point display artifacts are reduced through decimal normalization algorithms for clearer human-readable representations up to 12 decimal places.' },
+      { label: 'Precision Normalization', text: 'SciCalcX applies epsilon-based normalization to reduce common floating-point representation artifacts in displayed results up to 12 decimal places.' },
       { label: 'Standardized Verification', text: 'Matrix transformations and Simpson\'s numerical quadrature are tested against known reference solutions and linear algebra test cases.' },
-      { label: 'Differentiated Execution Model', text: 'SciCalcX maintains a strict architectural boundary between computation types: all mathematical calculators (Scientific, Matrix, Calculus, Graphing, Statistics, Programmer) evaluate 100% locally in your browser with zero network requests. The Code Tutor executes submitted source code by sending it over encrypted HTTPS directly to isolated container sandbox services (primary: Judge0 CE at ce.judge0.com, fallback: Wandbox API at wandbox.org) without permanent server-side storage.' },
+      { label: 'Architectural Separation', text: 'SciCalcX\'s mathematical tools perform their calculations locally in the browser where supported, allowing formula inputs and mathematical processing to remain on the user\'s device. The Code Tutor is separate from the mathematical engines: when a user clicks Run Code, the submitted program is securely transmitted over HTTPS to an isolated external execution service (primary: Judge0 CE at ce.judge0.com, fallback: Wandbox at wandbox.org) without permanent server storage.' },
     ],
     architectureBadge: 'Web Architecture',
     architectureTitle: 'High-Performance Web Architecture',
@@ -119,7 +119,7 @@ export const enInfo: InfoPageContent = {
       { 
         title: '2. Client-Side Mathematical Privacy', 
         paragraphs: [
-          'The core mathematical tools on SciCalcX—including the Scientific Calculator, Matrix Calculator, Calculus Calculator, Graphing Calculator, Statistics Calculator, and Programmer Bitboard—operate 100% client-side in your web browser.',
+          'The core mathematical tools on SciCalcX—including the Scientific Calculator, Matrix Calculator, Calculus Calculator, Graphing Calculator, Statistics Calculator, and Programmer Bitboard—perform their calculations locally in the browser where supported.',
           'When you enter expressions like "sin(45)", define a 3x3 matrix, or compute standard deviation on a dataset, the mathematical evaluation is executed locally by your browser\'s JavaScript engine. Your mathematical formulas, variable values, and dataset entries are never sent to our servers, never stored in remote databases, and never inspected by third parties.'
         ]
       },

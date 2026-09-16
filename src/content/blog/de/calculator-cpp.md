@@ -123,6 +123,6 @@ int main() {
 
 ---
 
-## Diesen Code live im Browser testen!
+## Diesen Code live in der Sandbox testen!
 
-**[Öffnen Sie den interaktiven SciCalcX Online-Compiler](/de/compiler/)**, fügen Sie den obigen Code ein und führen Sie ihn direkt im Browser aus!
+**[Öffnen Sie den interaktiven SciCalcX Online-Compiler](/de/compiler/)**, fügen Sie den obigen Code ein und führen Sie ihn direkt in unserer isolierten Sandbox aus!

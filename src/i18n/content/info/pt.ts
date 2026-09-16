@@ -14,9 +14,9 @@ export const ptInfo: InfoPageContent = {
     standardsTitle: 'Precisão de Cálculo e Rigor Editorial',
     standardsIntro: 'A exatidão é primordial em estudos científicos e de engenharia. Seguimos padrões rigorosos de validação:',
     standards: [
-      { label: 'Normalização Decimal', text: 'Imprecisões comuns da aritmética de ponto flutuante IEEE-754 são atenuadas por algoritmos de normalização decimal para garantir até 12 casas decimais legíveis.' },
+      { label: 'Normalização Decimal', text: 'O SciCalcX aplica normalização baseada em épsilon para atenuar artefatos comuns de representação em ponto flutuante nos resultados exibidos com até 12 casas decimais.' },
       { label: 'Verificação Padronizada', text: 'Operações matriciais e quadratura numérica de Simpson são continuamente testadas contra soluções analíticas de referência e casos de álgebra linear.' },
-      { label: 'Modelo de Execução Diferenciado', text: 'O SciCalcX mantém uma fronteira arquitetural rigorosa entre os tipos de computação: todas as calculadoras matemáticas (Científica, Matrizes, Cálculo, Gráficos, Estatística, Programador) avaliam 100% localmente no seu navegador sem requisições de rede. O Tutor de Código executa o código-fonte enviado transmitindo-o via HTTPS criptografado diretamente para serviços de sandbox isolados em contêineres (principal: Judge0 CE em ce.judge0.com, fallback: API Wandbox em wandbox.org) sem armazenamento permanente no servidor.' },
+      { label: 'Separação Arquitetural', text: 'O SciCalcX mantém uma rigorosa separação arquitetural: as ferramentas matemáticas realizam seus cálculos localmente no navegador onde suportado, permitindo que a entrada de fórmulas e o processamento permaneçam no dispositivo do usuário. O Tutor de Código é separado dos motores matemáticos: quando o usuário clica em "Executar Código", o programa é transmitido com segurança via HTTPS para um serviço de execução externo isolado (principal: Judge0 CE em ce.judge0.com, contingência: Wandbox em wandbox.org) sem armazenamento permanente em servidores.' },
     ],
     architectureBadge: 'Arquitetura Web',
     architectureTitle: 'Arquitetura Web de Alta Performance',
@@ -119,7 +119,7 @@ export const ptInfo: InfoPageContent = {
       { 
         title: '2. Processamento Matemático no Lado do Cliente', 
         paragraphs: [
-          'As calculadoras matemáticas fundamentais do SciCalcX—Científica, Matrizes, Cálculo, Gráficos, Estatística e Programador—operam 100% no lado do cliente no seu navegador.',
+          'As calculadoras matemáticas fundamentais do SciCalcX—Científica, Matrizes, Cálculo, Gráficos, Estatística e Programador—realizam seus cálculos localmente no seu navegador onde suportado.',
           'Ao digitar expressões como "sin(45)", configurar uma matriz ou calcular o desvio-padrão de uma amostra, o processamento ocorre localmente no motor JavaScript do seu aparelho. Suas fórmulas e números nunca são enviados aos nossos servidores nem salvos em bancos de dados remotos.'
         ]
       },

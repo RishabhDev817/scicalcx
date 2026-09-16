@@ -14,9 +14,9 @@ export const frInfo: InfoPageContent = {
     standardsTitle: 'Normes de Précision Numérique et Rigueur Éditoriale',
     standardsIntro: 'La rigueur est essentielle dans les sciences appliquées et l\'ingénierie. Nous appliquons des protocoles d\'évaluation rigoureux :',
     standards: [
-      { label: 'Normalisation de Précision', text: 'Les artefacts usuels de virgule flottante IEEE-754 sont atténués par des algorithmes de normalisation décimale pour garantir des affichages lisibles jusqu\'à 12 décimales.' },
+      { label: 'Normalisation de Précision', text: 'SciCalcX applique une normalisation basée sur un seuil epsilon pour réduire les artefacts usuels de représentation en virgule flottante dans les résultats affichés jusqu\'à 12 décimales.' },
       { label: 'Vérification Algorithmique', text: 'Les opérations matricielles et la quadrature numérique de Simpson sont systématiquement contrôlées face à des solutions symboliques de référence et des jeux de données d\'algèbre linéaire.' },
-      { label: 'Modèle d\'Exécution Différencié', text: 'SciCalcX maintient une frontière architecturale stricte entre ses types de calcul : toutes les calculatrices mathématiques (Scientifique, Matrices, Analyse, Graphique, Statistiques, Développeur) s\'exécutent à 100 % localement dans votre navigateur sans aucune requête réseau. Le Tuteur de Code exécute le code source soumis en le transmettant via une connexion HTTPS chiffrée directement à des services de bac à sable conteneurisés isolés (principal : Judge0 CE sur ce.judge0.com, basculement : API Wandbox sur wandbox.org) sans stockage persistant côté serveur.' },
+      { label: 'Séparation Architecturale', text: 'SciCalcX maintient une séparation architecturale stricte : les outils mathématiques effectuent leurs calculs localement dans le navigateur lorsque cela est pris en charge, permettant aux formules et aux traitements de rester sur l\'appareil de l\'utilisateur. Le Tuteur de Code est distinct des moteurs mathématiques : lorsque l\'utilisateur clique sur « Exécuter le Code », le programme est transmis de manière sécurisée via HTTPS à un service d\'exécution externe isolé (principal : Judge0 CE sur ce.judge0.com, basculement : Wandbox sur wandbox.org) sans stockage permanent sur serveur.' },
     ],
     architectureBadge: 'Architecture Web',
     architectureTitle: 'Architecture Web Haute Performance',
@@ -117,9 +117,9 @@ export const frInfo: InfoPageContent = {
         ]
       },
       { 
-        title: '2. Traitement Mathématique Strictement Côté Client', 
+        title: '2. Traitement Mathématique Côté Client', 
         paragraphs: [
-          'Les outils mathématiques fondamentaux de SciCalcX—notamment la Calculatrice Scientifique, le Résolveur de Matrices, le Calculateur d\'Analyse, le Traceur de Courbes, le Calculateur Statistique et le Module Développeur—fonctionnent à 100 % dans votre navigateur web.',
+          'Les outils mathématiques fondamentaux de SciCalcX—notamment la Calculatrice Scientifique, le Résolveur de Matrices, le Calculateur d\'Analyse, le Traceur de Courbes, le Calculateur Statistique et le Module Développeur—effectuent leurs calculs localement dans votre navigateur web lorsque cela est pris en charge.',
           'Lorsque vous saisissez une formule telle que « sin(45) », définissez une matrice 3x3 ou évaluez la variance d\'une série, le traitement est opéré en local par le moteur JavaScript de votre équipement. Vos expressions mathématiques, valeurs de variables et séries statistiques ne sont jamais transmises à nos serveurs ni enregistrées dans une base distante.'
         ]
       },
@@ -207,7 +207,7 @@ export const frInfo: InfoPageContent = {
           'Avant tout déploiement en ligne, nos méthodes de calcul sont soumises à des bancs de tests rigoureux :',
           '• Déterminants et Inversions de Matrices : Contrôlés face à des matrices de test standardisées et des résolveurs formels en formats 2x2 et 3x3, incluant les cas singuliers.',
           '• Analyse Numérique : Notre méthode de Simpson composite 1/3 (opérant sur N=1000 sous-intervalles) et les dérivées numériques par différences finies centrées (h=1e-6) sont validées sur des intégrales polynomiales, trigonométriques et exponentielles connues analytiquement.',
-          '• Statistiques Descriptives : Moyenne, médiane, mode, variance d\'échantillon (avec correction de Bessel n-1) et variance de population sont certifiées sur des jeux de données statistiques de référence.'
+          '• Statistiques Descriptives : Moyenne, médiane, mode, variance d\'échantillon (avec correction de Bessel n-1) et variance de population sont validées sur des jeux de données statistiques de référence.'
         ]
       },
       {

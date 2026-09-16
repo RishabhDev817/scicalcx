@@ -30,7 +30,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: 'How does this advanced web calculator reduce common floating-point display artifacts (like 0.1 + 0.2)?',
-        answer: 'Standard JavaScript engines execute numeric calculations using double-precision binary floats (IEEE 754), which cannot represent base-10 fractions like 0.1 or 0.2 without binary round-off errors. SciCalcX implements epsilon-threshold sanitization and decimal precision normalization to ensure calculations like 0.1 + 0.2 format cleanly to 0.3.',
+        answer: 'Standard JavaScript engines execute numeric calculations using double-precision binary floats (IEEE 754), which cannot represent certain base-10 fractions like 0.1 or 0.2 without binary round-off noise. Floating-point normalization can present common decimal results such as 0.1 + 0.2 as 0.3 when the computed value falls within the configured normalization threshold.',
       },
     ],
     matrix: [
@@ -103,7 +103,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Where is my code executed?',
-        answer: 'Code submitted through the Code Tutor and Online Compiler is executed inside isolated, ephemeral container sandboxes provided by external execution services (primary: Judge0 CE API at ce.judge0.com, with automatic fallback to Wandbox API at wandbox.org). Unlike SciCalcX mathematical calculators which run 100% locally in your browser, Code Tutor execution does not occur inside your browser.',
+        answer: 'Code submitted through the Code Tutor and Online Compiler is executed inside isolated, ephemeral container sandboxes provided by external execution services (primary: Judge0 CE API at ce.judge0.com, with automatic fallback to Wandbox API at wandbox.org). Unlike SciCalcX mathematical calculators which perform their calculations locally in your browser, Code Tutor execution does not occur inside your browser.',
       },
       {
         question: 'Which programming languages are supported?',
@@ -155,7 +155,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
       },
       {
         question: '¿Cómo reduce esta calculadora web avanzada los artefactos de coma flotante (ej. 0.1 + 0.2)?',
-        answer: 'Los motores estándar de JavaScript usan números flotantes binarios IEEE 754 que pueden generar artefactos de redondeo. SciCalcX aplica normalización y umbrales épsilon personalizados para que cálculos como 0.1 + 0.2 se representen limpiamente como 0.3.',
+        answer: 'Los motores estándar de JavaScript usan números flotantes binarios IEEE 754 que pueden generar pequeñas discrepancias de redondeo. La normalización de punto flotante puede presentar resultados decimales comunes como 0.1 + 0.2 como 0.3 cuando el valor calculado cae dentro del umbral de normalización configurado.',
       },
 
     ],
@@ -228,7 +228,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: '¿Dónde se ejecuta mi código?',
-        answer: 'El código enviado a través del Tutor de Código y Compilador se ejecuta en contenedores sandbox aislados y efímeros gestionados por servicios externos (primario: API de Judge0 CE en ce.judge0.com, con respaldo automático en la API de Wandbox en wandbox.org). A diferencia de las calculadoras matemáticas de SciCalcX que funcionan 100% de forma local en el navegador, la ejecución del Tutor de Código no ocurre dentro de tu navegador.',
+        answer: 'El código enviado a través del Tutor de Código y Compilador se ejecuta en contenedores sandbox aislados y efímeros gestionados por servicios externos (primario: API de Judge0 CE en ce.judge0.com, con respaldo automático en la API de Wandbox en wandbox.org). A diferencia de las calculadoras matemáticas de SciCalcX que realizan sus cálculos de forma local en el navegador, la ejecución del Tutor de Código no ocurre dentro de tu navegador.',
       },
       {
         question: '¿Qué lenguajes de programación son compatibles?',
@@ -263,8 +263,8 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
         answer: 'Notre calculatrice scientifique en ligne intègre un affichage de calculatrice d\'ingénierie multiligne qui présente l\'expression mathématique complète et le résultat instantané.',
       },
       {
-        question: 'Quels sont les avantages de cette calculatrice web avancée ?',
-        answer: 'Cette calculatrice web avancée élimine les erreurs d\'arrondi IEEE 754 grâce à une normalisation epsilon et propose les modes d\'affichage FIX, SCI et ENG.',
+        question: 'Comment cette calculatrice traite-t-elle la précision en virgule flottante ?',
+        answer: 'Cette calculatrice applique une normalisation basée sur un seuil epsilon pour réduire les artefacts d\'affichage IEEE 754, permettant de formater des calculs comme 0.1 + 0.2 en 0.3 dans la limite du seuil configuré, et propose les modes FIX, SCI et ENG.',
       },
       {
         question: 'Cette calculatrice intègre-t-elle une calculatrice de fractions gratuite en ligne ?',
@@ -316,7 +316,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Où mon code est-il exécuté ?',
-        answer: 'Le code soumis via le Tuteur de Code et Compilateur est exécuté dans des conteneurs sandbox isolés et éphémères fournis par des services distants (principal : API Judge0 CE sur ce.judge0.com, avec basculement automatique vers l\'API Wandbox sur wandbox.org). Contrairement aux calculatrices mathématiques de SciCalcX qui s\'exécutent à 100 % localement dans votre navigateur, l\'exécution du Tuteur de Code n\'a pas lieu dans votre navigateur.',
+        answer: 'Le code soumis via le Tuteur de Code et Compilateur est exécuté dans des conteneurs sandbox isolés et éphémères fournis par des services distants (principal : API Judge0 CE sur ce.judge0.com, avec basculement automatique vers l\'API Wandbox sur wandbox.org). Contrairement aux calculatrices mathématiques de SciCalcX qui effectuent leurs calculs localement dans votre navigateur, l\'exécution du Tuteur de Code n\'a pas lieu dans votre navigateur.',
       },
       {
         question: 'Quels langages de programmation sont pris en charge ?',
@@ -367,8 +367,8 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
         answer: 'AC (All Clear) löscht die gesamte Formel und den Zwischenspeicher. DEL löscht nur das zuletzt eingegebene Zeichen (Rücktaste). CE (Clear Entry) entfernt nur den aktuellen Term, ohne den Rest der Formel zurückzusetzen.',
       },
       {
-        question: 'Wie behebt SciCalcX Gleitkomma-Ungenauigkeiten (z. B. 0,1 + 0,2)?',
-        answer: 'Standard-JavaScript-Engines verwenden IEEE-754-Fließkommazahlen, die periodische Binärbrüche nicht exakt darstellen können. SciCalcX wendet Epsilon-Normalisierungen an, sodass 0,1 + 0,2 exakt als 0,3 ausgewertet wird.',
+        question: 'Wie verarbeitet SciCalcX Darstellungsartefakte der Gleitkommaarithmetik (z. B. 0,1 + 0,2)?',
+        answer: 'Standard-JavaScript-Engines verwenden IEEE-754-Fließkommazahlen, die bestimmte periodische Binärbrüche nicht endlich binär abbilden können. Die Fließkomma-Normalisierung kann gängige Dezimalergebnisse wie 0,1 + 0,2 als 0,3 darstellen, wenn der berechnete Wert innerhalb des konfigurierten Schwellenwerts liegt.',
       },
     ],
     matrix: [
@@ -408,7 +408,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Wo wird mein Programmcode ausgeführt?',
-        answer: 'Der über den Code-Tutor eingereichte Code wird in isolierten, temporären Container-Sandboxes externer Ausführungsdienste ausgeführt (primär: Judge0 CE API unter ce.judge0.com, mit automatischem Fallback auf die Wandbox API unter wandbox.org). Im Gegensatz zu den mathematischen Rechnern von SciCalcX, die zu 100 % lokal in Ihrem Browser rechnen, findet die Codeausführung nicht in Ihrem Browser statt.',
+        answer: 'Der über den Code-Tutor eingereichte Code wird in isolierten, temporären Container-Sandboxes externer Ausführungsdienste ausgeführt (primär: Judge0 CE API unter ce.judge0.com, mit automatischem Fallback auf die Wandbox API unter wandbox.org). Im Gegensatz zu den mathematischen Rechnern von SciCalcX, die ihre Berechnungen lokal im Browser ausführen, findet die Codeausführung nicht in Ihrem Browser statt.',
       },
       {
         question: 'Welche Programmiersprachen werden unterstützt?',
@@ -451,8 +451,8 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
         answer: 'De S-D toets (Standard to Decimal) schakelt resultaten direct om tussen decimale getallen, vereenvoudigde oneigenlijke breuken (bijv. 7/4) en gemengde getallen (bijv. 1 3/4) zonder enig verlies van numerieke precisie.',
       },
       {
-        question: 'Hoe elimineert deze geavanceerde webcalculator drijvende-komma afrondingsfouten (zoals 0.1 + 0.2)?',
-        answer: 'Standaard browsers gebruiken IEEE 754 binaire floats, wat kleine afrondingsfouten veroorzaakt. SciCalcX past geavanceerde epsilon-drempelnormalisatie toe zodat berekeningen zoals 0.1 + 0.2 exact als 0.3 worden weergegeven.',
+        question: 'Hoe verwerkt deze webcalculator drijvende-komma weergave-artefacten (zoals 0.1 + 0.2)?',
+        answer: 'Standaard browsers gebruiken IEEE 754 binaire floats, wat kleine afrondingsartefacten kan veroorzaken. Drijvende-komma normalisatie kan veelvoorkomende decimale resultaten zoals 0.1 + 0.2 als 0.3 weergeven wanneer de berekende waarde binnen de geconfigureerde drempel valt.',
       },
       {
         question: 'Wat is het verschil tussen de knoppen AC, CE en DEL?',
@@ -516,7 +516,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Waar wordt mijn programmacode uitgevoerd?',
-        answer: 'Code die via de Code Tutor wordt ingediend, wordt uitgevoerd in geïsoleerde, tijdelijke container-sandboxes van externe uitvoeringsdiensten (primair: Judge0 CE API op ce.judge0.com, met automatische terugval naar de Wandbox API op wandbox.org). In tegenstelling tot de wiskundige rekenmachines van SciCalcX die 100% lokaal in uw browser rekenen, vindt de code-uitvoering van de Code Tutor niet plaats in uw browser.',
+        answer: 'Code die via de Code Tutor wordt ingediend, wordt uitgevoerd in geïsoleerde, tijdelijke container-sandboxes van externe uitvoeringsdiensten (primair: Judge0 CE API op ce.judge0.com, met automatische terugval naar de Wandbox API op wandbox.org). In tegenstelling tot de wiskundige rekenmachines van SciCalcX die hun berekeningen lokaal in uw browser uitvoeren, vindt de code-uitvoering van de Code Tutor niet plaats in uw browser.',
       },
       {
         question: 'Welke programmeertalen worden ondersteund?',
@@ -551,8 +551,8 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
         answer: 'Nossa calculadora científica online possui visor de calculadora de engenharia multilinha que exibe simultaneamente a expressão algébrica e o resultado exato com validação de parênteses.',
       },
       {
-        question: 'Quais as vantagens desta calculadora web avançada?',
-        answer: 'Como calculadora web avançada, o SciCalcX previne imprecisões de ponto flutuante IEEE 754 e oferece modos de exibição FIX, SCI e ENG.',
+        question: 'Como esta calculadora trata artefatos visuais de ponto flutuante (como 0.1 + 0.2)?',
+        answer: 'A normalização de ponto flutuante pode apresentar resultados decimais comuns como 0.1 + 0.2 como 0.3 quando o valor calculado está dentro do limite configurado, e a calculadora oferece modos de exibição FIX, SCI e ENG.',
       },
       {
         question: 'O SciCalcX inclui uma calculadora de frações gratuita online?',
@@ -604,7 +604,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Onde o código do meu programa é executado?',
-        answer: 'O código enviado pelo Tutor de Código e Compilador é executado em contêineres sandbox isolados e temporários fornecidos por serviços externos (principal: API Judge0 CE em ce.judge0.com, com fallback automático para a API Wandbox em wandbox.org). Ao contrário das calculadoras matemáticas do SciCalcX que operam 100% localmente no navegador, a execução do Tutor de Código não ocorre dentro do seu navegador.',
+        answer: 'O código enviado pelo Tutor de Código e Compilador é executado em contêineres sandbox isolados e temporários fornecidos por serviços externos (primário: API do Judge0 CE em ce.judge0.com, com contingência automática para a API Wandbox em wandbox.org). Ao contrário das calculadoras matemáticas do SciCalcX, que realizam seus cálculos localmente no seu navegador, a execução do Tutor de Código não ocorre dentro do seu navegador.',
       },
       {
         question: 'Quais linguagens de programação são suportadas?',
@@ -639,10 +639,9 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
         answer: 'Questa calcolatrice scientifica online include un visore da calcolatrice ingegneristica multilinea che mostra la formula completa e il risultato in tempo reale.',
       },
       {
-        question: 'Quali vantaggi offre questa calcolatrice web avanzata?',
-        answer: 'Questa calcolatrice web avanzata riduce gli artefatti di arrotondamento binario IEEE 754 tramite normalizzazione decimale ed include i formati FIX, SCI ed ENG.',
+        question: 'In che modo questa calcolatrice riduce gli artefatti di virgola mobile (es. 0.1 + 0.2)?',
+        answer: 'La normalizzazione in virgola mobile consente di presentare risultati decimali comuni come 0.1 + 0.2 come 0.3 quando il valore calcolato rientra nella soglia configurata, e include i formati FIX, SCI ed ENG.',
       },
-
       {
         question: 'SciCalcX include una calcolatrice di frazioni gratuita online?',
         answer: 'Sì! Il tasto S-D opera come una calcolatrice di frazioni gratuita online per alternare tra decimali e frazioni irriducibili esatte.',
@@ -693,7 +692,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'Dove viene eseguito il codice del mio programma?',
-        answer: 'Il codice inviato tramite il Tutor di Codice e Compilatore viene eseguito all\'interno di container sandbox isolati ed effimeri gestiti da servizi remoti (principale: API Judge0 CE su ce.judge0.com, con fallback automatico all\'API Wandbox su wandbox.org). A differenza delle calcolatrici matematiche di SciCalcX che elaborano al 100% in locale nel browser, l\'esecuzione del Tutor di Codice non avviene all\'interno del browser.',
+        answer: 'Il codice inviato tramite il Tutor di Codice e Compilatore viene eseguito all\'interno di container sandbox isolati ed effimeri gestiti da servizi remoti (principale: API Judge0 CE su ce.judge0.com, con fallback automatico all\'API Wandbox su wandbox.org). A differenza delle calcolatrici matematiche di SciCalcX che eseguono i calcoli localmente nel browser, l\'esecuzione del Tutor di Codice non avviene all\'interno del browser.',
       },
       {
         question: 'Quali linguaggi di programmazione sono supportati?',
@@ -777,7 +776,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: 'プログラムコードはどこで実行されますか？',
-        answer: 'Code Tutorおよびオンラインコンパイラで送信されたコードは、外部の実行サービスが提供する隔離された一時的なコンテナサンドボックス内で実行されます（プライマリ：ce.judge0.comのJudge0 CE API、自動フォールバック：wandbox.orgのWandbox API）。ブラウザ内で100%ローカルに計算されるSciCalcXの数学電卓とは異なり、Code Tutorのコード実行はお使いのブラウザ内部では行われません。',
+        answer: 'Code Tutorおよびオンラインコンパイラで送信されたコードは、外部の実行サービスが提供する隔離された一時的なコンテナサンドボックス内で実行されます（プライマリ：ce.judge0.comのJudge0 CE API、自動フォールバック：wandbox.orgのWandbox API）。ブラウザ内でローカルに計算を実行するSciCalcXの数学ツールとは異なり、Code Tutorのコード実行はお使いのブラウザ内部では行われません。',
       },
       {
         question: 'サポートされているプログラミング言語は何ですか？',
@@ -808,8 +807,8 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
   ko: {
     scientific: [
       {
-        question: '온라인 공학용 계산기 및 고급 웹 계산기는 어떻게 사용하나요?',
-        answer: '본 온라인 공학용 계산기는 상단 슬라이더로 도(DEG)와 라디안(RAD)을 즉시 전환할 수 있으며, 고급 웹 계산기로서 IEEE 754 부동 소수점 오차를 정규화합니다.',
+        question: '공학용 계산기는 어떻게 사용하나요?',
+        answer: '본 온라인 공학용 계산기는 상단 슬라이더로 도(DEG)와 라디안(RAD)을 편리하게 전환할 수 있으며, 엡실론 정규화를 적용하여 표시되는 부동 소수점 아티팩트를 줄입니다.',
       },
       {
         question: '멀티라인 공학 계산기 및 수학 수식 계산기의 연산 원리는 무엇인가요?',
@@ -861,7 +860,7 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     compiler: [
       {
         question: '프로그램 코드는 어디에서 실행되나요?',
-        answer: 'Code Tutor 및 온라인 컴파일러를 통해 제출된 코드는 외부 실행 서비스가 제공하는 격리된 임시 컨테이너 샌드박스에서 실행됩니다(기본: ce.judge0.com의 Judge0 CE API, 자동 폴백: wandbox.org의 Wandbox API). 브라우저에서 100% 로컬로 연산되는 SciCalcX의 수학 계산기와 달리, Code Tutor의 코드 실행은 브라우저 내부에서 이루어지지 않습니다.',
+        answer: 'Code Tutor 및 온라인 컴파일러를 통해 제출된 코드는 외부 실행 서비스가 제공하는 격리된 임시 컨테이너 샌드박스에서 실행됩니다(기본: ce.judge0.com의 Judge0 CE API, 자동 폴백: wandbox.org의 Wandbox API). 브라우저 내부에서 로컬로 연산을 수행하는 SciCalcX의 수학 계산기와 달리, Code Tutor의 코드 실행은 브라우저 내부에서 이루어지지 않습니다.',
       },
       {
         question: '지원되는 프로그래밍 언어는 무엇인가요?',

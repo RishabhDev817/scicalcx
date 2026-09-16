@@ -38,7 +38,7 @@ const aboutExtras: Record<SupportedLanguage, {
 }> = {
   en: {
     teamRishabhRole: "Lead Developer",
-    teamRishabhBio: "Computer science student specializing in systems programming, compiler toolchains, and numerical computing. Lead architect of SciCalcX's token tokenizer, IEEE-754 precision sanitizer, and interactive bitboard simulator.",
+    teamRishabhBio: "Computer science student specializing in systems programming, compiler toolchains, and numerical computing. Lead architect of SciCalcX's token tokenizer, IEEE-754 precision normalization module, and interactive bitboard simulator.",
     githubProfile: "GitHub Profile →",
     teamRiyaRole: "Algorithm Research & UX",
     teamRiyaBio: "Developer focused on human-computer interaction, algorithm visualizers, and pedagogical content design. Curates our data structures curricula, descriptive statistics models, and educational tutorials.",
@@ -62,7 +62,7 @@ const aboutExtras: Record<SupportedLanguage, {
   },
   es: {
     teamRishabhRole: "Desarrollador Principal",
-    teamRishabhBio: "Estudiante de ciencias de la computación especializado en programación de sistemas, cadenas de herramientas de compiladores y cálculo numérico. Arquitecto principal del tokenizador de SciCalcX, el saneador de precisión IEEE-754 y el simulador de bitboards.",
+    teamRishabhBio: "Estudiante de ciencias de la computación especializado en programación de sistemas, cadenas de herramientas de compiladores y cálculo numérico. Arquitecto principal del tokenizador de SciCalcX, el módulo de normalización de precisión IEEE-754 y el simulador de bitboards.",
     githubProfile: "Perfil de GitHub →",
     teamRiyaRole: "Investigación de Algoritmos y UX",
     teamRiyaBio: "Desarrolladora enfocada en interacción humano-computadora, visualizadores de algoritmos y diseño de contenido pedagógico. Supervisa los planes de estudio de estructuras de datos y modelos estadísticos.",
@@ -86,7 +86,7 @@ const aboutExtras: Record<SupportedLanguage, {
   },
   fr: {
     teamRishabhRole: "Développeur Principal",
-    teamRishabhBio: "Étudiant en informatique spécialisé dans la programmation système, les chaînes de compilation et le calcul numérique. Concepteur principal du tokenizer de SciCalcX, du correcteur de précision IEEE-754 et du simulateur de bitboards.",
+    teamRishabhBio: "Étudiant en informatique spécialisé dans la programmation système, les chaînes de compilation et le calcul numérique. Concepteur principal du tokenizer de SciCalcX, du module de normalisation de précision IEEE-754 et du simulateur de bitboards.",
     githubProfile: "Profil GitHub →",
     teamRiyaRole: "Recherche Algorithmique & UX",
     teamRiyaBio: "Développeuse spécialisée dans l'interaction homme-machine, les visualisateurs d'algorithmes et la pédagogie numérique. Supervise les modules d'apprentissage des structures de données et de statistiques.",
@@ -110,7 +110,7 @@ const aboutExtras: Record<SupportedLanguage, {
   },
   de: {
     teamRishabhRole: "Chefentwickler",
-    teamRishabhBio: "Informatikstudent mit Schwerpunkt auf Systemprogrammierung, Compiler-Toolchains und numerischer Datenverarbeitung. Hauptarchitekt des Tokenizers, der IEEE-754-Präzisionsbereinigung und des interaktiven Bitboard-Simulators von SciCalcX.",
+    teamRishabhBio: "Informatikstudent mit Schwerpunkt auf Systemprogrammierung, Compiler-Toolchains und numerischer Datenverarbeitung. Hauptarchitekt des Tokenizers, der IEEE-754-Präzisionsnormalisierung und des interaktiven Bitboard-Simulators von SciCalcX.",
     githubProfile: "GitHub-Profil →",
     teamRiyaRole: "Algorithmenforschung & UX",
     teamRiyaBio: "Entwicklerin mit Fokus auf Mensch-Computer-Interaktion, Algorithmen-Visualisierung und didaktische Inhaltsgestaltung. Betreut unsere Lehrinhalte für Datenstrukturen und deskriptive Statistik.",
@@ -134,7 +134,7 @@ const aboutExtras: Record<SupportedLanguage, {
   },
   ja: {
     teamRishabhRole: "リード開発者",
-    teamRishabhBio: "システムプログラミング、コンパイラツールチェーン、数値計算を専門とするコンピュータサイエンス専攻。SciCalcXのトークナイザー、IEEE-754精度サニタイザー、および対話型ビットボードシミュレータの設計を担当。",
+    teamRishabhBio: "システムプログラミング、コンパイラツールチェーン、数値計算を専門とするコンピュータサイエンス専攻。SciCalcXのトークナイザー、IEEE-754精度正規化モジュール、および対話型ビットボードシミュレータの設計を担当。",
     githubProfile: "GitHub プロフィール →",
     teamRiyaRole: "アルゴリズム研究・UX",
     teamRiyaBio: "ヒューマンコンピュータインタラクション、アルゴリズム可視化、教育コンテンツの設計に従事。データ構造カリキュラム、記述統計モデル、学習チュートリアルの監修を担当。",
@@ -145,7 +145,7 @@ const aboutExtras: Record<SupportedLanguage, {
     cardScientificDesc: "高精度な科学計算、括弧付き複数行数式の評価、複雑な行列演算をブラウザ内でローカルに実行します。",
     cardCalculusTag: "クライアントサイド解析学",
     cardCalculusTitle: "微積分 & 動的関数プロッター",
-    cardCalculusDesc: "HTML5 Canvasを活用し、定積分、数値微分、座標系の可視化をレイテンシなしで実行します。",
+    cardCalculusDesc: "HTML5 Canvasを活用し、定積分、数値微分、座標系の可視化をブラウザ上で高速に実行します。",
     cardBitwiseTag: "クライアントサイド・ビット演算シミュレーション",
     cardBitwiseTitle: "対話型プログラマー・ビットボード",
     cardBitwiseDesc: "32ビットのビジュアルグリッド上でバイナリビットを対話的に切り替え、ビット単位演算を完全にJavaScriptで実行します。",
@@ -158,7 +158,7 @@ const aboutExtras: Record<SupportedLanguage, {
   },
   nl: {
     teamRishabhRole: "Hoofdontwikkelaar",
-    teamRishabhBio: "Student informatica gespecialiseerd in systeemprogrammering, compiler-toolchains en numerieke berekeningen. Hoofdarchitect van SciCalcX's rekenmachinetokenizer, IEEE-754 precisiesanitizer en interactieve bitboard-simulator.",
+    teamRishabhBio: "Student informatica gespecialiseerd in systeemprogrammering, compiler-toolchains en numerieke berekeningen. Hoofdarchitect van SciCalcX's rekenmachinetokenizer, IEEE-754 precisienormalisatiemodule en interactieve bitboard-simulator.",
     githubProfile: "GitHub-profiel →",
     teamRiyaRole: "Algoritme-onderzoek & UX",
     teamRiyaBio: "Ontwikkelaar gericht op mens-computerinteractie, algoritme-visualisaties en didactisch contentontwerp. Beheert onze curricula voor datastructuren, beschrijvende statistiek en tutorials.",
@@ -182,7 +182,7 @@ const aboutExtras: Record<SupportedLanguage, {
   },
   pt: {
     teamRishabhRole: "Desenvolvedor Principal",
-    teamRishabhBio: "Estudante de ciência da computação especializado em programação de sistemas, toolchains de compiladores e computação numérica. Arquiteto principal do tokenizer do SciCalcX, higienizador de precisão IEEE-754 e simulador de bitboards interativo.",
+    teamRishabhBio: "Estudante de ciência da computação especializado em programação de sistemas, toolchains de compiladores e computação numérica. Arquiteto principal do tokenizer do SciCalcX, módulo de normalização de precisão IEEE-754 e simulador de bitboards interativo.",
     githubProfile: "Perfil no GitHub →",
     teamRiyaRole: "Pesquisa de Algoritmos e UX",
     teamRiyaBio: "Desenvolvedora focada em interação humano-computador, visualizadores de algoritmos e design instrucional. Coordena nossos currículos de estruturas de dados, modelos de estatística descritiva e tutoriais.",
@@ -206,7 +206,7 @@ const aboutExtras: Record<SupportedLanguage, {
   },
   ko: {
     teamRishabhRole: "수석 개발자",
-    teamRishabhBio: "시스템 프로그래밍, 컴파일러 툴체인 및 수치 계산을 전공하는 컴퓨터 공학도. SciCalcX의 토크나이저, IEEE-754 정밀도 보정기 및 대화형 비트보드 시뮬레이터의 설계를 주도했습니다.",
+    teamRishabhBio: "시스템 프로그래밍, 컴파일러 툴체인 및 수치 계산을 전공하는 컴퓨터 공학도. SciCalcX의 토크나이저, IEEE-754 정밀도 정규화 모듈 및 대화형 비트보드 시뮬레이터의 설계를 주도했습니다.",
     githubProfile: "GitHub 프로필 →",
     teamRiyaRole: "알고리즘 연구 및 UX",
     teamRiyaBio: "인간-컴퓨터 상호작용(HCI), 알고리즘 시각화 및 교육용 콘텐츠 설계를 담당하는 개발자. 자료구조 커리큘럼, 기술 통계 모델 및 튜토리얼을 큐레이션합니다.",
@@ -214,10 +214,10 @@ const aboutExtras: Record<SupportedLanguage, {
     ecosystemTitle: "핵심 컴퓨팅 생태계",
     cardScientificTag: "클라이언트 사이드 수학 엔진",
     cardScientificTitle: "고급 공학용 계산기 & 행렬 대수 스위트",
-    cardScientificDesc: "정밀 과학 계산, 괄호가 포함된 복합 수식 평가 및 복잡한 행렬 연산을 브라우저에서 로컬로 즉시 수행합니다.",
+    cardScientificDesc: "정밀 과학 계산, 괄호가 포함된 복합 수식 평가 및 복잡한 행렬 연산을 브라우저에서 로컬로 수행합니다.",
     cardCalculusTag: "클라이언트 사이드 해석학",
     cardCalculusTitle: "미적분학 & 동적 함수 그래프 플로터",
-    cardCalculusDesc: "HTML5 Canvas를 활용하여 정적분, 수치 미분 근사치 및 함수 그래프를 지연 없이 시각화합니다.",
+    cardCalculusDesc: "HTML5 Canvas를 활용하여 정적분, 수치 미분 근사치 및 함수 그래프를 브라우저에서 직접 시각화합니다.",
     cardBitwiseTag: "클라이언트 사이드 비트 연산 시뮬레이션",
     cardBitwiseTitle: "대화형 프로그래머 비트보드",
     cardBitwiseDesc: "32비트 비주얼 그리드에서 2진수 비트를 직접 토글하며 클라이언트 JavaScript로 비트 단위 연산을 시뮬레이션합니다.",
@@ -230,7 +230,7 @@ const aboutExtras: Record<SupportedLanguage, {
   },
   it: {
     teamRishabhRole: "Sviluppatore Principale",
-    teamRishabhBio: "Studente di informatica specializzato in programmazione di sistema, toolchain di compilatori e calcolo numerico. Architetto principale del tokenizer di SciCalcX, del correttore di precisione IEEE-754 e del simulatore interattivo di bitboard.",
+    teamRishabhBio: "Studente di informatica specializzato in programmazione di sistema, toolchain di compilatori e calcolo numerico. Architetto principale del tokenizer di SciCalcX, del modulo di normalizzazione di precisione IEEE-754 e del simulatore interattivo di bitboard.",
     githubProfile: "Profilo GitHub →",
     teamRiyaRole: "Ricerca Algoritmica e UX",
     teamRiyaBio: "Sviluppatrice incentrata sull'interazione uomo-macchina, visualizzatori di algoritmi e design didattico. Cura i percorsi su strutture dati, statistica descrittiva ed esercitazioni.",

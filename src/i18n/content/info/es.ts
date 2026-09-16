@@ -14,9 +14,9 @@ export const esInfo: InfoPageContent = {
     standardsTitle: 'Estándares de Precisión y Rigor Editorial',
     standardsIntro: 'La exactitud es primordial en el cómputo académico y científico. Nos regimos por rigurosos estándares de validación:',
     standards: [
-      { label: 'Normalización de Precisión', text: 'Los artefactos comunes de coma flotante IEEE-754 se reducen mediante algoritmos de normalización decimal para ofrecer representaciones legibles de hasta 12 decimales.' },
+      { label: 'Normalización de Precisión', text: 'SciCalcX aplica normalización basada en épsilon para reducir los artefactos comunes de representación en coma flotante en los resultados mostrados de hasta 12 decimales.' },
       { label: 'Verificación Estandarizada', text: 'Las transformaciones matriciales y la cuadratura numérica de Simpson se contrastan continuamente con soluciones simbólicas de referencia y casos de prueba algebraicos.' },
-      { label: 'Modelo de Ejecución Diferenciado', text: 'SciCalcX mantiene un estricto límite arquitectónico entre tipos de cómputo: todas las calculadoras matemáticas (Científica, Matrices, Cálculo, Gráficas, Estadística, Programador) se evalúan al 100% de forma local en tu navegador sin peticiones de red. El Tutor de Código ejecuta el código fuente enviándolo mediante HTTPS cifrado directamente a servicios de sandbox en contenedores aislados (primario: Judge0 CE en ce.judge0.com, respaldo: API de Wandbox en wandbox.org) sin almacenamiento permanente en el servidor.' },
+      { label: 'Separación Arquitectónica', text: 'SciCalcX mantiene una estricta separación arquitectónica: las herramientas matemáticas realizan sus cálculos localmente en el navegador donde es compatible, permitiendo que las fórmulas y el procesamiento permanezcan en el dispositivo del usuario. El Tutor de Código es independiente de los motores matemáticos: al pulsar «Ejecutar Código», el programa se transmite de forma segura mediante HTTPS a un servicio de ejecución externo aislado (primario: Judge0 CE en ce.judge0.com, respaldo: Wandbox en wandbox.org) sin almacenamiento permanente en servidores.' },
     ],
     architectureBadge: 'Arquitectura Web',
     architectureTitle: 'Arquitectura Web de Alto Rendimiento',
@@ -119,7 +119,7 @@ export const esInfo: InfoPageContent = {
       { 
         title: '2. Privacidad Matemática en el Lado del Cliente', 
         paragraphs: [
-          'Las herramientas matemáticas principales de SciCalcX—incluyendo la Calculadora Científica, la Calculadora de Matrices, la Calculadora de Cálculo, el Graficador, la Calculadora Estadística y el Registro de Programador—operan 100% en el lado del cliente dentro de tu navegador web.',
+          'Las herramientas matemáticas principales de SciCalcX—incluyendo la Calculadora Científica, la Calculadora de Matrices, la Calculadora de Cálculo, el Graficador, la Calculadora Estadística y el Registro de Programador—realizan sus cálculos localmente en el navegador web donde es compatible.',
           'Al ingresar fórmulas como "sin(45)", definir matrices 3x3 o calcular la desviación estándar de un conjunto de datos, la evaluación matemática la ejecuta localmente el motor JavaScript de tu navegador. Tus expresiones matemáticas, variables y valores numéricos nunca se envían a nuestros servidores, nunca se guardan en bases de datos remotas y jamás son inspeccionados por terceros.'
         ]
       },
