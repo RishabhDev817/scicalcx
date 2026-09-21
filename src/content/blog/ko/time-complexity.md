@@ -2,7 +2,14 @@
 title: "시간 복잡도 완벽 이해: 초보자를 위한 빅오(Big O) 표기법"
 description: "알고리즘 효율성을 판단하는 빅오 표기법의 핵심 개념과 O(1), O(N), O(N^2)의 특징을 C++ 코드 예제와 함께 정리합니다."
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+author: "SciCalcX"
+updatedDate: "2026-09-21"
+category: "컴퓨터 과학 및 알고리즘"
+readTime: "11분 분량"
+calculatorUrl: "/graphing"
+calculatorLabel: "SciCalcX 2D 그래프 계산기"
+related: ["calculator-cpp", "pointers-cpp"]
+tags: ["시간 복잡도", "Big O", "알고리즘", "컴퓨터 과학", "프로그래밍"]
 ---
 
 컴퓨터 과학과 프로그래밍에서는 동일한 문제를 해결하기 위해 다양한 알고리즘을 설계할 수 있습니다. 그렇다면 여러 가지 해결책 중에서 어떤 구현이 가장 효율적인지 어떻게 객관적으로 판단할 수 있을까요?
@@ -141,3 +148,11 @@ int main() {
 - **샌드박스에서 즉시 실행:** **[SciCalcX C/C++ 코드 튜터](/ko/compiler/)**를 브라우저에서 열어 다양한 벡터 크기($N=100, 200, 400$)로 위 벤치마크를 직접 실행해 보세요.
 - **성장 곡선 인터랙티브 플롯:** **[SciCalcX 2D 그래프 계산기](/ko/graphing/)**를 사용해 $y = x$, $y = x \log_2(x)$, $y = x^2$ 함수를 데카르트 좌표계에 함께 그려봄으로써 2차 곡선의 가파른 발산을 눈으로 확인하세요.
 - **실전 최적화 원칙:** 고정 상수 계수는 무시하고($O(2N) \rightarrow O(N)$), 최고차항에만 집중하여($O(N^2 + N) \rightarrow O(N^2)$) 시스템의 확장성을 확보해야 합니다.
+
+---
+
+## 참고 문헌 및 추가 자료
+
+* **Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (CLRS)** — *Introduction to Algorithms* (한빛미디어 / MIT Press): 점근 표기법, 시간 복잡도 증명 및 마스터 정리에 관한 학술 표준 교재.
+* **Donald E. Knuth (1976)** — [Big Omicron and Big Omega and Big Theta](https://dl.acm.org/doi/10.1145/1008328.1008329): 컴퓨터 과학 분야에서 현대 점근 표기법 체계를 확립한 역사적 논문.
+* **NIST Dictionary of Algorithms and Data Structures (DADS)** — [Big-O Notation](https://xlinux.nist.gov/dads/HTML/bigOnotation.html): 알고리즘 복잡도 및 점근적 한계에 대한 공식 정의.

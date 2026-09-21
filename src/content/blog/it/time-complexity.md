@@ -2,7 +2,14 @@
 title: "Complessità Temporale Spiegata: Notazione O-Grande per Principianti"
 description: "Comprendi l'efficienza algoritmica. Impara a calcolare la complessità temporale Big O con esempi pratici in C++."
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+author: "SciCalcX"
+updatedDate: "2026-09-21"
+category: "Informatica & Algoritmi"
+readTime: "11 minuti di lettura"
+calculatorUrl: "/graphing"
+calculatorLabel: "Calcolatrice Grafica 2D SciCalcX"
+related: ["calculator-cpp", "pointers-cpp"]
+tags: ["Complessità Temporale", "Big O", "Algoritmi", "Informatica", "Programmazione"]
 ---
 
 Nell'informatica esistono quasi sempre molteplici modalità per risolvere uno specifico problema di programmazione. Ma come stabiliamo quale algoritmo sia effettivamente il più efficiente?
@@ -141,3 +148,11 @@ La teoria asintotica offre il massimo valore pratico quando viene testata e conf
 - **Sperimenta nel Sandbox:** Apri il **[Tutor di Codice C/C++ SciCalcX](/it/compiler/)** per eseguire il benchmark con differenti valori del vettore ($N=100, 200, 400$) e osservare la risposta dei tempi.
 - **Traccia le Funzioni su Grafico:** Utilizza la **[Calcolatrice Grafica 2D SciCalcX](/it/graphing/)** per visualizzare $y = x$, $y = x \log_2(x)$ e $y = x^2$ su piano cartesiano e verificare visivamente la rapida divergenza della complessità quadratica.
 - **Regole d'Oro di Ottimizzazione:** Ignora i coefficienti costanti ($O(2N) \rightarrow O(N)$) e concentrati sempre sul termine di grado massimo ($O(N^2 + N) \rightarrow O(N^2)$).
+
+---
+
+## Riferimenti e Ulteriori Letture
+
+* **Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (CLRS)** — *Introduzione agli Algoritmi e Strutture Dati* (McGraw-Hill / MIT Press): Testo accademico per lo studio delle delimitazioni asintotiche e del Teorema Fondamentale delle Ricorrenze.
+* **Donald E. Knuth (1976)** — [Big Omicron and Big Omega and Big Theta](https://dl.acm.org/doi/10.1145/1008328.1008329): Pubblicazione storica che ha formalizzato l'uso della notazione asintotica in informatica.
+* **NIST Dictionary of Algorithms and Data Structures (DADS)** — [Notazione Big-O](https://xlinux.nist.gov/dads/HTML/bigOnotation.html): Definizioni formali e proprietà dei limiti di crescita computazionale.

@@ -1,128 +1,158 @@
 ---
-title: "Créer une Calculatrice Scientifique de Base en C++"
-description: "Apprenez à concevoir un programme de calculatrice scientifique en C++ pour effectuer des opérations arithmétiques, puissances et calculs trigonométriques."
+title: "Programmer une Calculatrice Scientifique en C++ : Précision IEEE 754 et Algorithmes d'Analyse"
+description: "Découvrez comment concevoir une calculatrice scientifique en C++. Maîtrisez la validation mathématique, la précision flottante IEEE 754 et l'algorithme Shunting-yard."
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+updatedDate: "2026-09-21"
+author: "SciCalcX"
+category: "Informatique & Algorithmes"
+readTime: "10 min de lecture"
+calculatorUrl: "/"
+calculatorLabel: "Calculatrice Scientifique Multi-lignes SciCalcX"
+related: ["pointers-cpp", "time-complexity"]
+tags: ["C++", "Calculatrice Scientifique", "Algorithmes", "Mathématiques", "IEEE 754", "Programmation"]
 ---
 
-Les calculatrices scientifiques sont des outils indispensables dans les disciplines scientifiques et techniques. En arrière-plan, elles interprètent des opérandes et des symboles algébriques selon les règles mathématiques formelles.
+Les calculatrices scientifiques sont des outils indispensables dans les disciplines d'ingénierie et de recherche scientifique. Alors que les moteurs modernes tels que **[SciCalcX](/)** évaluent instantanément des expressions algébriques parenthésées directement dans le navigateur, développer soi-même une calculatrice en C++ permet d'appréhender le fonctionnement matériel des nombres à virgule flottante, la gestion rigoureuse des erreurs de domaine et les algorithmes d'analyse syntaxique (parsing).
 
-Dans ce tutoriel, nous allons concevoir une calculatrice interactive en console C++, gérant les quatre opérations élémentaires, les puissances, les racines carrées et la prévention des divisions par zéro.
-
----
-
-## 1. Structuration de la Logique de Calcul
-
-Pour construire un programme fiable, trois aspects doivent être pris en compte :
-1. **Lecture et validation des entrées :** Gestion des nombres à virgule flottante (`double`) et sélection de menu.
-2. **Contrôle de flux :** Traitement de l'opération choisie via une structure `switch`.
-3. **Gestion des erreurs mathématiques :** Prévention de la division par zéro et de l'extraction de racines carrées négatives dans l'ensemble des réels.
-
----
-
-## 2. Utilisation de la Bibliothèque Standard `<cmath>`
-
-Pour accéder aux fonctions scientifiques, nous incluons la bibliothèque standard `<cmath>` :
-
-* `pow(base, exposant)` : Calcule la puissance $x^y$.
-* `sqrt(valeur)` : Calcule la racine carrée.
-* `sin(angle)` / `cos(angle)` : Évalue les rapports trigonométriques (les angles doivent être en **radians**).
+Dans ce guide complet, vous découvrirez comment le standard **IEEE 754** représente les nombres décimaux en binaire, comment intercepter les indéterminations mathématiques (division par zéro, racines négatives), comment convertir les degrés en radians et comment l'algorithme Shunting-yard d'Edsger Dijkstra évalue les priorités opératoires (**PEMDAS**).
 
 ---
 
-## 3. Code Source Complet en C++
+## 1. Gestion des Erreurs et Domaines Mathématiques
 
-Voici le programme complet prêt à être compilé :
+Lors de calculs numériques en C++, des protections explicites doivent être mises en place pour éviter des interruptions de processus :
+
+1. **Division par Zéro :** Avec les entiers, la division par zéro entraîne l'arrêt brutal du programme via un signal processeur (`SIGFPE`). Avec les flottants (`double`), elle produit l'infini (`inf`) ou `NaN` ("Not a Number"). Un programme robuste doit vérifier que le dénominateur n'est pas nul avant l'opération.
+2. **Racines Carrées de Nombres Négatifs :** `std::sqrt()` de la bibliothèque `<cmath>` génère `NaN` si son paramètre est négatif dans les réels. Le code doit vérifier que le radicande est $\ge 0$.
+3. **Degrés et Radians :** Les fonctions trigonométriques du C++ (`std::sin`, `std::cos`, `std::tan`) prennent exclusivement des angles exprimés en **radians** :
+   $$\text{Radians} = \text{Degrés} \times \frac{\pi}{180}$$
+
+---
+
+## 2. Précision Flottante et Standard IEEE 754
+
+En arithmétique binaire, les ordinateurs ne peuvent pas représenter exactement certaines fractions décimales courantes comme $0.1$ ou $0.2$, car elles forment des répétitions binaires infinies :
+
+```cpp
+double a = 0.1;
+double b = 0.2;
+std::cout << (a + b == 0.3); // Affiche 0 (Faux) !
+// a + b équivaut en réalité à 0.3000000000000000444...
+```
+
+Pour comparer deux flottants de façon fiable, utilisez toujours un seuil d'écart toléré (epsilon $\epsilon$) :
+
+```cpp
+#include <cmath>
+
+bool sontEgaux(double x, double y, double epsilon = 1e-9) {
+    return std::fabs(x - y) < epsilon;
+}
+```
+
+---
+
+## 3. Analyse Syntaxique : L'Algorithme Shunting-Yard
+
+Pour évaluer des formules comportant des parenthèses et des priorités comme $3 + 4 \times 2 / (1 - 5)^2$, les calculateurs recourent à **l'algorithme Shunting-yard** :
+
+1. **Tokenisation :** Scinde la chaîne de caractères en nombres, opérateurs et parenthèses.
+2. **Pile d'Opérateurs :** Ordonne les opérateurs selon leur précédence et associativité.
+3. **Notation Polonaise Inverse (NPI / RPN) :** Produit une formule postfixée sans ambiguïté de parenthèses, évaluable en temps linéaire $O(N)$ à l'aide d'une simple pile numérique.
+
+---
+
+## 4. Code Source Complet en C++
 
 ```cpp
 #include <iostream>
 #include <cmath>
+#include <limits>
 
-void showMenu() {
-    std::cout << "=== Calculatrice SciCalcX C++ ===" << std::endl;
-    std::cout << "1. Addition (+)" << std::endl;
-    std::cout << "2. Soustraction (-)" << std::endl;
-    std::cout << "3. Multiplication (*)" << std::endl;
-    std::cout << "4. Division (/)" << std::endl;
-    std::cout << "5. Puissance (x^y)" << std::endl;
-    std::cout << "6. Racine Carrée (√)" << std::endl;
-    std::cout << "7. Quitter" << std::endl;
-    std::cout << "Sélectionnez une opération (1-7) : ";
+const double PI = 3.14159265358979323846;
+
+double degVersRad(double deg) {
+    return deg * (PI / 180.0);
+}
+
+void afficherMenu() {
+    std::cout << "\n=== Calculatrice Scientifique SciCalcX ===\n";
+    std::cout << "1. Addition (+)\n";
+    std::cout << "2. Soustraction (-)\n";
+    std::cout << "3. Multiplication (*)\n";
+    std::cout << "4. Division (/)\n";
+    std::cout << "5. Puissance (x^y)\n";
+    std::cout << "6. Racine Carrée (sqrt)\n";
+    std::cout << "7. Sinus (degrés)\n";
+    std::cout << "8. Cosinus (degrés)\n";
+    std::cout << "9. Quitter\n";
+    std::cout << "Votre choix (1-9) : ";
 }
 
 int main() {
-    int choice;
-    double num1, num2, result;
+    int choix;
+    double x, y, res;
 
     while (true) {
-        showMenu();
-        std::cin >> choice;
-
-        if (choice == 7) {
-            std::cout << "Fermeture de la calculatrice. À bientôt !" << std::endl;
-            break;
-        }
-
-        // Opération à un seul opérande
-        if (choice == 6) {
-            std::cout << "Entrez le nombre : ";
-            std::cin >> num1;
-            if (num1 < 0) {
-                std::cout << "Erreur : La racine carrée d'un nombre négatif n'est pas définie dans les réels." << std::endl << std::endl;
-            } else {
-                result = std::sqrt(num1);
-                std::cout << "Résultat : " << result << std::endl << std::endl;
-            }
+        afficherMenu();
+        if (!(std::cin >> choix)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
         }
 
-        // Opérations à deux opérandes
-        if (choice >= 1 && choice <= 5) {
-            std::cout << "Entrez le premier nombre : ";
-            std::cin >> num1;
-            std::cout << "Entrez le deuxième nombre : ";
-            std::cin >> num2;
+        if (choix == 9) break;
 
-            switch (choice) {
-                case 1:
-                    result = num1 + num2;
-                    std::cout << "Résultat : " << num1 << " + " << num2 << " = " << result << std::endl;
-                    break;
-                case 2:
-                    result = num1 - num2;
-                    std::cout << "Résultat : " << num1 << " - " << num2 << " = " << result << std::endl;
-                    break;
-                case 3:
-                    result = num1 * num2;
-                    std::cout << "Résultat : " << num1 << " * " << num2 << " = " << result << std::endl;
-                    break;
-                case 4:
-                    if (num2 == 0) {
-                        std::cout << "Erreur : Division par zéro impossible." << std::endl;
-                    } else {
-                        result = num1 / num2;
-                        std::cout << "Résultat : " << num1 << " / " << num2 << " = " << result << std::endl;
-                    }
-                    break;
-                case 5:
-                    result = std::pow(num1, num2);
-                    std::cout << "Résultat : " << num1 << "^" << num2 << " = " << result << std::endl;
-                    break;
-                default:
-                    std::cout << "Opération non reconnue." << std::endl;
-            }
-            std::cout << std::endl;
-        } else {
-            std::cout << "Choix de menu invalide. Réessayez." << std::endl << std::endl;
+        switch (choix) {
+            case 1:
+                std::cout << "Entrez deux nombres : ";
+                std::cin >> x >> y;
+                std::cout << "Résultat : " << x + y << "\n";
+                break;
+            case 4:
+                std::cout << "Dividende et diviseur : ";
+                std::cin >> x >> y;
+                if (std::fabs(y) < 1e-12) {
+                    std::cout << "Erreur : Division par zéro indéfinie.\n";
+                } else {
+                    std::cout << "Résultat : " << x / y << "\n";
+                }
+                break;
+            case 6:
+                std::cout << "Nombre pour la racine : ";
+                std::cin >> x;
+                if (x < 0) {
+                    std::cout << "Erreur : Racine réelle d'un nombre négatif impossible.\n";
+                } else {
+                    std::cout << "Résultat : " << std::sqrt(x) << "\n";
+                }
+                break;
+            case 7:
+                std::cout << "Angle en degrés : ";
+                std::cin >> x;
+                res = std::sin(degVersRad(x));
+                if (std::fabs(res) < 1e-12) res = 0.0;
+                std::cout << "Résultat : " << res << "\n";
+                break;
+            default:
+                std::cout << "Choix non reconnu.\n";
+                break;
         }
     }
-
     return 0;
 }
 ```
 
 ---
 
-## Testez ce code en direct !
+## 5. Exécutez Votre Code en Ligne
 
-**[Ouvrez le Compilateur en Ligne SciCalcX](/fr/compiler/)** et copiez ce code dans la console interactive pour l'exécuter directement dans notre environnement sandbox.
+Vous souhaitez exécuter ce programme immédiatement sans installation locale ? Ouvrez le **[Tuteur et Bac à Sable C/C++ de SciCalcX](/compiler/)** pour compiler et tester vos algorithmes directement dans votre navigateur.
+
+---
+
+## Références et Lectures Complémentaires
+
+* **David Goldberg (ACM Computing Surveys, 1991)** — [What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html) : Traité fondamental sur la norme IEEE 754, l'arrondi et la précision binaire.
+* **cppreference** — [Fonctions mathématiques C++ (`<cmath>`)](https://fr.cppreference.com/w/cpp/header/cmath) : Documentation technique officielle des fonctions trigonométriques et de la gestion des erreurs de domaine.
+* **Edsger W. Dijkstra (1961)** — [An Algol 60 Translator for the X1](https://www.cs.utexas.edu/~EWD/transcriptions/EWD00xx/EWD35.html) : Publication originale introduisant l'algorithme Shunting-yard pour l'évaluation d'expressions algébriques.

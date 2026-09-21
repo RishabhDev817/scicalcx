@@ -21,37 +21,37 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   en: {
     scientific: {
       badge: 'Technical Reference',
-      title: 'Advanced Scientific Computation & Multi-line Precision Guide',
+      title: 'Scientific Computation & Multi-line Evaluation Guide',
       sections: [
         {
-          title: 'Floating-Point Precision and Decimal Sanitization',
+          title: 'Floating-Point Precision and Decimal Normalization',
           paragraphs: [
-            'Scientific calculation requires rigorous numerical precision. Digital microprocessors execute mathematical operations using double-precision binary floats under the IEEE 754 standard. Because certain base-10 fractions (such as 0.1 or 0.2) cannot be represented finitely in binary, standard engines inevitably introduce minute round-off artifacts (such as 0.30000000000000004).',
-            'SciCalcX implements custom epsilon-threshold sanitization and decimal normalization algorithms. Every intermediate accumulator operation is verified against high-precision bounds, delivering an advanced web calculator experience with an exact free online fraction calculator mode.',
+            'Digital microprocessors execute arithmetic operations using double-precision binary floats under the IEEE 754 standard. Because certain decimal fractions (such as 0.1 or 0.2) have repeating binary expansions, standard computing environments inevitably introduce minute round-off artifacts (such as 0.1 + 0.2 = 0.30000000000000004).',
+            'SciCalcX implements epsilon-threshold sanitization and decimal normalization to keep displayed results clean up to 12 decimal places, alongside a Standard-to-Decimal (S-D) conversion mode that approximates outputs as simplified rational fractions.',
           ],
         },
         {
-          title: 'Operator Precedence and Mathematical Expression Solver',
+          title: 'Operator Precedence and Syntax Validation',
           paragraphs: [
-            'All input expressions follow strict mathematical algebraic hierarchy (PEMDAS/BODMAS): Parentheses, Exponents and Radicals, Multiplication and Division (evaluated left-to-right), followed by Addition and Subtraction.',
-            'Our multi-line engineering calculator engine inspects matching brackets in real-time, providing an interactive mathematical expression solver that halts unbalanced parenthesis before numerical evaluation occurs.',
+            'Input expressions adhere to standard algebraic precedence (PEMDAS/BODMAS): parentheses, exponents and radicals, multiplication and division evaluated left-to-right, followed by addition and subtraction.',
+            'The multi-line viewport tracks open and closing brackets in real time, alerting you to unbalanced parentheses and operator conflicts before numerical evaluation occurs.',
           ],
         },
       ],
-      recommendationTitle: 'Scientific Matrix Computing',
+      recommendationTitle: 'Matrix Algebra',
       recommendationDesc: 'Need linear systems or determinant evaluations? Open our dedicated matrix engine.',
-      recommendationAction: 'Open Scientific Matrix Calculator →',
+      recommendationAction: 'Open Matrix Calculator →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: 'Linear Algebra',
-      title: 'Scientific Matrix Computing & System Solver Guide',
+      title: 'Matrix Algebra & Linear Systems Guide',
       sections: [
         {
           title: 'Determinant Computation via Laplace Cofactor Expansion',
           paragraphs: [
             'The determinant is a scalar value characterizing a square matrix. It indicates whether a linear system of equations has a unique solution. A determinant of zero signifies a singular (non-invertible) matrix.',
-            'For 2x2 and 3x3 matrices, Laplace expansion multiplies each row element by its signed minor determinant, computing the exact scaling factor of the linear transformation.',
+            'For 2x2 and 3x3 matrices, Laplace expansion multiplies each row element by its signed minor determinant, computing the scaling factor of the linear transformation.',
           ],
           formula: 'det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)',
         },
@@ -63,14 +63,14 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           formula: 'A⁻¹ = (1 / det(A)) · adj(A)',
         },
       ],
-      recommendationTitle: 'Web-based Calculus Calculator',
+      recommendationTitle: 'Calculus Suite',
       recommendationDesc: 'Solve continuous derivatives, integrals, and limits alongside discrete algebra.',
-      recommendationAction: 'Open Web-based Calculus Calculator →',
+      recommendationAction: 'Open Calculus Calculator →',
       recommendationHref: '/calculus',
     },
     calculus: {
       badge: 'Analysis & Rates',
-      title: 'Web-based Calculus Solver & Numerical Methods Guide',
+      title: 'Calculus Solver & Numerical Methods Guide',
       sections: [
         {
           title: 'Numerical Differentiation via Symmetric Difference Quotient',
@@ -87,14 +87,14 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           formula: '∫[a,b] f(x)dx ≈ (h/3) [ f(x₀) + 4∑f(x_odd) + 2∑f(x_even) + f(x_n) ]',
         },
       ],
-      recommendationTitle: 'Online Graphing Derivative Calculator',
+      recommendationTitle: '2D Graphing Studio',
       recommendationDesc: 'Inspect slope tangents, local extrema, and curves with dynamic 2D plotting.',
-      recommendationAction: 'Open Online Graphing Derivative Calculator →',
+      recommendationAction: 'Open Graphing Calculator →',
       recommendationHref: '/graphing',
     },
     graphing: {
       badge: 'Analytical Geometry',
-      title: 'Online Graphing Derivative & 2D Curve Studio Handbook',
+      title: '2D Function Grapher & Curve Studio Handbook',
       sections: [
         {
           title: 'Sampling Resolution and Discontinuity Handling',
@@ -103,14 +103,14 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           ],
         },
       ],
-      recommendationTitle: 'Base-N Calculator for Programmers',
+      recommendationTitle: 'Programmer Calculator',
       recommendationDesc: 'Working with binary data, memory addresses, or bitwise logic? Switch to Base-N.',
-      recommendationAction: 'Open Base-N Calculator for Programmers →',
+      recommendationAction: 'Open Programmer Calculator →',
       recommendationHref: '/programming',
     },
     programming: {
       badge: 'Binary Systems',
-      title: 'Base-N Calculator for Programmers & Bitwise Logic Handbook',
+      title: 'Programmer Calculator & Bitwise Logic Handbook',
       sections: [
         {
           title: 'Two\'s Complement and Signed Integer Representation',
@@ -121,7 +121,7 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
       ],
       recommendationTitle: 'AI Code Tutor Platform',
       recommendationDesc: 'Run, debug, and learn C++, C, and Python algorithms in your browser.',
-      recommendationAction: 'Open AI Code Tutor Platform →',
+      recommendationAction: 'Open Code Tutor →',
       recommendationHref: '/compiler',
     },
     statistics: {
@@ -144,36 +144,36 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   es: {
     scientific: {
       badge: 'Referencia Técnica',
-      title: 'Guía de Calculadora Científica Online y Computación Avanzada',
+      title: 'Guía de Computación Científica y Evaluación Multilínea',
       sections: [
         {
-          title: 'Calculadora Web Avanzada y Precisión de Coma Flotante',
+          title: 'Precisión en Coma Flotante y Normalización Decimal',
           paragraphs: [
-            'Esta calculadora científica online ofrece una arquitectura de alta precisión para estudiantes y profesionales. Los microprocesadores ejecutan operaciones mediante punto flotante IEEE 754, lo que puede causar pequeños artefactos de redondeo (como 0.30000000000000004).',
-            'SciCalcX implementa algoritmos de normalización por umbral épsilon y una calculadora de fracciones gratuita en línea, reduciendo artefactos comunes de representación en coma flotante en los resultados mostrados.',
+            'El cómputo digital se basa en operaciones de coma flotante de doble precisión según el estándar IEEE 754. Dado que ciertas fracciones decimales (como 0.1 o 0.2) tienen expansiones binarias periódicas, los procesadores introducen pequeñas discrepancias de redondeo (por ejemplo, 0.30000000000000004).',
+            'SciCalcX aplica un umbral épsilon para normalizar los resultados mostrados hasta 12 decimales y ofrece la tecla S-D para convertir valores en fracciones racionales simplificadas.',
           ],
         },
         {
-          title: 'Calculadora de Ingeniería Multilínea y Solucionador de Expresiones',
+          title: 'Jerarquía de Operaciones y Validación de Sintaxis',
           paragraphs: [
-            'Como calculadora de ingeniería multilínea, el visor superior muestra la expresión completa mientras el acumulador inferior presenta el resultado inmediato. Funciona como un potente solucionador de expresiones matemáticas respetando estrictamente la jerarquía PEMDAS.',
-            'El analizador léxico valida paréntesis anidados en tiempo real para evitar errores sintácticos antes del cómputo final.',
+            'Las expresiones siguen la jerarquía algebraica estándar (PEMDAS): paréntesis, exponentes y raíces, multiplicaciones y divisiones evaluadas de izquierda a derecha, y sumas y restas.',
+            'El visor multilínea valida los paréntesis abiertos y cerrados en tiempo real, detectando inconsistencias sintácticas antes de iniciar la evaluación numérica.',
           ],
         },
       ],
-      recommendationTitle: 'Calculadora de Matrices Científica',
+      recommendationTitle: 'Álgebra Matricial',
       recommendationDesc: 'Resuelve sistemas lineales, determinantes e inversas con nuestro módulo especializado.',
-      recommendationAction: 'Abrir Calculadora de Matrices Científica →',
+      recommendationAction: 'Abrir Calculadora de Matrices →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: 'Álgebra Lineal',
-      title: 'Guía de la Calculadora de Matrices Científica y Sistemas Lineales',
+      title: 'Guía de Álgebra Matricial y Sistemas Lineales',
       sections: [
         {
           title: 'Cálculo de Determinantes mediante Expansión de Laplace',
           paragraphs: [
-            'Nuestra calculadora de matrices científica calcula determinantes de matrices 2x2 y 3x3 mediante el método de cofactores de Laplace, verificando si el sistema de ecuaciones posee solución única o es singular.',
+            'El determinante de matrices cuadradas 2x2 y 3x3 se calcula mediante la expansión de cofactores de Laplace, evaluando si el sistema lineal posee solución única o es singular.',
           ],
           formula: 'det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)',
         },
@@ -185,19 +185,19 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           formula: 'A⁻¹ = (1 / det(A)) · adj(A)',
         },
       ],
-      recommendationTitle: 'Calculadora de Cálculo Basada en Web',
+      recommendationTitle: 'Cálculo Infinitesimal',
       recommendationDesc: 'Calcula derivadas numéricas, integrales definidas y límites con curvas interactivas.',
-      recommendationAction: 'Abrir Calculadora de Cálculo Basada en Web →',
+      recommendationAction: 'Abrir Calculadora de Cálculo →',
       recommendationHref: '/calculus',
     },
     calculus: {
       badge: 'Análisis Matemático',
-      title: 'Manual de la Calculadora de Cálculo Basada en Web',
+      title: 'Guía de Cálculo Numérico y Análisis',
       sections: [
         {
-          title: 'Derivación Numérica y Solucionador de Expresiones Matemáticas',
+          title: 'Derivación Numérica y Diferencias Simétricas',
           paragraphs: [
-            'La calculadora de cálculo basada en web opera como un solucionador de expresiones matemáticas para evaluar derivadas instantáneas con cocientes de diferencias simétricas de alta precisión.',
+            'Las derivadas se evalúan numéricamente mediante cocientes de diferencias centrales simétricas, garantizando convergencia de orden superior sin requerir diferenciación simbólica.',
           ],
           formula: 'f\'(x) ≈ (f(x + h) - f(x - h)) / (2h)',
         },
@@ -209,41 +209,41 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           formula: '∫[a,b] f(x)dx ≈ (h/3) [ f(x₀) + 4∑f(x_impar) + 2∑f(x_par) + f(x_n) ]',
         },
       ],
-      recommendationTitle: 'Calculadora de Derivadas Gráficas en Línea',
+      recommendationTitle: 'Graficador 2D',
       recommendationDesc: 'Grafica funciones en 2D e inspecciona tangentes, raíces y asíntotas en tiempo real.',
-      recommendationAction: 'Abrir Calculadora de Derivadas Gráficas en Línea →',
+      recommendationAction: 'Abrir Graficador 2D →',
       recommendationHref: '/graphing',
     },
     graphing: {
       badge: 'Geometría Cartesiana',
-      title: 'Manual de la Calculadora de Derivadas Gráficas en Línea',
+      title: 'Manual de Visualización de Funciones 2D',
       sections: [
         {
           title: 'Trazado de Curvas 2D y Detección de Discontinuidades',
           paragraphs: [
-            'Nuestra calculadora de derivadas gráficas en línea muestrea dinámicamente las funciones para detectar asíntotas verticales y cambios de signo en derivadas.',
+            'El motor de renderizado muestrea dinámicamente las funciones para detectar asíntotas verticales y cambios de pendiente sin enlazar discontinuidades.',
           ],
         },
       ],
-      recommendationTitle: 'Calculadora Base-N para Programadores',
+      recommendationTitle: 'Calculadora Base-N',
       recommendationDesc: 'Conversión rápida entre binario, hexadecimal, octal y operaciones lógicas bitwise.',
-      recommendationAction: 'Abrir Calculadora Base-N para Programadores →',
+      recommendationAction: 'Abrir Calculadora Base-N →',
       recommendationHref: '/programming',
     },
     programming: {
       badge: 'Sistemas Binarios',
-      title: 'Manual de la Calculadora Base-N para Programadores',
+      title: 'Manual de Lógica Binaria y Aritmética Base-N',
       sections: [
         {
           title: 'Complemento a Dos y Operaciones Lógicas Bitwise',
           paragraphs: [
-            'La calculadora base-n para programadores permite manipular registros con signo de 32 bits (int32) con operaciones AND, OR, XOR, NOT y conversiones entre bases.',
+            'Permite manipular registros con signo de 32 bits (int32) con operaciones AND, OR, XOR, NOT, desplazamientos y conversiones entre bases.',
           ],
         },
       ],
       recommendationTitle: 'Plataforma de Tutor de Código de IA',
       recommendationDesc: 'Aprende y depura código C++, C y Python con asistencia inteligente.',
-      recommendationAction: 'Abrir Plataforma de Tutor de Código de IA →',
+      recommendationAction: 'Abrir Tutor de Código →',
       recommendationHref: '/compiler',
     },
     statistics: {
@@ -266,91 +266,92 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   fr: {
     scientific: {
       badge: 'Référence Technique',
-      title: 'Guide de Calculatrice Scientifique en Ligne & Précision Multi-ligne',
+      title: 'Guide de Calcul Scientifique & Évaluation Multiligne',
       sections: [
         {
-          title: 'Calculatrice Web Avancée et Précision Virgule Flottante',
+          title: 'Précision en Virgule Flottante et Normalisation Décimale',
           paragraphs: [
-            'Cette calculatrice scientifique en ligne constitue une calculatrice web avancée idéale pour étudiants et ingénieurs. Elle applique une normalisation basée sur un seuil epsilon pour réduire les artefacts d\'affichage en virgule flottante IEEE 754.',
-            'Elle intègre une calculatrice de fractions gratuite en ligne pour basculer en un clic entre décimales et fractions exactes irréductibles.',
+            'Les microprocesseurs effectuent leurs calculs numériques au moyen de nombres flottants double précision selon la norme IEEE 754. Comme certaines valeurs décimales (telles que 0.1 ou 0.2) ne possèdent pas de représentation binaire finie, les environnements d\'exécution génèrent de légers résidus d\'arrondi (par exemple, 0.30000000000000004).',
+            'SciCalcX applique un seuil epsilon pour stabiliser l\'affichage jusqu\'à 12 décimales et fournit une touche de conversion S-D permettant d\'approximer le résultat sous forme de fraction rationnelle simplifiée.',
           ],
         },
         {
-          title: 'Calculatrice d\'Ingénierie Multiligne & Résolveur d\'Expressions',
+          title: 'Priorité des Opérateurs et Contrôle Syntaxique',
           paragraphs: [
-            'En tant que calculatrice d\'ingénierie multiligne, SciCalcX affiche l\'expression complète et le résultat simultanément. C\'est un résolveur d\'expressions mathématiques rigoureux suivant l\'ordre PEMDAS.',
+            'L\'évaluation respecte la hiérarchie algébrique usuelle (PEMDAS) : parenthèses, exposants et racines, multiplications et divisions de gauche à droite, puis additions et soustractions.',
+            'L\'afficheur multiligne vérifie en continu l\'équilibrage des parenthèses ouvrantes et fermantes pour signaler les incohérences avant tout calcul numérique.',
           ],
         },
       ],
-      recommendationTitle: 'Calculatrice de Matrices Scientifique',
+      recommendationTitle: 'Algèbre Matricielle',
       recommendationDesc: 'Résolvez des systèmes d\'équations linéaires, déterminants et matrices inverses.',
-      recommendationAction: 'Ouvrir Calculatrice de Matrices Scientifique →',
+      recommendationAction: 'Ouvrir Calculatrice de Matrices →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: 'Algèbre Linéaire',
-      title: 'Guide de la Calculatrice de Matrices Scientifique',
+      title: 'Guide d\'Algèbre Matricielle',
       sections: [
         {
           title: 'Déterminant par Développement de Laplace',
           paragraphs: [
-            'La calculatrice de matrices scientifique évalue les déterminants par développement en cofacteurs le long de la première ligne.',
+            'Le déterminant est calculé par développement en cofacteurs de Laplace le long de la première ligne pour évaluer la singularité du système.',
           ],
           formula: 'det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)',
         },
       ],
-      recommendationTitle: 'Calculatrice de Calcul Infinitésimal Basée sur le Web',
+      recommendationTitle: 'Calcul Infinitésimal',
       recommendationDesc: 'Dérivées numériques, intégrales définies et calcul de limites interactives.',
-      recommendationAction: 'Ouvrir Calculatrice de Calcul Infinitésimal Basée sur le Web →',
+      recommendationAction: 'Ouvrir Calculateur d\'Analyse →',
       recommendationHref: '/calculus',
     },
     calculus: {
       badge: 'Analyse Mathématique',
-      title: 'Manuel de la Calculatrice de Calcul Infinitésimal Basée sur le Web',
+      title: 'Guide d\'Analyse et Méthodes Numériques',
       sections: [
         {
-          title: 'Dérivation Numérique et Résolveur d\'Expressions Mathématiques',
+          title: 'Dérivation Numérique par Différences Symétriques',
           paragraphs: [
-            'Notre calculatrice de calcul infinitésimal basée sur le Web utilise les quotients de différences symétriques pour évaluer les taux de variation instantanés.',
+            'Les dérivées numériques sont calculées au moyen de quotients différentiels symétriques centrés pour atteindre une précision d\'ordre supérieur.',
           ],
           formula: 'f\'(x) ≈ (f(x + h) - f(x - h)) / (2h)',
         },
       ],
-      recommendationTitle: 'Calculatrice de Dérivées Graphiques en Ligne',
+      recommendationTitle: 'Traceur 2D',
       recommendationDesc: 'Tracez des courbes 2D et analysez graphiquement racines, asymptotes et tangentes.',
-      recommendationAction: 'Ouvrir Calculatrice de Dérivées Graphiques en Ligne →',
+      recommendationAction: 'Ouvrir Traceur 2D →',
       recommendationHref: '/graphing',
     },
     graphing: {
       badge: 'Géométrie Cartésienne',
-      title: 'Manuel de la Calculatrice de Dérivées Graphiques en Ligne',
+      title: 'Guide de Tracé de Fonctions 2D',
       sections: [
         {
           title: 'Tracé de Courbes 2D et Analyse Graphique',
           paragraphs: [
-            'Visualisez plusieurs fonctions et évaluez instantanément les pentes de dérivées graphiques en ligne.',
+            'Le traceur échantillonne la fonction en continu pour identifier les discontinuités, asymptotes et tangentes sans relier artificiellement les branches divergentes.',
           ],
         },
       ],
-      recommendationTitle: 'Calculatrice de Base-N pour Programmeurs',
+      recommendationTitle: 'Calculatrice Base-N',
       recommendationDesc: 'Conversions hexadécimal, binaire, octal et logique bit à bit.',
-      recommendationAction: 'Ouvrir Calculatrice de Base-N pour Programmeurs →',
+      recommendationAction: 'Ouvrir Calculatrice Base-N →',
       recommendationHref: '/programming',
     },
     programming: {
       badge: 'Systèmes Binaires',
-      title: 'Manuel de la Calculatrice de Base-N pour Programmeurs',
+      title: 'Guide de Logique Binaire et Base-N',
       sections: [
         {
           title: 'Complément à Deux et Opérations Logiques',
           paragraphs: [
-            'La calculatrice de base-n pour programmeurs gère les registres signés 32 bits (int32) et les opérations logiques fondamentales.',
+            'Permet la manipulation directe de registres signés 32 bits (int32) et les opérations logiques fondamentales (AND, OR, XOR, NOT, décalages).',
           ],
         },
       ],
       recommendationTitle: 'Plateforme de Tuteur de Code IA',
       recommendationDesc: 'Écrivez, exécutez et comprenez le code C++, C et Python dans votre navigateur.',
-      recommendationAction: 'Ouvrir Plateforme de Tuteur de Code IA →',
+      recommendationAction: 'Ouvrir Sandbox Code →',
       recommendationHref: '/compiler',
     },
     statistics: {
@@ -373,23 +374,31 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   de: {
     scientific: {
       badge: 'Technische Referenz',
-      title: 'Wissenschaftlicher Taschenrechner Online & Präzisionshandbuch',
+      title: 'Wissenschaftliche Berechnung & Mehrzeilen-Auswertung',
       sections: [
         {
-          title: 'Präzision und Dezimalnormalisierung',
+          title: 'Gleitkommapräzision und Dezimalnormalisierung',
           paragraphs: [
-            'Wissenschaftliche Berechnungen verlangen Verlässlichkeit. SciCalcX wendet eine Epsilon-Normalisierung an, um typische Darstellungsartefakte der Gleitkommaarithmetik nach IEEE 754 zu reduzieren, und unterstützt die Umwandlung in Brüche.',
+            'Digitale Prozessoren führen arithmetische Berechnungen nach dem IEEE-754-Standard für doppelte Genauigkeit (Float64) durch. Da bestimmte periodische Dezimalbrüche (wie 0,1 oder 0,2) im Binärsystem nicht exakt darstellbar sind, entstehen minimale Rundungsabweichungen (z. B. 0,1 + 0,2 = 0,30000000000000004).',
+            'SciCalcX nutzt eine Epsilon-Schwellenwert-Normalisierung zur Bereinigung der Bildschirmausgabe bis zu 12 Dezimalstellen sowie eine S-D-Taste zur Umwandlung in gekürzte Brüche.',
+          ],
+        },
+        {
+          title: 'Operatorrangfolge und Syntaxprüfung',
+          paragraphs: [
+            'Eingegebene Terme folgen der mathematischen Standardrangfolge (Punkt vor Strich / PEMDAS): Klammern, Potenzen und Wurzeln, Multiplikation und Division von links nach rechts, gefolgt von Addition und Subtraktion.',
+            'Die mehrzeilige Anzeige prüft geöffnete und geschlossene Klammern in Echtzeit und signalisiert unvollständige Klammerpaare oder fehlerhafte Operatorfolgen vor der numerischen Auswertung.',
           ],
         },
       ],
-      recommendationTitle: 'Wissenschaftlicher Matrizenrechner',
+      recommendationTitle: 'Lineare Algebra',
       recommendationDesc: 'Berechne Determinanten, Inverse und lineare Gleichungssysteme.',
-      recommendationAction: 'Matrizenrechner Öffnen →',
+      recommendationAction: 'Matrizenrechner öffnen →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: 'Lineare Algebra',
-      title: 'Handbuch für den Wissenschaftlichen Matrizenrechner',
+      title: 'Handbuch für Matrizenrechnung & Lineare Systeme',
       sections: [
         {
           title: 'Laplace-Entwicklung für Determinanten',
@@ -398,9 +407,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           ],
         },
       ],
-      recommendationTitle: 'Analysis & Integrationsrechner',
+      recommendationTitle: 'Analysis & Infinitesimalrechnung',
       recommendationDesc: 'Berechne Ableitungen, Integrale und Grenzwerte online.',
-      recommendationAction: 'Analysis Rechner Öffnen →',
+      recommendationAction: 'Analysis-Rechner öffnen →',
       recommendationHref: '/calculus',
     },
     calculus: {
@@ -414,9 +423,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           ],
         },
       ],
-      recommendationTitle: 'Grafikrechner 2D Online',
+      recommendationTitle: 'Funktionsplotter 2D',
       recommendationDesc: 'Visualisiere Funktionskurven und Tangenten dynamisch.',
-      recommendationAction: 'Grafikrechner Öffnen →',
+      recommendationAction: 'Grafikrechner öffnen →',
       recommendationHref: '/graphing',
     },
     graphing: {
@@ -430,9 +439,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           ],
         },
       ],
-      recommendationTitle: 'Programmierer Rechner Base-N',
+      recommendationTitle: 'Base-N Programmierer-Rechner',
       recommendationDesc: 'Konvertiere Hex, Dez, Okt, Bin und führe Bitoperationen durch.',
-      recommendationAction: 'Programmierer Rechner Öffnen →',
+      recommendationAction: 'Programmierer-Rechner öffnen →',
       recommendationHref: '/programming',
     },
     programming: {
@@ -446,9 +455,9 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
           ],
         },
       ],
-      recommendationTitle: 'KI-Programmier-Tutor',
+      recommendationTitle: 'KI-Code-Tutor',
       recommendationDesc: 'Kompiliere und lerne C++, C und Python im Browser.',
-      recommendationAction: 'KI-Tutor Starten →',
+      recommendationAction: 'Code-Tutor öffnen →',
       recommendationHref: '/compiler',
     },
     statistics: {
@@ -471,91 +480,92 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   nl: {
     scientific: {
       badge: 'Technische Referentie',
-      title: 'Handleiding Wetenschappelijke Calculator & Multi-regel Webcalculator',
+      title: 'Handleiding Wetenschappelijke Berekeningen & Multi-regel Weergave',
       sections: [
         {
-          title: 'Geavanceerde Webcalculator en Drijvende-Kommaberekeningen',
+          title: 'Drijvende-Kommaberekeningen en Decimale Normalisatie',
           paragraphs: [
-            'Deze online wetenschappelijke calculator is ontworpen als een geavanceerde webcalculator voor studenten en ingenieurs. Het past epsilon-drempelnormalisatie toe om weergave-artefacten van binaire IEEE-754 berekeningen te verminderen.',
-            'Inclusief een gratis online breukencalculator waarmee u met één klik schakelt tussen exacte breuken en decimale getallen.',
+            'Digitale processors voeren berekeningen uit via IEEE 754 dubbele precisie (float64). Omdat decimale breuken zoals 0.1 en 0.2 repeterende binaire vormen hebben, kunnen afrondingsfoutjes optreden (bijvoorbeeld 0.1 + 0.2 = 0.30000000000000004).',
+            'SciCalcX past epsilon-drempelnormalisatie toe om de weergave tot 12 decimalen schoon te houden en biedt een S-D-toets om resultaten om te zetten naar vereenvoudigde breuken.',
           ],
         },
         {
-          title: 'Multi-regel Technische Calculator en Wiskundige Expressie-oplosser',
+          title: 'Rekenvolgorde en Syntaxvalidatie',
           paragraphs: [
-            'Als multi-regel technische calculator toont het scherm de volledige wiskundige expressie. Het fungeert als een betrouwbare wiskundige expressie-oplosser die wiskundige rekenvolgorde (PEMDAS) en haakjesparen strikt handhaaft.',
+            'Berekeningen volgen de standaard wiskundige rekenvolgorde (PEMDAS): haakjes, machten en wortels, vermenigvuldigingen en delingen van links naar rechts, gevolgd door optellen en aftrekken.',
+            'Het scherm controleert haakjesparen in real-time om invoerfouten en syntaxproblemen op te vangen voordat de numerieke evaluatie begint.',
           ],
         },
       ],
-      recommendationTitle: 'Wetenschappelijke Matrixcalculator',
+      recommendationTitle: 'Matrixalgebra',
       recommendationDesc: 'Bereken determinanten, inverse matrices en lineaire stelsels met precisie.',
-      recommendationAction: 'Open Wetenschappelijke Matrixcalculator →',
+      recommendationAction: 'Open Matrixcalculator →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: 'Lineaire Algebra',
-      title: 'Handleiding Wetenschappelijke Matrixcalculator',
+      title: 'Handleiding Matrixalgebra & Lineaire Stelsels',
       sections: [
         {
           title: 'Determinanten via Laplace-expansie',
           paragraphs: [
-            'De wetenschappelijke matrixcalculator berekent determinanten van 2x2 en 3x3 matrices via cofactor-expansie langs de eerste rij.',
+            'Determinanten van 2x2 en 3x3 matrices worden berekend via Laplace-cofactorexpansie langs de eerste rij om de oplosbaarheid van het stelsel te bepalen.',
           ],
           formula: 'det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)',
         },
       ],
-      recommendationTitle: 'Webgebaseerde Calculuscalculator',
+      recommendationTitle: 'Calculus Suite',
       recommendationDesc: 'Bereken afgeleiden, integralen en limieten met interactieve grafieken.',
-      recommendationAction: 'Open Webgebaseerde Calculuscalculator →',
+      recommendationAction: 'Open Calculuscalculator →',
       recommendationHref: '/calculus',
     },
     calculus: {
       badge: 'Wiskundige Analyse',
-      title: 'Handleiding Webgebaseerde Calculuscalculator',
+      title: 'Handleiding Numerieke Analyse & Differentiaalrekening',
       sections: [
         {
-          title: 'Numerieke Differentiatie en Wiskundige Expressie-oplosser',
+          title: 'Numerieke Differentiatie via Verschilquotiënten',
           paragraphs: [
-            'Deze webgebaseerde calculuscalculator functioneert als een wiskundige expressie-oplosser voor numerieke afgeleiden via symmetrische differentiequotiënten.',
+            'Afgeleiden worden numeriek berekend via symmetrische centrale differentiequotiënten voor een hogere nauwkeurigheidsorde.',
           ],
           formula: 'f\'(x) ≈ (f(x + h) - f(x - h)) / (2h)',
         },
       ],
-      recommendationTitle: 'Online Grafische Afgeleidingscalculator',
+      recommendationTitle: 'Functieplotter 2D',
       recommendationDesc: 'Plot functies in 2D en inspecteer afgeleiden, toppen en snijpunten.',
-      recommendationAction: 'Open Online Grafische Afgeleidingscalculator →',
+      recommendationAction: 'Open Functieplotter 2D →',
       recommendationHref: '/graphing',
     },
     graphing: {
       badge: 'Cartesiaanse Meetkunde',
-      title: 'Handleiding Online Grafische Afgeleidingscalculator',
+      title: 'Handleiding 2D Functieplotter',
       sections: [
         {
-          title: '2D Functieplotter en Grafische Afgeleiden',
+          title: '2D Functieplotter en Dynamische Grafieken',
           paragraphs: [
-            'De online grafische afgeleidingscalculator detecteert asymptoten en hellingen dynamisch op een 2D-canvas.',
+            'De plotter bemonstert functies dynamisch om verticale asymptoten, toppen en snijpunten vloeiend in beeld te brengen.',
           ],
         },
       ],
-      recommendationTitle: 'Programmeren Base-N Calculator',
+      recommendationTitle: 'Programmeurscalculator Base-N',
       recommendationDesc: 'Converteer tussen hexadecimaal, binair en voer bitsgewijze bewerkingen uit.',
-      recommendationAction: 'Open Programmeren Base-N Calculator →',
+      recommendationAction: 'Open Programmeurscalculator →',
       recommendationHref: '/programming',
     },
     programming: {
       badge: 'Binaire Systemen',
-      title: 'Handleiding Programmeren Base-N Calculator',
+      title: 'Handleiding Base-N & Binaire Bewerkingen',
       sections: [
         {
           title: 'Twee-complement en Bitsgewijze Logica',
           paragraphs: [
-            'De programmeren base-n calculator ondersteunt 32-bits bewerkingen en directe conversies tussen Hex, Dec, Oct en Bin.',
+            'Biedt directe ondersteuning voor 32-bits registers (int32), twee-complement en bitsgewijze bewerkingen (AND, OR, XOR, NOT, verschuivingen).',
           ],
         },
       ],
-      recommendationTitle: 'AI-Codetutorplatform',
+      recommendationTitle: 'AI-Codetutor',
       recommendationDesc: 'Schrijf, voer uit en leer C++, C en Python rechtstreeks in de browser.',
-      recommendationAction: 'Open AI-Codetutorplatform →',
+      recommendationAction: 'Open Codetutor →',
       recommendationHref: '/compiler',
     },
     statistics: {
@@ -578,91 +588,92 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   pt: {
     scientific: {
       badge: 'Referência Técnica',
-      title: 'Guia de Calculadora Científica Online e Engenharia Multilinha',
+      title: 'Guia de Computação Científica & Avaliação Multilinha',
       sections: [
         {
-          title: 'Calculadora Web Avançada e Precisão de Ponto Flutuante',
+          title: 'Precisão de Ponto Flutuante e Normalização Decimal',
           paragraphs: [
-            'Esta calculadora científica online oferece uma calculadora web avançada com normalização baseada em épsilon para reduzir artefatos comuns de ponto flutuante IEEE 754.',
-            'Possui uma calculadora de frações gratuita online integrada para alternar instantaneamente entre dízimas e frações irredutíveis exatas.',
+            'O processamento numérico opera através de pontos flutuantes de precisão dupla conforme o padrão IEEE 754. Como frações decimais (como 0.1 ou 0.2) possuem dízimas binárias periódicas, pequenas imprecisões de arredondamento podem surgir (como 0.30000000000000004).',
+            'O SciCalcX adota normalização por limiar épsilon para exibir resultados estáveis em até 12 casas decimais, acompanhado de uma tecla S-D para conversão em frações racionais simplificadas.',
           ],
         },
         {
-          title: 'Calculadora de Engenharia Multilinha e Solucionador de Expressões',
+          title: 'Precedência de Operadores e Validação de Sintaxe',
           paragraphs: [
-            'Como calculadora de engenharia multilinha, apresenta a equação e o resultado em tempo real. Funciona como um solucionador de expressões matemáticas com validação léxica de parênteses e regra PEMDAS.',
+            'A avaliação obedece à ordem matemática formal (PEMDAS): parênteses, expoentes e radicais, multiplicação e divisão da esquerda para a direita, seguidas de adição e subtração.',
+            'O visor multilinha valida a correspondência de parênteses em tempo real para acusar discrepâncias sintáticas antes da resolução numérica.',
           ],
         },
       ],
-      recommendationTitle: 'Calculadora de Matrizes Científica',
+      recommendationTitle: 'Álgebra Matricial',
       recommendationDesc: 'Calcule determinantes, inversas e multiplicação de matrizes online.',
-      recommendationAction: 'Abrir Calculadora de Matrizes Científica →',
+      recommendationAction: 'Abrir Calculadora de Matrizes →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: 'Álgebra Linear',
-      title: 'Guia da Calculadora de Matrizes Científica',
+      title: 'Guia de Álgebra Matricial',
       sections: [
         {
           title: 'Determinantes por Expansão de Laplace',
           paragraphs: [
-            'A calculadora de matrizes científica avalia matrizes 2x2 e 3x3 através de cofatores de Laplace com alta precisão.',
+            'Avalia determinantes de matrizes 2x2 e 3x3 através de expansão por cofatores de Laplace ao longo da primeira linha.',
           ],
           formula: 'det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)',
         },
       ],
-      recommendationTitle: 'Calculadora de Cálculo Baseada na Web',
+      recommendationTitle: 'Cálculo Diferencial e Integral',
       recommendationDesc: 'Derivadas numéricas, integrais e limites com gráficos interativos.',
-      recommendationAction: 'Abrir Calculadora de Cálculo Baseada na Web →',
+      recommendationAction: 'Abrir Calculadora de Cálculo →',
       recommendationHref: '/calculus',
     },
     calculus: {
       badge: 'Análise Matemática',
-      title: 'Manual da Calculadora de Cálculo Baseada na Web',
+      title: 'Guia de Cálculo Numérico & Análise',
       sections: [
         {
-          title: 'Derivação Numérica e Solucionador de Expressões Matemáticas',
+          title: 'Derivação Numérica por Diferenças Simétricas',
           paragraphs: [
-            'A calculadora de cálculo baseada na web atua como um solucionador de expressões matemáticas para taxas instantâneas de variação.',
+            'Calcula derivadas numericamente por meio de quocientes de diferenças centrais simétricas para obter convergência de ordem superior.',
           ],
           formula: 'f\'(x) ≈ (f(x + h) - f(x - h)) / (2h)',
         },
       ],
-      recommendationTitle: 'Calculadora de Derivadas Gráficas Online',
+      recommendationTitle: 'Traçador Gráfico 2D',
       recommendationDesc: 'Plote funções 2D e inspecione derivadas, raízes e assíntotas graficamente.',
-      recommendationAction: 'Abrir Calculadora de Derivadas Gráficas Online →',
+      recommendationAction: 'Abrir Traçador Gráfico 2D →',
       recommendationHref: '/graphing',
     },
     graphing: {
       badge: 'Geometria Cartesiana',
-      title: 'Manual da Calculadora de Derivadas Gráficas Online',
+      title: 'Manual de Visualização Gráfica 2D',
       sections: [
         {
           title: 'Traçado de Curvas 2D e Derivadas Gráficas',
           paragraphs: [
-            'A calculadora de derivadas gráficas online permite inspecionar variações e tangentes em tempo real.',
+            'Gera curvas bidimensionais dinâmicas com detecção de assíntotas verticais e visualização de tangentes.',
           ],
         },
       ],
-      recommendationTitle: 'Calculadora de Base-N para Programadores',
+      recommendationTitle: 'Calculadora Base-N',
       recommendationDesc: 'Conversões entre binário, hexadecimal e lógica de bits.',
-      recommendationAction: 'Abrir Calculadora de Base-N para Programadores →',
+      recommendationAction: 'Abrir Calculadora Base-N →',
       recommendationHref: '/programming',
     },
     programming: {
       badge: 'Sistemas Binários',
-      title: 'Manual da Calculadora de Base-N para Programadores',
+      title: 'Manual de Lógica Binária e Base-N',
       sections: [
         {
           title: 'Complemento de Dois e Operações Lógicas',
           paragraphs: [
-            'A calculadora de base-n para programadores processa valores inteiros sinalizados de 32 bits (int32) com operadores bit a bit.',
+            'Permite manipular inteiros sinalizados de 32 bits (int32) e aplicar operações bit a bit fundamentais (AND, OR, XOR, NOT, deslocamentos).',
           ],
         },
       ],
-      recommendationTitle: 'Plataforma de Tutoria de Código de IA',
+      recommendationTitle: 'Plataforma de Tutor de Código de IA',
       recommendationDesc: 'Escreva, teste e aprenda C++, C e Python direto no seu navegador.',
-      recommendationAction: 'Abrir Plataforma de Tutoria de Código de IA →',
+      recommendationAction: 'Abrir Tutor de Código →',
       recommendationHref: '/compiler',
     },
     statistics: {
@@ -685,91 +696,92 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   it: {
     scientific: {
       badge: 'Riferimento Tecnico',
-      title: 'Guida alla Calcolatrice Scientifica Online & Calcolo Multilinea',
+      title: 'Guida al Calcolo Scientifico & Valutazione Multilinea',
       sections: [
         {
-          title: 'Calcolatrice Web Avanzata e Precisione Decimale',
+          title: 'Precisione in Virgola Mobile e Normalizzazione Decimale',
           paragraphs: [
-            'Questa calcolatrice scientifica online funge da calcolatrice web avanzata per studenti e ingegneri, riducendo i comuni artefatti di rappresentazione IEEE 754 tramite normalizzazione decimale.',
-            'Include una calcolatrice di frazioni gratuita online per convertire istantaneamente valori decimali in frazioni irriducibili esatte.',
+            'I microprocessori eseguono calcoli numerici sfruttando numeri in virgola mobile a doppia precisione (standard IEEE 754). Poiché alcune frazioni decimali (come 0.1 o 0.2) possiedono rappresentazioni binarie periodiche, possono emergere lievi discrepanze di arrotondamento (ad esempio 0.30000000000000004).',
+            'SciCalcX adotta una normalizzazione per soglia epsilon che stabilizza i valori visualizzati fino a 12 cifre decimali, insieme al tasto S-D per convertire i valori in frazioni razionali semplificate.',
           ],
         },
         {
-          title: 'Calcolatrice Ingegneristica Multilinea e Risolutore di Espressioni',
+          title: 'Precedenza degli Operatori e Controllo della Sintassi',
           paragraphs: [
-            'Come calcolatrice ingegneristica multilinea, visualizza l\'intera formula matematica fungendo da risolutore di espressioni matematiche ad alta fedeltà.',
+            'Le espressioni rispettano la gerarchia algebrica convenzionale (PEMDAS): parentesi, potenze e radici, moltiplicazioni e divisioni da sinistra a destra, seguite da addizioni e sottrazioni.',
+            'Il display multilinea verifica in tempo reale l\'apertura e la chiusura delle parentesi, segnalando errori di sintassi prima del calcolo numerico effettivo.',
           ],
         },
       ],
-      recommendationTitle: 'Calcolatrice di Matrici Scientifica',
+      recommendationTitle: 'Algebra Matriciale',
       recommendationDesc: 'Calcola determinanti, matrici inverse e moltiplicazioni matriciali.',
-      recommendationAction: 'Apri Calcolatrice di Matrici Scientifica →',
+      recommendationAction: 'Apri Calcolatrice di Matrici →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: 'Algebra Lineare',
-      title: 'Guida alla Calcolatrice di Matrici Scientifica',
+      title: 'Guida all\'Algebra Matriciale',
       sections: [
         {
           title: 'Calcolo dei Determinanti con Espansione di Laplace',
           paragraphs: [
-            'La calcolatrice di matrici scientifica esegue l\'espansione in cofattori lungo la prima riga.',
+            'Calcola il determinante mediante lo sviluppo di Laplace lungo la prima riga per matrici 2x2 e 3x3.',
           ],
           formula: 'det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)',
         },
       ],
-      recommendationTitle: 'Calcolatrice di Analisi Matematica Basata sul Web',
+      recommendationTitle: 'Calcolo Infinitesimale',
       recommendationDesc: 'Derivate numeriche, integrali definiti e limiti con curve grafiche.',
-      recommendationAction: 'Apri Calcolatrice di Analisi Matematica Basata sul Web →',
+      recommendationAction: 'Apri Calcolatrice di Analisi →',
       recommendationHref: '/calculus',
     },
     calculus: {
       badge: 'Analisi Matematica',
-      title: 'Manuale della Calcolatrice di Analisi Matematica Basata sul Web',
+      title: 'Guida all\'Analisi Matematica e Metodi Numerici',
       sections: [
         {
-          title: 'Derivazione Numerica e Risolutore di Espressioni Matematiche',
+          title: 'Derivazione Numerica con Differenze Simmetriche',
           paragraphs: [
-            'La calcolatrice di analisi matematica basata sul web funge da risolutore di espressioni matematiche con quozienti di differenze simmetriche.',
+            'Valuta derivate numeriche tramite quozienti di differenze centrali simmetriche per garantire un ordine di convergenza superiore.',
           ],
           formula: 'f\'(x) ≈ (f(x + h) - f(x - h)) / (2h)',
         },
       ],
-      recommendationTitle: 'Calcolatrice di Derivate Grafiche Online',
+      recommendationTitle: 'Grafico Funzioni 2D',
       recommendationDesc: 'Traccia funzioni 2D e analizza derivate grafiche, tangenti ed estremi.',
-      recommendationAction: 'Apri Calcolatrice di Derivate Grafiche Online →',
+      recommendationAction: 'Apri Grafico Funzioni 2D →',
       recommendationHref: '/graphing',
     },
     graphing: {
       badge: 'Geometria Cartesiana',
-      title: 'Manuale della Calcolatrice di Derivate Grafiche Online',
+      title: 'Manuale per il Grafico di Funzioni 2D',
       sections: [
         {
-          title: 'Grafici 2D e Derivate Grafiche',
+          title: 'Grafici 2D e Curve Continue',
           paragraphs: [
-            'La calcolatrice di derivate grafiche online traccia curve multiple rilevando asintoti e tangenti.',
+            'Genera curve cartesiane continue identificando asintoti verticali, tangenti e punti critici in tempo reale.',
           ],
         },
       ],
-      recommendationTitle: 'Calcolatrice Base-N per Programmatori',
+      recommendationTitle: 'Calcolatrice Base-N',
       recommendationDesc: 'Conversioni binario, esadecimale e operazioni logiche a livello di bit.',
-      recommendationAction: 'Apri Calcolatrice Base-N per Programmatori →',
+      recommendationAction: 'Apri Calcolatrice Base-N →',
       recommendationHref: '/programming',
     },
     programming: {
       badge: 'Sistemi Binari',
-      title: 'Manuale della Calcolatrice Base-N per Programmatori',
+      title: 'Manuale di Logica Binaria e Base-N',
       sections: [
         {
           title: 'Complemento a Due e Logica Bit a Bit',
           paragraphs: [
-            'La calcolatrice base-n per programmatori esegue operazioni logiche su registri a 32 bit con segno (int32).',
+            'Supporta registri a 32 bit con segno (int32) e operazioni logiche a livello di bit (AND, OR, XOR, NOT, shift).',
           ],
         },
       ],
       recommendationTitle: 'Piattaforma di Tutor di Codice IA',
       recommendationDesc: 'Scrivi, esegui e impara C++, C e Python direttamente nel browser.',
-      recommendationAction: 'Apri Piattaforma di Tutor di Codice IA →',
+      recommendationAction: 'Apri Tutor di Codice →',
       recommendationHref: '/compiler',
     },
     statistics: {
@@ -792,91 +804,92 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   ja: {
     scientific: {
       badge: '技術リファレンス',
-      title: '科学用計算機 オンライン＆複数行計算ガイド',
+      title: '関数電卓の基本仕様＆複数行数式計算ガイド',
       sections: [
         {
-          title: '高度なウェブ計算機と浮動小数点正規化',
+          title: '浮動小数点演算とイプシロン正規化',
           paragraphs: [
-            '当サイトの科学用計算機は、工学および学習用途に最適化された高度なウェブ計算機です。イプシロン閾値に基づく正規化を適用し、IEEE 754の表示上の微細なアーティファクトを低減します。',
-            'オンライン無料分数計算機機能を備えており、小数と既約分数をワンタップで相互変換できます。',
+            'デジタルプロセッサはIEEE 754規格の倍精度浮動小数点数（float64）を用いて演算を行います。0.1や0.2のような10進小数は2進数で循環小数となるため、計算過程でごくわずかな丸め誤差（例：0.1 + 0.2 = 0.30000000000000004）が発生します。',
+            'SciCalcXではイプシロン閾値判定を用いた10進正規化を行い、最大12桁の表示アーティファクトを抑制しています。また、S-Dキーにより一般的な有理数を簡約分数として近似表示できます。',
           ],
         },
         {
-          title: '複数行エンジニアリング計算機と数式ソルバー',
+          title: '演算子の優先順位と構文チェック',
           paragraphs: [
-            '複数行エンジニアリング計算機として、入力式と計算結果を上下2段で表示。厳密なPEMDAS優先順位を守る数式ソルバーとして機能します。',
+            '入力された数式は標準的な代数階層（PEMDAS：括弧、累乗・平方根、左から右への乗除算、加減算）に厳密に従って評価されます。',
+            '複数行ディスプレイは開閉括弧の対応関係をリアルタイムに追跡し、構文の不整合を評価前に検知します。',
           ],
         },
       ],
-      recommendationTitle: '科学用行列計算機',
+      recommendationTitle: '線形代数・行列計算',
       recommendationDesc: '行列式、逆行列、連立方程式を高精度に解く専用計算ツールです。',
-      recommendationAction: '科学用行列計算機を開く →',
+      recommendationAction: '行列計算機を開く →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: '線形代数',
-      title: '科学用行列計算機＆連立方程式ガイド',
+      title: '行列計算＆連立方程式ガイド',
       sections: [
         {
           title: '余因子展開による行列式計算',
           paragraphs: [
-            '科学用行列計算機は、第1行に沿ったラプラス余因子展開により2x2および3x3行列式を正確に算出します。',
+            'ラプラス余因子展開により2x2および3x3正方行列の行列式を計算し、システムの可逆性（特異性）を判定します。',
           ],
           formula: 'det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)',
         },
       ],
-      recommendationTitle: 'ウェブベースの微積分計算機',
+      recommendationTitle: '微積分スイート',
       recommendationDesc: '数値微分、定積分、極限をグラフと共に解析します。',
-      recommendationAction: 'ウェブベースの微積分計算機を開く →',
+      recommendationAction: '微積分計算機を開く →',
       recommendationHref: '/calculus',
     },
     calculus: {
       badge: '数学解析',
-      title: 'ウェブベースの微積分計算機＆数式ソルバー解説',
+      title: '数値微積分＆解析ガイド',
       sections: [
         {
-          title: '数値微分と数式ソルバー',
+          title: '対称差分商による数値微分',
           paragraphs: [
-            'ウェブベースの微積分計算機は高度な数式ソルバーとして、対称差分商による瞬時変化率の算出をサポートします。',
+            '中心対称差分商アルゴリズムを用いて、解析的微分を行わずに高次の近似精度で変化率を算出します。',
           ],
           formula: 'f\'(x) ≈ (f(x + h) - f(x - h)) / (2h)',
         },
       ],
-      recommendationTitle: 'オンライングラフ微分計算機',
+      recommendationTitle: '2Dグラフスタジオ',
       recommendationDesc: '2Dグラフで接線の傾き、極値、漸近線を視覚的に確認できます。',
-      recommendationAction: 'オンライングラフ微分計算機を開く →',
+      recommendationAction: '2Dグラフ描画ツールを開く →',
       recommendationHref: '/graphing',
     },
     graphing: {
       badge: '直交幾何学',
-      title: 'オンライングラフ微分計算機＆2Dプロッター解説',
+      title: '2D関数グラフ＆プロッター解説',
       sections: [
         {
-          title: '関数プロットとグラフ微分',
+          title: '関数プロットと曲線解析',
           paragraphs: [
-            'オンライングラフ微分計算機により、関数の接線や微分係数をリアルタイムに描画・検証できます。',
+            '関数の動的サンプリングを行い、垂直漸近線や傾きの変化を滑らかな曲線として可視化します。',
           ],
         },
       ],
-      recommendationTitle: 'プログラマー向けN進数計算機',
+      recommendationTitle: '基数・ビット演算機',
       recommendationDesc: '16進数、2進数の相互変換とビット論理演算。',
-      recommendationAction: 'プログラマー向けN進数計算機を開く →',
+      recommendationAction: '基数・ビット演算機を開く →',
       recommendationHref: '/programming',
     },
     programming: {
       badge: '2進数システム',
-      title: 'プログラマー向けN進数計算機＆ビット演算解説',
+      title: '基数変換＆ビット演算ハンドブック',
       sections: [
         {
           title: '2の補数表現とビット演算',
           paragraphs: [
-            'プログラマー向けN進数計算機は、32ビット符号付き整数（int32）でのAND、OR、XOR演算を直感的に実行します。',
+            '32ビット符号付き整数（int32）のビット単位操作（AND、OR、XOR、NOT、シフト）および2進・16進変換を扱います。',
           ],
         },
       ],
-      recommendationTitle: 'AIコードチュータープラットフォーム',
+      recommendationTitle: 'AIコードチューター',
       recommendationDesc: 'ブラウザ上でC++、C、Pythonを直接実行・デバッグ学習。',
-      recommendationAction: 'AIコードチュータープラットフォームを開く →',
+      recommendationAction: 'コードチューターを開く →',
       recommendationHref: '/compiler',
     },
     statistics: {
@@ -899,91 +912,92 @@ export const handbooks: Record<SupportedLanguage, Record<string, HandbookData>> 
   ko: {
     scientific: {
       badge: '기술 레퍼런스',
-      title: '온라인 공학용 계산기 & 멀티라인 연산 가이드',
+      title: '공학용 계산 및 멀티라인 수식 평가 가이드',
       sections: [
         {
-          title: '고급 웹 계산기 및 부동 소수점 정밀도 정규화',
+          title: '부동소수점 연산과 엡실론 정규화',
           paragraphs: [
-            '본 온라인 공학용 계산기는 공학도와 연구원을 위한 고급 웹 계산기입니다. 엡실론 임계치 정규화 알고리즘을 적용하여 IEEE 754 부동 소수점 표현상의 미세한 표시 아티팩트를 줄입니다.',
-            '온라인 무료 분수 계산기 기능을 탑재하여 순환 소수와 기약 분수를 자유롭게 상호 변환할 수 있습니다.',
+            '디지털 프로세서는 IEEE 754 표준의 배정밀도 부동소수점(float64)을 기반으로 연산을 수행합니다. 0.1이나 0.2와 같은 10진 소수는 2진법에서 무한 순환소수로 표현되므로, 연산 과정에서 미세한 반올림 오차(예: 0.1 + 0.2 = 0.30000000000000004)가 발생합니다.',
+            'SciCalcX는 엡실론 임계치 기반의 10진 정규화를 적용하여 화면상에 최대 12자리까지 안정적인 결과를 표시하며, S-D 키를 통해 계산값을 기약분수로 근사 변환할 수 있습니다.',
           ],
         },
         {
-          title: '멀티라인 공학 계산기 & 수학 수식 계산기',
+          title: '연산자 우선순위와 구문 검증',
           paragraphs: [
-            '멀티라인 공학 계산기 화면 구성을 통해 입력 수식과 누적 계산 결과를 동시에 확인합니다. 엄격한 연산 우선순위를 지원하는 수학 수식 계산기로 동작합니다.',
+            '수식은 표준 대수학 연산 순서(PEMDAS: 괄호, 거듭제곱과 근호, 좌에서 우로의 곱셈과 나눗셈, 덧셈과 뺄셈)를 엄격히 따릅니다.',
+            '멀티라인 뷰포트는 열린 괄호와 닫힌 괄호의 짝을 실시간으로 추적하여 수식 평가 전 구문 오류를 방지합니다.',
           ],
         },
       ],
-      recommendationTitle: '공학용 행렬 계산기',
+      recommendationTitle: '선형대수학 & 행렬 계산',
       recommendationDesc: '행렬식, 역행렬, 행렬 곱셈 및 연립일차방정식을 단계별로 정밀 계산합니다.',
-      recommendationAction: '공학용 행렬 계산기 열기 →',
+      recommendationAction: '행렬 계산기 열기 →',
       recommendationHref: '/matrix',
     },
     matrix: {
       badge: '선형대수학',
-      title: '공학용 행렬 계산기 & 연립방정식 가이드',
+      title: '행렬 대수 & 연립방정식 가이드',
       sections: [
         {
           title: '라플라스 여인수 전개를 통한 행렬식 계산',
           paragraphs: [
-            '공학용 행렬 계산기는 첫 번째 행을 따른 여인수 전개를 통해 2x2 및 3x3 행렬식을 오차 없이 계산합니다.',
+            '첫 번째 행을 따른 라플라스 여인수 전개를 통해 2x2 및 3x3 정사각 행렬의 행렬식을 정밀하게 계산하고 역행렬 존재 여부를 판별합니다.',
           ],
           formula: 'det(A) = a(ei - fh) - b(di - fg) + c(dh - eg)',
         },
       ],
-      recommendationTitle: '웹 기반 미적분 계산기',
+      recommendationTitle: '미적분 스위트',
       recommendationDesc: '수치 미분, 정적분 및 극한값을 그래프와 함께 해석합니다.',
-      recommendationAction: '웹 기반 미적분 계산기 열기 →',
+      recommendationAction: '미적분 계산기 열기 →',
       recommendationHref: '/calculus',
     },
     calculus: {
       badge: '수학적 해석학',
-      title: '웹 기반 미적분 계산기 & 수학 수식 계산기 가이드',
+      title: '수치 해석 & 미적분 가이드',
       sections: [
         {
-          title: '수치 미분 및 수학 수식 계산기',
+          title: '대칭 차분법을 통한 수치 미분',
           paragraphs: [
-            '웹 기반 미적분 계산기는 대칭 차분 상용 알고리즘을 적용한 고정밀 수학 수식 계산기입니다.',
+            '중심 대칭 차분 상용 알고리즘을 활용하여 해석적 미분 없이도 고차 정확도로 순간 변화율을 산출합니다.',
           ],
           formula: 'f\'(x) ≈ (f(x + h) - f(x - h)) / (2h)',
         },
       ],
-      recommendationTitle: '온라인 그래프 미분 계산기',
+      recommendationTitle: '2D 그래프 스튜디오',
       recommendationDesc: '2D 그래프로 접선의 기울기, 극값, 점근선을 시각적으로 확인하세요.',
-      recommendationAction: '온라인 그래프 미분 계산기 열기 →',
+      recommendationAction: '2D 함수 그래프 열기 →',
       recommendationHref: '/graphing',
     },
     graphing: {
       badge: '데카르트 기하학',
-      title: '온라인 그래프 미분 계산기 & 2D 플로터 가이드',
+      title: '2D 함수 플로터 & 기하학 가이드',
       sections: [
         {
-          title: '2D 함수 플로팅 및 그래프 미분',
+          title: '2D 함수 플로팅 및 곡선 해석',
           paragraphs: [
-            '온라인 그래프 미분 계산기를 통해 다중 곡선, 접선 및 미분 계수를 실시간으로 그립니다.',
+            '함수를 동적으로 샘플링하여 수직 점근선, 극값, 접선의 기울기를 부드러운 곡선으로 시각화합니다.',
           ],
         },
       ],
-      recommendationTitle: '프로그래머 N진수 계산기',
+      recommendationTitle: '프로그래머 계산기',
       recommendationDesc: '16진수, 2진수 진법 변환 및 비트 단위 논리 연산.',
-      recommendationAction: '프로그래머 N진수 계산기 열기 →',
+      recommendationAction: 'N진수 계산기 열기 →',
       recommendationHref: '/programming',
     },
     programming: {
       badge: '이진 시스템',
-      title: '프로그래머 N진수 계산기 & 비트 연산 가이드',
+      title: 'N진수 변환 & 비트 연산 핸드북',
       sections: [
         {
           title: '2의 보수 및 32비트 논리 연산',
           paragraphs: [
-            '프로그래머 N진수 계산기는 32비트 부호 있는 정수(int32) 연산 및 AND, OR, XOR 비트 연산을 지원합니다.',
+            '32비트 부호 있는 정수(int32)를 대상으로 2의 보수 표현과 비트 단위 논리 연산(AND, OR, XOR, NOT, 시프트)을 수행합니다.',
           ],
         },
       ],
-      recommendationTitle: 'AI 코드 튜터 플랫폼',
+      recommendationTitle: 'AI 코드 튜터',
       recommendationDesc: '브라우저에서 C++, C, Python 코드를 직접 작성하고 지능형 피드백을 받으세요.',
-      recommendationAction: 'AI 코드 튜터 플랫폼 열기 →',
+      recommendationAction: '코드 튜터 열기 →',
       recommendationHref: '/compiler',
     },
     statistics: {

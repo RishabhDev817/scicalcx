@@ -1,8 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { render, type CollectionEntry } from 'astro:content';
+import { render, getCollection, type CollectionEntry } from 'astro:content';
 import { useTranslations, useTranslatedPath } from '../../i18n/utils';
 import type { SupportedLanguage } from '../../i18n/ui';
+import 'katex/dist/katex.min.css';
 
 interface Props {
   post: CollectionEntry<'blog'>;
@@ -10,17 +11,66 @@ interface Props {
 }
 
 const { post, lang = 'en' } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
+// Format dates nicely per locale
 function formatDate(date: Date) {
-  return new Intl.DateTimeFormat(lang === 'ja' ? 'ja-JP' : lang === 'ko' ? 'ko-KR' : lang === 'de' ? 'de-DE' : lang === 'fr' ? 'fr-FR' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : lang === 'pt' ? 'pt-PT' : 'en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(new Date(date));
+  return new Intl.DateTimeFormat(
+    lang === 'ja' ? 'ja-JP' : lang === 'ko' ? 'ko-KR' : lang === 'de' ? 'de-DE' : lang === 'fr' ? 'fr-FR' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : lang === 'pt' ? 'pt-PT' : 'en-US',
+    {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    }
+  ).format(new Date(date));
 }
+
+// Calculate estimated read time if not explicitly provided
+const wordCount = (post.body || '').trim().split(/\s+/).filter(Boolean).length;
+const estimatedMinutes = Math.max(3, Math.ceil(wordCount / 200));
+const displayReadTime = post.data.readTime || `${estimatedMinutes} ${t('blog.readTime')}`;
+
+// Filter major headings for Table of Contents (H2 & H3)
+const tocHeadings = (headings || []).filter((h) => h.depth === 2 || h.depth === 3);
+
+// Fetch related articles
+const allPosts = await getCollection('blog');
+const currentSlug = post.id.includes('/') ? post.id.split('/').slice(1).join('/') : post.id;
+
+let relatedPosts: CollectionEntry<'blog'>[] = [];
+if (post.data.related && post.data.related.length > 0) {
+  relatedPosts = allPosts.filter((p) => {
+    const slug = p.id.includes('/') ? p.id.split('/').slice(1).join('/') : p.id;
+    const pLang = p.id.includes('/') ? p.id.split('/')[0] : 'en';
+    return (
+      slug !== currentSlug &&
+      post.data.related!.includes(slug) &&
+      (lang === 'en' ? !p.id.includes('/') : pLang === lang || !p.id.includes('/'))
+    );
+  });
+}
+
+// Fallback: match by category or take recent posts
+if (relatedPosts.length < 2) {
+  const fallbacks = allPosts.filter((p) => {
+    const slug = p.id.includes('/') ? p.id.split('/').slice(1).join('/') : p.id;
+    const pLang = p.id.includes('/') ? p.id.split('/')[0] : 'en';
+    const isDifferent = slug !== currentSlug;
+    const isTargetLang = lang === 'en' ? !p.id.includes('/') : pLang === lang;
+    const matchesCategory = post.data.category && p.data.category === post.data.category;
+    return isDifferent && isTargetLang && (matchesCategory || true);
+  });
+  
+  for (const fb of fallbacks) {
+    if (!relatedPosts.some((r) => r.id === fb.id)) {
+      relatedPosts.push(fb);
+    }
+    if (relatedPosts.length >= 3) break;
+  }
+}
+relatedPosts = relatedPosts.slice(0, 3);
 ---
 
 <Layout
@@ -28,42 +78,188 @@ function formatDate(date: Date) {
   title={`${post.data.title} | SciCalcX`}
   description={post.data.description}
   lang={lang}
+  ogType="article"
+  publishedTime={post.data.pubDate.toISOString()}
+  modifiedTime={(post.data.updatedDate || post.data.pubDate).toISOString()}
+  author={post.data.author}
+  category={post.data.category || 'Computer Science & Mathematics'}
 >
-  <article class="w-full max-w-3xl mx-auto space-y-8 font-sans pb-12">
+  <article class="w-full max-w-4xl mx-auto space-y-8 font-sans pb-16">
     <!-- Breadcrumbs -->
-    <nav class="flex items-center space-x-2 text-xs font-mono text-brand-text-dim border-b border-brand-border/40 pb-3">
+    <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-1.5 text-xs font-mono text-brand-text-dim border-b border-brand-border/40 pb-3">
       <a href={translatePath('/')} class="hover:text-brand-blue-neon transition-colors">{t('blog.breadcrumbHome')}</a>
       <span>/</span>
       <a href={translatePath('/blog')} class="hover:text-brand-blue-neon transition-colors">{t('blog.breadcrumbBlog')}</a>
+      {post.data.category && (
+        <>
+          <span>/</span>
+          <span class="text-brand-blue-neon/80 hidden sm:inline">{post.data.category}</span>
+        </>
+      )}
       <span>/</span>
       <span class="text-brand-text-muted truncate max-w-[200px] sm:max-w-xs">{post.data.title}</span>
     </nav>
 
     <!-- Post Header -->
-    <header class="space-y-3">
-      <div class="flex flex-wrap items-center gap-3 text-xs font-mono text-brand-text-muted">
-        <time datetime={post.data.pubDate.toISOString()} class="text-brand-blue-neon font-semibold">
+    <header class="space-y-4">
+      <div class="flex flex-wrap items-center gap-2.5 text-xs font-mono">
+        {post.data.category && (
+          <span class="px-2.5 py-0.5 rounded-full bg-brand-blue/15 border border-brand-blue/30 text-brand-blue-neon text-[11px] font-semibold">
+            {post.data.category}
+          </span>
+        )}
+        <span class="text-brand-text-dim">&bull;</span>
+        <time datetime={post.data.pubDate.toISOString()} class="text-brand-text-muted">
           {formatDate(post.data.pubDate)}
         </time>
-        <span>&bull;</span>
-        <span>By {post.data.author}</span>
-        <span>&bull;</span>
-        <span class="text-emerald-400">{t('blog.badgeTutorial')}</span>
+        {post.data.updatedDate && (
+          <>
+            <span class="text-brand-text-dim">&bull;</span>
+            <span class="text-emerald-400 font-medium">
+              {t('blog.lastUpdated')}: {formatDate(post.data.updatedDate)}
+            </span>
+          </>
+        )}
+        <span class="text-brand-text-dim">&bull;</span>
+        <span class="text-brand-text-dim flex items-center gap-1">
+          <svg class="w-3.5 h-3.5 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          {displayReadTime}
+        </span>
       </div>
 
-      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
         {post.data.title}
       </h1>
 
-      <p class="text-sm sm:text-base text-brand-text-muted leading-relaxed font-sans pt-1 border-l-2 border-brand-blue pl-4 italic">
-        {post.data.description}
-      </p>
+      <div class="flex flex-wrap items-center gap-2 pt-1 text-xs text-brand-text-muted font-mono">
+        <span>By</span>
+        <a href={translatePath('/about')} class="text-white hover:text-brand-blue-neon transition-colors font-semibold underline underline-offset-2">
+          {post.data.author}
+        </a>
+        <span>&bull;</span>
+        <span class="text-brand-blue-neon">{t('blog.badgeTutorial')}</span>
+      </div>
+
+      <div class="text-sm sm:text-base text-brand-text leading-relaxed font-sans p-4 rounded-xl border border-brand-border bg-brand-gray-dark/30 border-l-4 border-l-brand-blue shadow-inner">
+        <p class="italic text-brand-text-muted">
+          {post.data.description}
+        </p>
+      </div>
     </header>
 
+    <!-- Optional Table of Contents for comprehensive guides -->
+    {tocHeadings.length >= 3 && (
+      <nav aria-label="Table of Contents" class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 font-sans">
+        <div class="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-brand-blue-neon font-semibold pb-2 border-b border-brand-border/40">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+          </svg>
+          {t('blog.tableOfContents')}
+        </div>
+        <ul class="mt-3 space-y-1.5 text-xs sm:text-sm font-sans">
+          {tocHeadings.map((h) => (
+            <li class={h.depth === 3 ? 'ml-4 list-disc list-inside text-brand-text-dim' : 'font-medium'}>
+              <a
+                href={`#${h.slug}`}
+                class="text-brand-text-muted hover:text-brand-blue-neon transition-colors"
+              >
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
     <!-- Post Body Content -->
-    <div class="blog-prose border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:10 shadow-xl backdrop-blur-sm text-brand-text leading-relaxed text-sm sm:text-base space-y-6">
+    <div class="blog-prose border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-10 shadow-xl backdrop-blur-sm text-brand-text leading-relaxed text-sm sm:text-base space-y-6">
       <Content />
     </div>
+
+    <!-- Natural Contextual Tool Callout / CTA -->
+    {post.data.calculatorUrl && (
+      <div class="border border-brand-blue/30 bg-gradient-to-r from-brand-blue/10 via-brand-gray-dark/40 to-brand-black rounded-xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 shadow-lg">
+        <div class="space-y-1">
+          <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon animate-pulse"></span>
+            {t('blog.interactiveToolTitle')}
+          </div>
+          <h2 class="text-base sm:text-lg font-bold text-white">
+            {post.data.calculatorLabel || 'SciCalcX Interactive Computational Engine'}
+          </h2>
+          <p class="text-xs text-brand-text-muted max-w-xl leading-relaxed">
+            Apply these formulas and principles with live numerical evaluation, high-precision rounding, and interactive visual steps.
+          </p>
+        </div>
+        <a
+          href={translatePath(post.data.calculatorUrl)}
+          class="shrink-0 text-xs font-mono font-semibold px-5 py-2.5 rounded-lg bg-brand-blue hover:bg-brand-blue-hover text-white transition-all duration-200 shadow-md flex items-center gap-1.5"
+        >
+          {t('blog.openTool')} &rarr;
+        </a>
+      </div>
+    )}
+
+    <!-- Editorial Trust & Review Badge -->
+    <section aria-labelledby="editorial-review-title" class="border border-brand-border bg-brand-gray-dark/20 rounded-xl p-5 sm:p-6 space-y-3 font-sans">
+      <div class="flex items-center gap-2 text-xs font-mono text-emerald-400 font-semibold">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+        <span id="editorial-review-title">{t('blog.editorialReview')}</span>
+      </div>
+      <p class="text-xs text-brand-text-muted leading-relaxed">
+        {t('blog.editorialReviewNote')} {t('blog.authorBio')}
+      </p>
+      <div class="pt-2 flex flex-wrap gap-4 text-xs font-mono">
+        <a href={translatePath('/editorial-integrity')} class="text-brand-blue-neon hover:text-white transition-colors underline underline-offset-2">
+          {t('blog.readIntegrityPolicy')}
+        </a>
+        <a href={translatePath('/about')} class="text-brand-text-dim hover:text-white transition-colors">
+          About SciCalcX & Our Founders &rarr;
+        </a>
+      </div>
+    </section>
+
+    <!-- Related Articles -->
+    {relatedPosts.length > 0 && (
+      <section aria-labelledby="related-articles-title" class="space-y-4 pt-4 border-t border-brand-border/60">
+        <h2 id="related-articles-title" class="text-sm font-mono uppercase tracking-wider text-white flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
+          {t('blog.relatedArticles')}
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {relatedPosts.map((rel) => {
+            const relSlug = rel.id.includes('/') ? rel.id.split('/').slice(1).join('/') : rel.id;
+            return (
+              <a
+                href={translatePath(`/blog/${relSlug}`)}
+                class="border border-brand-border bg-brand-gray-dark/30 hover:border-brand-border-strong rounded-xl p-4 flex flex-col justify-between space-y-2 group transition-all duration-150 hover:-translate-y-0.5"
+              >
+                <div class="space-y-1.5">
+                  {rel.data.category && (
+                    <span class="text-[9px] font-mono uppercase text-brand-blue-neon">
+                      {rel.data.category}
+                    </span>
+                  )}
+                  <h3 class="text-xs sm:text-sm font-bold text-white group-hover:text-brand-blue-neon transition-colors line-clamp-2">
+                    {rel.data.title}
+                  </h3>
+                  <p class="text-[11px] text-brand-text-muted line-clamp-2 leading-relaxed">
+                    {rel.data.description}
+                  </p>
+                </div>
+                <div class="pt-2 text-[10px] font-mono text-brand-blue-neon flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                  Read guide &rarr;
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
 
     <!-- Post Footer Navigation -->
     <div class="border-t border-brand-border/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
@@ -74,10 +270,10 @@ function formatDate(date: Date) {
         &larr; {t('blog.backToArticles')}
       </a>
       <a
-        href={translatePath('/compiler')}
+        href={translatePath('/')}
         class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-brand-border bg-brand-black hover:border-brand-border-strong text-white transition-colors"
       >
-        {t('blog.openSandbox')} &rarr;
+        Explore SciCalcX Calculators &rarr;
       </a>
     </div>
   </article>
@@ -91,8 +287,9 @@ function formatDate(date: Date) {
       color: #ffffff;
       font-weight: 700;
       letter-spacing: -0.02em;
-      margin-top: 1.75rem;
-      margin-bottom: 0.75rem;
+      margin-top: 2rem;
+      margin-bottom: 0.85rem;
+      scroll-margin-top: 5rem;
     }
     .light .blog-prose h1,
     .light .blog-prose h2,
@@ -101,15 +298,16 @@ function formatDate(date: Date) {
       color: #111827;
     }
 
-    .blog-prose h1 { font-size: 1.65rem; }
+    .blog-prose h1 { font-size: 1.75rem; }
     .blog-prose h2 { font-size: 1.35rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem; }
     .light .blog-prose h2 { border-bottom-color: rgba(0,0,0,0.08); }
     .blog-prose h3 { font-size: 1.15rem; }
+    .blog-prose h4 { font-size: 1rem; }
     
     .blog-prose p {
       color: #a1a1aa;
-      line-height: 1.75;
-      margin-bottom: 1rem;
+      line-height: 1.8;
+      margin-bottom: 1.15rem;
     }
     .light .blog-prose p {
       color: #374151;
@@ -127,14 +325,14 @@ function formatDate(date: Date) {
       margin-left: 1.5rem;
       margin-bottom: 1.25rem;
       color: #a1a1aa;
-      line-height: 1.7;
+      line-height: 1.75;
     }
     .light .blog-prose ul, .light .blog-prose ol {
       color: #374151;
     }
     .blog-prose ul { list-style-type: disc; }
     .blog-prose ol { list-style-type: decimal; }
-    .blog-prose li { margin-bottom: 0.35rem; }
+    .blog-prose li { margin-bottom: 0.4rem; }
 
     .blog-prose a {
       color: #00a2ff;
@@ -149,41 +347,146 @@ function formatDate(date: Date) {
       color: #0051b3;
     }
 
+    /* Math Formula Blocks */
+    .blog-prose .math-block,
+    .blog-prose .formula-block {
+      background-color: #09090b;
+      border: 1px solid rgba(0, 162, 255, 0.25);
+      border-radius: 0.5rem;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      text-align: center;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.95rem;
+      color: #38bdf8;
+      overflow-x: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .light .blog-prose .math-block,
+    .light .blog-prose .formula-block {
+      background-color: #f8fafc;
+      border-color: #93c5fd;
+      color: #0284c7;
+    }
+
+    /* Table Styles */
+    .blog-prose table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+      border: 1px solid #27272a;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .light .blog-prose table {
+      border-color: #e4e4e7;
+    }
+    .blog-prose th {
+      background-color: rgba(255, 255, 255, 0.04);
+      color: #ffffff;
+      font-weight: 600;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #27272a;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .light .blog-prose th {
+      background-color: #f4f4f5;
+      color: #111827;
+      border-bottom-color: #e4e4e7;
+    }
+    .blog-prose td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #a1a1aa;
+    }
+    .light .blog-prose td {
+      border-bottom-color: rgba(0, 0, 0, 0.05);
+      color: #374151;
+    }
+    .blog-prose tr:last-child td {
+      border-bottom: none;
+    }
+    .blog-prose tr:nth-child(even) td {
+      background-color: rgba(255, 255, 255, 0.015);
+    }
+    .light .blog-prose tr:nth-child(even) td {
+      background-color: rgba(0, 0, 0, 0.02);
+    }
+
     .blog-prose blockquote {
       border-left: 3px solid #0070f3;
-      padding-left: 1rem;
-      font-style: italic;
-      color: #71717a;
+      background-color: rgba(0, 112, 243, 0.05);
+      padding: 1rem 1.25rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      font-style: normal;
+      color: #cbd5e1;
+      margin: 1.5rem 0;
+    }
+    .light .blog-prose blockquote {
+      border-left-color: #0284c7;
+      background-color: rgba(2, 132, 199, 0.05);
+      color: #334155;
+    }
+
+    /* Code Blocks & Syntax Highlighting (Dual Theme: Light / Dark Mode Adaptive) */
+    .blog-prose pre {
+      border-radius: 0.625rem;
+      padding: 1.15rem 1.25rem;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.85rem;
+      line-height: 1.65;
       margin: 1.5rem 0;
     }
 
-    .blog-prose pre {
-      background-color: #09090b !important;
-      border: 1px solid #27272a;
-      border-radius: 0.5rem;
-      padding: 1rem;
-      overflow-x: auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.825rem;
-      line-height: 1.6;
-      margin: 1.25rem 0;
+    /* Dark mode (default) */
+    html.dark .blog-prose pre.astro-code,
+    html:not(.light) .blog-prose pre.astro-code {
+      background-color: #0d1117 !important;
+      border: 1px solid #30363d !important;
+      color: #e6edf3 !important;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     }
-    .light .blog-prose pre {
-      background-color: #f4f4f5 !important;
-      border-color: #e4e4e7;
+    html.dark .blog-prose pre.astro-code span,
+    html:not(.light) .blog-prose pre.astro-code span {
+      color: var(--shiki-dark) !important;
+      font-style: var(--shiki-dark-font-style, inherit) !important;
+      font-weight: var(--shiki-dark-font-weight, inherit) !important;
+      text-decoration: var(--shiki-dark-text-decoration, inherit) !important;
     }
 
+    /* Light mode */
+    html.light .blog-prose pre.astro-code {
+      background-color: #f6f8fa !important;
+      border: 1px solid #d0d7de !important;
+      color: #24292f !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    html.light .blog-prose pre.astro-code span {
+      color: var(--shiki-light) !important;
+      font-style: var(--shiki-light-font-style, inherit) !important;
+      font-weight: var(--shiki-light-font-weight, inherit) !important;
+      text-decoration: var(--shiki-light-text-decoration, inherit) !important;
+    }
+
+    /* Inline Code Styling */
     .blog-prose code:not(pre code) {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size: 0.85em;
+      font-weight: 500;
       background-color: rgba(255, 255, 255, 0.08);
-      color: #00a2ff;
-      padding: 0.15rem 0.35rem;
-      border-radius: 0.25rem;
+      color: #7dd3fc;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.3rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     .light .blog-prose code:not(pre code) {
-      background-color: rgba(0, 0, 0, 0.06);
-      color: #0070f3;
+      background-color: #f1f5f9;
+      color: #0369a1;
+      border-color: #cbd5e1;
     }
 
     .blog-prose hr {
@@ -193,6 +496,48 @@ function formatDate(date: Date) {
     }
     .light .blog-prose hr {
       border-top-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* Mathematical Formula (KaTeX) Styling */
+    .blog-prose .katex-display {
+      display: block;
+      margin: 1.75rem 0;
+      padding: 0.75rem 0.5rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      text-align: center;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .light .blog-prose .katex-display {
+      scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+    }
+    .blog-prose .katex-display::-webkit-scrollbar {
+      height: 4px;
+    }
+    .blog-prose .katex-display::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+    .light .blog-prose .katex-display::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+    .blog-prose .katex-display > .katex {
+      display: inline-block;
+      text-align: initial;
+      font-size: 1.15em;
+    }
+    .blog-prose .katex {
+      font-size: 1.05em;
+      color: inherit;
+      text-rendering: auto;
+      line-height: 1.2;
+    }
+    /* Ensure KaTeX symbols and rules scale and stay sharp */
+    .blog-prose .katex .katex-html {
+      overflow-x: visible;
     }
   </style>
 </Layout>

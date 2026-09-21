@@ -27,12 +27,20 @@ const displayItems = lang === 'en'
       .filter((item): item is { post: (typeof allPosts)[number]; href: string } => item !== null);
 
 function formatDate(date: Date) {
-  return new Intl.DateTimeFormat(lang === 'ja' ? 'ja-JP' : lang === 'ko' ? 'ko-KR' : lang === 'de' ? 'de-DE' : lang === 'fr' ? 'fr-FR' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : lang === 'pt' ? 'pt-PT' : 'en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(new Date(date));
+  return new Intl.DateTimeFormat(
+    lang === 'ja' ? 'ja-JP' : lang === 'ko' ? 'ko-KR' : lang === 'de' ? 'de-DE' : lang === 'fr' ? 'fr-FR' : lang === 'es' ? 'es-ES' : lang === 'it' ? 'it-IT' : lang === 'pt' ? 'pt-PT' : 'en-US',
+    {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    }
+  ).format(new Date(date));
 }
+
+// Collect unique categories
+const categories = Array.from(
+  new Set(displayItems.map((item) => item.post.data.category).filter(Boolean))
+) as string[];
 ---
 
 <Layout
@@ -41,35 +49,70 @@ function formatDate(date: Date) {
   description={t('meta.blog.desc')}
   lang={lang}
 >
-  <div class="w-full max-w-4xl mx-auto space-y-8 font-sans">
+  <div class="w-full max-w-5xl mx-auto space-y-8 font-sans pb-12">
     <!-- Page Header -->
     <div class="text-center md:text-left space-y-2 border-b border-brand-border/60 pb-6">
       <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon flex items-center justify-center md:justify-start gap-1.5">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon animate-pulse"></span>
         {t('blog.eyebrow')}
       </div>
-      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-brand-text">
+      <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
         {t('blog.heading')}<span class="text-brand-blue">.</span>
       </h1>
-      <p class="text-xs sm:text-sm text-brand-text-muted max-w-2xl">
+      <p class="text-xs sm:text-sm text-brand-text-muted max-w-3xl leading-relaxed">
         {t('blog.subheading')}
       </p>
+
+      <!-- Category Filter Pills -->
+      {categories.length > 0 && (
+        <div class="pt-4 flex flex-wrap gap-2 items-center" id="category-filter-bar">
+          <button
+            type="button"
+            data-filter="all"
+            class="category-btn active px-3 py-1 rounded-full text-xs font-mono transition-all border border-brand-blue bg-brand-blue text-white shadow-sm"
+          >
+            {t('blog.categoryAll')} ({displayItems.length})
+          </button>
+          {categories.map((cat) => {
+            const count = displayItems.filter((i) => i.post.data.category === cat).length;
+            return (
+              <button
+                type="button"
+                data-filter={cat}
+                class="category-btn px-3 py-1 rounded-full text-xs font-mono transition-all border border-brand-border bg-brand-gray-dark/40 hover:border-brand-blue/50 text-brand-text-muted hover:text-white"
+              >
+                {cat} ({count})
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
 
     <!-- Blog Posts Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="blog-posts-grid">
       {displayItems.map(({ post: displayPost, href: postHref }) => {
+        const bodyWords = (displayPost.body || '').trim().split(/\s+/).filter(Boolean).length;
+        const estMin = Math.max(3, Math.ceil(bodyWords / 200));
+        const readTimeStr = displayPost.data.readTime || `${estMin} ${t('blog.readTime')}`;
+        const itemCategory = displayPost.data.category || 'General';
+
         return (
-          <article class="border border-brand-border bg-brand-gray-dark/40 hover:border-brand-border-strong rounded-xl p-6 flex flex-col justify-between space-y-4 shadow-lg backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 group">
+          <article
+            data-category={itemCategory}
+            class="article-card border border-brand-border bg-brand-gray-dark/40 hover:border-brand-border-strong rounded-xl p-6 flex flex-col justify-between space-y-4 shadow-lg backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 group"
+          >
             <div class="space-y-3">
               <div class="flex items-center justify-between text-[11px] font-mono text-brand-text-dim">
-                <time datetime={displayPost.data.pubDate.toISOString()}>
-                  {formatDate(displayPost.data.pubDate)}
-                </time>
+                <span class="px-2 py-0.5 rounded bg-brand-blue/10 border border-brand-blue/20 text-brand-blue-neon text-[10px] font-semibold">
+                  {itemCategory}
+                </span>
                 <div class="flex items-center gap-2">
-                  <span class="text-brand-blue-neon/80 group-hover:text-brand-blue-neon transition-colors">
-                    {displayPost.data.author}
-                  </span>
+                  <time datetime={displayPost.data.pubDate.toISOString()}>
+                    {formatDate(displayPost.data.pubDate)}
+                  </time>
+                  <span>&bull;</span>
+                  <span>{readTimeStr}</span>
                 </div>
               </div>
 
@@ -84,13 +127,13 @@ function formatDate(date: Date) {
               </p>
             </div>
 
-            <div class="pt-3 border-t border-brand-border/40 flex items-center justify-between">
-              <span class="text-[10px] font-mono uppercase text-brand-text-dim">
-                {t('btn.technicalGuide')}
+            <div class="pt-3 border-t border-brand-border/40 flex items-center justify-between text-xs font-mono">
+              <span class="text-[11px] text-brand-text-dim">
+                By {displayPost.data.author}
               </span>
               <a
                 href={postHref}
-                class="text-xs font-mono font-semibold text-brand-blue-neon hover:text-white flex items-center gap-1 transition-colors"
+                class="font-semibold text-brand-blue-neon hover:text-white flex items-center gap-1 group-hover:translate-x-0.5 transition-all"
               >
                 {t('btn.readArticle')} &rarr;
               </a>
@@ -100,20 +143,67 @@ function formatDate(date: Date) {
       })}
     </div>
 
-    <!-- Interactive Sandboxes CTA Callout -->
-    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="space-y-1 text-center sm:text-left">
-        <h3 class="text-sm font-semibold text-white">{t('cta.tutorTitle')}</h3>
-        <p class="text-xs text-brand-text-muted">
-          {t('cta.tutorDesc')}
+    <!-- Educational Mission Callout Box -->
+    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+      <div class="space-y-1.5 text-center sm:text-left max-w-xl">
+        <div class="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-semibold">
+          Computational Science & Educational Rigor
+        </div>
+        <h3 class="text-base sm:text-lg font-bold text-white">
+          Accurate Calculations Combined with Intuitive Explanations
+        </h3>
+        <p class="text-xs text-brand-text-muted leading-relaxed">
+          SciCalcX exists to make advanced mathematics, algorithmic computer science, and scientific computing accessible, rigorous, and completely free of tracking paywalls.
         </p>
       </div>
-      <a
-        href={translatePath('/compiler')}
-        class="shrink-0 text-xs font-mono font-semibold px-4 py-2.5 rounded bg-brand-blue hover:bg-brand-blue-hover text-white transition-all shadow-md"
-      >
-        {t('btn.openTutor')} &rarr;
-      </a>
+      <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+        <a
+          href={translatePath('/')}
+          class="text-xs font-mono font-semibold px-4 py-2.5 rounded-lg bg-brand-blue hover:bg-brand-blue-hover text-white transition-all shadow-md text-center"
+        >
+          Scientific Calculator &rarr;
+        </a>
+        <a
+          href={translatePath('/compiler')}
+          class="text-xs font-mono font-semibold px-4 py-2.5 rounded-lg border border-brand-border bg-brand-black hover:border-brand-border-strong text-white transition-all text-center"
+        >
+          Code Sandbox &rarr;
+        </a>
+      </div>
     </div>
   </div>
+
+  <script is:inline>
+    // Client-side category filtering
+    (function () {
+      const filterBar = document.getElementById('category-filter-bar');
+      if (!filterBar) return;
+      const buttons = filterBar.querySelectorAll('.category-btn');
+      const cards = document.querySelectorAll('.article-card');
+
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const filter = btn.getAttribute('data-filter');
+
+          // Toggle active classes
+          buttons.forEach((b) => {
+            b.classList.remove('active', 'bg-brand-blue', 'text-white', 'border-brand-blue');
+            b.classList.add('bg-brand-gray-dark/40', 'text-brand-text-muted', 'border-brand-border');
+          });
+          btn.classList.add('active', 'bg-brand-blue', 'text-white', 'border-brand-blue');
+          btn.classList.remove('bg-brand-gray-dark/40', 'text-brand-text-muted', 'border-brand-border');
+
+          // Filter cards
+          cards.forEach((card) => {
+            const cardCat = card.getAttribute('data-category');
+            if (filter === 'all' || cardCat === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    })();
+  </script>
 </Layout>

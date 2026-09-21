@@ -2,7 +2,14 @@
 title: "Tijdcomplexiteit Uitgelegd: De Big-O Notatie voor Beginners"
 description: "Begrijp algoritmische efficiëntie. Bereken de Big-O looptijdcomplexiteit met praktische C++ codevoorbeelden."
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+author: "SciCalcX"
+updatedDate: "2026-09-21"
+category: "Informatica & Algoritmen"
+readTime: "11 min leestijd"
+calculatorUrl: "/graphing"
+calculatorLabel: "SciCalcX 2D Grafische Rekenmachine"
+related: ["calculator-cpp", "pointers-cpp"]
+tags: ["Tijdcomplexiteit", "Big O", "Algoritmen", "Informatica", "Programmeren"]
 ---
 
 In de informatica bestaan er voor vrijwel elk softwareprobleem meerdere oplossingen. Maar hoe bepalen software-ontwikkelaars welke implementatie het meest efficiënt is?
@@ -141,3 +148,11 @@ Asymptotische notatie wordt pas echt inzichtelijk wanneer u theorie en visuele b
 - **Benchmark in de Sandbox:** Open de **[SciCalcX C/C++ Code Tutor](/nl/compiler/)** om het bovenstaande programma met verschillende vectorgroottes ($N=100, 200, 400$) direct in de browser uit te voeren.
 - **Grafieken Plotten:** Gebruik de **[SciCalcX 2D Grafische Rekenmachine](/nl/graphing/)** om $y = x$, $y = x \log_2(x)$ en $y = x^2$ over elkaar heen te projecteren en de snelle divergentie van kwadratische groei te bekijken.
 - **Vuistregels voor Productie:** Negeer constante factoren ($O(2N) \rightarrow O(N)$) en richt u altijd op de hoogste macht van $N$ ($O(N^2 + N) \rightarrow O(N^2)$).
+
+---
+
+## Bronnen & Aanbevolen Literatuur
+
+* **Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (CLRS)** — *Introduction to Algorithms* (MIT Press): Het standaard academische naslagwerk voor formele bewijzen van asymptotische grenzen en het Master Theorem.
+* **Donald E. Knuth (1976)** — [Big Omicron and Big Omega and Big Theta](https://dl.acm.org/doi/10.1145/1008328.1008329): Fundamenteel artikel waarin de moderne wiskundige notatie voor computationele complexiteit werd gestandaardiseerd.
+* **NIST Dictionary of Algorithms and Data Structures (DADS)** — [Big-O Notation](https://xlinux.nist.gov/dads/HTML/bigOnotation.html): Formele definities en eigenschappen van asymptotische complexiteitsklassen.

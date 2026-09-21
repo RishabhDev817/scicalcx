@@ -2,7 +2,14 @@
 title: "Complexidade de Tempo Explicada: Notação Big O para Iniciantes"
 description: "Desmistifique a eficiência de algoritmos. Aprenda a calcular a complexidade temporal Big O com exemplos práticos em C++."
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+author: "SciCalcX"
+updatedDate: "2026-09-21"
+category: "Ciência da Computação"
+readTime: "11 min de leitura"
+calculatorUrl: "/graphing"
+calculatorLabel: "Calculadora Gráfica 2D SciCalcX"
+related: ["calculator-cpp", "pointers-cpp"]
+tags: ["Complexidade Temporal", "Big O", "Algoritmos", "Ciência da Computação", "Programação"]
 ---
 
 Na ciência da computação, quase sempre existem várias abordagens para solucionar o mesmo problema de programação. Mas como definir, com rigor técnico, qual solução é a mais eficiente?
@@ -141,3 +148,11 @@ O domínio da análise assintótica se consolida ao testar o código e plotar as
 - **Executar no Sandbox:** Abra o **[Tutor de Código C/C++ SciCalcX](/pt/compiler/)** para rodar o benchmark acima alterando o tamanho do vetor ($N=100, 200, 400$) e constatar a diferença de processamento.
 - **Plotar Curvas Interativamente:** Acesse a **[Calculadora Gráfica 2D SciCalcX](/pt/graphing/)** para plotar $y = x$, $y = x \log_2(x)$ e $y = x^2$ em um plano cartesiano unificado e visualizar a divergência exponencial do tempo quadrático.
 - **Regras Práticas:** Desconsidere constantes multiplicativas ($O(2N) \rightarrow O(N)$) e foque no termo de maior expoente ($O(N^2 + N) \rightarrow O(N^2)$) para garantir escalabilidade.
+
+---
+
+## Referências e Leituras Recomendadas
+
+* **Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (CLRS)** — *Algoritmos: Teoria e Prática* (Campus / MIT Press): A principal referência acadêmica para demonstrações formais de limites assintóticos e Teorema Mestre.
+* **Donald E. Knuth (1976)** — [Big Omicron and Big Omega and Big Theta](https://dl.acm.org/doi/10.1145/1008328.1008329): Publicação histórica responsável pela padronização da notação assintótica na ciência da computação.
+* **NIST Dictionary of Algorithms and Data Structures (DADS)** — [Notação Big-O](https://xlinux.nist.gov/dads/HTML/bigOnotation.html): Definições formais e propriedades de complexidade computacional.

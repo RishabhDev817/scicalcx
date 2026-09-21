@@ -2,7 +2,14 @@
 title: "La Complexité Temporelle Expliquée : La Notation Grand O pour Débutants"
 description: "Démystifiez l'efficacité algorithmique. Apprenez à calculer la complexité temporelle Grand O avec des exemples pratiques en C++."
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+author: "SciCalcX"
+updatedDate: "2026-09-21"
+category: "Informatique & Algorithmes"
+readTime: "11 min de lecture"
+calculatorUrl: "/graphing"
+calculatorLabel: "Traceur de Courbes 2D SciCalcX"
+related: ["calculator-cpp", "pointers-cpp"]
+tags: ["Complexité Temporelle", "Big O", "Algorithmes", "Informatique", "Programmation"]
 ---
 
 En informatique, il existe souvent plusieurs façons de résoudre un même problème algorithmique. Mais comment déterminer quelle solution est la plus efficace ?
@@ -142,3 +149,11 @@ La notation asymptotique s'appréhende de manière optimale lorsqu'elle est comb
 - **Exécuter le code dans le bac à sable :** Lancez le **[Tuteur de Code C/C++ SciCalcX](/fr/compiler/)** pour exécuter le programme ci-dessus avec différentes tailles de vecteurs ($N=100, 200, 400$) et observer directement les temps d'exécution.
 - **Tracer les courbes de croissance :** Utilisez la **[Calculatrice Graphique 2D SciCalcX](/fr/graphing/)** pour superposer les fonctions $y = x$, $y = x \log_2(x)$ et $y = x^2$ sur un repère cartésien et visualiser la divergence fulgurante de la croissance quadratique.
 - **Règles d'or pour l'optimisation :** Ignorez les constantes multiplicatives ($O(2N) \rightarrow O(N)$) et ne retenez que le terme de plus haut degré ($O(N^2 + N) \rightarrow O(N^2)$) pour vous concentrer sur l'évolutivité en production.
+
+---
+
+## Références et Lectures Complémentaires
+
+* **Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (CLRS)** — *Introduction à l'algorithmique* (Dunod / MIT Press) : Manuel de référence académique pour les notations asymptotiques et le théorème maître.
+* **Donald E. Knuth (1976)** — [Big Omicron and Big Omega and Big Theta](https://dl.acm.org/doi/10.1145/1008328.1008329) : Article fondateur harmonisant la notation mathématique des complexités algorithmiques.
+* **NIST Dictionary of Algorithms and Data Structures (DADS)** — [Notations Asymptotiques](https://xlinux.nist.gov/dads/HTML/bigOnotation.html) : Définitions formelles et propriétés limites en informatique théorique.

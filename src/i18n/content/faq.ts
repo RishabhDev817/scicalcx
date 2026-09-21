@@ -17,20 +17,20 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
         answer: 'FIX rounds calculation outputs to a specified number of fixed decimal places. SCI (Scientific) formats outputs as a decimal coefficient multiplied by a base-10 power (e.g., 5.2 × 10⁴). ENG (Engineering) notation constrains exponents to multiples of 3 (e.g., milli, micro, kilo, mega), aligning with engineering units.',
       },
       {
-        question: 'How does the free online fraction calculator work via the S-D key?',
-        answer: 'The S-D key stands for Standard to Decimal conversion. Tapping it cycles calculation results between their decimal expansion, simplified improper fractions (e.g., 7/4), and mixed numbers (e.g., 1 3/4), providing simplified fractional representations for common rational results.',
+        question: 'How does standard-to-decimal (S-D) conversion work?',
+        answer: 'The S-D key stands for Standard to Decimal conversion. Tapping it cycles calculation results between their decimal expansion, simplified improper fractions (such as 7/4), and mixed numbers (such as 1 3/4), providing simplified fractional representations for common rational results.',
       },
       {
-        question: 'How does the multi-line engineering calculator validate expressions?',
-        answer: 'SciCalcX features a real-time mathematical expression solver with live parenthetical validation. Check the lower-left status readout under the formula viewport: it displays open and close bracket counters. Ensure all opened parentheses ( are closed with matching ), preventing calculation syntax errors.',
+        question: 'How does the multi-line display validate syntax and brackets?',
+        answer: 'SciCalcX validates expression syntax in real time with live bracket counting. The status readout below the formula viewport displays open and closed parenthesis counters so you can verify that all opened parentheses are properly closed before evaluating.',
       },
       {
         question: 'What is the difference between the AC, CE, and DEL buttons?',
         answer: 'AC (All Clear) purges the current formula buffer and resets the accumulator. DEL functions as a backspace, deleting only the immediate last token or character. CE (Clear Entry) removes only the most recent numeric term or operator without clearing the entire formula history.',
       },
       {
-        question: 'How does this advanced web calculator reduce common floating-point display artifacts (like 0.1 + 0.2)?',
-        answer: 'Standard JavaScript engines execute numeric calculations using double-precision binary floats (IEEE 754), which cannot represent certain base-10 fractions like 0.1 or 0.2 without binary round-off noise. Floating-point normalization can present common decimal results such as 0.1 + 0.2 as 0.3 when the computed value falls within the configured normalization threshold.',
+        question: 'How does SciCalcX handle floating-point display artifacts (such as 0.1 + 0.2)?',
+        answer: 'Standard JavaScript engines execute numeric calculations using double-precision binary floats (IEEE 754), which cannot represent certain base-10 fractions like 0.1 or 0.2 without binary round-off noise. Floating-point normalization formats common decimal results like 0.1 + 0.2 as 0.3 when the computed value falls within the configured normalization threshold.',
       },
     ],
     matrix: [
@@ -134,38 +134,37 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
   es: {
     scientific: [
       {
-        question: '¿Cómo funciona la calculadora científica online y el cambio entre Grados (DEG) y Radianes (RAD)?',
-        answer: 'Cambia entre DEG y RAD usando el selector deslizante en la barra de estado superior de la calculadora científica online. En modo DEG, una circunferencia completa equivale a 360° (sin(90) = 1). En modo RAD, equivale a 2π radianes (sin(π/2) = 1). El modo activo se aplica inmediatamente a todas las funciones trigonométricas.',
+        question: '¿Cómo funciona el cambio entre Grados (DEG) y Radianes (RAD)?',
+        answer: 'Cambia entre DEG y RAD usando el selector deslizante en la barra de estado superior. En modo DEG, una circunferencia completa equivale a 360° (sin(90) = 1). En modo RAD, equivale a 2π radianes (sin(π/2) = 1). El modo activo se aplica inmediatamente a todas las funciones trigonométricas.',
       },
       {
-        question: '¿Qué ventajas ofrece esta calculadora web avanzada con modos SCI, ENG y FIX?',
-        answer: 'Nuestra calculadora web avanzada incluye modo FIX para redondear a decimales fijos, modo SCI (Científico) en potencias de 10 (ej. 5.2 × 10⁴), y modo ENG (Ingeniería) con exponentes múltiplos de 3 (mili, micro, kilo, mega).',
+        question: '¿Qué significan los modos de cálculo FIX, SCI y ENG?',
+        answer: 'El modo FIX redondea a un número fijo de decimales, el modo SCI (Científico) formatea los valores como potencias de 10 (ej. 5.2 × 10⁴), y el modo ENG (Ingeniería) restringe los exponentes a múltiplos de 3 (mili, micro, kilo, mega).',
       },
       {
-        question: '¿SciCalcX incluye una calculadora de fracciones gratuita en línea con la tecla S-D?',
-        answer: '¡Sí! La tecla S-D funciona como una calculadora de fracciones gratuita en línea. Al presionarla, conmuta los resultados instantáneamente entre su valor decimal, fracción irreducible simplificada (ej. 7/4) y número mixto (ej. 1 3/4), proporcionando representaciones fraccionarias simplificadas para resultados racionales comunes.',
+        question: '¿Cómo funciona la tecla S-D para conversión a fracciones?',
+        answer: 'La tecla S-D (Standard to Decimal) conmuta los resultados entre su valor decimal, fracción irreducible simplificada (ej. 7/4) y número mixto (ej. 1 3/4), facilitando la lectura de resultados racionales.',
       },
       {
-        question: '¿Cómo opera la calculadora de ingeniería multilínea como solucionador de expresiones matemáticas?',
-        answer: 'Como calculadora de ingeniería multilínea, muestra la expresión completa en el visor superior mientras calcula el resultado. Funciona como un seguro solucionador de expresiones matemáticas con validación léxica de paréntesis anidados y orden de operaciones PEMDAS en tiempo real.',
+        question: '¿Cómo valida el visor multilínea las expresiones y los paréntesis?',
+        answer: 'SciCalcX valida la sintaxis en tiempo real mediante un contador de paréntesis en la barra inferior del visor. Muestra los paréntesis abiertos y cerrados para asegurar que todas las agrupaciones estén equilibradas antes del cálculo.',
       },
       {
         question: '¿Cuál es la diferencia entre las teclas AC, CE y DEL?',
         answer: 'AC (All Clear) borra toda la fórmula y reinicia la memoria temporal. DEL borra solo el último carácter o token ingresado (retroceso). CE (Clear Entry) elimina el término o número actual sin reiniciar todo el historial de la fórmula.',
       },
       {
-        question: '¿Cómo reduce esta calculadora web avanzada los artefactos de coma flotante (ej. 0.1 + 0.2)?',
-        answer: 'Los motores estándar de JavaScript usan números flotantes binarios IEEE 754 que pueden generar pequeñas discrepancias de redondeo. La normalización de punto flotante puede presentar resultados decimales comunes como 0.1 + 0.2 como 0.3 cuando el valor calculado cae dentro del umbral de normalización configurado.',
+        question: '¿Cómo se manejan los artefactos de coma flotante (como 0.1 + 0.2)?',
+        answer: 'Los motores de JavaScript usan números flotantes binarios IEEE 754 que pueden generar pequeñas discrepancias de redondeo. La normalización decimal formatea resultados comunes como 0.1 + 0.2 en 0.3 cuando el valor calculado cae dentro del umbral de normalización configurado.',
       },
-
     ],
     matrix: [
       {
-        question: '¿Cómo calcular determinantes con la calculadora de matrices científica en 2x2 y 3x3?',
-        answer: 'Nuestra calculadora de matrices científica aplica el método de cofactores de Laplace: det(A) = a(ei - fh) - b(di - fg) + c(dh - eg). Ingresa los coeficientes en la Matriz A y obtén el determinante exacto y paso a paso.',
+        question: '¿Cómo calcular determinantes en matrices 2x2 y 3x3?',
+        answer: 'SciCalcX aplica el método de cofactores de Laplace: det(A) = a(ei - fh) - b(di - fg) + c(dh - eg). Ingresa los coeficientes en la Matriz A y obtén el determinante paso a paso.',
       },
       {
-        question: '¿Cuándo es invertible una matriz en la calculadora de matrices científica?',
+        question: '¿Cuándo es invertible una matriz?',
         answer: 'Una matriz cuadrada es invertible si y solo si su determinante es diferente de cero (det(A) ≠ 0). Si det(A) = 0, la matriz es singular y no existe matriz inversa.',
       },
       {
@@ -259,30 +258,34 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
   fr: {
     scientific: [
       {
-        question: 'Comment fonctionne la calculatrice scientifique en ligne et le mode d\'ingénierie multiligne ?',
-        answer: 'Notre calculatrice scientifique en ligne intègre un affichage de calculatrice d\'ingénierie multiligne qui présente l\'expression mathématique complète et le résultat instantané.',
+        question: 'Comment basculer entre Degrés (DEG) et Radians (RAD) ?',
+        answer: 'Basculez entre DEG et RAD à l\'aide du sélecteur situé dans la barre d\'état supérieure. En mode DEG, un cercle complet équivaut à 360° (sin(90) = 1). En mode RAD, il correspond à 2π radians (sin(π/2) = 1). Le réglage s\'applique immédiatement à toutes les fonctions trigonométriques.',
       },
       {
-        question: 'Comment cette calculatrice traite-t-elle la précision en virgule flottante ?',
-        answer: 'Cette calculatrice applique une normalisation basée sur un seuil epsilon pour réduire les artefacts d\'affichage IEEE 754, permettant de formater des calculs comme 0.1 + 0.2 en 0.3 dans la limite du seuil configuré, et propose les modes FIX, SCI et ENG.',
+        question: 'Quelle est la différence entre les modes FIX, SCI et ENG ?',
+        answer: 'FIX arrondit l\'affichage à un nombre fixe de décimales. SCI (Scientifique) exprime les valeurs sous forme de puissances de 10 (ex. 5.2 × 10⁴). ENG (Ingénierie) contraint les exposants à des multiples de 3 (milli, micro, kilo, méga).',
       },
       {
-        question: 'Cette calculatrice intègre-t-elle une calculatrice de fractions gratuite en ligne ?',
-        answer: 'Oui ! La touche S-D agit comme une calculatrice de fractions gratuite en ligne pour convertir instantanément les décimales en fractions exactes simplifiées.',
+        question: 'Comment fonctionne la touche de conversion S-D ?',
+        answer: 'La touche S-D (Standard to Decimal) alterne l\'affichage entre valeur décimale, fraction rationnelle simplifiée (ex. 7/4) et nombre fractionnaire (ex. 1 3/4), facilitant la lecture des résultats rationnels.',
       },
       {
-        question: 'Comment utiliser le résolveur d\'expressions mathématiques sans erreurs de syntaxe ?',
-        answer: 'Le résolveur d\'expressions mathématiques valide en temps réel les parenthèses ouvrantes et fermantes pour éviter toute erreur avant l\'évaluation.',
+        question: 'Comment l\'afficheur multiligne valide-t-il les parenthèses et la syntaxe ?',
+        answer: 'SciCalcX contrôle la syntaxe en temps réel grâce à un compteur de parenthèses situé sous la zone de formule. Il signale l\'équilibre entre parenthèses ouvrantes et fermantes pour éviter toute erreur de calcul.',
       },
       {
-        question: 'Quelle est la différence entre AC, CE et DEL ?',
-        answer: 'AC efface toute l\'expression, DEL supprime le dernier caractère saisi, et CE efface uniquement le terme actif.',
+        question: 'Quelle est la différence entre les touches AC, CE et DEL ?',
+        answer: 'AC (All Clear) réinitialise la formule complète et la mémoire temporaire. DEL efface le dernier caractère ou opérateur saisi (retour arrière). CE (Clear Entry) supprime uniquement le terme actif sans effacer le reste du calcul.',
+      },
+      {
+        question: 'Comment sont traités les résidus d\'arrondi en virgule flottante (comme 0.1 + 0.2) ?',
+        answer: 'Les moteurs d\'exécution utilisent des nombres flottants binaires IEEE 754 qui peuvent générer d\'infimes artefacts d\'arrondi. La normalisation décimale formate les résultats courants comme 0.1 + 0.2 en 0.3 lorsque la valeur se situe dans le seuil d\'épsilon configuré.',
       },
     ],
     matrix: [
       {
-        question: 'Comment calculer déterminants et inverses avec la calculatrice de matrices scientifique ?',
-        answer: 'La calculatrice de matrices scientifique applique le développement en cofacteurs de Laplace pour déterminer la valeur scalaire exacte et calculer l\'inverse matricielle.',
+        question: 'Comment calculer les déterminants et inverses de matrices 2x2 et 3x3 ?',
+        answer: 'SciCalcX applique le développement en cofacteurs de Laplace pour déterminer la valeur scalaire du déterminant et évaluer l\'inverse matricielle.',
       },
       {
         question: 'Quand une matrice est-elle inversible ?',
@@ -291,8 +294,8 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     calculus: [
       {
-        question: 'Comment fonctionne la calculatrice de calcul infinitésimal basée sur le Web ?',
-        answer: 'La calculatrice de calcul infinitésimal basée sur le Web calcule les intégrales définies par la méthode de Simpson et évalue les dérivées par quotients différentiels symétriques.',
+        question: 'Comment fonctionne l\'évaluation du calcul infinitésimal ?',
+        answer: 'Le moteur calcule les intégrales définies par la méthode de Simpson et évalue les dérivées numériques par quotients différentiels symétriques.',
       },
     ],
     graphing: [
@@ -439,38 +442,42 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
   nl: {
     scientific: [
       {
-        question: 'Hoe gebruik ik deze online wetenschappelijke calculator?',
-        answer: 'Schakel eenvoudig tussen graden (DEG) en radialen (RAD) via de schakelaar in de bovenste statusbalk. In DEG-modus is een cirkel 360° (sin(90) = 1) en in RAD-modus 2π radialen (sin(π/2) = 1). De calculator berekent alle goniometrische en algebraïsche bewerkingen direct in real-time.',
+        question: 'Hoe wissel ik tussen graden (DEG) en radialen (RAD)?',
+        answer: 'Schakel eenvoudig tussen graden (DEG) en radialen (RAD) via de schakelaar in de bovenste statusbalk. In DEG-modus is een cirkel 360° (sin(90) = 1) en in RAD-modus 2π radialen (sin(π/2) = 1). De gekozen eenheid geldt direct voor alle goniometrische functies.',
       },
       {
-        question: 'Wat is de werking van de multi-regel technische calculator en de wiskundige expressie-oplosser?',
-        answer: 'Als multi-regel technische calculator toont het bovenste scherm de volledige wiskundige expressie terwijl het onderste scherm direct het resultaat berekent. Het fungeert als een betrouwbare wiskundige expressie-oplosser die de wiskundige rekenvolgorde (PEMDAS) en haakjesparen strikt handhaaft.',
+        question: 'Wat is het verschil tussen de weergavemodi FIX, SCI en ENG?',
+        answer: 'FIX rondt uitkomsten af op een vast aantal decimalen. SCI (wetenschappelijk) noteert getallen in machten van 10 (bijv. 5.2 × 10⁴). ENG (technisch) beperkt exponenten tot veelvouden van 3 (milli, micro, kilo, mega).',
       },
       {
-        question: 'Hoe werkt de gratis online breukencalculator via de S-D toets?',
-        answer: 'De S-D toets (Standard to Decimal) schakelt resultaten direct om tussen decimale getallen, vereenvoudigde oneigenlijke breuken (bijv. 7/4) en gemengde getallen (bijv. 1 3/4) voor veelvoorkomende rationale resultaten.',
+        question: 'Hoe werkt de S-D toets voor breukconversie?',
+        answer: 'De S-D toets (Standard to Decimal) schakelt resultaten direct om tussen decimale getallen, vereenvoudigde breuken (bijv. 7/4) en gemengde getallen (bijv. 1 3/4) voor rationale resultaten.',
       },
       {
-        question: 'Hoe verwerkt deze webcalculator drijvende-komma weergave-artefacten (zoals 0.1 + 0.2)?',
-        answer: 'Standaard browsers gebruiken IEEE 754 binaire floats, wat kleine afrondingsartefacten kan veroorzaken. Drijvende-komma normalisatie kan veelvoorkomende decimale resultaten zoals 0.1 + 0.2 als 0.3 weergeven wanneer de berekende waarde binnen de geconfigureerde drempel valt.',
+        question: 'Hoe controleert het scherm haakjes en syntaxfouten?',
+        answer: 'SciCalcX controleert formules in real-time met een haakjesteller onder het invoerveld. Deze teller toont het aantal open en gesloten haakjes zodat u eenvoudig ziet of de expressie sluitend is voor evaluatie.',
       },
       {
         question: 'Wat is het verschil tussen de knoppen AC, CE en DEL?',
         answer: 'AC (All Clear) wist de gehele formule en het werkgeheugen. DEL werkt als backspace en verwijdert alleen het laatste teken. CE (Clear Entry) verwijdert de laatst ingevoerde term zonder de rest van de formule te resetten.',
       },
+      {
+        question: 'Hoe verwerkt SciCalcX drijvende-komma weergave-artefacten (zoals 0.1 + 0.2)?',
+        answer: 'Standaard browsers gebruiken IEEE 754 binaire floats, wat kleine afrondingsartefacten kan veroorzaken. Decimale normalisatie geeft veelvoorkomende uitkomsten zoals 0.1 + 0.2 als 0.3 weer wanneer de berekende waarde binnen de geconfigureerde drempel valt.',
+      },
     ],
     matrix: [
       {
-        question: 'Hoe bereken ik de determinant met de wetenschappelijke matrixcalculator?',
-        answer: 'De wetenschappelijke matrixcalculator berekent de determinant van 2x2 en 3x3 matrices via Laplace-cofactorexpansie langs de eerste rij: det(A) = a(ei - fh) - b(di - fg) + c(dh - eg). Vul de elementen in en klik op Determinant.',
+        question: 'Hoe bereken ik de determinant van een 2x2 of 3x3 matrix?',
+        answer: 'SciCalcX berekent de determinant van 2x2 en 3x3 matrices via Laplace-cofactorexpansie langs de eerste rij: det(A) = a(ei - fh) - b(di - fg) + c(dh - eg). Vul de elementen in en klik op Determinant.',
       },
       {
         question: 'Wanneer is een matrix inverteerbaar?',
         answer: 'Een matrix is inverteerbaar dan en slechts dan als de determinant ongelijk is aan nul (det(A) ≠ 0). Als det(A) = 0 is de matrix singulier en bestaat er geen inverse.',
       },
       {
-        question: 'Ondersteunt de matrixcalculator matrixvermenigvuldiging (A × B)?',
-        answer: 'Ja! Voor vermenigvuldiging moet het aantal kolommen van A gelijk zijn aan het aantal rijen van B. Het resultaat wordt berekend via het inwendig product van rijen en kolommen.',
+        question: 'Ondersteunt de calculator matrixvermenigvuldiging (A × B)?',
+        answer: 'Ja. Voor vermenigvuldiging moet het aantal kolommen van A gelijk zijn aan het aantal rijen van B. Het resultaat wordt berekend via het inwendig product van rijen en kolommen.',
       },
     ],
     calculus: [
@@ -547,30 +554,34 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
   pt: {
     scientific: [
       {
-        question: 'Como funciona esta calculadora científica online e seu display de engenharia multilinha?',
-        answer: 'Nossa calculadora científica online possui visor de calculadora de engenharia multilinha que exibe simultaneamente a expressão algébrica e o resultado exato com validação de parênteses.',
+        question: 'Como alternar entre Graus (DEG) e Radianos (RAD)?',
+        answer: 'Alterne entre DEG e RAD usando o seletor na barra de status superior. No modo DEG, uma circunferência completa equivale a 360° (sin(90) = 1). No modo RAD, equivale a 2π radianos (sin(π/2) = 1). A unidade selecionada é aplicada imediatamente a todas as funções trigonométricas.',
       },
       {
-        question: 'Como esta calculadora trata artefatos visuais de ponto flutuante (como 0.1 + 0.2)?',
-        answer: 'A normalização de ponto flutuante pode apresentar resultados decimais comuns como 0.1 + 0.2 como 0.3 quando o valor calculado está dentro do limite configurado, e a calculadora oferece modos de exibição FIX, SCI e ENG.',
+        question: 'Qual a diferença entre os modos de exibição FIX, SCI e ENG?',
+        answer: 'O modo FIX arredonda os resultados para um número fixo de casas decimais. O modo SCI (Científico) formata os números em potências de 10 (ex. 5.2 × 10⁴). O modo ENG (Engenharia) restringe os expoentes a múltiplos de 3 (mili, micro, quilo, mega).',
       },
       {
-        question: 'O SciCalcX inclui uma calculadora de frações gratuita online?',
-        answer: 'Sim! A tecla S-D atua como uma calculadora de frações gratuita online, convertendo instantaneamente entre dízimas decimais e frações irredutíveis exatas.',
+        question: 'Como funciona a tecla S-D para conversão de frações?',
+        answer: 'A tecla S-D (Standard to Decimal) alterna os resultados entre dízima decimal, fração simplificada (ex. 7/4) e número misto (ex. 1 3/4), facilitando a leitura de valores racionais.',
       },
       {
-        question: 'Como o solucionador de expressões matemáticas previne erros de sintaxe?',
-        answer: 'O solucionador de expressões matemáticas valida em tempo real a abertura e fechamento de parênteses e a ordem das operações PEMDAS.',
+        question: 'Como o visor multilinha valida expressões e parênteses?',
+        answer: 'O SciCalcX valida a sintaxe em tempo real através de um contador de parênteses na barra inferior do visor. Ele indica se todos os parênteses abertos foram fechados corretamente antes da avaliação.',
       },
       {
         question: 'Qual a diferença entre os botões AC, CE e DEL?',
-        answer: 'AC limpa toda a fórmula e acumulador, DEL apaga o último caractere digitado e CE remove apenas a entrada atual.',
+        answer: 'AC (All Clear) limpa toda a fórmula e o acumulador. DEL apaga o último caractere digitado (retrocesso). CE (Clear Entry) remove apenas o termo atual sem reiniciar a expressão inteira.',
+      },
+      {
+        question: 'Como são tratados os artefatos de ponto flutuante (como 0.1 + 0.2)?',
+        answer: 'Navegadores utilizam representação binária IEEE 754, que pode gerar pequenas imprecisões de arredondamento. A normalização decimal exibe resultados comuns como 0.1 + 0.2 como 0.3 quando o valor calculado está dentro do limiar configurado.',
       },
     ],
     matrix: [
       {
-        question: 'Como calcular determinantes com a calculadora de matrices científica?',
-        answer: 'A calculadora de matrizes científica emprega expansão por cofatores de Laplace para calcular determinantes e inversas de matrizes 2x2 e 3x3.',
+        question: 'Como calcular determinantes de matrizes 2x2 e 3x3?',
+        answer: 'O SciCalcX emprega expansão por cofatores de Laplace para calcular determinantes e inversas de matrizes 2x2 e 3x3.',
       },
       {
         question: 'Quando uma matriz é inversível?',
@@ -579,8 +590,8 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     calculus: [
       {
-        question: 'Como funciona a calculadora de cálculo baseada na web?',
-        answer: 'A calculadora de cálculo baseada na web avalia integrais definidas via regra composta de Simpson e calcula derivadas instantâneas por quocientes de diferenças simétricas.',
+        question: 'Como funciona a avaliação de cálculo numérico?',
+        answer: 'O módulo calcula integrais definidas pela regra de Simpson e derivadas numéricas por quocientes de diferenças simétricas centradas.',
       },
     ],
     graphing: [
@@ -635,30 +646,34 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
   it: {
     scientific: [
       {
-        question: 'Come funziona questa calcolatrice scientifica online e il visore multilinea?',
-        answer: 'Questa calcolatrice scientifica online include un visore da calcolatrice ingegneristica multilinea che mostra la formula completa e il risultato in tempo reale.',
+        question: 'Come passo tra gradi (DEG) e radianti (RAD)?',
+        answer: 'Passa facilmente tra gradi (DEG) e radianti (RAD) tramite l\'interruttore nella barra di stato superiore. In modalità DEG, un cerchio è 360° (sin(90) = 1) e in modalità RAD sono 2π radianti (sin(π/2) = 1). L\'unità scelta si applica immediatamente a tutte le funzioni trigonometriche.',
       },
       {
-        question: 'In che modo questa calcolatrice riduce gli artefatti di virgola mobile (es. 0.1 + 0.2)?',
-        answer: 'La normalizzazione in virgola mobile consente di presentare risultati decimali comuni come 0.1 + 0.2 come 0.3 quando il valore calcolato rientra nella soglia configurata, e include i formati FIX, SCI ed ENG.',
+        question: 'Qual è la differenza tra le modalità di visualizzazione FIX, SCI ed ENG?',
+        answer: 'FIX arrotonda i risultati a un numero fisso di decimali. SCI (scientifico) formatta i numeri in potenze di 10 (es. 5.2 × 10⁴). ENG (ingegneria) limita gli esponenti a multipli di 3 (milli, micro, kilo, mega).',
       },
       {
-        question: 'SciCalcX include una calcolatrice di frazioni gratuita online?',
-        answer: 'Sì! Il tasto S-D opera come una calcolatrice di frazioni gratuita online per alternare tra decimali e frazioni irriducibili esatte.',
+        question: 'Come funziona il tasto S-D per la conversione di frazioni?',
+        answer: 'Il tasto S-D (Standard to Decimal) converte immediatamente i risultati tra numeri decimali, frazioni semplificate (es. 7/4) e numeri misti (es. 1 3/4) per risultati razionali.',
       },
       {
-        question: 'Come opera la calcolatrice ingegneristica multilinea come risolutore di espressioni matematiche?',
-        answer: 'Come risolutore di espressioni matematiche, convalida la corretta chiusura delle parentesi e rispetta rigorosamente la gerarchia algebrica PEMDAS.',
+        question: 'Come verifica lo schermo le parentesi e gli errori di sintassi?',
+        answer: 'SciCalcX controlla le formule in tempo reale con un contatore di parentesi sotto il campo di input. Questo contatore mostra il numero di parentesi aperte e chiuse in modo da poter vedere facilmente se l\'espressione è chiusa per la valutazione.',
       },
       {
-        question: 'Qual è la differenza tra i tasti AC, CE e DEL?',
-        answer: 'AC azzera l\'intera formula, DEL cancella l\'ultimo carattere e CE rimuove l\'ultimo numero digitato.',
+        question: 'Qual è la differenza tra i pulsanti AC, CE e DEL?',
+        answer: 'AC (All Clear) cancella l\'intera formula e la memoria di lavoro. DEL funziona come backspace e rimuove solo l\'ultimo carattere. CE (Clear Entry) rimuove l\'ultimo termine inserito senza azzerare il resto della formula.',
+      },
+      {
+        question: 'Come gestisce SciCalcX gli artefatti di visualizzazione in virgola mobile (come 0.1 + 0.2)?',
+        answer: 'I browser standard utilizzano float binari IEEE 754, che possono causare piccoli artefatti di arrotondamento. La normalizzazione decimale mostra risultati comuni come 0.1 + 0.2 come 0.3 quando il valore calcolato rientra nella soglia configurata.',
       },
     ],
     matrix: [
       {
-        question: 'Come calcolare determinanti con la calcolatrice di matrici scientifica?',
-        answer: 'La calcolatrice di matrici scientifica applica lo sviluppo per cofattori di Laplace lungo la prima riga per matrici 2x2 e 3x3.',
+        question: 'Come calcolo il determinante di una matrice 2x2 o 3x3?',
+        answer: 'SciCalcX calcola il determinante di matrici 2x2 e 3x3 tramite l\'espansione dei cofattori di Laplace lungo la prima riga: det(A) = a(ei - fh) - b(di - fg) + c(dh - eg). Inserisci gli elementi e clicca su Determinante.',
       },
       {
         question: 'Quando una matrice è invertibile?',
@@ -667,20 +682,20 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     calculus: [
       {
-        question: 'Come funziona la calcolatrice di analisi matematica basata sul web?',
-        answer: 'La calcolatrice di analisi matematica basata sul web calcola integrali definiti con la regola di Simpson e derivate con differenze simmetriche.',
+        question: 'Come funziona il modulo di calcolo infinitesimale?',
+        answer: 'Il motore valuta integrali definiti con la regola di Simpson e calcola derivate numeriche tramite quozienti di differenze simmetriche.',
       },
     ],
     graphing: [
       {
-        question: 'Come usare la calcolatrice di derivate grafiche online?',
-        answer: 'La calcolatrice di derivate grafiche online visualizza funzioni in 2D analizzando tangenti, radici ed asintoti.',
+        question: 'Come tracciare funzioni nel grafico 2D?',
+        answer: 'Il grafico visualizza funzioni in 2D analizzando tangenti, radici ed asintoti in tempo reale.',
       },
     ],
     programming: [
       {
-        question: 'Come opera la calcolatrice base-n per programmatori?',
-        answer: 'La calcolatrice base-n per programmatori converte tra Hex, Dec, Oct e Bin supportando operatori logici su interi con segno a 32 bit (int32).',
+        question: 'Come operano le conversioni e la logica Base-N?',
+        answer: 'Il modulo converte tra Hex, Dec, Oct e Bin supportando operatori logici su interi con segno a 32 bit (int32).',
       },
     ],
     statistics: [
@@ -723,26 +738,34 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
   ja: {
     scientific: [
       {
-        question: '科学用計算機 オンラインおよび高度なウェブ計算機の使い方を教えてください。`',
-        answer: '当サイトのオンライン科学用計算機は、上段のステータスバーで度数法（DEG）とラジアン（RAD）を瞬時に切り替え可能。高度なウェブ計算機として浮動小数点誤差を解消した高精度計算を提供します。',
+        question: '度数法（DEG）とラジアン（RAD）の切り替え方法は？',
+        answer: '画面上部のステータスバーにあるスライダーでDEGとRADを切り替えます。DEGモードでは1周が360°（sin(90) = 1）、RADモードでは2πラジアン（sin(π/2) = 1）となります。選択した単位系はすべての三角関数に即座に反映されます。',
       },
       {
-        question: '複数行エンジニアリング計算機と数式ソルバーの仕組みはどうなっていますか？',
-        answer: '複数行エンジニアリング計算機表示により、入力数式と計算結果を同時に確認できます。厳密な数式ソルバーとして括弧の整合性をリアルタイム判定し、構文エラーを防止します。',
+        question: 'FIX、SCI、ENG表示モードの違いは何ですか？',
+        answer: 'FIXは指定した小数点以下の桁数に丸めて表示します。SCI（科学的表記）は10のべき乗（例：5.2 × 10⁴）で表し、ENG（工学表記）は指数を3の倍数（ミリ、マイクロ、キロ、メガ）に制限して工学単位に合わせます。',
       },
       {
-        question: 'オンライン無料分数計算機はどのように活用できますか？',
-        answer: 'S-Dキーを押すことで、オンライン無料分数計算機として小数表記、既約分数、帯分数を相互に変換できます。一般的な有理数結果を簡約分数で表示します。',
+        question: 'S-Dキーによる分数変換機能の使い方は？',
+        answer: 'S-D（Standard to Decimal）キーを押すことで、計算結果を小数、既約分数（例：7/4）、帯分数（例：1 3/4）の間で切り替え、有理数の結果を見やすく表示します。',
+      },
+      {
+        question: '複数行表示ディスプレイはどのように括弧や構文を検証しますか？',
+        answer: 'SciCalcXは画面下のステータス領域で開閉括弧の数をリアルタイムに追跡します。数式の評価前に未終了の括弧や演算子の連続などの構文エラーを防止します。',
       },
       {
         question: 'AC、CE、DELキーの違いは何ですか？',
-        answer: 'ACは数式バッファ全体を消去、DELは直前の文字を削除（バックスペース）、CEは現在の入力数値のみをクリアします。',
+        answer: 'AC（All Clear）は数式バッファ全体とアキュムレータを消去します。DELは直前の1文字またはトークンを削除（バックスペース）し、CE（Clear Entry）は直前に入力中の数値のみを取り消します。',
+      },
+      {
+        question: '浮動小数点数の表示アーティファクト（例：0.1 + 0.2）はどのように処理されますか？',
+        answer: 'ブラウザのJavaScriptエンジンはIEEE 754倍精度浮動小数点数を使用するため、0.1 + 0.2のような計算で微小な丸め誤差が生じます。SciCalcXではイプシロン閾値正規化を適用し、計算値が閾値内にある場合に0.3として安定して表示します。',
       },
     ],
     matrix: [
       {
-        question: '科学用行列計算機で行列式や逆行列を計算するには？',
-        answer: '科学用行列計算機はラプラス余因子展開により2x2および3x3行列の行列式と逆行列をステップバイステップで計算します。',
+        question: '2x2や3x3行列の行列式を計算するには？',
+        answer: 'ラプラス余因子展開により、2x2および3x3正方行列の行列式をステップバイステップで計算します。',
       },
       {
         question: '逆行列が存在する条件は何ですか？',
@@ -751,20 +774,20 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     calculus: [
       {
-        question: 'ウェブベースの微積分計算機で微分や積分を解くには？',
-        answer: 'ウェブベースの微積分計算機はシンプソン法による定積分と対称差分商による数値微分をサポートする数式ソルバーです。',
+        question: '数値微分や定積分の計算方法は？',
+        answer: 'シンプソン法による定積分と対称差分商による数値微分をサポートし、滑らかな連続関数の解析をブラウザ上で行います。',
       },
     ],
     graphing: [
       {
-        question: 'オンライングラフ微分計算機で2D関数を描画するには？',
-        answer: 'オンライングラフ微分計算機に数式を入力すると、2Dプロッターが接線の傾き、極値、漸近線を瞬時にプロットします。',
+        question: '2D関数グラフを描画するには？',
+        answer: '数式を入力すると、2Dキャンバスに接線の傾き、極値、漸近線がリアルタイムに可視化されます。',
       },
     ],
     programming: [
       {
-        question: 'プログラマー向けN進数計算機で基数変換を行うには？',
-        answer: 'プログラマー向けN進数計算機は16進数、10進数、8進数、2進数を相互変換し、32ビット符号付き整数のビット演算をサポートします。',
+        question: 'Base-Nモードでの進数変換やビット演算はどう使いますか？',
+        answer: '16進数、10進数、8進数、2進数を相互変換し、32ビット符号付き整数（int32）のビット論理演算を実行できます。',
       },
     ],
     statistics: [
@@ -807,26 +830,34 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
   ko: {
     scientific: [
       {
-        question: '공학용 계산기는 어떻게 사용하나요?',
-        answer: '본 온라인 공학용 계산기는 상단 슬라이더로 도(DEG)와 라디안(RAD)을 편리하게 전환할 수 있으며, 엡실론 정규화를 적용하여 표시되는 부동 소수점 아티팩트를 줄입니다.',
+        question: '도(DEG)와 라디안(RAD) 단위는 어떻게 전환하나요?',
+        answer: '상단 상태 표시줄의 슬라이더를 토글하여 DEG와 RAD를 전환합니다. DEG 모드에서는 한 바퀴가 360°(sin(90) = 1)이며, RAD 모드에서는 2π 라디안(sin(π/2) = 1)입니다. 설정된 각도 단위는 모든 삼각함수 연산에 즉시 반영됩니다.',
       },
       {
-        question: '멀티라인 공학 계산기 및 수학 수식 계산기의 연산 원리는 무엇인가요?',
-        answer: '멀티라인 공학 계산기 인터페이스를 통해 입력 수식과 연산 결과를 상하 2단으로 제공하며, 괄호 검증을 갖춘 지능형 수학 수식 계산기로 작동합니다.',
+        question: 'FIX, SCI, ENG 표기 모드의 차이는 무엇인가요?',
+        answer: 'FIX는 지정된 소수점 자리수로 반올림합니다. SCI(과학적 표기법)는 10의 거듭제곱(예: 5.2 × 10⁴)으로 값을 나타내며, ENG(공학적 표기법)는 지수를 3의 배수(밀리, 마이크로, 킬로, 메가) 단위로 맞추어 표시합니다.',
       },
       {
-        question: '온라인 무료 분수 계산기 기능은 어떻게 전환하나요?',
-        answer: 'S-D 키를 누르면 온라인 무료 분수 계산기 기능이 활성화되어 소수점 수치와 기약 분수를 즉시 전환합니다. 일반적인 유리수 결과를 기약 분수로 표시합니다.',
+        question: 'S-D 키를 이용한 분수 변환은 어떻게 작동하나요?',
+        answer: 'S-D(Standard to Decimal) 키를 누르면 연산 결과가 소수점 수치, 기약분수(예: 7/4), 대분수(예: 1 3/4) 형태로 순환 변환되어 유리수 결과를 간결하게 확인할 수 있습니다.',
+      },
+      {
+        question: '멀티라인 디스플레이는 괄호와 구문 오류를 어떻게 검증하나요?',
+        answer: 'SciCalcX는 뷰포트 하단 상태창에서 열린 괄호와 닫힌 괄호의 개수를 실시간으로 카운트합니다. 수식 평가 전 짝이 맞지 않는 괄호나 연속된 연산자 등의 구문 오류를 사전에 감지합니다.',
       },
       {
         question: 'AC, CE, DEL 버튼의 차이는 무엇인가요?',
-        answer: 'AC는 수식 버퍼 전체를 초기화하고, DEL은 마지막 한 글자를 삭제하며, CE는 현재 입력 중인 숫자만 삭제합니다.',
+        answer: 'AC(All Clear)는 수식 버퍼 전체와 누적 메모리를 초기화합니다. DEL은 마지막 한 글자 또는 토큰을 삭제(백스페이스)하며, CE(Clear Entry)는 현재 입력 중인 수치만 취소합니다.',
+      },
+      {
+        question: '부동소수점 오차 표시(예: 0.1 + 0.2)는 어떻게 정규화되나요?',
+        answer: '브라우저 자바스크립트 엔진은 IEEE 754 배정밀도 부동소수점을 사용하여 0.1 + 0.2 연산 시 미세한 2진 반올림 잔여물이 발생할 수 있습니다. SciCalcX는 엡실론 임계치 정규화를 적용하여 계산값이 오차 범위 내에 있을 때 0.3으로 깔끔하게 표시합니다.',
       },
     ],
     matrix: [
       {
-        question: '공학용 행렬 계산기로 역행렬과 행렬식을 계산하려면 어떻게 하나요?',
-        answer: '공학용 행렬 계산기는 1행을 따른 라플라스 여인수 전개를 통해 2x2 및 3x3 행렬식과 역행렬을 정밀 계산합니다.',
+        question: '2x2 및 3x3 행렬의 행렬식은 어떻게 계산하나요?',
+        answer: '1행을 따른 라플라스 여인수 전개를 통해 2x2 및 3x3 정사각 행렬의 행렬식을 단계별로 정밀 계산합니다.',
       },
       {
         question: '역행렬이 존재하는 조건은 무엇인가요?',
@@ -835,20 +866,20 @@ export const faqs: Record<SupportedLanguage, Record<string, FAQItem[]>> = {
     ],
     calculus: [
       {
-        question: '웹 기반 미적분 계산기로 미분과 정적분을 풀려면 어떻게 하나요?',
-        answer: '웹 기반 미적분 계산기는 심슨 1/3 공식을 통한 정적분과 대칭 차분 상용 알고리즘을 통한 수치 미분을 지원합니다.',
+        question: '미분과 정적분은 어떻게 계산하나요?',
+        answer: '심슨 1/3 공식을 통한 정적분과 대칭 차분 알고리즘을 통한 수치 미분을 지원합니다.',
       },
     ],
     graphing: [
       {
-        question: '온라인 그래프 미분 계산기로 2D 함수 그래프를 그리려면 어떻게 하나요?',
-        answer: '온라인 그래프 미분 계산기에 함수를 입력하면 2D 캔버스에 접선의 기울기, 극값, 점근선이 실시간 시각화됩니다.',
+        question: '2D 함수 그래프는 어떻게 시각화하나요?',
+        answer: '수식을 입력하면 2D 캔버스에 접선의 기울기, 극값, 점근선이 실시간 시각화됩니다.',
       },
     ],
     programming: [
       {
-        question: '프로그래머 N진수 계산기로 진법 변환과 비트 연산을 하려면 어떻게 하나요?',
-        answer: '프로그래머 N진수 계산기는 16진수, 10진수, 8진수, 2진수를 즉시 상호 변환하고 32비트 부호 있는 정수 비트 논리 연산을 지원합니다.',
+        question: '진법 변환과 비트 연산은 어떻게 사용하나요?',
+        answer: '16진수, 10진수, 8진수, 2진수를 상호 변환하고 32비트 부호 있는 정수(int32)의 비트 논리 연산을 수행합니다.',
       },
     ],
     statistics: [

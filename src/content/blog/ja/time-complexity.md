@@ -2,7 +2,14 @@
 title: "時間計算量をわかりやすく解説：初心者向けランダウの記号（Big O記法）"
 description: "アルゴリズムの効率性を評価するBig O記法の基本概念、O(1)、O(N)、O(N^2)の違いをC++コード例とともに徹底解説。"
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+updatedDate: "2026-09-21"
+author: "SciCalcX"
+category: "コンピュータ科学・アルゴリズム"
+readTime: "11分で読める"
+calculatorUrl: "/graphing"
+calculatorLabel: "SciCalcX 2Dグラフ描画電卓"
+related: ["calculator-cpp", "pointers-cpp"]
+tags: ["時間計算量", "Big O", "アルゴリズム", "コンピュータ科学", "プログラミング"]
 ---
 
 情報科学やソフトウェア開発において、同一の課題を解決するアルゴリズムには複数のアプローチが存在します。では、複数の解法の中からどれが最も効率的であるかを客観的に判断するにはどうすればよいでしょうか？
@@ -140,3 +147,11 @@ int main() {
 - **サンドボックスでコードを実行：** **[SciCalcX C/C++ Code Tutor](/ja/compiler/)** をブラウザで開き、上記のプログラムを異なるベクターサイズ（$N=100, 200, 400$）で実行してステップ数の挙動を確認できます。
 - **成長曲線をインタラクティブにプロット：** **[SciCalcX 2D関数グラフ計算機](/ja/graphing/)** を用いて、$y = x$、$y = x \log_2(x)$、$y = x^2$ を共通の座標平面上に重ねて描画することで、2次関数が急激に乖離していく様子を視覚的に把握できます。
 - **計算量評価の重要原則：** 定数倍の係数は無視し（$O(2N) \rightarrow O(N)$）、最高次数の項にのみ着目して（$O(N^2 + N) \rightarrow O(N^2)$）、スケーラビリティを確保する設計を意識しましょう。
+
+---
+
+## 参考文献・推薦文献
+
+* **Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (CLRS)** — 『アルゴリズムイントロダクション』（近代科学社 / MIT Press）: 漸近的上限・下限・タイトな限界およびマスター定理の数学的基礎。
+* **Donald E. Knuth (1976)** — [Big Omicron and Big Omega and Big Theta](https://dl.acm.org/doi/10.1145/1008328.1008329): 計算機科学における漸近記法の表記標準を確立した歴史的文献。
+* **NIST Dictionary of Algorithms and Data Structures (DADS)** — [Big-O Notation](https://xlinux.nist.gov/dads/HTML/bigOnotation.html): アルゴリズム計算量とデータ構造の漸近限界に関する定義。

@@ -13,6 +13,12 @@ interface Props {
   activeTab?: 'scientific' | 'matrix' | 'statistics' | 'programming' | 'calculus' | 'graphing' | 'compiler' | 'blog';
   lang?: SupportedLanguage;
   robots?: string;
+  ogType?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  category?: string;
+  extraSchema?: Record<string, any>[];
 }
 
 const currentLang = Astro.props.lang || getLangFromUrl(Astro.url);
@@ -26,11 +32,63 @@ const {
   keywords = t('meta.scientific.keywords'),
   activeTab = 'scientific',
   robots,
+  ogType = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  category,
+  extraSchema = [],
 } = Astro.props;
 
 const canonicalPath = Astro.url.pathname === '/' ? '/' : (Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`);
 const canonicalURL = new URL(canonicalPath, 'https://scicalcx.com');
 
+const isArticle = ogType === 'article';
+
+const articleSchema = isArticle ? {
+  '@type': 'TechArticle',
+  '@id': `${canonicalURL.href}#article`,
+  'isPartOf': {
+    '@id': 'https://scicalcx.com/#website',
+  },
+  'headline': title.replace(/ \| SciCalcX$/, ''),
+  'description': description,
+  'url': canonicalURL.href,
+  'inLanguage': currentLang,
+  'author': {
+    '@type': author === 'SciCalcX' || !author ? 'Organization' : 'Person',
+    'name': author || 'SciCalcX',
+    'url': 'https://scicalcx.com/about/',
+  },
+  'publisher': {
+    '@type': 'Organization',
+    'name': 'SciCalcX',
+    'url': 'https://scicalcx.com/',
+    'logo': {
+      '@type': 'ImageObject',
+      'url': 'https://scicalcx.com/favicon-96x96.png',
+    },
+  },
+  ...(publishedTime ? { 'datePublished': publishedTime } : {}),
+  ...(modifiedTime ? { 'dateModified': modifiedTime } : (publishedTime ? { 'dateModified': publishedTime } : {})),
+  ...(category ? { 'articleSection': category } : {}),
+} : null;
+
+const pageEntity = isArticle ? articleSchema : {
+  '@type': 'WebApplication',
+  '@id': `${canonicalURL.href}#webapp`,
+  'url': canonicalURL.href,
+  'name': title,
+  'description': description,
+  'applicationCategory': 'EducationalApplication',
+  'operatingSystem': 'Any modern web browser',
+  'offers': {
+    '@type': 'Offer',
+    'price': '0',
+    'priceCurrency': 'USD',
+  },
+  'browserRequirements': 'Requires JavaScript. Requires HTML5 Canvas for graphing.',
+};
 
 const siteSchema = {
   '@context': 'https://schema.org',
@@ -53,22 +111,9 @@ const siteSchema = {
       },
       'inLanguage': currentLang,
     },
-    {
-      '@type': 'WebApplication',
-      '@id': `${canonicalURL.href}#webapp`,
-      'url': canonicalURL.href,
-      'name': title,
-      'description': description,
-      'applicationCategory': 'EducationalApplication',
-      'operatingSystem': 'Any modern web browser',
-      'offers': {
-        '@type': 'Offer',
-        'price': '0',
-        'priceCurrency': 'USD',
-      },
-      'browserRequirements': 'Requires JavaScript. Requires HTML5 Canvas for graphing.',
-    }
-  ],
+    pageEntity,
+    ...extraSchema,
+  ].filter(Boolean),
 };
 ---
 
@@ -107,10 +152,14 @@ const siteSchema = {
     {keywords && <meta name="keywords" content={keywords} />}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content="https://scicalcx.com/og-image.png" />
     <meta property="og:site_name" content="SciCalcX" />
+    {isArticle && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {isArticle && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {isArticle && author && <meta property="article:author" content={author} />}
+    {isArticle && category && <meta property="article:section" content={category} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />

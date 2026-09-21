@@ -2,7 +2,14 @@
 title: "Zeitkomplexität verständlich erklärt: Die O-Notation für Einsteiger"
 description: "Verstehen Sie algorithmische Effizienz. Berechnen Sie die Big-O-Laufzeitkomplexität mit praxisnahen C++-Codebeispielen."
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+author: "SciCalcX"
+updatedDate: "2026-09-21"
+category: "Informatik & Algorithmen"
+readTime: "11 Min. Lesezeit"
+calculatorUrl: "/graphing"
+calculatorLabel: "SciCalcX 2D-Funktionsplotter"
+related: ["calculator-cpp", "pointers-cpp"]
+tags: ["Zeitkomplexität", "Big O", "Algorithmen", "Informatik", "Programmierung"]
 ---
 
 In der Informatik existieren für fast jede Problemstellung mehrere algorithmische Lösungsansätze. Doch wie entscheidet man objektiv, welche Implementierung am effizientesten ist?
@@ -141,3 +148,11 @@ Die theoretische Analyse wird besonders greifbar, wenn man Rechenzeiten direkt m
 - **Im Sandbox-Compiler ausführen:** Nutzen Sie den **[SciCalcX C/C++ Code-Tutor](/de/compiler/)**, um die obige Benchmark-Demonstration mit variierenden Vektorgrößen ($N=100, 200, 400$) interaktiv auszuführen.
 - **Wachstumskurven grafisch plotten:** Verwenden Sie den **[SciCalcX 2D-Grafikrechner](/de/graphing/)**, um $y = x$, $y = x \log_2(x)$ und $y = x^2$ in einem gemeinsamen Koordinatensystem darzustellen und die starke Divergenz quadratischer Funktionen nachzuvollziehen.
 - **Faustregeln für die Praxis:** Konstante Faktoren entfallen ($O(2N) \rightarrow O(N)$) und nur die am schnellsten wachsende Potenz bestimmt die Einstufung ($O(N^2 + N) \rightarrow O(N^2)$).
+
+---
+
+## Quellen & Weiterführende Literatur
+
+* **Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (CLRS)** — *Algorithmen – Eine Einführung* (Oldenbourg Wissenschaftsverlag / MIT Press): Standardlehrbuch für asymptotische Notationen und formale Komplexitätsbeweise.
+* **Donald E. Knuth (1976)** — [Big Omicron and Big Omega and Big Theta](https://dl.acm.org/doi/10.1145/1008328.1008329): Die klassische Veröffentlichung zur Standardisierung asymptotischer O-Notationen in der Informatik.
+* **NIST Dictionary of Algorithms and Data Structures (DADS)** — [Big-O Notation](https://xlinux.nist.gov/dads/HTML/bigOnotation.html): Formale Definitionen und asymptotische Schranken.

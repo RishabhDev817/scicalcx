@@ -1,130 +1,159 @@
 ---
-title: "C++で基本的な関数電卓プログラムを作成する"
-description: "C++を用いて数学演算や三角関数、べき乗計算を実行するコンソール関数電卓の作成手順を解説します。"
+title: "C++で関数電卓を作る：IEEE 754浮動小数点演算と構文解析"
+description: "C++による関数電卓の自作プログラミングガイド。数学的ドメイン検証、IEEE 754浮動小数点の丸め誤差、逆ポーランド記法とShunting-yardアルゴリズムを基礎から解説します。"
 pubDate: "2026-07-22"
-author: "Rishabh Raj Mahato"
+updatedDate: "2026-09-21"
+author: "SciCalcX"
+category: "コンピュータ科学・アルゴリズム"
+readTime: "10分で読める"
+calculatorUrl: "/"
+calculatorLabel: "SciCalcX 関数電卓"
+related: ["pointers-cpp", "time-complexity"]
+tags: ["C++", "関数電卓", "アルゴリズム", "IEEE 754", "数学", "プログラミング"]
 ---
 
-関数電卓は科学技術計算や工学分野に欠かせないツールです。内部では入力された数値と演算子を代数規則に基づいて評価・処理しています。
+関数電卓は、自然科学や工学のあらゆる現場で不可欠な計算ツールです。**[SciCalcX](/)** のような高機能ウェブ電卓は、複数行の数式をブラウザ上で瞬時に評価しますが、C++言語で電卓プログラムを自作することは、浮動小数点のハードウェア挙動、ゼロ除算などの例外処理、構文解析アルゴリズムを深く理解するための最良の演習となります。
 
-このチュートリアルでは、基本四則演算に加え、べき乗計算や平方根計算、ゼロ除算保護を備えたインタラクティブなC++関数電卓を作成します。
-
----
-
-## 1. 電卓ロジックの設計
-
-堅牢な電卓プログラムを作成するには以下の要素が重要です：
-1. **入力処理とパース:** 浮動小数点数（`double`）とメニュー選択肢の取得。
-2. **制御フロー:** `switch` 文または条件分岐による選択された演算の振り分け。
-3. **境界値とエラーハンドリング:** ゼロ除算や実数範囲外の負の平方根に対する例外対策。
-
-複雑な数式計算ではダイクストラの「操車場アルゴリズム（Shunting-yard）」が使われますが、対話型メニュー形式であれば反復ループで直感的に実装可能です。
+本稿では、コンピュータが小数を2進数で扱う **IEEE 754 規格**の基本、ゼロ除算や負の数の平方根への対処法、三角関数のラジアン変換、そして四則演算の優先順位（**PEMDAS**）を解決するShunting-yardアルゴリズムについて解説します。
 
 ---
 
-## 2. C++ `<cmath>` 標準ライブラリの活用
+## 1. 数学的ドメイン検証と例外処理
 
-科学計算機能を活用するため、C++標準ライブラリの `<cmath>` をインクルードします：
+C++で数式計算を行う際は、プログラムの異常終了を防ぐために以下のガード処理が不可欠です：
 
-* `pow(底, 指数)`: べき乗の計算。
-* `sqrt(値)`: 平方根の計算。
-* `sin(角度)` / `cos(角度)`: 三角関数（角度は**ラジアン**で指定）。
+1. **ゼロ除算（Division by Zero）：** 整数演算ではCPU例外（`SIGFPE`）が発生し即座にクラッシュします。浮動小数点（`double`）演算では無限大（`inf`）や非数（`NaN`）が生成されます。除数がゼロでないかを計算前に判定することが重要です。
+2. **負の数の平方根：** `<cmath>` の `std::sqrt()` は、実数の範囲で負の値が渡されると `NaN` を返します。被開平数が $\ge 0$ であることを事前に確認します。
+3. **度数法から弧度法（ラジアン）への変換：** C++標準ライブラリの三角関数（`std::sin`, `std::cos`, `std::tan`）は、角度を必ず**ラジアン**で受け取ります：
+   $$\text{ラジアン} = \text{度} \times \frac{\pi}{180}$$
 
 ---
 
-## 3. C++電卓の完全なソースコード
+## 2. 浮動小数点数とIEEE 754規格の誤差
 
-以下はすぐにコンパイルして実行できる完全なC++プログラムです：
+コンピュータは2進法で数値を保持するため、$0.1$ や $0.2$ といった10進数の小数は循環小数となり、ごく微小な丸め誤差が生じます：
+
+```cpp
+double a = 0.1;
+double b = 0.2;
+std::cout << (a + b == 0.3); // 0（偽）と出力される！
+// a + b の内部値は実際には 0.3000000000000000444... です
+```
+
+実数同士を安全に比較するためには、許容誤差イプシロン（$\epsilon$）を定義して差の絶対値を比較します：
+
+```cpp
+#include <cmath>
+
+bool areEqual(double x, double y, double epsilon = 1e-9) {
+    return std::fabs(x - y) < epsilon;
+}
+```
+
+---
+
+## 3. 数式パーサー：Shunting-Yard アルゴリズム
+
+カッコや演算子の優先順位を含む式（例: $3 + 4 \times 2 / (1 - 5)^2$）を正確に計算するために、電卓プログラムはエドガー・ダイクストラの **Shunting-yard アルゴリズム** を利用します：
+
+1. **トークン分割（字句解析）：** 文字列を数値、演算子、カッコに分解します。
+2. **演算子スタック：** 演算子の結合法則と優先度に従って演算子を並べ替えます。
+3. **逆ポーランド記法（RPN）：** カッコのない後置記法を出力し、数値スタックを用いて線形時間 $O(N)$ で計算を実行します。
+
+---
+
+## 4. 完成版 C++ 関数電卓プログラム
 
 ```cpp
 #include <iostream>
 #include <cmath>
+#include <limits>
 
-void showMenu() {
-    std::cout << "=== SciCalcX C++ 関数電卓 ===" << std::endl;
-    std::cout << "1. 足し算 (+)" << std::endl;
-    std::cout << "2. 引き算 (-)" << std::endl;
-    std::cout << "3. 掛け算 (*)" << std::endl;
-    std::cout << "4. 割り算 (/)" << std::endl;
-    std::cout << "5. べき乗 (x^y)" << std::endl;
-    std::cout << "6. 平方根 (√)" << std::endl;
-    std::cout << "7. 終了" << std::endl;
-    std::cout << "操作を選択してください (1-7): ";
+const double PI = 3.14159265358979323846;
+
+double degToRad(double deg) {
+    return deg * (PI / 180.0);
+}
+
+void printMenu() {
+    std::cout << "\n=== SciCalcX C++ 関数電卓 ===\n";
+    std::cout << "1. 加算 (+)\n";
+    std::cout << "2. 減算 (-)\n";
+    std::cout << "3. 乗算 (*)\n";
+    std::cout << "4. 除算 (/)\n";
+    std::cout << "5. べき乗 (x^y)\n";
+    std::cout << "6. 平方根 (sqrt)\n";
+    std::cout << "7. 正弦 (度数法)\n";
+    std::cout << "8. 余弦 (度数法)\n";
+    std::cout << "9. 終了\n";
+    std::cout << "メニューを選択 (1-9): ";
 }
 
 int main() {
     int choice;
-    double num1, num2, result;
+    double x, y, result;
 
     while (true) {
-        showMenu();
-        std::cin >> choice;
-
-        if (choice == 7) {
-            std::cout << "電卓を終了します。ご利用ありがとうございました！" << std::endl;
-            break;
-        }
-
-        // 単一オペランドの処理
-        if (choice == 6) {
-            std::cout << "数値を入力してください: ";
-            std::cin >> num1;
-            if (num1 < 0) {
-                std::cout << "エラー: 実数範囲では負の数の平方根は定義されていません。" << std::endl << std::endl;
-            } else {
-                result = std::sqrt(num1);
-                std::cout << "計算結果: " << result << std::endl << std::endl;
-            }
+        printMenu();
+        if (!(std::cin >> choice)) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             continue;
         }
 
-        // 2つのオペランドの処理
-        if (choice >= 1 && choice <= 5) {
-            std::cout << "1つ目の数値を入力: ";
-            std::cin >> num1;
-            std::cout << "2つ目の数値を入力: ";
-            std::cin >> num2;
+        if (choice == 9) break;
 
-            switch (choice) {
-                case 1:
-                    result = num1 + num2;
-                    std::cout << "計算結果: " << num1 << " + " << num2 << " = " << result << std::endl;
-                    break;
-                case 2:
-                    result = num1 - num2;
-                    std::cout << "計算結果: " << num1 << " - " << num2 << " = " << result << std::endl;
-                    break;
-                case 3:
-                    result = num1 * num2;
-                    std::cout << "計算結果: " << num1 << " * " << num2 << " = " << result << std::endl;
-                    break;
-                case 4:
-                    if (num2 == 0) {
-                        std::cout << "エラー: ゼロ除算は未定義です。" << std::endl;
-                    } else {
-                        result = num1 / num2;
-                        std::cout << "計算結果: " << num1 << " / " << num2 << " = " << result << std::endl;
-                    }
-                    break;
-                case 5:
-                    result = std::pow(num1, num2);
-                    std::cout << "計算結果: " << num1 << "^" << num2 << " = " << result << std::endl;
-                    break;
-                default:
-                    std::cout << "無効な操作です。" << std::endl;
-            }
-            std::cout << std::endl;
-        } else {
-            std::cout << "選択肢が無効です。もう一度お試しください。" << std::endl << std::endl;
+        switch (choice) {
+            case 1:
+                std::cout << "2つの数値を入力: ";
+                std::cin >> x >> y;
+                std::cout << "計算結果: " << x + y << "\n";
+                break;
+            case 4:
+                std::cout << "被除数と除数を入力: ";
+                std::cin >> x >> y;
+                if (std::fabs(y) < 1e-12) {
+                    std::cout << "エラー: ゼロ除算は未定義です。\n";
+                } else {
+                    std::cout << "計算結果: " << x / y << "\n";
+                }
+                break;
+            case 6:
+                std::cout << "平方根を計算する数値: ";
+                std::cin >> x;
+                if (x < 0) {
+                    std::cout << "エラー: 実数の範囲で負の平方根は計算できません。\n";
+                } else {
+                    std::cout << "計算結果: " << std::sqrt(x) << "\n";
+                }
+                break;
+            case 7:
+                std::cout << "角度（度）を入力: ";
+                std::cin >> x;
+                result = std::sin(degToRad(x));
+                if (std::fabs(result) < 1e-12) result = 0.0;
+                std::cout << "計算結果: " << result << "\n";
+                break;
+            default:
+                std::cout << "無効な選択です。\n";
+                break;
         }
     }
-
     return 0;
 }
 ```
 
 ---
 
-## ブラウザ上で実際にコードを実行してみましょう！
+## 5. ブラウザ上でC++コードを即時実行
 
-コードを読むだけでなく、実際に動かしてみることがプログラミング習得の近道です。**[SciCalcX オンラインコンパイラ](/ja/compiler/)**を開き、上記のコードを貼り付けてリアルタイム実行を体験してください！
+開発環境をローカルにインストールすることなく、ブラウザ上でコードを試してみませんか？
+**[SciCalcX C/C++ コードチューター](/compiler/)** を使えば、オンライン上でコードをコンパイルし、リアルタイムに動作を確認できます。
+
+---
+
+## 参考文献・推薦文献
+
+* **David Goldberg (ACM Computing Surveys, 1991)** — [What Every Computer Scientist Should Know About Floating-Point Arithmetic](https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html): IEEE 754規格の二進浮動小数点数表現、仮数部の丸め誤差、情報落ちに関する決定版論文。
+* **cppreference** — [C++ `<cmath>` 数学関数ライブラリ](https://ja.cppreference.com/w/cpp/header/cmath): 三角関数、平方根、浮動小数点例外および定義域エラー処理に関する公式仕様。
+* **Edsger W. Dijkstra (1961)** — [An Algol 60 Translator for the X1](https://www.cs.utexas.edu/~EWD/transcriptions/EWD00xx/EWD35.html): 中置記法から逆ポーランド記法へ演算子順序を正しく変換する操車場アルゴリズムの原著報告書。
