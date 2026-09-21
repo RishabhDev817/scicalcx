@@ -589,6 +589,7 @@ const w = ui[lang] || ui.en;
             <!-- Language Dropdown -->
             <select 
               id="select-language" 
+              aria-label="Select Programming Language"
               class="bg-white border border-gray-300 text-gray-800 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-200 text-xs rounded px-2.5 py-1 font-mono focus:outline-none focus:border-brand-blue cursor-pointer"
             >
               <option value="python">Python 3</option>
@@ -601,6 +602,7 @@ const w = ui[lang] || ui.en;
               id="btn-toggle-fullscreen" 
               class="p-1.5 border border-gray-300 dark:border-gray-700 bg-white hover:bg-slate-50 text-slate-600 hover:text-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800 dark:text-gray-200 dark:hover:text-white rounded-md transition-all focus:outline-none cursor-pointer flex items-center justify-center hover:scale-105 active:scale-95"
               title={w.fullscreenTitle}
+              aria-label={w.fullscreenTitle || "Toggle Fullscreen Editor"}
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path id="fullscreen-path" stroke-linecap="round" stroke-linejoin="round" d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
@@ -623,6 +625,7 @@ const w = ui[lang] || ui.en;
           <!-- Textarea Input Area -->
           <textarea 
             id="code-editor" 
+            aria-label={w.sourceEditor || "Source Code Editor"}
             class="flex-1 bg-white dark:bg-[#0d1117] text-gray-900 dark:text-gray-300 px-3 py-3 resize-none focus:outline-none overflow-auto text-xs h-full font-mono whitespace-pre"
             style="line-height: 20px;"
             placeholder={w.editorPlaceholder}
@@ -771,7 +774,7 @@ const w = ui[lang] || ui.en;
       <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-slate-800 dark:text-slate-100 flex items-center gap-2">
         <span>📸</span> {w.exportModalTitle}
       </h3>
-      <button id="btn-close-export-modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer focus:outline-none transition-colors">
+      <button id="btn-close-export-modal" aria-label={w.cancel || 'Close modal'} class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer focus:outline-none transition-colors">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
         </svg>

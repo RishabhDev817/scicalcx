@@ -206,6 +206,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
               data-col="${c}" 
               value="${val}" 
               placeholder="0"
+              aria-label="Matrix ${matrixName.toUpperCase()} row ${r + 1} column ${c + 1}"
             />
           `;
         }
@@ -231,8 +232,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       let gridStyles = rows === 2 ? 'grid-cols-2' : 'grid-cols-3';
 
       let cellsHtml = matrix
-        .map(row => 
-          row.map(val => `<input type="text" class="bg-brand-black/40 border border-brand-border rounded text-brand-text font-mono text-center text-sm sm:text-base focus:outline-none min-w-[64px] min-h-[44px]" value="${clean(val)}" readonly />`).join('')
+        .map((row, r) => 
+          row.map((val, c) => `<input type="text" aria-label="Result matrix row ${r + 1} column ${c + 1}" class="bg-brand-black/40 border border-brand-border rounded text-brand-text font-mono text-center text-sm sm:text-base focus:outline-none min-w-[64px] min-h-[44px]" value="${clean(val)}" readonly />`).join('')
         )
         .join('');
 

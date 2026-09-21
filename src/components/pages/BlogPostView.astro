@@ -165,7 +165,7 @@ relatedPosts = relatedPosts.slice(0, 3);
                 href={`#${h.slug}`}
                 class="text-brand-text-muted hover:text-brand-blue-neon transition-colors"
               >
-                {h.text}
+                {h.text.replace(/\$([^$]+)\$/g, '$1')}
               </a>
             </li>
           ))}

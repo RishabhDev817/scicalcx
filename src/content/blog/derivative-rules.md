@@ -178,7 +178,9 @@ $$f'(x) = 5(4x^3 - 7x)^4 \cdot (12x^2 - 7)$$
 
 Real-world problems frequently require applying multiple rules simultaneously.
 
-### Problem: Differentiate $y = \frac{e^{3x}}{\cos(x)}$
+### Problem: Differentiate y = e^(3x) / cos(x)
+
+Find the derivative of the composite quotient function $y = \frac{e^{3x}}{\cos(x)}$:
 
 1. **Primary Structure:** The overall expression is a quotient ($u/v$).
 2. **Numerator:** $u = e^{3x}$. By the chain rule, $u' = e^{3x} \cdot \frac{d}{dx}[3x] = 3e^{3x}$.
@@ -206,11 +208,11 @@ $$y' = \frac{e^{3x}(3\cos(x) + \sin(x))}{\cos^2(x)}$$
 
 ## 9. Frequently Asked Questions
 
-### What is the geometric interpretation of a derivative being zero ($f'(x) = 0$)?
+### What is the geometric interpretation of a derivative being zero (f'(x) = 0)?
 When $f'(x) = 0$, the tangent line is horizontal. This indicates a potential **local maximum, local minimum, or horizontal inflection point** on the graph. Evaluating the second derivative ($f''(x)$) determines whether the curve is concave up (minimum) or concave down (maximum).
 
-### What is the difference between $\frac{dy}{dx}$ and $f'(x)$?
-They represent identical mathematical concepts. $f'(x)$ is **Lagrange's notation**, which is concise and convenient for evaluating values like $f'(2)$. $\frac{dy}{dx}$ is **Leibniz's notation**, which explicitly specifies the independent variable and is useful when applying the chain rule or working with differential equations.
+### What is the difference between dy/dx and f'(x)?
+They represent identical mathematical concepts: $\frac{dy}{dx}$ and $f'(x)$ are two standard ways to express the first derivative. $f'(x)$ is **Lagrange's notation**, which is concise and convenient for evaluating values like $f'(2)$. $\frac{dy}{dx}$ is **Leibniz's notation**, which explicitly specifies the independent variable and is useful when applying the chain rule or working with differential equations.
 
 ---
 

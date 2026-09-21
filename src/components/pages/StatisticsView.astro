@@ -80,8 +80,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           </p>
         </div>
 
+        <label for="data-input" class="sr-only">Dataset input numbers</label>
         <textarea
           id="data-input"
+          aria-label="Dataset input numbers"
           class="flex-1 min-h-[180px] bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded-lg p-3 text-sm font-mono text-white focus:outline-none focus:ring-1 focus:ring-brand-blue/30 resize-none mt-2 placeholder:text-brand-text-dim"
           placeholder="e.g. 12, 19, 3, 5, 2, 3, 9, 14, 16"
         ></textarea>
