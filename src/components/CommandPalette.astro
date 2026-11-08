@@ -1,0 +1,341 @@
+---
+// CommandPalette.astro - Universal Raycast-style ⌘K Command Palette & Constants Library
+import { useTranslatedPath, getLangFromUrl } from '../i18n/utils';
+import type { SupportedLanguage } from '../i18n/ui';
+
+interface Props {
+  lang?: SupportedLanguage;
+}
+
+const { lang = 'en' } = Astro.props;
+const currentLang = lang || getLangFromUrl(Astro.url);
+const translatePath = useTranslatedPath(currentLang);
+---
+
+<!-- Modal Overlay -->
+<div 
+  id="cmd-palette-modal" 
+  class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-start justify-center pt-[8vh] sm:pt-[12vh] px-3 sm:px-4 opacity-0 pointer-events-none transition-all duration-200"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command Palette"
+>
+  <!-- Dialog Container -->
+  <div 
+    id="cmd-palette-dialog" 
+    class="w-full max-w-xl bg-brand-gray-dark border border-brand-border rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col scale-95 transition-all duration-200"
+  >
+    <!-- Search Bar -->
+    <div class="flex items-center px-4 py-3.5 border-b border-brand-border bg-brand-black/50 gap-3">
+      <svg class="h-4 w-4 text-brand-blue shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input 
+        type="text" 
+        id="cmd-search-input" 
+        placeholder="Type a tool name or search constants (e.g. 'c', 'planck', 'matrix')..." 
+        class="w-full bg-transparent text-sm sm:text-base font-sans text-brand-text placeholder-brand-text-dim focus:outline-none"
+        autocomplete="off" 
+        spellcheck="false"
+      />
+      <kbd class="kbd-shortcut hidden sm:inline-flex text-[9px] px-1.5 py-0.5">ESC</kbd>
+    </div>
+
+    <!-- Results List -->
+    <div id="cmd-results" class="max-h-[360px] overflow-y-auto p-2 space-y-1 font-mono text-xs select-none">
+      <!-- Dynamically Rendered via JS -->
+    </div>
+
+    <!-- Footer HUD Navigation Hint -->
+    <div class="px-4 py-2 border-t border-brand-border bg-brand-black/40 flex items-center justify-between text-[10px] font-mono text-brand-text-dim select-none">
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1">
+          <kbd class="kbd-shortcut px-1">↑</kbd><kbd class="kbd-shortcut px-1">↓</kbd> Navigate
+        </span>
+        <span class="flex items-center gap-1">
+          <kbd class="kbd-shortcut px-1.5">↵</kbd> Select / Inject
+        </span>
+      </div>
+      <span class="hidden sm:inline text-brand-text-dim">SciCalcX Command Palette</span>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Toast Notification -->
+<div 
+  id="cmd-toast" 
+  class="fixed bottom-6 right-6 z-50 bg-brand-gray-dark border border-brand-blue/50 text-brand-text px-4 py-2 rounded-lg text-xs font-mono shadow-2xl flex items-center gap-2 opacity-0 translate-y-3 pointer-events-none transition-all duration-200"
+>
+  <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+  <span id="cmd-toast-message">Copied to clipboard</span>
+</div>
+
+<style>
+  .cmd-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    border: 1px solid transparent;
+  }
+  .cmd-item.selected {
+    background: linear-gradient(90deg, rgba(91, 156, 246, 0.14) 0%, rgba(91, 156, 246, 0.04) 100%);
+    border-color: rgba(91, 156, 246, 0.3);
+  }
+  .cmd-item.selected .cmd-title {
+    color: #ffffff;
+  }
+  html.light .cmd-item.selected {
+    background: linear-gradient(90deg, rgba(26, 115, 232, 0.12) 0%, rgba(26, 115, 232, 0.04) 100%);
+    border-color: rgba(26, 115, 232, 0.3);
+  }
+  html.light .cmd-item.selected .cmd-title {
+    color: #0f141c;
+  }
+</style>
+
+<script is:inline define:vars={{
+  homeUrl: translatePath('/'),
+  matrixUrl: translatePath('/matrix'),
+  calculusUrl: translatePath('/calculus'),
+  graphingUrl: translatePath('/graphing'),
+  programmingUrl: translatePath('/programming'),
+  statisticsUrl: translatePath('/statistics'),
+  compilerUrl: translatePath('/compiler'),
+  blogUrl: translatePath('/blog')
+}}>
+  (function() {
+    const modal = document.getElementById('cmd-palette-modal');
+    const dialog = document.getElementById('cmd-palette-dialog');
+    const input = document.getElementById('cmd-search-input');
+    const resultsContainer = document.getElementById('cmd-results');
+    const toast = document.getElementById('cmd-toast');
+    const toastMsg = document.getElementById('cmd-toast-message');
+
+    let isOpen = false;
+    let selectedIndex = 0;
+    let filteredItems = [];
+
+    const items = [
+      // --- NAVIGATION / TOOLS ---
+      { id: 'tool-sci', type: 'tool', title: 'Scientific Calculator', desc: 'Standard & trigonometric scientific engine', url: homeUrl, icon: '📐', tags: 'sci math calc trigo sine' },
+      { id: 'tool-matrix', type: 'tool', title: 'Matrix Algebra', desc: 'Determinant, inverse, transpose & multiplication', url: matrixUrl, icon: '▦', tags: 'matrix det inv linear algebra' },
+      { id: 'tool-calc', type: 'tool', title: 'Calculus Suite', desc: 'Definite & indefinite integrals, polynomial roots', url: calculusUrl, icon: '∫', tags: 'calculus derivative integral antiderivative' },
+      { id: 'tool-graph', type: 'tool', title: 'Graphing Engine', desc: '2D multi-function coordinate canvas & traces', url: graphingUrl, icon: '📈', tags: 'graph plot curve canvas coordinate' },
+      { id: 'tool-prog', type: 'tool', title: 'Programmer Calculator', desc: 'Hex, binary, octal, decimal & bitwise logic', url: programmingUrl, icon: '💻', tags: 'bitwise binary hex bit programmer logic' },
+      { id: 'tool-stats', type: 'tool', title: 'Statistics Suite', desc: 'Mean, median, mode, variance, standard deviation', url: statisticsUrl, icon: '📊', tags: 'statistics mean median stddev variance distribution' },
+      { id: 'tool-comp', type: 'tool', title: 'AI Code Tutor & Compiler', desc: 'C++, Python & JS in-browser sandbox runner', url: compilerUrl, icon: '⚡', tags: 'compiler code python cpp execution tutor' },
+      { id: 'tool-blog', type: 'tool', title: 'Handbooks & Engineering Blog', desc: 'Pedagogical guides and math articles', url: blogUrl, icon: '📚', tags: 'blog articles guide documentation' },
+
+      // --- PHYSICAL CONSTANTS ---
+      { id: 'c-light', type: 'const', title: 'Speed of Light (c)', symbol: 'c', val: '2.99792458e8', desc: '299,792,458 m/s', unit: 'm/s', tags: 'speed light c relativity physics' },
+      { id: 'c-planck', type: 'const', title: "Planck's Constant (h)", symbol: 'h', val: '6.62607015e-34', desc: '6.62607 × 10⁻³⁴ J·s', unit: 'J·s', tags: 'planck constant quantum h photon' },
+      { id: 'c-h-bar', type: 'const', title: 'Reduced Planck Constant (ħ)', symbol: 'ħ', val: '1.054571817e-34', desc: '1.05457 × 10⁻³⁴ J·s', unit: 'J·s', tags: 'hbar reduced planck dirac quantum' },
+      { id: 'c-grav', type: 'const', title: 'Gravitational Constant (G)', symbol: 'G', val: '6.67430e-11', desc: '6.67430 × 10⁻¹¹ m³/(kg·s²)', unit: 'm³/(kg·s²)', tags: 'gravity gravitational G newton' },
+      { id: 'c-elem', type: 'const', title: 'Elementary Charge (e)', symbol: 'e_c', val: '1.602176634e-19', desc: '1.60218 × 10⁻¹⁹ C', unit: 'C', tags: 'electron charge coulomb' },
+      { id: 'c-boltz', type: 'const', title: 'Boltzmann Constant (k_B)', symbol: 'k_B', val: '1.380649e-23', desc: '1.38065 × 10⁻²³ J/K', unit: 'J/K', tags: 'boltzmann kb thermodynamics entropy' },
+      { id: 'c-avogadro', type: 'const', title: 'Avogadro Constant (N_A)', symbol: 'N_A', val: '6.02214076e23', desc: '6.02214 × 10²³ mol⁻¹', unit: 'mol⁻¹', tags: 'avogadro mole chemistry particles' },
+      { id: 'c-mass-e', type: 'const', title: 'Electron Rest Mass (m_e)', symbol: 'm_e', val: '9.1093837e-31', desc: '9.10938 × 10⁻³¹ kg', unit: 'kg', tags: 'electron mass particle me' },
+      { id: 'c-mass-p', type: 'const', title: 'Proton Rest Mass (m_p)', symbol: 'm_p', val: '1.6726219e-27', desc: '1.67262 × 10⁻²⁷ kg', unit: 'kg', tags: 'proton mass particle mp' },
+      { id: 'c-gas', type: 'const', title: 'Universal Gas Constant (R)', symbol: 'R', val: '8.314462618', desc: '8.31446 J/(mol·K)', unit: 'J/(mol·K)', tags: 'gas constant R ideal thermodynamic' },
+      { id: 'c-g', type: 'const', title: 'Standard Earth Gravity (g)', symbol: 'g', val: '9.80665', desc: '9.80665 m/s²', unit: 'm/s²', tags: 'gravity earth acceleration g' },
+      { id: 'c-pi', type: 'const', title: 'Archimedes Constant (π)', symbol: 'π', val: 'pi', desc: '3.141592653589...', unit: 'rad', tags: 'pi circle circumference' },
+      { id: 'c-euler', type: 'const', title: "Euler's Number (e)", symbol: 'e', val: 'e', desc: '2.718281828459...', unit: 'base', tags: 'euler e exponential natural log' },
+      { id: 'c-phi', type: 'const', title: 'Golden Ratio (φ)', symbol: 'φ', val: '1.61803398875', desc: '1.6180339887...', unit: 'ratio', tags: 'golden ratio phi fibonacci' },
+
+      // --- ACTIONS ---
+      { id: 'act-theme', type: 'action', title: 'Toggle Light / Dark Mode', desc: 'Switch visual palette theme', action: 'toggle-theme', icon: '◐', tags: 'theme light dark mode color' },
+      { id: 'act-clear', type: 'action', title: 'Clear Calculator (AC)', desc: 'Reset calculation expression buffer', action: 'clear-calc', icon: '⌫', tags: 'clear reset ac erase' },
+      { id: 'act-angle', type: 'action', title: 'Toggle Angle Unit (DEG / RAD)', desc: 'Switch angle mode between degrees and radians', action: 'toggle-angle', icon: '↻', tags: 'deg rad angle degree radian' }
+    ];
+
+    function showToast(msg) {
+      if (!toast) return;
+      toastMsg.textContent = msg;
+      toast.classList.remove('opacity-0', 'translate-y-3', 'pointer-events-none');
+      setTimeout(function() {
+        toast.classList.add('opacity-0', 'translate-y-3', 'pointer-events-none');
+      }, 2400);
+    }
+
+    function renderResults() {
+      const q = input.value.trim().toLowerCase();
+      filteredItems = items.filter(function(it) {
+        if (!q) return true;
+        return it.title.toLowerCase().includes(q) ||
+               (it.tags && it.tags.includes(q)) ||
+               (it.desc && it.desc.toLowerCase().includes(q)) ||
+               (it.symbol && it.symbol.toLowerCase().includes(q));
+      });
+
+      if (filteredItems.length === 0) {
+        resultsContainer.innerHTML = '<div class="p-6 text-center text-brand-text-dim">No matching commands or constants found.</div>';
+        return;
+      }
+
+      if (selectedIndex >= filteredItems.length) {
+        selectedIndex = 0;
+      }
+
+      let currentGroup = '';
+      let html = '';
+
+      filteredItems.forEach(function(it, idx) {
+        const groupName = it.type === 'tool' ? 'TOOLS & ENGINES' : (it.type === 'const' ? 'PHYSICAL & MATH CONSTANTS' : 'QUICK ACTIONS');
+        if (groupName !== currentGroup) {
+          currentGroup = groupName;
+          html += '<div class="text-[9px] font-mono tracking-widest text-brand-text-dim uppercase px-3 pt-3 pb-1">' + currentGroup + '</div>';
+        }
+
+        const isSelected = idx === selectedIndex;
+        const iconOrBadge = it.symbol ? '<span class="w-6 h-6 rounded flex items-center justify-center font-bold bg-brand-blue/10 text-brand-blue border border-brand-blue/30 text-[11px]">' + it.symbol + '</span>' : '<span class="text-sm">' + (it.icon || '•') + '</span>';
+        const rightBadge = it.unit ? '<span class="text-[10px] text-brand-text-dim font-mono">' + it.desc + '</span>' : (it.type === 'tool' ? '<span class="text-[10px] text-brand-blue">Open →</span>' : '');
+
+        html += `
+          <div class="cmd-item ${isSelected ? 'selected' : ''}" data-index="${idx}">
+            <div class="flex items-center gap-2.5 min-w-0">
+              ${iconOrBadge}
+              <div class="flex flex-col min-w-0">
+                <span class="cmd-title text-brand-text font-medium truncate">${it.title}</span>
+                <span class="text-[10px] text-brand-text-dim truncate">${it.desc}</span>
+              </div>
+            </div>
+            <div class="shrink-0 ml-3">
+              ${rightBadge}
+            </div>
+          </div>
+        `;
+      });
+
+      resultsContainer.innerHTML = html;
+
+      // Scroll selected item into view
+      const selectedEl = resultsContainer.querySelector('.cmd-item.selected');
+      if (selectedEl) {
+        selectedEl.scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    function executeItem(it) {
+      if (!it) return;
+      closePalette();
+
+      if (it.type === 'tool') {
+        window.location.href = it.url;
+      } else if (it.type === 'const') {
+        // Dispatch to active calculator if on calculator page
+        const isCalcPage = window.location.pathname === '/' || window.location.pathname.endsWith('/');
+        window.dispatchEvent(new CustomEvent('inject-constant', {
+          detail: { symbol: it.symbol, value: it.val }
+        }));
+
+        // Also copy to clipboard for universal utility
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(it.val).then(function() {
+            showToast('Injected ' + it.title + ' (' + it.val + ')');
+          }).catch(function() {
+            showToast('Injected ' + it.title);
+          });
+        } else {
+          showToast('Injected ' + it.title);
+        }
+      } else if (it.type === 'action') {
+        if (it.action === 'toggle-theme') {
+          const themeToggleBtn = document.getElementById('theme-toggle');
+          if (themeToggleBtn) themeToggleBtn.click();
+          showToast('Toggled color theme');
+        } else if (it.action === 'clear-calc') {
+          window.dispatchEvent(new CustomEvent('calculator-action', { detail: { action: 'clear' } }));
+          showToast('Reset calculator buffer');
+        } else if (it.action === 'toggle-angle') {
+          window.dispatchEvent(new CustomEvent('calculator-action', { detail: { action: 'toggle-angle' } }));
+          showToast('Toggled angle mode');
+        }
+      }
+    }
+
+    function openPalette() {
+      isOpen = true;
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      dialog.classList.remove('scale-95');
+      dialog.classList.add('scale-100');
+      input.value = '';
+      selectedIndex = 0;
+      renderResults();
+      setTimeout(function() { input.focus(); }, 50);
+    }
+
+    function closePalette() {
+      isOpen = false;
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      dialog.classList.remove('scale-100');
+      dialog.classList.add('scale-95');
+    }
+
+    // Global keyboard listeners
+    window.addEventListener('keydown', function(e) {
+      // ⌘K or Ctrl+K toggle
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (isOpen) closePalette();
+        else openPalette();
+        return;
+      }
+
+      if (!isOpen) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closePalette();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (filteredItems.length > 0) {
+          selectedIndex = (selectedIndex + 1) % filteredItems.length;
+          renderResults();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (filteredItems.length > 0) {
+          selectedIndex = (selectedIndex - 1 + filteredItems.length) % filteredItems.length;
+          renderResults();
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (filteredItems[selectedIndex]) {
+          executeItem(filteredItems[selectedIndex]);
+        }
+      }
+    });
+
+    input.addEventListener('input', function() {
+      selectedIndex = 0;
+      renderResults();
+    });
+
+    // Close on clicking backdrop
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closePalette();
+      }
+    });
+
+    // Delegate click on result items
+    resultsContainer.addEventListener('click', function(e) {
+      const itemEl = e.target.closest('.cmd-item');
+      if (itemEl) {
+        const idx = parseInt(itemEl.getAttribute('data-index') || '0', 10);
+        executeItem(filteredItems[idx]);
+      }
+    });
+
+    // Trigger button binding
+    const triggerBtn = document.getElementById('cmd-palette-toggle');
+    if (triggerBtn) {
+      triggerBtn.addEventListener('click', openPalette);
+    }
+  })();
+</script>
+

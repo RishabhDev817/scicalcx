@@ -39,7 +39,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
   description={t('meta.statistics.desc')}
   keywords={t('meta.statistics.keywords')}
 >
-  <div class="w-full max-w-4xl mx-auto space-y-6">
+  <div class="w-full max-w-5xl mx-auto space-y-6">
     <!-- Page Header -->
     <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
       <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
@@ -61,22 +61,43 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       </div>
     </div>
 
-    <!-- Live Status -->
-    <div class="flex items-center justify-between px-3 py-1.5 bg-brand-gray-light/40 border border-brand-border rounded text-[10px] font-mono text-brand-text-muted">
-      <div>DATA SET COUNT: <span id="data-count">0</span> items</div>
-      <div>STATUS: <span id="data-status" class="text-brand-blue-neon">Awaiting data...</span></div>
+    <!-- Live Telemetry Bar (Raycast / TradingView Style) -->
+    <div class="flex flex-wrap items-center justify-between gap-2 px-3.5 py-2 bg-brand-gray-light/60 border border-brand-border rounded-lg text-[11px] font-mono text-brand-text-muted shadow-sm">
+      <div class="flex items-center gap-4">
+        <div class="flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
+          <span>COUNT: <strong id="data-count" class="text-brand-text">0</strong> items</span>
+        </div>
+        <div class="hidden sm:inline-block text-brand-text-dim">|</div>
+        <div class="hidden sm:flex items-center gap-1.5">
+          <span>SUM: <strong id="stat-sum" class="text-brand-text">0</strong></span>
+        </div>
+        <div class="hidden md:inline-block text-brand-text-dim">|</div>
+        <div class="hidden md:flex items-center gap-1.5">
+          <span>DISTRIBUTION: <strong id="data-dist-shape" class="text-brand-blue-neon">Awaiting data</strong></span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-brand-text-dim">ENGINE:</span>
+        <span id="data-status" class="text-brand-blue-neon font-semibold">Ready</span>
+      </div>
     </div>
 
-    <!-- Statistics Workspace -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Input Card (Col 1) -->
-      <div class="md:col-span-1 border border-brand-border bg-brand-gray-dark/40 rounded-xl p-5 space-y-4 flex flex-col justify-between">
+    <!-- Main Workspace Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Input Panel & Presets (Lg: 4 Cols) -->
+      <div class="lg:col-span-4 border border-brand-border bg-brand-gray-dark/50 rounded-xl p-5 space-y-4 flex flex-col justify-between shadow-lg">
         <div class="space-y-2">
-          <h2 class="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
-            Dataset Input
-          </h2>
-          <p class="text-[11px] text-brand-text-muted">
-            Enter numbers separated by commas, spaces, or newlines.
+          <div class="flex items-center justify-between">
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-sm bg-brand-blue"></span> Dataset Input
+            </h2>
+            <span id="parsed-badge" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-gray-light border border-brand-border text-brand-text-dim">
+              0 valid
+            </span>
+          </div>
+          <p class="text-[11px] text-brand-text-muted leading-tight">
+            Enter numbers separated by commas, spaces, tabs, or newlines.
           </p>
         </div>
 
@@ -84,84 +105,270 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <textarea
           id="data-input"
           aria-label="Dataset input numbers"
-          class="flex-1 min-h-[180px] bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded-lg p-3 text-sm font-mono text-white focus:outline-none focus:ring-1 focus:ring-brand-blue/30 resize-none mt-2 placeholder:text-brand-text-dim"
-          placeholder="e.g. 12, 19, 3, 5, 2, 3, 9, 14, 16"
+          class="w-full h-44 bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded-lg p-3 text-xs font-mono text-white focus:outline-none focus:ring-1 focus:ring-brand-blue/30 resize-none placeholder:text-brand-text-dim/60 transition-colors leading-relaxed"
+          placeholder="e.g. 12, 19, 3, 5, 2, 3, 9, 14, 16, 22, 15, 8"
         ></textarea>
 
-        <div class="grid grid-cols-2 gap-2 mt-4">
-          <button id="btn-clear-data" class="text-xs py-2 border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white rounded transition-all cursor-pointer">Clear</button>
-          <button id="btn-sample-data" class="text-xs py-2 border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-blue-neon hover:text-white rounded transition-all cursor-pointer">Use Sample</button>
+        <!-- Presets Selector -->
+        <div class="space-y-1.5 pt-1">
+          <div class="text-[10px] font-mono text-brand-text-dim uppercase tracking-wider">Dataset Presets</div>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button id="btn-preset-sample" aria-label="Load basic sample dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-white transition-all cursor-pointer">
+              ✦ Sample
+            </button>
+            <button id="btn-preset-normal" aria-label="Load normal bell curve dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-white transition-all cursor-pointer">
+              ◈ Normal (Bell)
+            </button>
+            <button id="btn-preset-finance" aria-label="Load daily stock market returns dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-white transition-all cursor-pointer">
+              📈 Stock Returns
+            </button>
+            <button id="btn-preset-outliers" aria-label="Load dataset containing extreme outliers" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-white transition-all cursor-pointer">
+              ⚠ With Outliers
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Data Clean & Transformation Tools -->
+        <div class="space-y-1.5 pt-2 border-t border-brand-border/40">
+          <div class="text-[10px] font-mono text-brand-text-dim uppercase tracking-wider">Data Transform</div>
+          <div class="grid grid-cols-3 gap-1.5">
+            <button id="btn-sort-asc" aria-label="Sort dataset in ascending order" class="keycap-tactile text-[10px] py-1.5 px-1 text-center rounded font-mono text-brand-text-muted hover:text-brand-blue-neon transition-all cursor-pointer">
+              Sort ↑
+            </button>
+            <button id="btn-filter-outliers" aria-label="Filter out extreme statistical outliers" class="keycap-tactile text-[10px] py-1.5 px-1 text-center rounded font-mono text-brand-text-muted hover:text-brand-orange transition-all cursor-pointer">
+              No Outliers
+            </button>
+            <button id="btn-z-score" aria-label="Normalize dataset using Z-scores" class="keycap-tactile text-[10px] py-1.5 px-1 text-center rounded font-mono text-brand-text-muted hover:text-brand-blue-neon transition-all cursor-pointer">
+              Z-Score
+            </button>
+          </div>
+        </div>
+
+        <!-- Primary Action Triggers -->
+        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-brand-border/40">
+          <button id="btn-clear-data" aria-label="Clear current dataset" class="text-xs py-2 border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-brand-red rounded transition-all cursor-pointer font-mono font-medium">
+            Clear
+          </button>
+          <button id="btn-sample-data" aria-label="Load default sample dataset" class="text-xs py-2 border border-brand-blue/30 bg-brand-blue/10 hover:bg-brand-blue/20 text-brand-blue-neon hover:text-white rounded transition-all cursor-pointer font-mono font-medium">
+            Reset Sample
+          </button>
         </div>
       </div>
 
-      <!-- Outputs Grid (Col 2 & 3) -->
-      <div class="md:col-span-2 space-y-4">
-        <!-- Main Stats Summary -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <!-- Stat Card -->
-          <div class="border border-brand-border bg-brand-gray-dark/20 rounded-lg p-3.5 space-y-1.5">
-            <div class="text-[10px] font-mono text-brand-text-dim light:text-neutral-600 uppercase">Mean (Average)</div>
-            <div id="stat-mean" class="text-xl font-bold font-mono text-brand-text">0</div>
+      <!-- Analytics Dashboard & Visualizer (Lg: 8 Cols) -->
+      <div class="lg:col-span-8 space-y-5">
+        <!-- Interactive Chart Visualizer (TradingView Style Box Plot & Histogram) -->
+        <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-5 space-y-3.5 shadow-md">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-brand-border/50 pb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-brand-orange"></span>
+              <h3 class="text-xs font-semibold uppercase tracking-wider text-brand-text font-mono">
+                Distribution Visualizer
+              </h3>
+            </div>
+            
+            <!-- Visualizer View Toggle -->
+            <div class="flex items-center p-0.5 bg-brand-black border border-brand-border rounded-lg text-[10px] font-mono">
+              <button id="tab-boxplot" aria-label="Show Five-Number Box and Whisker Plot" class="px-2.5 py-1 rounded text-white bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors">
+                Box & Whisker
+              </button>
+              <button id="tab-histogram" aria-label="Show Frequency Histogram Distribution" class="px-2.5 py-1 rounded text-brand-text-muted hover:text-white cursor-pointer transition-colors">
+                Frequency Histogram
+              </button>
+            </div>
           </div>
-          <!-- Stat Card -->
-          <div class="border border-brand-border bg-brand-gray-dark/20 rounded-lg p-3.5 space-y-1.5">
-            <div class="text-[10px] font-mono text-brand-text-dim light:text-neutral-600 uppercase">Median</div>
-            <div id="stat-median" class="text-xl font-bold font-mono text-brand-text">0</div>
+
+          <!-- Chart Render Canvas / SVG Area -->
+          <div id="chart-container" class="w-full min-h-[170px] flex items-center justify-center bg-brand-black/70 border border-brand-border/60 rounded-lg p-2 overflow-hidden relative">
+            <div id="chart-empty" class="text-xs font-mono text-brand-text-dim text-center py-10">
+              Input numerical data above to render interactive distribution
+            </div>
+            <div id="chart-svg-wrapper" class="w-full hidden">
+              <!-- Dynamically populated SVG -->
+            </div>
           </div>
-          <!-- Stat Card -->
-          <div class="border border-brand-border bg-brand-gray-dark/20 rounded-lg p-3.5 space-y-1.5">
-            <div class="text-[10px] font-mono text-brand-text-dim light:text-neutral-600 uppercase">Mode</div>
-            <div id="stat-mode" class="text-xl font-bold font-mono text-brand-text">0</div>
-          </div>
-          <!-- Stat Card -->
-          <div class="border border-brand-border bg-brand-gray-dark/20 rounded-lg p-3.5 space-y-1.5">
-            <div class="text-[10px] font-mono text-brand-text-dim light:text-neutral-600 uppercase">Min Value</div>
-            <div id="stat-min" class="text-xl font-bold font-mono text-brand-text">0</div>
-          </div>
-          <!-- Stat Card -->
-          <div class="border border-brand-border bg-brand-gray-dark/20 rounded-lg p-3.5 space-y-1.5">
-            <div class="text-[10px] font-mono text-brand-text-dim light:text-neutral-600 uppercase">Max Value</div>
-            <div id="stat-max" class="text-xl font-bold font-mono text-brand-text">0</div>
-          </div>
-          <!-- Stat Card -->
-          <div class="border border-brand-border bg-brand-gray-dark/20 rounded-lg p-3.5 space-y-1.5">
-            <div class="text-[10px] font-mono text-brand-text-dim light:text-neutral-600 uppercase">Range</div>
-            <div id="stat-range" class="text-xl font-bold font-mono text-brand-text">0</div>
+
+          <!-- Interactive Legend & Five-Number Summary Ribbon -->
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-1 text-center font-mono">
+            <div class="p-1.5 rounded bg-brand-black/40 border border-brand-border/50">
+              <div class="text-[9px] text-brand-text-dim uppercase">Min (Whisker)</div>
+              <div id="five-min" class="text-xs font-bold text-brand-text mt-0.5">0</div>
+            </div>
+            <div class="p-1.5 rounded bg-brand-black/40 border border-brand-border/50">
+              <div class="text-[9px] text-brand-blue-neon uppercase">Q1 (25th %)</div>
+              <div id="five-q1" class="text-xs font-bold text-brand-text mt-0.5">0</div>
+            </div>
+            <div class="p-1.5 rounded bg-brand-black/40 border border-brand-orange/40 bg-brand-orange/5">
+              <div class="text-[9px] text-brand-orange uppercase font-bold">Median (Q2)</div>
+              <div id="five-median" class="text-xs font-bold text-brand-orange mt-0.5">0</div>
+            </div>
+            <div class="p-1.5 rounded bg-brand-black/40 border border-brand-border/50">
+              <div class="text-[9px] text-brand-blue-neon uppercase">Q3 (75th %)</div>
+              <div id="five-q3" class="text-xs font-bold text-brand-text mt-0.5">0</div>
+            </div>
+            <div class="col-span-2 sm:col-span-1 p-1.5 rounded bg-brand-black/40 border border-brand-border/50">
+              <div class="text-[9px] text-brand-text-dim uppercase">Max (Whisker)</div>
+              <div id="five-max" class="text-xs font-bold text-brand-text mt-0.5">0</div>
+            </div>
           </div>
         </div>
 
-        <!-- Advanced Variance Summaries -->
-        <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-4">
-          <h3 class="text-xs font-semibold uppercase tracking-wider text-brand-text-muted font-mono flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> Variance & Dispersion Analysis
-          </h3>
+        <!-- Metric Grid 1: Central Tendency & Core Stats -->
+        <div class="space-y-2">
+          <div class="text-[11px] font-mono font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> Central Tendency & Extremes
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <div class="border border-brand-border bg-brand-gray-dark/30 rounded-lg p-3 space-y-1">
+              <div class="text-[10px] font-mono text-brand-text-dim uppercase">Mean (Average, &mu;)</div>
+              <div id="stat-mean" class="text-lg font-bold font-mono text-brand-text truncate">0</div>
+              <div id="stat-mean-trimmed" class="text-[10px] font-mono text-brand-text-dim truncate">10% Trim: 0</div>
+            </div>
+
+            <div class="border border-brand-border bg-brand-gray-dark/30 rounded-lg p-3 space-y-1">
+              <div class="text-[10px] font-mono text-brand-text-dim uppercase">Median (Q2)</div>
+              <div id="stat-median" class="text-lg font-bold font-mono text-brand-text truncate">0</div>
+              <div id="stat-iqr" class="text-[10px] font-mono text-brand-text-dim truncate">IQR: 0</div>
+            </div>
+
+            <div class="border border-brand-border bg-brand-gray-dark/30 rounded-lg p-3 space-y-1">
+              <div class="text-[10px] font-mono text-brand-text-dim uppercase">Mode</div>
+              <div id="stat-mode" class="text-lg font-bold font-mono text-brand-text truncate">0</div>
+              <div id="stat-mode-count" class="text-[10px] font-mono text-brand-text-dim truncate">Frequency: 0</div>
+            </div>
+
+            <div class="border border-brand-border bg-brand-gray-dark/30 rounded-lg p-3 space-y-1">
+              <div class="text-[10px] font-mono text-brand-text-dim uppercase">Min Value</div>
+              <div id="stat-min" class="text-lg font-bold font-mono text-brand-text truncate">0</div>
+            </div>
+
+            <div class="border border-brand-border bg-brand-gray-dark/30 rounded-lg p-3 space-y-1">
+              <div class="text-[10px] font-mono text-brand-text-dim uppercase">Max Value</div>
+              <div id="stat-max" class="text-lg font-bold font-mono text-brand-text truncate">0</div>
+            </div>
+
+            <div class="border border-brand-border bg-brand-gray-dark/30 rounded-lg p-3 space-y-1">
+              <div class="text-[10px] font-mono text-brand-text-dim uppercase">Range (Max - Min)</div>
+              <div id="stat-range" class="text-lg font-bold font-mono text-brand-text truncate">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric Grid 2: Dispersion & Higher Moments -->
+        <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-4 sm:p-5 space-y-4">
+          <div class="flex items-center justify-between border-b border-brand-border/40 pb-2.5">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-brand-text-muted font-mono flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span> Variance, Dispersion & Moments
+            </h3>
+            <span class="text-[10px] font-mono text-brand-text-dim">Bessel's correction (n - 1)</span>
+          </div>
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-            <!-- Row 1 -->
-            <div class="flex items-center justify-between border-b border-brand-border pb-2">
-              <span class="text-xs text-brand-text-muted light:text-neutral-500 font-mono">Sample Variance (s&sup2;)</span>
-              <span id="stat-variance-sample" class="text-sm font-semibold font-mono text-brand-text">0</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Sample Variance (s&sup2;)</span>
+              <span id="stat-variance-sample" class="text-xs font-semibold font-mono text-brand-text">0</span>
             </div>
-            <div class="flex items-center justify-between border-b border-brand-border pb-2">
-              <span class="text-xs text-brand-text-muted light:text-neutral-500 font-mono">Population Variance (&sigma;&sup2;)</span>
-              <span id="stat-variance-pop" class="text-sm font-semibold font-mono text-brand-text">0</span>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Population Variance (&sigma;&sup2;)</span>
+              <span id="stat-variance-pop" class="text-xs font-semibold font-mono text-brand-text">0</span>
             </div>
-            <!-- Row 2 -->
-            <div class="flex items-center justify-between border-b border-brand-border pb-2">
-              <span class="text-xs text-brand-text-muted light:text-neutral-500 font-mono">Sample Std Dev (s)</span>
-              <span id="stat-stddev-sample" class="text-sm font-semibold font-mono text-brand-text">0</span>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Sample Std Dev (s)</span>
+              <span id="stat-stddev-sample" class="text-xs font-semibold font-mono text-brand-text">0</span>
             </div>
-            <div class="flex items-center justify-between border-b border-brand-border pb-2">
-              <span class="text-xs text-brand-text-muted light:text-neutral-500 font-mono">Population Std Dev (&sigma;)</span>
-              <span id="stat-stddev-pop" class="text-sm font-semibold font-mono text-brand-text">0</span>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Population Std Dev (&sigma;)</span>
+              <span id="stat-stddev-pop" class="text-xs font-semibold font-mono text-brand-text">0</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Std Error (SE = s / &radic;n)</span>
+              <span id="stat-stderr" class="text-xs font-semibold font-mono text-brand-text">0</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Coeff. of Variation (CV)</span>
+              <span id="stat-cv" class="text-xs font-semibold font-mono text-brand-text">0%</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Skewness (Fisher-Pearson)</span>
+              <span id="stat-skewness" class="text-xs font-semibold font-mono text-brand-text">0</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Excess Kurtosis</span>
+              <span id="stat-kurtosis" class="text-xs font-semibold font-mono text-brand-text">0</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Geometric Mean (G)</span>
+              <span id="stat-geom-mean" class="text-xs font-semibold font-mono text-brand-text">0</span>
+            </div>
+            <div class="flex items-center justify-between border-b border-brand-border/40 pb-1.5">
+              <span class="text-xs text-brand-text-muted font-mono">Outliers (&plusmn;1.5 IQR)</span>
+              <span id="stat-outliers-count" class="text-xs font-semibold font-mono text-brand-orange">0 detected</span>
             </div>
           </div>
 
-          <div class="pt-3 flex justify-between items-center text-[10px] font-mono text-brand-text-dim border-t border-brand-border/40">
-            <span>SUM VALUE (&sum; x): <span id="stat-sum" class="text-brand-text font-bold">0</span></span>
-            <button id="btn-save-stats" class="text-brand-blue hover:text-white uppercase transition-colors focus:outline-none cursor-pointer">
+          <!-- Utility & Export Action Bar -->
+          <div class="pt-3 flex flex-wrap justify-between items-center gap-3 text-[11px] font-mono text-brand-text-dim border-t border-brand-border/40">
+            <div class="flex items-center gap-3">
+              <button id="btn-copy-latex" aria-label="Copy summary data formatted as LaTeX table" class="hover:text-brand-blue-neon uppercase transition-colors cursor-pointer">
+                [ Copy LaTeX Table ]
+              </button>
+              <button id="btn-export-csv" aria-label="Download dataset as CSV file" class="hover:text-brand-blue-neon uppercase transition-colors cursor-pointer">
+                [ Download CSV ]
+              </button>
+            </div>
+            <button id="btn-save-stats" aria-label="Save statistics analysis to calculation history" class="text-brand-blue-neon hover:text-white uppercase transition-colors cursor-pointer font-semibold">
               [ Save analysis to history ]
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wolfram Step-by-Step Mathematical Derivations Block -->
+    <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-5 space-y-4 shadow-xl">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-brand-surface-math-border/70 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-orange"></span>
+          <h3 class="text-sm font-bold tracking-wide uppercase text-white font-mono">
+            Wolfram Mathematical Derivations & Decompositions
+          </h3>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-black/50 text-brand-blue-neon border border-brand-border/50">
+          KaTeX Symbolic Engine
+        </span>
+      </div>
+
+      <div id="stats-derivations-container" class="space-y-4 text-xs font-mono leading-relaxed">
+        <!-- Step 1: Mean -->
+        <div class="p-3.5 bg-brand-black/40 border border-brand-surface-math-border rounded-lg space-y-2">
+          <div class="flex items-center justify-between text-brand-orange font-semibold">
+            <span>Step 1: Arithmetic Mean Formulation</span>
+            <span class="text-[10px] text-brand-text-dim font-normal">&mu; = (1/n) &sum; x_i</span>
+          </div>
+          <div id="derivation-mean" class="overflow-x-auto py-1 min-h-[36px] flex items-center">
+            <span class="text-brand-text-dim text-[11px]">Awaiting dataset...</span>
+          </div>
+        </div>
+
+        <!-- Step 2: Variance -->
+        <div class="p-3.5 bg-brand-black/40 border border-brand-surface-math-border rounded-lg space-y-2">
+          <div class="flex items-center justify-between text-brand-blue-neon font-semibold">
+            <span>Step 2: Sum of Squared Deviations & Bessel's Sample Variance</span>
+            <span class="text-[10px] text-brand-text-dim font-normal">s&sup2; = SS / (n - 1)</span>
+          </div>
+          <div id="derivation-variance" class="overflow-x-auto py-1 min-h-[36px] flex items-center">
+            <span class="text-brand-text-dim text-[11px]">Awaiting dataset...</span>
+          </div>
+        </div>
+
+        <!-- Step 3: Five-Number & Fences -->
+        <div class="p-3.5 bg-brand-black/40 border border-brand-surface-math-border rounded-lg space-y-2">
+          <div class="flex items-center justify-between text-brand-text font-semibold">
+            <span>Step 3: Quartiles & Tukey Outlier Fences</span>
+            <span class="text-[10px] text-brand-text-dim font-normal">IQR = Q_3 - Q_1</span>
+          </div>
+          <div id="derivation-quartiles" class="overflow-x-auto py-1 min-h-[36px] flex items-center">
+            <span class="text-brand-text-dim text-[11px]">Awaiting dataset...</span>
           </div>
         </div>
       </div>
@@ -178,38 +385,101 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
   </div>
 
   <script>
+    import katex from 'katex';
+    import 'katex/dist/katex.min.css';
+
+    function renderKaTeX(latex: string, el: HTMLElement, displayMode = true) {
+      try {
+        katex.render(latex, el, {
+          throwOnError: false,
+          displayMode: displayMode
+        });
+      } catch (err) {
+        el.textContent = latex;
+      }
+    }
+
+    // DOM Elements
     const dataInput = document.getElementById('data-input') as HTMLTextAreaElement;
     const dataCount = document.getElementById('data-count')!;
+    const dataSum = document.getElementById('stat-sum')!;
+    const dataDistShape = document.getElementById('data-dist-shape')!;
     const dataStatus = document.getElementById('data-status')!;
-    
-    // Summary DOM Elements
+    const parsedBadge = document.getElementById('parsed-badge')!;
+
+    // Five-Number DOM
+    const fiveMin = document.getElementById('five-min')!;
+    const fiveQ1 = document.getElementById('five-q1')!;
+    const fiveMedian = document.getElementById('five-median')!;
+    const fiveQ3 = document.getElementById('five-q3')!;
+    const fiveMax = document.getElementById('five-max')!;
+
+    // Core Metrics
     const statMean = document.getElementById('stat-mean')!;
+    const statMeanTrimmed = document.getElementById('stat-mean-trimmed')!;
     const statMedian = document.getElementById('stat-median')!;
+    const statIqr = document.getElementById('stat-iqr')!;
     const statMode = document.getElementById('stat-mode')!;
+    const statModeCount = document.getElementById('stat-mode-count')!;
     const statMin = document.getElementById('stat-min')!;
     const statMax = document.getElementById('stat-max')!;
     const statRange = document.getElementById('stat-range')!;
-    const statSum = document.getElementById('stat-sum')!;
+
+    // Variance & Dispersion
     const statVarSample = document.getElementById('stat-variance-sample')!;
     const statVarPop = document.getElementById('stat-variance-pop')!;
     const statDevSample = document.getElementById('stat-stddev-sample')!;
     const statDevPop = document.getElementById('stat-stddev-pop')!;
-    
+    const statStderr = document.getElementById('stat-stderr')!;
+    const statCv = document.getElementById('stat-cv')!;
+    const statSkewness = document.getElementById('stat-skewness')!;
+    const statKurtosis = document.getElementById('stat-kurtosis')!;
+    const statGeomMean = document.getElementById('stat-geom-mean')!;
+    const statOutliers = document.getElementById('stat-outliers-count')!;
+
+    // Visualizer DOM
+    const tabBoxplot = document.getElementById('tab-boxplot')!;
+    const tabHistogram = document.getElementById('tab-histogram')!;
+    const chartEmpty = document.getElementById('chart-empty')!;
+    const chartSvgWrapper = document.getElementById('chart-svg-wrapper')!;
+
+    // Derivations DOM
+    const derivationMean = document.getElementById('derivation-mean')!;
+    const derivationVariance = document.getElementById('derivation-variance')!;
+    const derivationQuartiles = document.getElementById('derivation-quartiles')!;
+
+    // Buttons
     const btnClear = document.getElementById('btn-clear-data')!;
     const btnSample = document.getElementById('btn-sample-data')!;
     const btnSave = document.getElementById('btn-save-stats')!;
+    const btnCopyLatex = document.getElementById('btn-copy-latex')!;
+    const btnExportCsv = document.getElementById('btn-export-csv')!;
+
+    // Presets
+    const btnPresetSample = document.getElementById('btn-preset-sample')!;
+    const btnPresetNormal = document.getElementById('btn-preset-normal')!;
+    const btnPresetFinance = document.getElementById('btn-preset-finance')!;
+    const btnPresetOutliers = document.getElementById('btn-preset-outliers')!;
+
+    // Transform Tools
+    const btnSortAsc = document.getElementById('btn-sort-asc')!;
+    const btnFilterOutliers = document.getElementById('btn-filter-outliers')!;
+    const btnZScore = document.getElementById('btn-z-score')!;
+
+    let currentViewMode: 'boxplot' | 'histogram' = 'boxplot';
 
     // Helper: Round value
-    function round(val: number) {
+    function round(val: number, decimals = 4): number {
       if (isNaN(val) || !isFinite(val)) return 0;
-      return Number(val.toPrecision(10));
+      const factor = Math.pow(10, decimals);
+      return Math.round(val * factor) / factor;
     }
 
     function parseData(text: string): number[] {
-      // Splits by commas, whitespace, or newlines
-      const raw = text.split(/[\s,\n]+/);
+      const raw = text.split(/[\s,\t\n;]+/);
       const numbers: number[] = [];
       raw.forEach(token => {
+        if (!token.trim()) return;
         const num = parseFloat(token);
         if (!isNaN(num) && isFinite(num)) {
           numbers.push(num);
@@ -218,50 +488,67 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       return numbers;
     }
 
+    // Linear interpolation percentile (Type 7 / Excel / Wolfram default)
+    function calcPercentile(sorted: number[], p: number): number {
+      if (sorted.length === 0) return 0;
+      if (sorted.length === 1) return sorted[0];
+      const index = (sorted.length - 1) * p;
+      const lower = Math.floor(index);
+      const upper = Math.ceil(index);
+      const weight = index - lower;
+      return sorted[lower] * (1 - weight) + sorted[upper] * weight;
+    }
+
     function calculateStats() {
       const data = parseData(dataInput.value);
-      
-      dataCount.textContent = String(data.length);
+      const n = data.length;
 
-      if (data.length === 0) {
+      dataCount.textContent = String(n);
+      parsedBadge.textContent = `${n} valid`;
+
+      if (n === 0) {
         dataStatus.textContent = 'Awaiting data...';
         dataStatus.className = 'text-brand-text-dim';
+        dataDistShape.textContent = 'Awaiting data';
         resetStats();
+        renderEmptyChart();
         return;
       }
 
       dataStatus.textContent = 'Operational';
-      dataStatus.className = 'text-green-500 font-semibold';
+      dataStatus.className = 'text-brand-blue-neon font-semibold';
 
-      // Sort data for median/mode
+      // Sorted dataset
       const sorted = [...data].sort((a, b) => a - b);
-      
-      // Basic metrics
-      const sum = data.reduce((acc, val) => acc + val, 0);
+      const sum = sorted.reduce((acc, val) => acc + val, 0);
       const min = sorted[0];
       const max = sorted[sorted.length - 1];
       const range = max - min;
-      const mean = sum / data.length;
+      const mean = sum / n;
 
-      // Median calculation
-      let median = 0;
-      const mid = Math.floor(sorted.length / 2);
-      if (sorted.length % 2 === 0) {
-        median = (sorted[mid - 1] + sorted[mid]) / 2;
-      } else {
-        median = sorted[mid];
-      }
+      // Median & Quartiles
+      const q1 = calcPercentile(sorted, 0.25);
+      const median = calcPercentile(sorted, 0.5);
+      const q3 = calcPercentile(sorted, 0.75);
+      const iqr = q3 - q1;
+
+      // Tukey's Fences for Outliers
+      const lowerFence = q1 - 1.5 * iqr;
+      const upperFence = q3 + 1.5 * iqr;
+      const outliers = sorted.filter(x => x < lowerFence || x > upperFence);
 
       // Mode calculation
       const freq: Record<number, number> = {};
       let maxFreq = 0;
-      let modes: number[] = [];
       data.forEach(val => {
-        freq[val] = (freq[val] || 0) + 1;
-        if (freq[val] > maxFreq) {
-          maxFreq = freq[val];
+        const roundedVal = round(val, 6);
+        freq[roundedVal] = (freq[roundedVal] || 0) + 1;
+        if (freq[roundedVal] > maxFreq) {
+          maxFreq = freq[roundedVal];
         }
       });
+
+      let modes: number[] = [];
       if (maxFreq > 1) {
         Object.keys(freq).forEach(key => {
           if (freq[Number(key)] === maxFreq) {
@@ -269,50 +556,444 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           }
         });
       }
-      const modeStr = modes.length > 0 ? modes.slice(0, 3).join(', ') + (modes.length > 3 ? '...' : '') : 'N/A';
+      const modeStr = modes.length > 0 
+        ? modes.slice(0, 3).map(m => round(m, 3)).join(', ') + (modes.length > 3 ? '...' : '') 
+        : 'None (Unique)';
+      const modeCountStr = maxFreq > 1 ? `Frequency: ${maxFreq} times` : 'All distinct';
 
-      // Variance & StdDev
-      const squaredDiffSum = data.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0);
-      
-      // Sample (n - 1)
-      const varSample = data.length > 1 ? squaredDiffSum / (data.length - 1) : 0;
+      // 10% Trimmed Mean
+      const trimCount = Math.floor(n * 0.1);
+      let trimmedMean = mean;
+      if (trimCount > 0 && n > 2 * trimCount) {
+        const trimmedData = sorted.slice(trimCount, n - trimCount);
+        const trimmedSum = trimmedData.reduce((acc, x) => acc + x, 0);
+        trimmedMean = trimmedSum / trimmedData.length;
+      }
+
+      // Sum of squared differences
+      const ss = data.reduce((acc, val) => acc + Math.pow(val - mean, 2), 0);
+      const varSample = n > 1 ? ss / (n - 1) : 0;
+      const varPop = ss / n;
       const devSample = Math.sqrt(varSample);
-
-      // Population (n)
-      const varPop = squaredDiffSum / data.length;
       const devPop = Math.sqrt(varPop);
+      const stderr = n > 0 ? devSample / Math.sqrt(n) : 0;
+      const cv = mean !== 0 ? (devSample / Math.abs(mean)) * 100 : 0;
 
-      // Populate DOM
-      statMean.textContent = String(round(mean));
-      statMedian.textContent = String(round(median));
+      // Geometric Mean (if all positive)
+      const allPositive = data.every(x => x > 0);
+      let geomMeanStr = 'N/A (has ≤ 0)';
+      if (allPositive) {
+        const logSum = data.reduce((acc, x) => acc + Math.log(x), 0);
+        geomMeanStr = String(round(Math.exp(logSum / n), 4));
+      }
+
+      // Skewness (Sample moment)
+      let skewness = 0;
+      if (n > 2 && devSample > 0) {
+        const m3 = data.reduce((acc, x) => acc + Math.pow(x - mean, 3), 0) / n;
+        skewness = m3 / Math.pow(devPop, 3);
+      }
+
+      // Kurtosis (Excess)
+      let excessKurtosis = 0;
+      if (n > 3 && devPop > 0) {
+        const m4 = data.reduce((acc, x) => acc + Math.pow(x - mean, 4), 0) / n;
+        excessKurtosis = (m4 / Math.pow(devPop, 4)) - 3;
+      }
+
+      // Distribution Shape description
+      let shapeText = 'Symmetric (Normal-like)';
+      if (Math.abs(skewness) > 1) {
+        shapeText = skewness > 0 ? 'Strongly Right-Skewed' : 'Strongly Left-Skewed';
+      } else if (Math.abs(skewness) > 0.5) {
+        shapeText = skewness > 0 ? 'Moderately Right-Skewed' : 'Moderately Left-Skewed';
+      }
+      dataDistShape.textContent = shapeText;
+
+      // Populate DOM Core
+      dataSum.textContent = String(round(sum, 4));
+      statMean.textContent = String(round(mean, 4));
+      statMeanTrimmed.textContent = `10% Trim: ${round(trimmedMean, 4)}`;
+      statMedian.textContent = String(round(median, 4));
+      statIqr.textContent = `IQR: ${round(iqr, 4)}`;
       statMode.textContent = modeStr;
-      statMin.textContent = String(min);
-      statMax.textContent = String(max);
-      statRange.textContent = String(range);
-      statSum.textContent = String(sum);
-      statVarSample.textContent = String(round(varSample));
-      statVarPop.textContent = String(round(varPop));
-      statDevSample.textContent = String(round(devSample));
-      statDevPop.textContent = String(round(devPop));
+      statModeCount.textContent = modeCountStr;
+      statMin.textContent = String(round(min, 4));
+      statMax.textContent = String(round(max, 4));
+      statRange.textContent = String(round(range, 4));
+
+      // Five-Number Summary
+      fiveMin.textContent = String(round(min, 3));
+      fiveQ1.textContent = String(round(q1, 3));
+      fiveMedian.textContent = String(round(median, 3));
+      fiveQ3.textContent = String(round(q3, 3));
+      fiveMax.textContent = String(round(max, 3));
+
+      // Variance & Dispersion
+      statVarSample.textContent = String(round(varSample, 4));
+      statVarPop.textContent = String(round(varPop, 4));
+      statDevSample.textContent = String(round(devSample, 4));
+      statDevPop.textContent = String(round(devPop, 4));
+      statStderr.textContent = String(round(stderr, 4));
+      statCv.textContent = `${round(cv, 2)}%`;
+      statSkewness.textContent = `${round(skewness, 3)} (${skewness > 0.3 ? 'Right' : skewness < -0.3 ? 'Left' : 'Sym'})`;
+      statKurtosis.textContent = `${round(excessKurtosis, 3)} (${excessKurtosis > 0.5 ? 'Lepto' : excessKurtosis < -0.5 ? 'Platy' : 'Meso'})`;
+      statGeomMean.textContent = geomMeanStr;
+      statOutliers.textContent = outliers.length > 0 
+        ? `${outliers.length} point${outliers.length > 1 ? 's' : ''} (${outliers.map(o => round(o, 2)).join(', ')})`
+        : '0 detected';
+
+      // Update Visualizer Chart
+      renderActiveChart(sorted, min, q1, median, q3, max, lowerFence, upperFence, outliers);
+
+      // Update Wolfram Step-by-Step KaTeX Derivations
+      renderDerivations(n, sum, mean, ss, varSample, devSample, q1, median, q3, iqr, lowerFence, upperFence, outliers);
     }
 
     function resetStats() {
+      dataSum.textContent = '0';
       statMean.textContent = '0';
+      statMeanTrimmed.textContent = '10% Trim: 0';
       statMedian.textContent = '0';
+      statIqr.textContent = 'IQR: 0';
       statMode.textContent = '0';
+      statModeCount.textContent = 'Frequency: 0';
       statMin.textContent = '0';
       statMax.textContent = '0';
       statRange.textContent = '0';
-      statSum.textContent = '0';
+
+      fiveMin.textContent = '0';
+      fiveQ1.textContent = '0';
+      fiveMedian.textContent = '0';
+      fiveQ3.textContent = '0';
+      fiveMax.textContent = '0';
+
       statVarSample.textContent = '0';
       statVarPop.textContent = '0';
       statDevSample.textContent = '0';
       statDevPop.textContent = '0';
+      statStderr.textContent = '0';
+      statCv.textContent = '0%';
+      statSkewness.textContent = '0';
+      statKurtosis.textContent = '0';
+      statGeomMean.textContent = '0';
+      statOutliers.textContent = '0 detected';
+
+      renderKaTeX('\\bar{x} = \\frac{1}{n} \\sum_{i=1}^{n} x_i = 0', derivationMean);
+      renderKaTeX('s^2 = \\frac{1}{n-1} \\sum_{i=1}^{n} (x_i - \\bar{x})^2 = 0', derivationVariance);
+      renderKaTeX('\\text{IQR} = Q_3 - Q_1 = 0, \\quad \\text{Fences: } [Q_1 - 1.5\\text{IQR}, \\, Q_3 + 1.5\\text{IQR}]', derivationQuartiles);
     }
 
-    // Hook listeners
-    dataInput.addEventListener('input', calculateStats);
+    function renderEmptyChart() {
+      chartEmpty.classList.remove('hidden');
+      chartSvgWrapper.classList.add('hidden');
+      chartSvgWrapper.innerHTML = '';
+    }
 
+    function renderActiveChart(
+      sorted: number[],
+      min: number,
+      q1: number,
+      median: number,
+      q3: number,
+      max: number,
+      lowerFence: number,
+      upperFence: number,
+      outliers: number[]
+    ) {
+      chartEmpty.classList.add('hidden');
+      chartSvgWrapper.classList.remove('hidden');
+
+      if (currentViewMode === 'boxplot') {
+        renderBoxPlotSVG(sorted, min, q1, median, q3, max, lowerFence, upperFence, outliers);
+      } else {
+        renderHistogramSVG(sorted, min, max);
+      }
+    }
+
+    // Render Box and Whisker Plot SVG (TradingView Palette)
+    function renderBoxPlotSVG(
+      sorted: number[],
+      min: number,
+      q1: number,
+      median: number,
+      q3: number,
+      max: number,
+      lowerFence: number,
+      upperFence: number,
+      outliers: number[]
+    ) {
+      const width = 640;
+      const height = 150;
+      const padX = 50;
+      const plotWidth = width - padX * 2;
+      const centerY = 65;
+      const boxHeight = 44;
+
+      const fullRange = max - min === 0 ? 1 : max - min;
+      const scaleX = (val: number) => padX + ((val - min) / fullRange) * plotWidth;
+
+      const minX = scaleX(min);
+      const q1X = scaleX(q1);
+      const medX = scaleX(median);
+      const q3X = scaleX(q3);
+      const maxX = scaleX(max);
+
+      // Whisker bounds (non-outliers)
+      const nonOutliers = sorted.filter(x => x >= lowerFence && x <= upperFence);
+      const whiskerMin = nonOutliers.length > 0 ? nonOutliers[0] : min;
+      const whiskerMax = nonOutliers.length > 0 ? nonOutliers[nonOutliers.length - 1] : max;
+      const whiskerMinX = scaleX(whiskerMin);
+      const whiskerMaxX = scaleX(whiskerMax);
+
+      let outlierDotsSvg = '';
+      outliers.forEach(outlier => {
+        const ox = scaleX(outlier);
+        outlierDotsSvg += `
+          <circle cx="${ox}" cy="${centerY}" r="5" fill="#f23645" stroke="#ffffff" stroke-width="1.5" opacity="0.9">
+            <title>Outlier: ${round(outlier, 3)}</title>
+          </circle>
+        `;
+      });
+
+      chartSvgWrapper.innerHTML = `
+        <svg viewBox="0 0 ${width} ${height}" class="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+          <!-- Background Axis Line -->
+          <line x1="${padX}" y1="${centerY + 45}" x2="${width - padX}" y2="${centerY + 45}" stroke="#20242c" stroke-width="1.5" />
+          
+          <!-- Axis Ticks & Labels -->
+          <line x1="${minX}" y1="${centerY + 40}" x2="${minX}" y2="${centerY + 50}" stroke="#5c6474" stroke-width="1" />
+          <text x="${minX}" y="${centerY + 62}" fill="#8890a0" font-size="10" font-family="monospace" text-anchor="middle">${round(min, 2)}</text>
+
+          <line x1="${medX}" y1="${centerY + 40}" x2="${medX}" y2="${centerY + 50}" stroke="#ff6c00" stroke-width="1.5" />
+          <text x="${medX}" y="${centerY + 62}" fill="#ff6c00" font-size="10" font-family="monospace" text-anchor="middle" font-weight="bold">${round(median, 2)}</text>
+
+          <line x1="${maxX}" y1="${centerY + 40}" x2="${maxX}" y2="${centerY + 50}" stroke="#5c6474" stroke-width="1" />
+          <text x="${maxX}" y="${centerY + 62}" fill="#8890a0" font-size="10" font-family="monospace" text-anchor="middle">${round(max, 2)}</text>
+
+          <!-- Whiskers -->
+          <line x1="${whiskerMinX}" y1="${centerY}" x2="${q1X}" y2="${centerY}" stroke="#5b9cf6" stroke-width="2" stroke-dasharray="3,3" />
+          <line x1="${whiskerMinX}" y1="${centerY - 12}" x2="${whiskerMinX}" y2="${centerY + 12}" stroke="#5b9cf6" stroke-width="2" />
+
+          <line x1="${q3X}" y1="${centerY}" x2="${whiskerMaxX}" y2="${centerY}" stroke="#5b9cf6" stroke-width="2" stroke-dasharray="3,3" />
+          <line x1="${whiskerMaxX}" y1="${centerY - 12}" x2="${whiskerMaxX}" y2="${centerY + 12}" stroke="#5b9cf6" stroke-width="2" />
+
+          <!-- Interquartile Box (Q1 to Q3) -->
+          <rect x="${q1X}" y="${centerY - boxHeight / 2}" width="${Math.max(2, q3X - q1X)}" height="${boxHeight}" fill="rgba(91, 156, 246, 0.15)" stroke="#5b9cf6" stroke-width="2" rx="4" />
+
+          <!-- Median Line -->
+          <line x1="${medX}" y1="${centerY - boxHeight / 2}" x2="${medX}" y2="${centerY + boxHeight / 2}" stroke="#ff6c00" stroke-width="3" />
+
+          <!-- Outliers -->
+          ${outlierDotsSvg}
+        </svg>
+      `;
+    }
+
+    // Render Histogram SVG (Sturges' Rule Binning)
+    function renderHistogramSVG(sorted: number[], min: number, max: number) {
+      const width = 640;
+      const height = 160;
+      const padX = 45;
+      const padY = 25;
+      const plotWidth = width - padX * 2;
+      const plotHeight = height - padY * 2;
+
+      const n = sorted.length;
+      // Sturges' rule: k = ceil(log2(n) + 1), clamped between 4 and 14
+      const numBins = Math.min(14, Math.max(4, Math.ceil(Math.log2(n) + 1)));
+      const span = max - min === 0 ? 1 : max - min;
+      const binWidth = span / numBins;
+
+      const bins = Array(numBins).fill(0);
+      sorted.forEach(val => {
+        let idx = Math.floor((val - min) / binWidth);
+        if (idx >= numBins) idx = numBins - 1;
+        bins[idx]++;
+      });
+
+      const maxCount = Math.max(...bins, 1);
+      const barSvgWidth = plotWidth / numBins;
+
+      let barsHtml = '';
+      bins.forEach((count, i) => {
+        const barHeight = (count / maxCount) * (plotHeight - 15);
+        const x = padX + i * barSvgWidth;
+        const y = height - padY - barHeight;
+        const binStart = min + i * binWidth;
+
+        barsHtml += `
+          <g class="transition-opacity hover:opacity-80">
+            <rect x="${x + 2}" y="${y}" width="${Math.max(2, barSvgWidth - 4)}" height="${barHeight}" fill="rgba(91, 156, 246, 0.35)" stroke="#5b9cf6" stroke-width="1.2" rx="2">
+              <title>Bin [${round(binStart, 2)}, ${round(binStart + binWidth, 2)}): ${count} items</title>
+            </rect>
+            ${count > 0 ? `
+              <text x="${x + barSvgWidth / 2}" y="${y - 4}" fill="#60a5fa" font-size="9" font-family="monospace" text-anchor="middle">${count}</text>
+            ` : ''}
+          </g>
+        `;
+      });
+
+      chartSvgWrapper.innerHTML = `
+        <svg viewBox="0 0 ${width} ${height}" class="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+          <!-- Baseline -->
+          <line x1="${padX}" y1="${height - padY}" x2="${width - padX}" y2="${height - padY}" stroke="#20242c" stroke-width="1.5" />
+          
+          <!-- Axis Bounds -->
+          <text x="${padX}" y="${height - 8}" fill="#8890a0" font-size="10" font-family="monospace" text-anchor="start">${round(min, 2)}</text>
+          <text x="${width - padX}" y="${height - 8}" fill="#8890a0" font-size="10" font-family="monospace" text-anchor="end">${round(max, 2)}</text>
+
+          <!-- Frequency Bars -->
+          ${barsHtml}
+        </svg>
+      `;
+    }
+
+    // Render Wolfram Symbolic Derivation Steps in KaTeX
+    function renderDerivations(
+      n: number,
+      sum: number,
+      mean: number,
+      ss: number,
+      varSample: number,
+      devSample: number,
+      q1: number,
+      median: number,
+      q3: number,
+      iqr: number,
+      lowerFence: number,
+      upperFence: number,
+      outliers: number[]
+    ) {
+      // Step 1: Mean
+      const meanLatex = `\\bar{x} = \\frac{1}{n} \\sum_{i=1}^{n} x_i = \\frac{${round(sum, 4)}}{${n}} = \\mathbf{${round(mean, 5)}}`;
+      renderKaTeX(meanLatex, derivationMean);
+
+      // Step 2: Variance
+      const varLatex = `s^2 = \\frac{1}{n - 1} \\sum_{i=1}^{n} (x_i - \\bar{x})^2 = \\frac{${round(ss, 4)}}{${n - 1}} = \\mathbf{${round(varSample, 5)}}, \\quad s = \\sqrt{s^2} = \\mathbf{${round(devSample, 5)}}`;
+      renderKaTeX(varLatex, derivationVariance);
+
+      // Step 3: Quartiles & Fences
+      const outlierStr = outliers.length > 0 ? outliers.map(o => round(o, 2)).join(', ') : '\\emptyset';
+      const quartilesLatex = `Q_1 = ${round(q1, 3)}, \\; \\text{Med} = ${round(median, 3)}, \\; Q_3 = ${round(q3, 3)} \\implies \\text{IQR} = ${round(iqr, 3)} \\\\ \\text{Fences: } [${round(lowerFence, 3)}, \\, ${round(upperFence, 3)}] \\implies \\text{Outliers} = \\{${outlierStr}\\}`;
+      renderKaTeX(quartilesLatex, derivationQuartiles);
+    }
+
+    // Toggle Visualizer Views
+    tabBoxplot.addEventListener('click', () => {
+      currentViewMode = 'boxplot';
+      tabBoxplot.className = 'px-2.5 py-1 rounded text-white bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors';
+      tabHistogram.className = 'px-2.5 py-1 rounded text-brand-text-muted hover:text-white cursor-pointer transition-colors';
+      calculateStats();
+    });
+
+    tabHistogram.addEventListener('click', () => {
+      currentViewMode = 'histogram';
+      tabHistogram.className = 'px-2.5 py-1 rounded text-white bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors';
+      tabBoxplot.className = 'px-2.5 py-1 rounded text-brand-text-muted hover:text-white cursor-pointer transition-colors';
+      calculateStats();
+    });
+
+    // Preset Data Handlers
+    btnPresetSample.addEventListener('click', () => {
+      dataInput.value = '12, 19, 3, 5, 2, 3, 9, 14, 16, 22, 15, 8';
+      calculateStats();
+    });
+
+    btnPresetNormal.addEventListener('click', () => {
+      dataInput.value = '48.2, 51.5, 49.8, 50.2, 47.9, 52.1, 50.0, 49.3, 51.0, 48.9, 50.7, 53.2, 46.8, 50.4, 49.6';
+      calculateStats();
+    });
+
+    btnPresetFinance.addEventListener('click', () => {
+      dataInput.value = '1.24, -0.85, 2.15, -1.42, 0.45, 1.80, -0.32, 3.10, -2.05, 0.95, 1.15, -0.60, 2.40';
+      calculateStats();
+    });
+
+    btnPresetOutliers.addEventListener('click', () => {
+      dataInput.value = '10, 12, 11, 14, 13, 12, 15, 11, 12, 13, 95, -45';
+      calculateStats();
+    });
+
+    // Data Transformation Tools
+    btnSortAsc.addEventListener('click', () => {
+      const nums = parseData(dataInput.value);
+      if (nums.length === 0) return;
+      nums.sort((a, b) => a - b);
+      dataInput.value = nums.join(', ');
+      calculateStats();
+    });
+
+    btnFilterOutliers.addEventListener('click', () => {
+      const nums = parseData(dataInput.value);
+      if (nums.length < 4) return;
+      const sorted = [...nums].sort((a, b) => a - b);
+      const q1 = calcPercentile(sorted, 0.25);
+      const q3 = calcPercentile(sorted, 0.75);
+      const iqr = q3 - q1;
+      const low = q1 - 1.5 * iqr;
+      const high = q3 + 1.5 * iqr;
+      const filtered = nums.filter(x => x >= low && x <= high);
+      dataInput.value = filtered.join(', ');
+      calculateStats();
+    });
+
+    btnZScore.addEventListener('click', () => {
+      const nums = parseData(dataInput.value);
+      if (nums.length < 2) return;
+      const mean = nums.reduce((a, b) => a + b, 0) / nums.length;
+      const ss = nums.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0);
+      const s = Math.sqrt(ss / (nums.length - 1));
+      if (s === 0) return;
+      const normalized = nums.map(x => round((x - mean) / s, 3));
+      dataInput.value = normalized.join(', ');
+      calculateStats();
+    });
+
+    // Copy LaTeX Table
+    btnCopyLatex.addEventListener('click', () => {
+      const mean = statMean.textContent;
+      const median = statMedian.textContent;
+      const s = statDevSample.textContent;
+      const iqr = statIqr.textContent;
+      const count = dataCount.textContent;
+
+      const latex = `\\begin{table}[h]
+\\centering
+\\begin{tabular}{|l|r|}
+\\hline
+\\textbf{Metric} & \\textbf{Value} \\\\ \\hline
+Count ($n$) & ${count} \\\\
+Mean ($\\bar{x}$) & ${mean} \\\\
+Median ($\\tilde{x}$) & ${median} \\\\
+Sample Std Dev ($s$) & ${s} \\\\
+${iqr} \\\\ \\hline
+\\end{tabular}
+\\caption{Descriptive Statistics Summary}
+\\end{table}`;
+
+      navigator.clipboard.writeText(latex).then(() => {
+        const orig = btnCopyLatex.textContent;
+        btnCopyLatex.textContent = '[ Copied LaTeX! ]';
+        setTimeout(() => { btnCopyLatex.textContent = orig; }, 1800);
+      });
+    });
+
+    // Download CSV
+    btnExportCsv.addEventListener('click', () => {
+      const data = parseData(dataInput.value);
+      if (data.length === 0) return;
+      const csv = 'Index,Value\n' + data.map((v, i) => `${i + 1},${v}`).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `statistics-dataset-${Date.now()}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Clear & Sample Buttons
     btnClear.addEventListener('click', () => {
       dataInput.value = '';
       calculateStats();
@@ -338,17 +1019,23 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           detail: { expr, result, mode: 'statistics' }
         })
       );
+
+      const orig = btnSave.textContent;
+      btnSave.textContent = '[ Saved to History! ]';
+      setTimeout(() => { btnSave.textContent = orig; }, 1800);
     });
 
     // Handle incoming history item triggers
     window.addEventListener('load-expression', (e: any) => {
       if (e.detail.mode === 'statistics') {
-        // Just reload custom loaded prompt
         dataInput.focus();
       }
     });
 
-    // Initial run
-    calculateStats();
+    // Live listener
+    dataInput.addEventListener('input', calculateStats);
+
+    // Initial run with default sample
+    btnPresetSample.click();
   </script>
 </Layout>

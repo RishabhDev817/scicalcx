@@ -69,21 +69,21 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     </div>
 
     <!-- Live Engine Status Bar -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-3 py-1.5 bg-brand-gray-light/40 border border-brand-border rounded text-[9px] sm:text-[10px] font-mono text-brand-text-muted">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-2 px-3 py-1.5 bg-brand-gray-dark/80 border border-brand-border rounded-lg text-[9px] sm:text-[10px] font-mono text-brand-text-muted">
       <div class="flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-        <span>{t('engine.status')}</span>
+        <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+        <span class="tracking-wide">{t('engine.status')}</span>
         <span id="memory-indicator" class="hidden ml-2 px-1.5 py-0.5 bg-brand-blue/10 border border-brand-blue/30 text-brand-blue-neon rounded text-[8px] font-bold tracking-wider animate-pulse">
           M
         </span>
       </div>
       <div class="flex items-center gap-2 sm:gap-4">
-        <span class="hidden sm:inline">PRECISION: FLOAT64 (12-DEC)</span>
+        <span class="hidden sm:inline opacity-80">PRECISION: FLOAT64 (12-DEC)</span>
         <!-- Sleek DEG/RAD slider toggle capsule -->
-        <div class="relative flex items-center bg-brand-black border border-neutral-800 light:border-neutral-300 rounded-full p-0.5 select-none w-24 h-6">
+        <div class="relative flex items-center bg-brand-black border border-brand-border rounded-full p-0.5 select-none w-24 h-6">
           <div 
             id="angle-slider" 
-            class="absolute top-0.5 bottom-0.5 left-0.5 w-[44px] bg-brand-text rounded-full transition-transform duration-200 ease-in-out"
+            class="absolute top-0.5 bottom-0.5 left-0.5 w-[44px] bg-brand-blue rounded-full transition-transform duration-200 ease-in-out shadow-sm"
             style="transform: translateX(44px);"
           ></div>
           <button 
@@ -96,7 +96,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           <button 
             id="toggle-rad" 
             type="button"
-            class="relative z-10 flex-1 text-center text-[9px] font-bold font-mono tracking-wider transition-colors duration-200 focus:outline-none cursor-pointer text-brand-black"
+            class="relative z-10 flex-1 text-center text-[9px] font-bold font-mono tracking-wider transition-colors duration-200 focus:outline-none cursor-pointer text-white"
           >
             RAD
           </button>
@@ -105,7 +105,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     </div>
 
     <!-- Main Calculator Interface -->
-    <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-3 sm:p-5 space-y-3 sm:space-y-4 shadow-xl backdrop-blur-sm relative overflow-hidden">
+    <div class="border border-brand-border bg-brand-gray-dark/70 rounded-xl p-3 sm:p-5 space-y-3 sm:space-y-4 shadow-2xl backdrop-blur-md relative overflow-hidden">
       <!-- Hidden Input for Native Keyboard Interaction -->
       <input 
         type="text" 
@@ -123,20 +123,20 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <!-- Auto-Wrapping Multi-Line Viewport Display -->
       <div 
         id="display-container" 
-        class="w-full min-h-[80px] sm:min-h-[96px] bg-brand-black border border-brand-border rounded-lg p-3 sm:p-4 flex flex-col justify-between cursor-text hover:border-brand-border-hover transition-colors focus-within:border-brand-blue focus-within:ring-1 focus-within:ring-brand-blue"
+        class="w-full min-h-[104px] sm:min-h-[116px] bg-[#07080b] border border-brand-border rounded-xl p-3.5 sm:p-4 flex flex-col justify-between cursor-text hover:border-brand-border-hover transition-colors focus-within:border-brand-blue focus-within:ring-1 focus-within:ring-brand-blue"
         tabindex="0"
       >
         <!-- Token Matcher Syntax Overlay -->
-        <div id="display-tokens" class="w-full text-sm sm:text-base sm:text-lg font-mono break-all whitespace-pre-wrap text-brand-text-muted min-h-[24px] sm:min-h-[28px] leading-relaxed">
-          <span class="text-brand-text-dim italic">Type or press keys to calculate...</span>
+        <div id="display-tokens" class="w-full text-base sm:text-lg font-mono break-all whitespace-pre-wrap text-brand-text min-h-[28px] leading-relaxed">
+          <span class="text-brand-text-dim">0</span>
         </div>
 
-        <!-- Result / Error Real-time Preview Pane -->
-        <div class="flex items-end justify-between mt-2 sm:mt-3 pt-2 border-t border-brand-border/30">
-          <div id="bracket-validation" class="text-[9px] sm:text-[10px] font-mono text-brand-text-dim">
+        <!-- Result / Error Output Pane -->
+        <div class="flex items-end justify-between mt-2 pt-2 border-t border-brand-border/40">
+          <div id="bracket-validation" class="text-xs font-mono text-brand-text-dim">
             <!-- Bracket validation state -->
           </div>
-          <div id="display-result" class="text-xl sm:text-2xl sm:text-3xl font-bold font-mono text-brand-text tracking-tight break-all">
+          <div id="display-result" class="text-3xl sm:text-4xl font-bold font-mono text-white tracking-tight break-all text-right ml-auto">
             0
           </div>
         </div>
@@ -145,7 +145,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <!-- Middle Scientific Functions Block -->
       <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 sm:gap-2">
         <!-- Row 1 -->
-        <button class="key-sci font-bold animate-pulse" data-key="shift" id="btn-shift">SHIFT</button>
+        <button class="key-sci font-bold" data-key="shift" id="btn-shift">SHIFT</button>
         <button class="key-sci font-serif text-sm" data-key="/">◼/◼</button>
         <button class="key-sci text-xs" data-key="logBase">log_◼(◻)</button>
         <button class="key-sci text-sm" data-key="sqrt">√◼</button>
@@ -205,7 +205,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <button class="key-num" data-key=".">.</button>
         <button class="key-sci font-sans text-xs" data-key="×10ˣ">×10ˣ</button>
         <button class="key-sci" data-key="ans" id="btn-ans">Ans</button>
-        <button class="key-action active-glow" data-key="equals">=</button>
+        <button class="key-action" data-key="equals">=</button>
       </div>
     </div>
 
@@ -223,7 +223,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
   </div>
 
   <style>
-    /* Styling key groups matching Vercel Design Language */
+    /* Styling key groups matching SciCalcX HyperPrecision (Wolfram × Raycast × TradingView) */
     #toggle-deg, #toggle-rad {
       height: 100% !important;
       min-height: 0 !important;
@@ -231,100 +231,195 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     }
 
     button {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.75rem;
+      font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+      font-size: 0.85rem;
       font-weight: 500;
-      height: 44px;
-      min-height: 44px;
-      border-radius: 6px;
-      transition: all 0.15s ease-in-out;
+      height: 46px;
+      min-height: 46px;
+      border-radius: 8px;
+      transition: all 0.1s ease-out;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       user-select: none;
       outline: none;
+      position: relative;
     }
     @media (min-width: 640px) {
       button {
-        font-size: 0.875rem;
+        font-size: 0.95rem;
+        height: 48px;
+        min-height: 48px;
       }
     }
     
+    /* Numeric Keys (Crisp, High-Contrast Digits) */
     .key-num {
-      background-color: var(--color-brand-gray-dark);
-      border: 1px solid var(--color-brand-border);
-      color: var(--color-brand-text);
+      background: #151822;
+      border: 1px solid #283040;
+      color: #ffffff;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+    @media (min-width: 640px) {
+      .key-num {
+        font-size: 1.35rem;
+      }
     }
     .key-num:hover {
-      background-color: var(--color-brand-gray-hover);
-      border-color: var(--color-brand-border-hover);
+      background: #1e2332;
+      border-color: #3e4860;
+      color: #ffffff;
     }
     .key-num:active {
-      background-color: var(--color-brand-gray-light);
+      transform: translateY(1px);
+      background: #0f121a;
     }
 
+    /* Scientific Modifiers & Functions */
     .key-sci {
-      background-color: var(--color-brand-gray-light);
-      border: 1px solid var(--color-brand-border);
-      color: var(--color-brand-text-muted);
+      background: #0f1218;
+      border: 1px solid #1e2432;
+      color: #cbd5e1;
+      font-size: 0.8rem;
+    }
+    @media (min-width: 640px) {
+      .key-sci {
+        font-size: 0.9rem;
+      }
     }
     .key-sci:hover {
-      background-color: var(--color-brand-gray-hover);
-      color: var(--color-brand-text);
-      border-color: var(--color-brand-border-hover);
+      background: #171c26;
+      color: #ffffff;
+      border-color: #2e384c;
     }
     .key-sci:active {
-      background-color: var(--color-brand-gray-dark);
+      transform: translateY(1px);
+      background: #0b0d12;
     }
 
+    /* Mathematical Operators */
     .key-op {
-      background-color: rgba(0, 112, 243, 0.06);
-      border: 1px solid rgba(0, 112, 243, 0.2);
-      color: var(--color-brand-blue);
+      background: #141c2c;
+      border: 1px solid #253554;
+      color: #60a5fa;
+      font-size: 1.15rem;
       font-weight: 600;
+    }
+    @media (min-width: 640px) {
+      .key-op {
+        font-size: 1.35rem;
+      }
     }
     .key-op:hover {
-      background-color: rgba(0, 112, 243, 0.15);
-      color: var(--color-brand-blue-neon);
-      border-color: var(--color-brand-blue);
+      background: #1a253c;
+      border-color: #3b82f6;
+      color: #ffffff;
     }
     .key-op:active {
-      background-color: rgba(0, 112, 243, 0.25);
+      transform: translateY(1px);
+      background: #0e1420;
     }
 
+    /* Clear & Delete */
     .key-cmd {
-      background-color: rgba(234, 67, 53, 0.06);
-      border: 1px solid rgba(234, 67, 53, 0.2);
-      color: #ea4335;
+      background: #201317;
+      border: 1px solid #421e25;
+      color: #f87171;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    @media (min-width: 640px) {
+      .key-cmd {
+        font-size: 0.95rem;
+      }
     }
     .key-cmd:hover {
-      background-color: rgba(234, 67, 53, 0.15);
-      border-color: #ea4335;
+      background: #2c171e;
+      border-color: #ef4444;
+      color: #ffffff;
     }
     .key-cmd:active {
-      background-color: rgba(234, 67, 53, 0.25);
+      transform: translateY(1px);
+      background: #150a0d;
     }
 
+    /* Evaluation / Equals (Wolfram Computational Warm Orange) */
     .key-action {
-      background-color: var(--color-brand-blue);
-      border: 1px solid var(--color-brand-blue-hover);
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 0.875rem;
+      background: #ff6c00;
+      border: 1px solid #ff7b1a;
+      color: #000000;
+      font-weight: 800;
+      font-size: 1.35rem;
     }
     @media (min-width: 640px) {
       .key-action {
-        font-size: 1rem;
+        font-size: 1.55rem;
       }
     }
     .key-action:hover {
-      background-color: var(--color-brand-blue-hover);
-      box-shadow: 0 0 10px rgba(0, 112, 243, 0.4);
+      background: #ff7e1a;
+      border-color: #ffa154;
     }
     .key-action:active {
-      background-color: #003e8a;
+      transform: translateY(1px);
+      background: #e65c00;
     }
+
+    /* Light Mode Overrides */
+    html.light .key-num {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+      border: 1px solid #dee2e6;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      color: var(--color-brand-text);
+    }
+    html.light .key-num:hover {
+      background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+      border-color: #ced4da;
+    }
+    html.light .key-sci {
+      background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+      border: 1px solid #dee2e6;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+      color: #495057;
+    }
+    html.light .key-sci:hover {
+      background: linear-gradient(180deg, #ffffff 0%, #e9ecef 100%);
+      color: #0f141c;
+      border-color: #ced4da;
+    }
+    html.light .key-op {
+      background: linear-gradient(180deg, rgba(26, 115, 232, 0.1) 0%, rgba(26, 115, 232, 0.04) 100%);
+      border: 1px solid rgba(26, 115, 232, 0.3);
+      color: #1a73e8;
+    }
+    html.light .key-cmd {
+      background: linear-gradient(180deg, rgba(211, 47, 47, 0.1) 0%, rgba(211, 47, 47, 0.04) 100%);
+      border: 1px solid rgba(211, 47, 47, 0.3);
+      color: #d32f2f;
+    }
+    html.light .key-action {
+      background: linear-gradient(180deg, #ff6c00 0%, #e65100 100%);
+      border: 1px solid #bf4300;
+      color: #ffffff;
+    }
+
+    /* Raycast Mechanical Keypress Reflection */
+    .key-pressed {
+      transform: translateY(2px) scale(0.97) !important;
+      border-color: var(--color-brand-blue) !important;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.75), 0 0 12px rgba(91, 156, 246, 0.45) !important;
+    }
+    .key-action.key-pressed {
+      border-color: #ff851a !important;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.75), 0 0 16px rgba(255, 108, 0, 0.65) !important;
+    }
+    .key-cmd.key-pressed {
+      border-color: var(--color-brand-red) !important;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.75), 0 0 12px rgba(242, 54, 69, 0.45) !important;
+    }
+
   </style>
 
   <script>
@@ -697,7 +792,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     }
 
     function generateHighlightHtml(expr: string) {
-      if (!expr) return `<span class="text-brand-text-dim italic">Type or press keys to calculate...</span>`;
+      if (!expr) return `<span class="text-brand-text-dim">0</span>`;
       
       const tokens = tokenize(expr);
       const openIndices: number[] = [];
@@ -729,20 +824,20 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       return tokens
         .map((tok, idx) => {
           if (tok.includes('°') || (!isNaN(parseFloat(tok)) && isFinite(tok as any))) {
-            return `<span class="token-number">${tok}</span>`;
+            return `<span class="text-white font-medium">${tok}</span>`;
           } else if (constants.has(tok)) {
-            return `<span class="token-constant font-medium">${tok}</span>`;
+            return `<span class="text-brand-blue-neon font-medium">${tok}</span>`;
           } else if (functions.has(tok)) {
-            return `<span class="token-function font-medium">${tok}</span>`;
+            return `<span class="text-brand-blue font-medium">${tok}</span>`;
           } else if (operators.has(tok)) {
-            return `<span class="token-operator font-semibold">${tok}</span>`;
+            return `<span class="text-brand-orange font-semibold">${tok}</span>`;
           } else if (tok === '(' || tok === ')') {
             const matched = matchMap[idx];
-            return `<span class="${matched ? 'token-paren-match' : 'token-paren-error'}">${tok}</span>`;
+            return `<span class="${matched ? 'text-brand-text-muted' : 'text-brand-red font-bold'}">${tok}</span>`;
           } else if (tok === '.') {
-            return `<span class="token-number">${tok}</span>`;
+            return `<span class="text-white">${tok}</span>`;
           }
-          return `<span class="token-paren-error">${tok}</span>`;
+          return `<span class="text-brand-red">${tok}</span>`;
         })
         .join('');
     }
@@ -756,21 +851,22 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         if (tok === ')') closeCount++;
       });
       if (openCount > closeCount) {
-        bracketValidation.innerHTML = `<span class="text-brand-blue-neon font-medium">Unclosed: ${openCount - closeCount} )</span>`;
+        bracketValidation.innerHTML = `<span class="text-brand-orange font-medium">Unclosed: ${openCount - closeCount} )</span>`;
       } else if (closeCount > openCount) {
-        bracketValidation.innerHTML = `<span class="text-red-500 font-medium">Extra: ${closeCount - openCount} )</span>`;
+        bracketValidation.innerHTML = `<span class="text-brand-red font-medium">Extra: ${closeCount - openCount} )</span>`;
       } else {
-        bracketValidation.innerHTML = expression ? `<span class="text-emerald-400 font-medium">Syntax valid</span>` : '';
+        bracketValidation.innerHTML = '';
       }
     }
 
     function updateDisplay() {
       displayTokens.innerHTML = generateHighlightHtml(expression);
       updateBracketStatus();
+
       if (!expression) {
         displayResult.textContent = '0';
         displayResult.classList.remove('text-red-500', 'text-brand-blue-neon');
-        displayResult.classList.add('text-brand-text');
+        displayResult.classList.add('text-white');
         return;
       }
       try {
@@ -780,7 +876,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         const clean = cleanResult(rawRes);
         displayResult.textContent = isNaN(clean) ? 'Error' : String(clean);
         displayResult.classList.remove('text-red-500');
-        displayResult.classList.add('text-brand-text');
+        displayResult.classList.add('text-white');
       } catch (err: any) {
         displayResult.textContent = '...';
         displayResult.classList.remove('text-red-500');
@@ -1004,7 +1100,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           expression = finalResult;
           displayResult.textContent = finalResult;
           displayResult.classList.remove('text-brand-text-dim', 'text-red-500');
-          displayResult.classList.add('text-brand-blue-neon');
+          displayResult.classList.add('text-white');
         } catch (err: any) {
           numericResult = null;
           displayResult.textContent = 'Syntax Error';
@@ -1033,26 +1129,70 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       updateDisplay();
     }
 
+    // Raycast Physical Keyboard to Virtual Keycap Mapping
+    const keyToDataMap: Record<string, string> = {
+      '0': '0', '1': '1', '2': '2', '3': '3', '4': '4',
+      '5': '5', '6': '6', '7': '7', '8': '8', '9': '9',
+      '+': '+', '-': '-', '*': '*', '/': '/',
+      '.': '.', '(': '(', ')': ')', '^': '^', '%': '%',
+      'Enter': 'equals', '=': 'equals',
+      'Backspace': 'backspace', 'Escape': 'clear', 'Delete': 'clear',
+      'c': 'cos', 'C': 'cos',
+      's': 'sin', 'S': 'sin',
+      't': 'tan', 'T': 'tan',
+      'p': 'pi', 'P': 'pi',
+      'e': 'e', 'E': 'e',
+      'l': 'ln', 'L': 'log',
+      'r': 'sqrt', 'R': 'sqrt'
+    };
+
+    function highlightButton(targetKey: string, active: boolean) {
+      if (!targetKey) return;
+      const btn = document.querySelector(`button[data-key="${targetKey}"]`);
+      if (btn) {
+        if (active) {
+          btn.classList.add('key-pressed');
+        } else {
+          btn.classList.remove('key-pressed');
+        }
+      }
+    }
+
     window.addEventListener('keydown', (e) => {
       if (document.activeElement?.tagName === 'INPUT' && document.activeElement !== rawInput) return;
       const key = e.key;
+      const dataKey = keyToDataMap[key] || (key >= '0' && key <= '9' ? key : null);
+      if (dataKey) {
+        highlightButton(dataKey, true);
+      }
+
       if (key >= '0' && key <= '9') processKey(key);
       else if (['+', '-', '*', '/', '.', '(', ')', '%', '^', '!'].includes(key)) processKey(key);
       else if (key === 'Enter' || key === '=') { e.preventDefault(); processKey('equals'); }
       else if (key === 'Backspace') { e.preventDefault(); processKey('backspace'); }
-      else if (key === 'Delete') { e.preventDefault(); processKey('CE'); }
+      else if (key === 'Delete') { e.preventDefault(); processKey('clear'); }
       else if (key === 'Escape') processKey('clear');
-      else if (key === 'c' || key === 'C') processKey('nCr');
-      else if (key === 'p' || key === 'P') processKey('nPr');
-      else if (key === 'h' || key === 'H') processKey('hyp');
-      else if (key === 's' || key === 'S') processKey('shift');
-      else if (key === 'd' || key === 'D') processKey('DMS');
-      else if (key === 'f' || key === 'F') processKey('SD');
+      else if (key.toLowerCase() === 's') processKey('sin');
+      else if (key.toLowerCase() === 'c') processKey('cos');
+      else if (key.toLowerCase() === 't') processKey('tan');
+      else if (key.toLowerCase() === 'l') processKey('ln');
+      else if (key.toLowerCase() === 'p') processKey('pi');
+      else if (key.toLowerCase() === 'e') processKey('e');
+      else if (key.toLowerCase() === 'r') processKey('sqrt');
+    });
+
+    window.addEventListener('keyup', (e) => {
+      const dataKey = keyToDataMap[e.key] || (e.key >= '0' && e.key <= '9' ? e.key : null);
+      if (dataKey) {
+        highlightButton(dataKey, false);
+      }
     });
 
     document.querySelectorAll('button[data-key]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const key = btn.getAttribute('data-key')!;
+        btn.classList.add('key-pressed');
+        setTimeout(() => btn.classList.remove('key-pressed'), 140);
         processKey(key);
         if (!window.matchMedia('(pointer: coarse)').matches) {
           rawInput.focus();
@@ -1065,6 +1205,26 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
     window.addEventListener('load-expression', (e: any) => {
       if (e.detail.mode === 'scientific') { expression = e.detail.expression; updateDisplay(); }
+    });
+
+    // Integration with Universal ⌘K Command Palette
+    window.addEventListener('inject-constant', (e: any) => {
+      if (e.detail?.value) {
+        expression = sanitizeInput(expression, String(e.detail.value));
+        updateDisplay();
+        if (!window.matchMedia('(pointer: coarse)').matches) {
+          rawInput.focus();
+        }
+      }
+    });
+
+    window.addEventListener('calculator-action', (e: any) => {
+      if (e.detail?.action === 'clear') {
+        expression = '';
+        updateDisplay();
+      } else if (e.detail?.action === 'toggle-angle') {
+        setAngleUnit(angleUnit === 'DEG' ? 'RAD' : 'DEG');
+      }
     });
 
     updateMemoryIndicator();

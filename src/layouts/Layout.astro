@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
 import LanguagePicker from '../components/LanguagePicker.astro';
+import CommandPalette from '../components/CommandPalette.astro';
 import { getLangFromUrl, useTranslations, useTranslatedPath, getAlternateLanguageLinks } from '../i18n/utils';
 import type { SupportedLanguage } from '../i18n/ui';
 
@@ -278,6 +279,20 @@ const siteSchema = {
       </div>
 
       <div class="flex items-center space-x-2">
+        <!-- Universal Command Palette Trigger (Raycast ⌘K) -->
+        <button
+          id="cmd-palette-toggle"
+          class="flex items-center space-x-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-mono text-brand-text-muted hover:text-brand-text border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover hover:border-brand-border-hover transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-blue"
+          aria-label="Open Command Palette (⌘K)"
+          title="Open Command Palette (⌘K)"
+        >
+          <svg class="h-3.5 w-3.5 text-brand-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span class="hidden xl:inline text-[11px]">Command Palette</span>
+          <kbd class="kbd-shortcut hidden sm:inline-flex text-[9px] px-1 py-0.5">⌘K</kbd>
+        </button>
+
         <!-- Language Picker Dropdown -->
         <LanguagePicker variant="select" />
 
@@ -398,7 +413,8 @@ const siteSchema = {
           </h2>
           <button
             id="clear-history"
-            class="text-[10px] text-brand-text-dim hover:text-red-500 font-mono transition-colors uppercase cursor-pointer focus:outline-none"
+            aria-label={t('history.clear')}
+            class="text-[10px] text-brand-text-dim hover:text-brand-red font-mono transition-colors uppercase cursor-pointer focus:outline-none"
           >
             {t('history.clear')}
           </button>
@@ -438,7 +454,7 @@ const siteSchema = {
       }
 
       // Add to history
-      function saveHistory(expr, result, mode = 'scientific') {
+      function saveHistory(expr: string, result: string, mode = 'scientific') {
         const history = getHistory();
         history.unshift({ id: Date.now(), expr, result, mode, time: new Date().toLocaleTimeString() });
         localStorage.setItem('scicalcx_history', JSON.stringify(history.slice(0, 50))); // Cap at 50
@@ -458,7 +474,7 @@ const siteSchema = {
 
         historyList.innerHTML = history
           .map(
-            (item) => `
+            (item: any) => `
             <div class="p-2.5 rounded border border-brand-border bg-brand-gray-light/40 hover:bg-brand-gray-hover/60 cursor-pointer group transition-all relative overflow-hidden" 
                  data-expr="${encodeURIComponent(item.expr)}"
                  data-mode="${item.mode}">
@@ -474,7 +490,7 @@ const siteSchema = {
 
         // Bind clicks to history load
         historyList.querySelectorAll('[data-expr]').forEach((el) => {
-          el.addEventListener('click', (e) => {
+          el.addEventListener('click', () => {
             const rawExpr = el.getAttribute('data-expr');
             const expr = decodeURIComponent(rawExpr || '');
             const mode = el.getAttribute('data-mode');
@@ -546,5 +562,7 @@ const siteSchema = {
       // Initial render
       renderHistory();
     </script>
+    <!-- Universal Command Palette -->
+    <CommandPalette lang={currentLang} />
   </body>
 </html>

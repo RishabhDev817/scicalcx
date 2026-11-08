@@ -39,7 +39,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
   description={t('meta.matrix.desc')}
   keywords={t('meta.matrix.keywords')}
 >
-  <div class="w-full max-w-2xl mx-auto space-y-6">
+  <div class="w-full max-w-4xl mx-auto space-y-6">
     <!-- Page Header -->
     <div class="text-center md:text-left space-y-1.5 border-b border-brand-border/60 pb-4">
       <div class="text-[10px] font-mono uppercase tracking-widest text-brand-blue-neon">
@@ -62,79 +62,120 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     </div>
 
     <!-- Live Status -->
-    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-2 px-3 py-1.5 bg-brand-gray-light/40 border border-brand-border rounded text-[10px] font-mono text-brand-text-muted">
-      <div>{t('matrix.dimA')}: <span id="dim-a-display">3x3</span></div>
-      <div>{t('matrix.dimB')}: <span id="dim-b-display">3x3</span></div>
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-2 px-3.5 py-2 bg-brand-surface-math border border-brand-surface-math-border rounded-lg text-[10px] font-mono text-brand-text-muted">
+      <div class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
+        <span>{t('matrix.dimA')}: <strong id="dim-a-display" class="text-brand-text">3×3</strong></span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
+        <span>{t('matrix.dimB')}: <strong id="dim-b-display" class="text-brand-text">3×3</strong></span>
+      </div>
     </div>
 
-    <!-- Matrix Configuration & Inputs -->
+    <!-- Matrix Configuration & Inputs (TradingView Data Grid Style) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
       <!-- Matrix A Card -->
-      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-5 space-y-3 sm:space-y-4">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
-          <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text light:text-neutral-500 font-mono">{t('matrix.matrixA')}</h2>
+      <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-4 sm:p-5 space-y-3 sm:space-y-4 shadow-xl">
+        <div class="flex items-center justify-between gap-2 border-b border-brand-border/40 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_8px_rgba(91,156,246,0.6)]"></span>
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text font-mono">{t('matrix.matrixA')}</h2>
+          </div>
           <div class="flex space-x-1">
-            <button class="dim-btn-a px-2.5 py-1 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover min-h-[40px]" data-dim="2">2x2</button>
-            <button class="dim-btn-a px-2.5 py-1 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text light:text-neutral-600 rounded font-mono min-h-[40px]" data-dim="3">3x3</button>
+            <button type="button" aria-label="Set Matrix A dimension 2x2" class="dim-btn-a px-2.5 py-1 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover min-h-[32px] cursor-pointer" data-dim="2">2×2</button>
+            <button type="button" aria-label="Set Matrix A dimension 3x3" class="dim-btn-a px-2.5 py-1 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text rounded font-mono min-h-[32px] cursor-pointer" data-dim="3">3×3</button>
           </div>
         </div>
 
-        <!-- Matrix A Grid -->
-        <div id="grid-a" class="grid gap-1.5 sm:gap-2 py-2">
+        <!-- Quick Presets Toolbar for A -->
+        <div class="flex items-center justify-between text-[10px] font-mono gap-1">
+          <span class="text-brand-text-dim text-[9px] uppercase tracking-wider">Presets:</span>
+          <div class="flex gap-1">
+            <button type="button" aria-label="Fill Matrix A with identity matrix" class="preset-matrix-a px-2 py-0.5 rounded bg-brand-black border border-brand-border/60 text-brand-text-muted hover:text-white hover:border-brand-blue transition-colors cursor-pointer" data-preset="identity">Identity</button>
+            <button type="button" aria-label="Fill Matrix A with zeros" class="preset-matrix-a px-2 py-0.5 rounded bg-brand-black border border-brand-border/60 text-brand-text-muted hover:text-white hover:border-brand-blue transition-colors cursor-pointer" data-preset="zeros">Zeros</button>
+            <button type="button" aria-label="Fill Matrix A with random values" class="preset-matrix-a px-2 py-0.5 rounded bg-brand-black border border-brand-border/60 text-brand-text-muted hover:text-white hover:border-brand-blue transition-colors cursor-pointer" data-preset="random">Random</button>
+          </div>
+        </div>
+
+        <!-- Matrix A Grid (TradingView Hairline Data Grid) -->
+        <div id="grid-a" class="grid gap-1 py-1">
           <!-- Dynamic Input Cells -->
         </div>
 
-        <!-- A Operations -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white min-h-[40px]" data-op="det-a">{t('matrix.det')}</button>
-          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white min-h-[40px]" data-op="inv-a">{t('matrix.inv')}</button>
-          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white sm:col-span-2 min-h-[40px]" data-op="trans-a">{t('matrix.trans')}</button>
+        <!-- A Operations Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-1">
+          <button type="button" aria-label="Calculate determinant of Matrix A" class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text hover:text-white cursor-pointer" data-op="det-a">det(A)</button>
+          <button type="button" aria-label="Calculate inverse of Matrix A" class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text hover:text-white cursor-pointer" data-op="inv-a">A⁻¹</button>
+          <button type="button" aria-label="Calculate transpose of Matrix A" class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text hover:text-white cursor-pointer" data-op="trans-a">Aᵀ</button>
+          <button type="button" aria-label="Calculate trace of Matrix A" class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text hover:text-white cursor-pointer" data-op="trace-a">tr(A)</button>
         </div>
       </div>
 
       <!-- Matrix B Card -->
-      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-5 space-y-3 sm:space-y-4">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
-          <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text light:text-neutral-500 font-mono">{t('matrix.matrixB')}</h2>
+      <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-4 sm:p-5 space-y-3 sm:space-y-4 shadow-xl">
+        <div class="flex items-center justify-between gap-2 border-b border-brand-border/40 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-brand-orange shadow-[0_0_8px_rgba(255,108,0,0.6)]"></span>
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text font-mono">{t('matrix.matrixB')}</h2>
+          </div>
           <div class="flex space-x-1">
-            <button class="dim-btn-b px-2.5 py-1 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover min-h-[40px]" data-dim="2">2x2</button>
-            <button class="dim-btn-b px-2.5 py-1 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text light:text-neutral-600 rounded font-mono min-h-[40px]" data-dim="3">3x3</button>
+            <button type="button" aria-label="Set Matrix B dimension 2x2" class="dim-btn-b px-2.5 py-1 text-[10px] border border-brand-border rounded font-mono hover:bg-brand-gray-hover min-h-[32px] cursor-pointer" data-dim="2">2×2</button>
+            <button type="button" aria-label="Set Matrix B dimension 3x3" class="dim-btn-b px-2.5 py-1 text-[10px] border border-brand-blue bg-brand-gray-hover text-brand-text rounded font-mono min-h-[32px] cursor-pointer" data-dim="3">3×3</button>
           </div>
         </div>
 
-        <!-- Matrix B Grid -->
-        <div id="grid-b" class="grid gap-1.5 sm:gap-2 py-2">
+        <!-- Quick Presets Toolbar for B -->
+        <div class="flex items-center justify-between text-[10px] font-mono gap-1">
+          <span class="text-brand-text-dim text-[9px] uppercase tracking-wider">Presets:</span>
+          <div class="flex gap-1">
+            <button type="button" aria-label="Fill Matrix B with identity matrix" class="preset-matrix-b px-2 py-0.5 rounded bg-brand-black border border-brand-border/60 text-brand-text-muted hover:text-white hover:border-brand-orange transition-colors cursor-pointer" data-preset="identity">Identity</button>
+            <button type="button" aria-label="Fill Matrix B with zeros" class="preset-matrix-b px-2 py-0.5 rounded bg-brand-black border border-brand-border/60 text-brand-text-muted hover:text-white hover:border-brand-orange transition-colors cursor-pointer" data-preset="zeros">Zeros</button>
+            <button type="button" aria-label="Fill Matrix B with random values" class="preset-matrix-b px-2 py-0.5 rounded bg-brand-black border border-brand-border/60 text-brand-text-muted hover:text-white hover:border-brand-orange transition-colors cursor-pointer" data-preset="random">Random</button>
+          </div>
+        </div>
+
+        <!-- Matrix B Grid (TradingView Hairline Data Grid) -->
+        <div id="grid-b" class="grid gap-1 py-1">
           <!-- Dynamic Input Cells -->
         </div>
 
-        <!-- B Operations -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white min-h-[40px]" data-op="det-b">{t('matrix.det')}</button>
-          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white min-h-[40px]" data-op="inv-b">{t('matrix.inv')}</button>
-          <button class="op-btn-matrix text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-white sm:col-span-2 min-h-[40px]" data-op="trans-b">{t('matrix.trans')}</button>
+        <!-- B Operations Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 pt-1">
+          <button type="button" aria-label="Calculate determinant of Matrix B" class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text hover:text-white cursor-pointer" data-op="det-b">det(B)</button>
+          <button type="button" aria-label="Calculate inverse of Matrix B" class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text hover:text-white cursor-pointer" data-op="inv-b">B⁻¹</button>
+          <button type="button" aria-label="Calculate transpose of Matrix B" class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text hover:text-white cursor-pointer" data-op="trans-b">Bᵀ</button>
+          <button type="button" aria-label="Calculate trace of Matrix B" class="op-btn-matrix text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text hover:text-white cursor-pointer" data-op="trace-b">tr(B)</button>
         </div>
       </div>
     </div>
 
     <!-- Dual Matrix Joint Operations -->
-    <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 justify-center items-center">
-      <span class="text-xs font-mono text-brand-text-muted px-2">{t('matrix.binaryOps')}</span>
-      <button class="op-btn-matrix px-3 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold min-h-[40px] flex-1 sm:flex-initial" data-op="add">A + B</button>
-      <button class="op-btn-matrix px-3 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold min-h-[40px] flex-1 sm:flex-initial" data-op="sub">A - B</button>
-      <button class="op-btn-matrix px-3 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-blue-neon font-semibold min-h-[40px] flex-1 sm:flex-initial" data-op="mul">{t('matrix.mul')}</button>
+    <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 justify-center items-center shadow-lg">
+      <span class="text-xs font-mono text-brand-text-muted px-2 uppercase tracking-wider font-semibold">{t('matrix.binaryOps')}</span>
+      <button type="button" aria-label="Add Matrix A and Matrix B" class="op-btn-matrix px-4 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-blue text-brand-text font-mono font-semibold flex-1 sm:flex-initial cursor-pointer" data-op="add">A + B</button>
+      <button type="button" aria-label="Subtract Matrix B from Matrix A" class="op-btn-matrix px-4 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover hover:border-brand-blue text-brand-text font-mono font-semibold flex-1 sm:flex-initial cursor-pointer" data-op="sub">A − B</button>
+      <button type="button" aria-label="Multiply Matrix A and Matrix B" class="op-btn-matrix px-5 py-2 text-xs sm:text-sm bg-brand-orange text-brand-black font-mono font-bold hover:bg-brand-orange-hover hover:shadow-[0_0_12px_rgba(255,108,0,0.35)] active:scale-[0.98] transition-all flex-1 sm:flex-initial cursor-pointer" data-op="mul">A × B</button>
+      <button type="button" aria-label="Swap Matrix A and Matrix B values" id="btn-swap-matrices" class="op-btn-matrix px-3.5 py-2 text-xs sm:text-sm border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-blue-neon font-mono font-semibold flex-1 sm:flex-initial cursor-pointer" data-op="swap">Swap A ⇄ B</button>
     </div>
 
-    <!-- Viewport Result Console -->
-    <div class="border border-brand-border bg-brand-black rounded-xl p-6 space-y-4">
+    <!-- Viewport Result Console (Wolfram + TradingView Surface) -->
+    <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-5 sm:p-6 space-y-4 shadow-xl">
       <div class="flex items-center justify-between border-b border-brand-border/60 pb-2">
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-brand-text-muted font-mono flex items-center gap-1.5">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> {t('matrix.console')}
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-brand-text font-mono flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-brand-orange shadow-[0_0_8px_rgba(255,108,0,0.6)]"></span> {t('matrix.console')}
         </h3>
-        <div id="output-operation" class="text-[10px] font-mono text-brand-blue-neon uppercase">{t('matrix.ready')}</div>
+        <div id="output-operation" class="text-[10px] font-mono text-brand-blue-neon uppercase px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60">{t('matrix.ready')}</div>
       </div>
 
-      <div id="console-display" class="flex flex-col items-center justify-center min-h-[120px] text-center font-mono">
+      <!-- Result Display Area (KaTeX 2D Brackets) -->
+      <div id="console-display" class="flex flex-col items-center justify-center min-h-[120px] text-center font-mono py-2">
         <span class="text-brand-text-dim text-xs">{t('matrix.awaiting')}</span>
+      </div>
+
+      <!-- Step-by-Step Derivation Breakdown Container -->
+      <div id="matrix-steps-container" class="space-y-2 pt-2 border-t border-brand-border/40">
+        <!-- Populated dynamically with step derivations -->
       </div>
     </div>
 
@@ -153,55 +194,134 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       outline: none;
     }
     .op-btn-matrix {
-      height: 40px;
-      min-height: 40px;
+      height: 36px;
+      min-height: 36px;
       border-radius: 6px;
-      transition: all 0.15s ease-in-out;
+      transition: all 0.12s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: linear-gradient(180deg, #171920 0%, #0f1116 100%);
+      border: 1px solid #1e222a;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
     }
+    .op-btn-matrix:hover {
+      background: linear-gradient(180deg, #20242e 0%, #15181f 100%);
+      border-color: #2d3340;
+    }
+    .op-btn-matrix:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.65);
+    }
+
     .dim-btn-a, .dim-btn-b {
-      min-height: 40px;
+      min-height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 4px;
+      transition: all 0.12s ease;
     }
+
     .cell-a, .cell-b {
-      min-height: 44px;
+      min-height: 42px;
       font-size: 0.875rem;
+      font-family: var(--font-mono, monospace);
+      font-variant-numeric: tabular-nums;
+      text-align: center;
+      transition: all 0.12s ease;
+      background: #090b10;
+      border: 1px solid #1c202a;
+      border-radius: 4px;
+      color: #f4f5f8;
     }
-    @media (max-width: 639px) {
-      .cell-a, .cell-b {
-        font-size: 1rem;
-        padding: 0.75rem 0.5rem;
-      }
+    .cell-a:focus, .cell-b:focus {
+      outline: none;
+      background: #0e1424;
+      border-color: #5B9CF6;
+      box-shadow: 0 0 0 1px #5B9CF6, inset 0 0 8px rgba(91, 156, 246, 0.2);
+      color: #ffffff;
+      font-weight: bold;
+    }
+    .cell-a:hover, .cell-b:hover {
+      border-color: #2e3547;
+      background: #10131a;
+    }
+
+    html.light .op-btn-matrix {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+      border: 1px solid #dee2e6;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+    html.light .op-btn-matrix:hover {
+      background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+      border-color: #ced4da;
+    }
+    html.light .cell-a, html.light .cell-b {
+      background: #ffffff;
+      border: 1px solid #ced4da;
+      color: #212529;
+    }
+    html.light .cell-a:focus, html.light .cell-b:focus {
+      background: #f0f7ff;
+      border-color: #0070f3;
+      box-shadow: 0 0 0 1px #0070f3;
+    }
+
+    :global(.math-step-matrix .katex) {
+      font-size: 1.15em;
+      color: var(--color-brand-formula, #B0CCEC);
+    }
+    html.light :global(.math-step-matrix .katex) {
+      color: #0056b3;
     }
   </style>
 
   <script>
+    import katex from 'katex';
+    import 'katex/dist/katex.min.css';
+
+    function renderKaTeX(latex: string, el: HTMLElement, displayMode = true) {
+      try {
+        katex.render(latex, el, {
+          throwOnError: false,
+          displayMode: displayMode
+        });
+      } catch (err) {
+        el.textContent = latex;
+      }
+    }
+
     let dimA = 3;
     let dimB = 3;
 
     function clean(val: number) {
       if (isNaN(val) || !isFinite(val)) return val;
-      return Number(val.toPrecision(12));
+      return Number(val.toPrecision(10));
     }
 
-    function buildGrid(matrixName: 'a' | 'b', dim: number) {
+    function matrixToLatex(matrix: number[][]): string {
+      const body = matrix.map(row => row.map(v => clean(v)).join(' & ')).join(' \\\\ ');
+      return `\\begin{pmatrix} ${body} \\end{pmatrix}`;
+    }
+
+    function buildGrid(matrixName: 'a' | 'b', dim: number, initialValues?: number[][]) {
       const grid = document.getElementById(`grid-${matrixName}`)!;
-      grid.className = `grid gap-1.5 py-2 ${dim === 2 ? 'grid-cols-2' : 'grid-cols-3'}`;
+      grid.className = `grid gap-1 py-1 ${dim === 2 ? 'grid-cols-2' : 'grid-cols-3'}`;
       
       let html = '';
       for (let r = 0; r < dim; r++) {
         for (let c = 0; c < dim; c++) {
-          const val = (r === c) ? '1' : '0';
+          let val = (r === c) ? '1' : '0';
+          if (initialValues && initialValues[r] && initialValues[r][c] !== undefined) {
+            val = String(initialValues[r][c]);
+          }
           html += `
             <input 
               type="number" 
               step="any" 
-              class="cell-${matrixName} bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded text-white font-mono text-center text-sm sm:text-base focus:outline-none focus:ring-1 focus:ring-brand-blue/30 min-h-[44px]"
+              class="cell-${matrixName}"
               data-row="${r}" 
               data-col="${c}" 
               value="${val}" 
@@ -212,6 +332,60 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         }
       }
       grid.innerHTML = html;
+      attachCellKeynav(matrixName, dim);
+    }
+
+    // Keyboard Arrow-Key & Enter grid navigation (TradingView style)
+    function attachCellKeynav(matrixName: 'a' | 'b', dim: number) {
+      const inputs = document.querySelectorAll(`.cell-${matrixName}`) as NodeListOf<HTMLInputElement>;
+      inputs.forEach(input => {
+        input.addEventListener('keydown', (e: KeyboardEvent) => {
+          const r = parseInt(input.getAttribute('data-row')!);
+          const c = parseInt(input.getAttribute('data-col')!);
+          let targetRow = r;
+          let targetCol = c;
+
+          if (e.key === 'ArrowRight') {
+            targetCol = (c + 1) % dim;
+            if (targetCol === 0 && c === dim - 1) targetRow = (r + 1) % dim;
+          } else if (e.key === 'ArrowLeft') {
+            targetCol = (c - 1 + dim) % dim;
+            if (targetCol === dim - 1 && c === 0) targetRow = (r - 1 + dim) % dim;
+          } else if (e.key === 'ArrowDown' || e.key === 'Enter') {
+            e.preventDefault();
+            targetRow = (r + 1) % dim;
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            targetRow = (r - 1 + dim) % dim;
+          } else {
+            return;
+          }
+
+          const nextInput = document.querySelector(`.cell-${matrixName}[data-row="${targetRow}"][data-col="${targetCol}"]`) as HTMLInputElement;
+          if (nextInput) {
+            nextInput.focus();
+            nextInput.select();
+          }
+        });
+      });
+    }
+
+    function applyMatrixPreset(matrixName: 'a' | 'b', preset: string) {
+      const dim = matrixName === 'a' ? dimA : dimB;
+      const inputs = document.querySelectorAll(`.cell-${matrixName}`) as NodeListOf<HTMLInputElement>;
+      
+      inputs.forEach(input => {
+        const r = parseInt(input.getAttribute('data-row')!);
+        const c = parseInt(input.getAttribute('data-col')!);
+
+        if (preset === 'identity') {
+          input.value = (r === c) ? '1' : '0';
+        } else if (preset === 'zeros') {
+          input.value = '0';
+        } else if (preset === 'random') {
+          input.value = String(Math.floor(Math.random() * 9) + 1);
+        }
+      });
     }
 
     function getMatrixValues(matrixName: 'a' | 'b', dim: number): number[][] {
@@ -225,23 +399,6 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         matrix[row][col] = isNaN(val) ? 0 : val;
       });
       return matrix;
-    }
-
-    function renderMatrixHtml(matrix: number[][]): string {
-      const rows = matrix.length;
-      let gridStyles = rows === 2 ? 'grid-cols-2' : 'grid-cols-3';
-
-      let cellsHtml = matrix
-        .map((row, r) => 
-          row.map((val, c) => `<input type="text" aria-label="Result matrix row ${r + 1} column ${c + 1}" class="bg-brand-black/40 border border-brand-border rounded text-brand-text font-mono text-center text-sm sm:text-base focus:outline-none min-w-[64px] min-h-[44px]" value="${clean(val)}" readonly />`).join('')
-        )
-        .join('');
-
-      return `
-        <div class="grid gap-2 ${gridStyles} max-w-[240px] mx-auto p-4 bg-brand-gray-dark/30 border border-brand-border rounded-xl">
-          ${cellsHtml}
-        </div>
-      `;
     }
 
     function calcDet(m: number[][]): number {
@@ -265,6 +422,14 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         }
       }
       return result;
+    }
+
+    function calcTrace(m: number[][]): number {
+      let tr = 0;
+      for (let i = 0; i < m.length; i++) {
+        tr += m[i][i];
+      }
+      return tr;
     }
 
     function calcInverse(m: number[][]): number[][] | null {
@@ -297,73 +462,226 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
     const consoleDisplay = document.getElementById('console-display')!;
     const outputOperation = document.getElementById('output-operation')!;
+    const matrixStepsContainer = document.getElementById('matrix-steps-container')!;
+
+    function renderResultMatrix(matrix: number[][], label: string) {
+      const latex = `${label} = ${matrixToLatex(matrix)}`;
+      const rows = matrix.length;
+      const gridStyles = rows === 2 ? 'grid-cols-2' : 'grid-cols-3';
+
+      const cellsHtml = matrix
+        .map((row) => 
+          row.map((val) => `<div class="bg-brand-black/60 border border-brand-border/60 rounded text-brand-text font-mono text-center text-sm py-2 px-1 tabular-nums font-semibold">${clean(val)}</div>`).join('')
+        )
+        .join('');
+
+      consoleDisplay.innerHTML = `
+        <div class="space-y-3 w-full">
+          <div class="text-base sm:text-lg font-bold font-mono text-brand-formula py-1 math-step-matrix overflow-x-auto" id="matrix-katex-view"></div>
+          <div class="grid gap-1.5 ${gridStyles} max-w-[240px] mx-auto p-2 bg-brand-black/50 border border-brand-border/60 rounded-lg">
+            ${cellsHtml}
+          </div>
+        </div>
+      `;
+
+      const katexView = document.getElementById('matrix-katex-view')!;
+      renderKaTeX(latex, katexView, true);
+    }
 
     function handleMatrixOp(op: string) {
       const mDecA = getMatrixValues('a', dimA);
       const mDecB = getMatrixValues('b', dimB);
+      matrixStepsContainer.innerHTML = '';
 
       try {
-        if (op === 'det-a') {
-          const val = calcDet(mDecA);
-          const formatted = String(clean(val));
-          outputOperation.textContent = 'Det(A)';
-          consoleDisplay.innerHTML = `<div class="text-xl font-bold text-white">Determinant of A = ${formatted}</div>`;
-          saveToHistory(`Det(A)`, formatted);
-        } else if (op === 'det-b') {
-          const val = calcDet(mDecB);
-          const formatted = String(clean(val));
-          outputOperation.textContent = 'Det(B)';
-          consoleDisplay.innerHTML = `<div class="text-xl font-bold text-white">Determinant of B = ${formatted}</div>`;
-          saveToHistory(`Det(B)`, formatted);
-        } else if (op === 'trans-a') {
-          const trans = calcTranspose(mDecA);
-          outputOperation.textContent = 'A^T';
-          consoleDisplay.innerHTML = renderMatrixHtml(trans);
-          saveToHistory(`Transpose(A)`, JSON.stringify(trans));
-        } else if (op === 'trans-b') {
-          const trans = calcTranspose(mDecB);
-          outputOperation.textContent = 'B^T';
-          consoleDisplay.innerHTML = renderMatrixHtml(trans);
-          saveToHistory(`Transpose(B)`, JSON.stringify(trans));
-        } else if (op === 'inv-a') {
-          const inv = calcInverse(mDecA);
-          outputOperation.textContent = 'A^-1';
-          if (!inv) {
-            consoleDisplay.innerHTML = `<span class="text-red-500 font-semibold text-xs">Error: Matrix is singular (determinant is 0). Inverse does not exist.</span>`;
+        if (op === 'det-a' || op === 'det-b') {
+          const isA = op === 'det-a';
+          const name = isA ? 'A' : 'B';
+          const m = isA ? mDecA : mDecB;
+          const dim = isA ? dimA : dimB;
+          const val = calcDet(m);
+          const cleanVal = clean(val);
+
+          outputOperation.textContent = `det(${name})`;
+          consoleDisplay.innerHTML = `
+            <div class="space-y-2 py-2">
+              <div class="text-[10px] text-brand-text-dim uppercase tracking-wider font-mono">Scalar Value</div>
+              <div class="text-2xl sm:text-3xl font-bold font-mono text-brand-orange">det(${name}) = ${cleanVal}</div>
+              <div class="text-xs text-brand-text-muted font-mono">${Math.abs(val) > 1e-12 ? 'Invertible (Non-Singular)' : 'Singular (Non-Invertible)'}</div>
+            </div>
+          `;
+
+          // Wolfram Step-by-Step Derivation
+          let stepHtml = '';
+          if (dim === 2) {
+            stepHtml = `
+              <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2 text-xs font-mono">
+                <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                  <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                    Step 1: 2×2 Determinant Formula
+                  </span>
+                  <span class="text-[9px] text-brand-text-dim">Cross-Multiplication</span>
+                </div>
+                <div class="text-brand-text leading-relaxed py-1">
+                  Formula: $\\det(${name}) = a_{11}a_{22} - a_{12}a_{21}$<br/>
+                  Substitution: $(${m[0][0]})(${m[1][1]}) - (${m[0][1]})(${m[1][0]}) = ${m[0][0] * m[1][1]} - (${m[0][1] * m[1][0]}) = ${cleanVal}$
+                </div>
+              </div>
+            `;
           } else {
-            consoleDisplay.innerHTML = renderMatrixHtml(inv);
-            saveToHistory(`Inverse(A)`, JSON.stringify(inv));
+            const m11 = m[1][1] * m[2][2] - m[1][2] * m[2][1];
+            const m12 = m[1][0] * m[2][2] - m[1][2] * m[2][0];
+            const m13 = m[1][0] * m[2][1] - m[1][1] * m[2][0];
+
+            stepHtml = `
+              <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2 text-xs font-mono">
+                <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                  <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                    Step 1: Laplace Cofactor Expansion (Row 1)
+                  </span>
+                  <span class="text-[9px] text-brand-text-dim">3×3 Expansion</span>
+                </div>
+                <div class="text-brand-text space-y-1 py-1">
+                  <div>Minor $M_{11} = (${m[1][1]})(${m[2][2]}) - (${m[1][2]})(${m[2][1]}) = ${clean(m11)}$</div>
+                  <div>Minor $M_{12} = (${m[1][0]})(${m[2][2]}) - (${m[1][2]})(${m[2][0]}) = ${clean(m12)}$</div>
+                  <div>Minor $M_{13} = (${m[1][0]})(${m[2][1]}) - (${m[1][1]})(${m[2][0]}) = ${clean(m13)}$</div>
+                </div>
+              </div>
+
+              <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5 text-xs font-mono">
+                <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                  <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                    Step 2: Linear Combination
+                  </span>
+                </div>
+                <div class="text-brand-text pt-1">
+                  $\\det(${name}) = (${m[0][0]})(${clean(m11)}) - (${m[0][1]})(${clean(m12)}) + (${m[0][2]})(${clean(m13)}) = $ <strong class="text-brand-orange">${cleanVal}</strong>
+                </div>
+              </div>
+            `;
           }
-        } else if (op === 'inv-b') {
-          const inv = calcInverse(mDecB);
-          outputOperation.textContent = 'B^-1';
+          matrixStepsContainer.innerHTML = stepHtml;
+          saveToHistory(`det(${name})`, String(cleanVal));
+
+        } else if (op === 'trans-a' || op === 'trans-b') {
+          const isA = op === 'trans-a';
+          const name = isA ? 'A' : 'B';
+          const m = isA ? mDecA : mDecB;
+          const trans = calcTranspose(m);
+
+          outputOperation.textContent = `${name}ᵀ`;
+          renderResultMatrix(trans, `${name}^T`);
+
+          matrixStepsContainer.innerHTML = `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5 text-xs font-mono">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Transposition Rule
+                </span>
+                <span class="text-[9px] text-brand-text-dim">Main Diagonal Reflection</span>
+              </div>
+              <div class="text-brand-text-muted pt-1">
+                Reflect all elements across the main diagonal: $[${name}^T]_{ij} = [${name}]_{ji}$.
+              </div>
+            </div>
+          `;
+          saveToHistory(`${name}^T`, JSON.stringify(trans));
+
+        } else if (op === 'trace-a' || op === 'trace-b') {
+          const isA = op === 'trace-a';
+          const name = isA ? 'A' : 'B';
+          const m = isA ? mDecA : mDecB;
+          const tr = calcTrace(m);
+          const cleanTr = clean(tr);
+
+          outputOperation.textContent = `tr(${name})`;
+          consoleDisplay.innerHTML = `
+            <div class="space-y-2 py-2">
+              <div class="text-[10px] text-brand-text-dim uppercase tracking-wider font-mono">Matrix Trace</div>
+              <div class="text-2xl sm:text-3xl font-bold font-mono text-brand-blue-neon">tr(${name}) = ${cleanTr}</div>
+              <div class="text-xs text-brand-text-muted font-mono">Sum of diagonal elements</div>
+            </div>
+          `;
+
+          const diagTerms = m.map((row, i) => `${clean(row[i])}`).join(' + ');
+          matrixStepsContainer.innerHTML = `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5 text-xs font-mono">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Diagonal Summation
+                </span>
+              </div>
+              <div class="text-brand-text pt-1">
+                $\\text{tr}(${name}) = \\sum_{i=1}^n a_{ii} = ${diagTerms} = $ <strong class="text-brand-blue-neon">${cleanTr}</strong>
+              </div>
+            </div>
+          `;
+          saveToHistory(`tr(${name})`, String(cleanTr));
+
+        } else if (op === 'inv-a' || op === 'inv-b') {
+          const isA = op === 'inv-a';
+          const name = isA ? 'A' : 'B';
+          const m = isA ? mDecA : mDecB;
+          const det = calcDet(m);
+          const inv = calcInverse(m);
+
+          outputOperation.textContent = `${name}⁻¹`;
+
           if (!inv) {
-            consoleDisplay.innerHTML = `<span class="text-red-500 font-semibold text-xs">Error: Matrix is singular (determinant is 0). Inverse does not exist.</span>`;
+            consoleDisplay.innerHTML = `
+              <div class="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 font-mono text-xs space-y-1">
+                <div class="font-bold text-sm">Singular Matrix (det = 0)</div>
+                <div>Matrix ${name} has a determinant of 0 and cannot be inverted.</div>
+              </div>
+            `;
           } else {
-            consoleDisplay.innerHTML = renderMatrixHtml(inv);
-            saveToHistory(`Inverse(B)`, JSON.stringify(inv));
+            renderResultMatrix(inv, `${name}^{-1}`);
+
+            matrixStepsContainer.innerHTML = `
+              <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5 text-xs font-mono">
+                <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                  <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                    Inversion via Adjugate Formula
+                  </span>
+                  <span class="text-[9px] text-brand-text-dim">det = ${clean(det)}</span>
+                </div>
+                <div class="text-brand-text pt-1">
+                  Formula: $${name}^{-1} = \\frac{1}{\\det(${name})} \\text{adj}(${name}) = \\frac{1}{${clean(det)}} C^T$
+                </div>
+              </div>
+            `;
+            saveToHistory(`${name}^-1`, JSON.stringify(inv));
           }
-        } else if (op === 'add') {
+
+        } else if (op === 'add' || op === 'sub') {
           if (dimA !== dimB) {
-            consoleDisplay.innerHTML = `<span class="text-red-500 text-xs">Dimension Error: Matrices must share matching dimensions.</span>`;
+            consoleDisplay.innerHTML = `<span class="text-red-400 text-xs font-mono">Dimension Mismatch: Matrices must share matching dimensions.</span>`;
             return;
           }
-          const res = mDecA.map((row, r) => row.map((val, c) => val + mDecB[r][c]));
-          outputOperation.textContent = 'A + B';
-          consoleDisplay.innerHTML = renderMatrixHtml(res);
-          saveToHistory(`A + B`, JSON.stringify(res));
-        } else if (op === 'sub') {
-          if (dimA !== dimB) {
-            consoleDisplay.innerHTML = `<span class="text-red-500 text-xs">Dimension Error: Matrices must share matching dimensions.</span>`;
-            return;
-          }
-          const res = mDecA.map((row, r) => row.map((val, c) => val - mDecB[r][c]));
-          outputOperation.textContent = 'A - B';
-          consoleDisplay.innerHTML = renderMatrixHtml(res);
-          saveToHistory(`A - B`, JSON.stringify(res));
+          const isAdd = op === 'add';
+          const symbol = isAdd ? '+' : '−';
+          const res = mDecA.map((row, r) => row.map((val, c) => isAdd ? val + mDecB[r][c] : val - mDecB[r][c]));
+
+          outputOperation.textContent = `A ${symbol} B`;
+          renderResultMatrix(res, `A ${symbol} B`);
+
+          matrixStepsContainer.innerHTML = `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5 text-xs font-mono">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Element-Wise ${isAdd ? 'Addition' : 'Subtraction'}
+                </span>
+              </div>
+              <div class="text-brand-text pt-1">
+                $[C]_{ij} = [A]_{ij} ${symbol} [B]_{ij}$ for all row $i$ and column $j$.
+              </div>
+            </div>
+          `;
+          saveToHistory(`A ${symbol} B`, JSON.stringify(res));
+
         } else if (op === 'mul') {
           if (dimA !== dimB) {
-            consoleDisplay.innerHTML = `<span class="text-red-500 text-xs">Dimension Error: Matrices must share matching dimensions.</span>`;
+            consoleDisplay.innerHTML = `<span class="text-red-400 text-xs font-mono">Dimension Mismatch: Matrices must share matching dimensions.</span>`;
             return;
           }
           const dim = dimA;
@@ -377,12 +695,57 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
               res[r][c] = sum;
             }
           }
-          outputOperation.textContent = 'A * B';
-          consoleDisplay.innerHTML = renderMatrixHtml(res);
+
+          outputOperation.textContent = `A × B`;
+          renderResultMatrix(res, `A \\times B`);
+
+          let dotParts = [];
+          for (let k = 0; k < dim; k++) {
+            dotParts.push(`(${mDecA[0][k]})(${mDecB[k][0]})`);
+          }
+          const dotFormula = dotParts.join(' + ');
+
+          matrixStepsContainer.innerHTML = `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5 text-xs font-mono">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Matrix Product (Row × Column Dot Products)
+                </span>
+                <span class="text-[9px] text-brand-text-dim">C_{ij} = \\sum A_{ik}B_{kj}</span>
+              </div>
+              <div class="text-brand-text pt-1">
+                Sample Element $C_{11} = ${dotFormula} = $ <strong class="text-brand-orange">${clean(res[0][0])}</strong>
+              </div>
+            </div>
+          `;
           saveToHistory(`A * B`, JSON.stringify(res));
+
+        } else if (op === 'swap') {
+          const oldA = mDecA;
+          const oldB = mDecB;
+          const oldDimA = dimA;
+          const oldDimB = dimB;
+
+          dimA = oldDimB;
+          dimB = oldDimA;
+
+          document.getElementById('dim-a-display')!.textContent = `${dimA}×${dimA}`;
+          document.getElementById('dim-b-display')!.textContent = `${dimB}×${dimB}`;
+
+          buildGrid('a', dimA, oldB);
+          buildGrid('b', dimB, oldA);
+
+          outputOperation.textContent = `Swapped`;
+          consoleDisplay.innerHTML = `
+            <div class="text-sm font-bold font-mono text-brand-blue-neon py-2">
+              ✓ Swapped Matrix A ⇄ Matrix B
+            </div>
+          `;
+          matrixStepsContainer.innerHTML = '';
         }
+
       } catch (err: any) {
-        consoleDisplay.innerHTML = `<span class="text-red-500 text-xs">Evaluation Error: ${err.message}</span>`;
+        consoleDisplay.innerHTML = `<span class="text-red-400 text-xs font-mono">Evaluation Error: ${err.message}</span>`;
       }
     }
 
@@ -394,33 +757,56 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       );
     }
 
-    function initDimensionListeners() {
+    function initMatrixWorkspace() {
+      // Dimension listeners A
       document.querySelectorAll('.dim-btn-a').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.querySelectorAll('.dim-btn-a').forEach(b => b.classList.replace('border-brand-blue', 'border-brand-border'));
-          document.querySelectorAll('.dim-btn-a').forEach(b => b.classList.remove('bg-brand-gray-hover', 'text-white'));
-          btn.classList.replace('border-brand-border', 'border-brand-blue');
-          btn.classList.add('bg-brand-gray-hover', 'text-white');
+          document.querySelectorAll('.dim-btn-a').forEach(b => {
+            b.classList.remove('border-brand-blue', 'bg-brand-gray-hover', 'text-brand-text');
+            b.classList.add('border-brand-border', 'text-brand-text-muted');
+          });
+          btn.classList.remove('border-brand-border', 'text-brand-text-muted');
+          btn.classList.add('border-brand-blue', 'bg-brand-gray-hover', 'text-brand-text');
           
           dimA = parseInt(btn.getAttribute('data-dim')!);
-          document.getElementById('dim-a-display')!.textContent = `${dimA}x${dimA}`;
+          document.getElementById('dim-a-display')!.textContent = `${dimA}×${dimA}`;
           buildGrid('a', dimA);
         });
       });
 
+      // Dimension listeners B
       document.querySelectorAll('.dim-btn-b').forEach(btn => {
         btn.addEventListener('click', () => {
-          document.querySelectorAll('.dim-btn-b').forEach(b => b.classList.replace('border-brand-blue', 'border-brand-border'));
-          document.querySelectorAll('.dim-btn-b').forEach(b => b.classList.remove('bg-brand-gray-hover', 'text-white'));
-          btn.classList.replace('border-brand-border', 'border-brand-blue');
-          btn.classList.add('bg-brand-gray-hover', 'text-white');
+          document.querySelectorAll('.dim-btn-b').forEach(b => {
+            b.classList.remove('border-brand-blue', 'bg-brand-gray-hover', 'text-brand-text');
+            b.classList.add('border-brand-border', 'text-brand-text-muted');
+          });
+          btn.classList.remove('border-brand-border', 'text-brand-text-muted');
+          btn.classList.add('border-brand-blue', 'bg-brand-gray-hover', 'text-brand-text');
           
           dimB = parseInt(btn.getAttribute('data-dim')!);
-          document.getElementById('dim-b-display')!.textContent = `${dimB}x${dimB}`;
+          document.getElementById('dim-b-display')!.textContent = `${dimB}×${dimB}`;
           buildGrid('b', dimB);
         });
       });
 
+      // Presets listeners A
+      document.querySelectorAll('.preset-matrix-a').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const preset = btn.getAttribute('data-preset')!;
+          applyMatrixPreset('a', preset);
+        });
+      });
+
+      // Presets listeners B
+      document.querySelectorAll('.preset-matrix-b').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const preset = btn.getAttribute('data-preset')!;
+          applyMatrixPreset('b', preset);
+        });
+      });
+
+      // Operation buttons
       document.querySelectorAll('.op-btn-matrix').forEach(btn => {
         btn.addEventListener('click', () => {
           const op = btn.getAttribute('data-op')!;
@@ -429,27 +815,20 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       });
     }
 
+    // Handle incoming history item triggers
     window.addEventListener('load-expression', (e: any) => {
       if (e.detail.mode === 'matrix') {
-        const expr = e.detail.expression;
-        const resStr = e.detail.result;
-        outputOperation.textContent = expr;
-        
-        try {
-          const parsed = JSON.parse(resStr);
-          if (Array.isArray(parsed) && Array.isArray(parsed[0])) {
-            consoleDisplay.innerHTML = renderMatrixHtml(parsed);
-          } else {
-            consoleDisplay.innerHTML = `<div class="text-xl font-bold text-brand-text">${resStr}</div>`;
-          }
-        } catch {
-          consoleDisplay.innerHTML = `<div class="text-xl font-bold text-brand-text">${resStr}</div>`;
+        const firstCell = document.querySelector('.cell-a') as HTMLInputElement;
+        if (firstCell) {
+          firstCell.focus();
+          firstCell.select();
         }
       }
     });
 
+    // Build initial grids
     buildGrid('a', 3);
     buildGrid('b', 3);
-    initDimensionListeners();
+    initMatrixWorkspace();
   </script>
 </Layout>

@@ -62,136 +62,249 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     </div>
 
     <!-- Interface Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="space-y-6">
       
-      <!-- Definite Integration Card -->
-      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4 shadow-xl backdrop-blur-sm relative animate-fade-in">
-        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5 border-b border-brand-border/40 pb-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
-          {t('calculus.defInt')}
-        </h2>
-        <div class="space-y-3 font-mono text-xs">
-          <div class="flex flex-col gap-1.5">
-            <label for="def-expr" class="text-brand-text-dim uppercase text-[10px]">{t('calculus.expr')}</label>
-            <input 
-              type="text" 
-              id="def-expr" 
-              placeholder="e.g. x^2, sin(x), e^x" 
-              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
-              value="x^2"
-            />
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="flex flex-col gap-1.5">
-              <label for="def-limit-a" class="text-brand-text-dim uppercase text-[10px]">{t('calculus.lowerLimit')}</label>
-              <input 
-                type="number" 
-                id="def-limit-a" 
-                class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text focus:outline-none focus:border-brand-blue"
-                value="0"
-                step="any"
-              />
-            </div>
-            <div class="flex flex-col gap-1.5">
-              <label for="def-limit-b" class="text-brand-text-dim uppercase text-[10px]">{t('calculus.upperLimit')}</label>
-              <input 
-                type="number" 
-                id="def-limit-b" 
-                class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text focus:outline-none focus:border-brand-blue"
-                value="3"
-                step="any"
-              />
-            </div>
-          </div>
-          <button 
-            id="btn-integrate-definite"
-            class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm"
-          >
-            {t('calculus.calcInt')}
-          </button>
-          
-          <div class="mt-4 pt-3 border-t border-brand-border/30 flex justify-between items-center bg-brand-black/40 p-3 rounded border border-brand-border/60">
-            <span class="text-[10px] text-brand-text-dim uppercase">Bounded Area Result</span>
-            <span id="definite-result" class="text-base font-bold text-brand-blue-neon">9</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Indefinite Integration Card -->
-      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4 shadow-xl backdrop-blur-sm relative">
-        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5 border-b border-brand-border/40 pb-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
-          Indefinite Integration (Symbolic Polynomial)
-        </h2>
-        <div class="space-y-3 font-mono text-xs">
-          <div class="flex flex-col gap-1.5">
-            <label for="indef-expr" class="text-brand-text-dim uppercase text-[10px]">Polynomial Expression f(x)</label>
-            <input 
-              type="text" 
-              id="indef-expr" 
-              placeholder="e.g. 3*x^2 + 5*x - 2" 
-              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
-              value="3*x^2 + 2*x - 1"
-            />
-          </div>
-          <button 
-            id="btn-integrate-indefinite"
-            class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm"
-          >
-            Find Anti-Derivative
-          </button>
-          
-          <div class="mt-4 pt-3 border-t border-brand-border/30 flex flex-col gap-1.5 bg-brand-black/40 p-3 rounded border border-brand-border/60">
-            <span class="text-[10px] text-brand-text-dim uppercase">Anti-Derivative F(x)</span>
-            <span id="indefinite-result" class="text-sm font-bold text-brand-blue-neon break-all">x^3 + x^2 - x + C</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Polynomial Solver Card -->
-      <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4 shadow-xl backdrop-blur-sm relative md:col-span-2">
-        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text-muted flex items-center gap-1.5 border-b border-brand-border/40 pb-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
-          Polynomial & Algebraic Root Solver
-        </h2>
+      <!-- Top Row: Differentiation & Indefinite Integration -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
-          <!-- Solver Selector & Coefficients Input -->
-          <div class="md:col-span-1 space-y-4">
+        <!-- Card 1: Symbolic & Numerical Differentiation (Wolfram Style) -->
+        <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-5 sm:p-6 space-y-4 shadow-xl backdrop-blur-sm relative hover:border-brand-border-hover transition-colors">
+          <div class="flex items-center justify-between border-b border-brand-border/40 pb-2.5">
+            <h2 class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-text flex items-center gap-2 font-mono">
+              <span class="w-2 h-2 rounded-full bg-brand-orange shadow-[0_0_8px_rgba(255,108,0,0.6)]"></span>
+              Symbolic & Numerical Derivative (d/dx)
+            </h2>
+            <div class="flex border border-brand-border/60 rounded overflow-hidden text-[10px] font-mono">
+              <button id="btn-deriv-order-1" type="button" aria-label="First order derivative" class="px-2.5 py-1 bg-brand-orange text-brand-black font-bold cursor-pointer transition-colors">f'(x)</button>
+              <button id="btn-deriv-order-2" type="button" aria-label="Second order derivative" class="px-2.5 py-1 bg-brand-gray-light text-brand-text-muted hover:text-white cursor-pointer border-l border-brand-border/60 transition-colors">f''(x)</button>
+            </div>
+          </div>
+
+          <div class="space-y-3 font-mono text-xs">
             <div class="flex flex-col gap-1.5">
-              <label class="text-brand-text-dim uppercase text-[10px]">Equation Degree</label>
-              <div class="flex border border-brand-border rounded overflow-hidden">
-                <button id="btn-deg-2" class="flex-1 py-1.5 text-center bg-brand-gray-light text-white font-medium focus:outline-none cursor-pointer">Quadratic (x²)</button>
-                <button id="btn-deg-3" class="flex-1 py-1.5 text-center text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50 focus:outline-none cursor-pointer border-l border-brand-border">Cubic (x³)</button>
+              <label for="diff-expr" class="text-brand-text-dim uppercase text-[10px]">Function Expression f(x)</label>
+              <input 
+                type="text" 
+                id="diff-expr" 
+                placeholder="e.g. 4*x^3 - 5*x^2 + 2*x - 7" 
+                class="w-full bg-brand-black border border-brand-border rounded-lg px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange/30"
+                value="4*x^3 - 5*x^2 + 2*x - 7"
+              />
+            </div>
+
+            <!-- Quick Presets -->
+            <div class="flex flex-wrap gap-1.5 pt-0.5">
+              <span class="text-brand-text-dim text-[9px] uppercase tracking-wider self-center mr-1">Presets:</span>
+              <button type="button" aria-label="Preset cubic polynomial" class="preset-diff-btn px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60 text-[10px] text-brand-text-muted hover:text-white hover:border-brand-orange transition-colors cursor-pointer" data-expr="3*x^4 - 2*x^2 + 5">3x⁴ - 2x² + 5</button>
+              <button type="button" aria-label="Preset cubic minus linear" class="preset-diff-btn px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60 text-[10px] text-brand-text-muted hover:text-white hover:border-brand-orange transition-colors cursor-pointer" data-expr="x^3 - 3*x">x³ - 3x</button>
+              <button type="button" aria-label="Preset trigonometric sine" class="preset-diff-btn px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60 text-[10px] text-brand-text-muted hover:text-white hover:border-brand-orange transition-colors cursor-pointer" data-expr="sin(x)">sin(x)</button>
+              <button type="button" aria-label="Preset exponential" class="preset-diff-btn px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60 text-[10px] text-brand-text-muted hover:text-white hover:border-brand-orange transition-colors cursor-pointer" data-expr="e^x">eˣ</button>
+            </div>
+
+            <!-- Optional Point Evaluation -->
+            <div class="flex flex-col gap-1.5">
+              <label for="diff-eval-x" class="text-brand-text-dim uppercase text-[10px]">Evaluate Slope at Point x₀ (Optional)</label>
+              <input 
+                type="number" 
+                id="diff-eval-x" 
+                placeholder="e.g. 2" 
+                class="w-full bg-brand-black border border-brand-border rounded-lg px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-orange"
+                value="2"
+                step="any"
+              />
+            </div>
+
+            <button 
+              id="btn-differentiate"
+              type="button"
+              aria-label="Differentiate function"
+              class="w-full h-10 rounded-lg bg-brand-orange text-brand-black font-bold hover:bg-brand-orange-hover hover:shadow-[0_0_12px_rgba(255,108,0,0.35)] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center text-sm"
+            >
+              Differentiate Function
+            </button>
+            
+            <!-- Result Banner -->
+            <div class="mt-3 pt-3 border-t border-brand-border/40 flex flex-col gap-1.5 bg-brand-black/60 p-3 rounded-lg border border-brand-border/60">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] text-brand-text-dim uppercase tracking-wider font-bold">Derivative Result</span>
+                <span id="diff-eval-badge" class="text-[10px] text-brand-blue-neon font-mono">Slope at x₀ = 2: 30</span>
+              </div>
+              <div id="diff-result-katex" class="text-sm sm:text-base font-bold font-mono text-brand-formula break-all py-1 overflow-x-auto math-step-formula">
+                <!-- KaTeX rendered formula -->
               </div>
             </div>
+
+            <!-- Wolfram Step-by-Step Derivation Container -->
+            <div id="diff-steps-container" class="space-y-2 pt-2 border-t border-brand-border/40">
+              <!-- Dynamically populated by differentiation engine -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Indefinite Integration (Symbolic Antiderivative) -->
+        <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-5 sm:p-6 space-y-4 shadow-xl backdrop-blur-sm relative hover:border-brand-border-hover transition-colors">
+          <div class="flex items-center justify-between border-b border-brand-border/40 pb-2.5">
+            <h2 class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-text flex items-center gap-2 font-mono">
+              <span class="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_8px_rgba(91,156,246,0.6)]"></span>
+              Indefinite Integration (Symbolic Anti-Derivative)
+            </h2>
+          </div>
+
+          <div class="space-y-3 font-mono text-xs">
+            <div class="flex flex-col gap-1.5">
+              <label for="indef-expr" class="text-brand-text-dim uppercase text-[10px]">Polynomial / Function f(x)</label>
+              <input 
+                type="text" 
+                id="indef-expr" 
+                placeholder="e.g. 3*x^2 + 2*x - 1" 
+                class="w-full bg-brand-black border border-brand-border rounded-lg px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue/30"
+                value="3*x^2 + 2*x - 1"
+              />
+            </div>
+
+            <!-- Quick Presets -->
+            <div class="flex flex-wrap gap-1.5 pt-0.5">
+              <span class="text-brand-text-dim text-[9px] uppercase tracking-wider self-center mr-1">Presets:</span>
+              <button type="button" aria-label="Preset polynomial 3x squared" class="preset-integ-btn px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60 text-[10px] text-brand-text-muted hover:text-white hover:border-brand-blue transition-colors cursor-pointer" data-expr="3*x^2 + 2*x - 1">3x² + 2x - 1</button>
+              <button type="button" aria-label="Preset cubic polynomial" class="preset-integ-btn px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60 text-[10px] text-brand-text-muted hover:text-white hover:border-brand-blue transition-colors cursor-pointer" data-expr="4*x^3 - 6*x">4x³ - 6x</button>
+              <button type="button" aria-label="Preset trigonometric cosine" class="preset-integ-btn px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60 text-[10px] text-brand-text-muted hover:text-white hover:border-brand-blue transition-colors cursor-pointer" data-expr="cos(x)">cos(x)</button>
+              <button type="button" aria-label="Preset reciprocal 1 over x" class="preset-integ-btn px-2 py-0.5 rounded bg-brand-black/60 border border-brand-border/60 text-[10px] text-brand-text-muted hover:text-white hover:border-brand-blue transition-colors cursor-pointer" data-expr="1/x">1/x</button>
+            </div>
+
+            <button 
+              id="btn-integrate-indefinite"
+              type="button"
+              aria-label="Calculate indefinite antiderivative"
+              class="w-full h-10 rounded-lg bg-brand-orange text-brand-black font-bold hover:bg-brand-orange-hover hover:shadow-[0_0_12px_rgba(255,108,0,0.35)] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center text-sm"
+            >
+              Find Anti-Derivative
+            </button>
             
+            <!-- Result Banner -->
+            <div class="mt-3 pt-3 border-t border-brand-border/40 flex flex-col gap-1.5 bg-brand-black/60 p-3 rounded-lg border border-brand-border/60">
+              <span class="text-[10px] text-brand-text-dim uppercase tracking-wider font-bold">Anti-Derivative F(x)</span>
+              <div id="indefinite-result-katex" class="text-sm sm:text-base font-bold font-mono text-brand-formula break-all py-1 overflow-x-auto math-step-formula">
+                <!-- KaTeX rendered formula -->
+              </div>
+            </div>
+
+            <!-- Wolfram Step-by-Step Derivation Container -->
+            <div id="indef-steps-container" class="space-y-2 pt-2 border-t border-brand-border/40">
+              <!-- Dynamically populated by integration engine -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Definite Integration & Polynomial Solver -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Card 3: Definite Integration (Simpson's 1/3 Rule) -->
+        <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-5 sm:p-6 space-y-4 shadow-xl backdrop-blur-sm relative hover:border-brand-border-hover transition-colors">
+          <h2 class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-text flex items-center gap-2 border-b border-brand-border/40 pb-2.5 font-mono">
+            <span class="w-2 h-2 rounded-full bg-brand-orange shadow-[0_0_8px_rgba(255,108,0,0.6)]"></span>
+            Definite Integration (Simpson's 1/3 Rule)
+          </h2>
+          <div class="space-y-3 font-mono text-xs">
+            <div class="flex flex-col gap-1.5">
+              <label for="def-expr" class="text-brand-text-dim uppercase text-[10px]">Integrand f(x)</label>
+              <input 
+                type="text" 
+                id="def-expr" 
+                placeholder="e.g. x^2, sin(x), e^x" 
+                class="w-full bg-brand-black border border-brand-border rounded-lg px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-orange focus:ring-1 focus:ring-brand-orange/30"
+                value="x^2"
+              />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex flex-col gap-1.5">
+                <label for="def-limit-a" class="text-brand-text-dim uppercase text-[10px]">Lower Limit (a)</label>
+                <input 
+                  type="number" 
+                  id="def-limit-a" 
+                  class="w-full bg-brand-black border border-brand-border rounded-lg px-3 py-2 text-brand-text focus:outline-none focus:border-brand-orange"
+                  value="0"
+                  step="any"
+                />
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label for="def-limit-b" class="text-brand-text-dim uppercase text-[10px]">Upper Limit (b)</label>
+                <input 
+                  type="number" 
+                  id="def-limit-b" 
+                  class="w-full bg-brand-black border border-brand-border rounded-lg px-3 py-2 text-brand-text focus:outline-none focus:border-brand-orange"
+                  value="3"
+                  step="any"
+                />
+              </div>
+            </div>
+            <button 
+              id="btn-integrate-definite"
+              type="button"
+              aria-label="Calculate bounded area"
+              class="w-full h-10 rounded-lg bg-brand-orange text-brand-black font-bold hover:bg-brand-orange-hover hover:shadow-[0_0_12px_rgba(255,108,0,0.35)] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center text-sm"
+            >
+              Calculate Definite Area
+            </button>
+            
+            <div class="mt-3 pt-3 border-t border-brand-border/40 flex justify-between items-center bg-brand-black/60 p-3 rounded-lg border border-brand-border/60">
+              <span class="text-[10px] text-brand-text-dim uppercase tracking-wider font-bold">Bounded Area Result</span>
+              <div id="definite-result-katex" class="text-lg font-bold font-mono text-brand-orange">9</div>
+            </div>
+
+            <!-- Simpson Breakdown Card -->
+            <div id="definite-steps-container" class="space-y-2 pt-2 border-t border-brand-border/40">
+              <!-- Populated by definite integrator -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Polynomial & Algebraic Root Solver -->
+        <div class="border border-brand-surface-math-border bg-brand-surface-math rounded-xl p-5 sm:p-6 space-y-4 shadow-xl backdrop-blur-sm relative hover:border-brand-border-hover transition-colors">
+          <div class="flex items-center justify-between border-b border-brand-border/40 pb-2.5">
+            <h2 class="text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-text flex items-center gap-2 font-mono">
+              <span class="w-2 h-2 rounded-full bg-brand-blue shadow-[0_0_8px_rgba(91,156,246,0.6)]"></span>
+              Polynomial & Algebraic Root Solver
+            </h2>
+            <div class="flex border border-brand-border rounded overflow-hidden text-[10px] font-mono">
+              <button id="btn-deg-2" type="button" aria-label="Quadratic degree solver" class="px-2.5 py-1 bg-brand-gray-light text-brand-text font-medium cursor-pointer transition-colors">Quadratic (x²)</button>
+              <button id="btn-deg-3" type="button" aria-label="Cubic degree solver" class="px-2.5 py-1 text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50 cursor-pointer border-l border-brand-border transition-colors">Cubic (x³)</button>
+            </div>
+          </div>
+          
+          <div class="space-y-4 font-mono text-xs">
             <div id="coeff-inputs" class="space-y-3">
               <!-- Dynamically populated fields -->
             </div>
 
             <button 
               id="btn-solve-roots"
-              class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm"
+              type="button"
+              aria-label="Solve equation roots"
+              class="w-full h-10 rounded-lg bg-brand-orange text-brand-black font-bold hover:bg-brand-orange-hover hover:shadow-[0_0_12px_rgba(255,108,0,0.35)] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center text-sm"
             >
               Solve Equation Roots
             </button>
-          </div>
 
-          <!-- Calculated Roots Output Panel -->
-          <div class="md:col-span-2 border border-brand-border bg-brand-black/40 rounded-lg p-4 flex flex-col justify-between">
-            <div class="space-y-3">
-              <div class="text-[10px] text-brand-text-dim uppercase tracking-wider border-b border-brand-border/40 pb-1.5">
+            <!-- Calculated Roots Output Panel -->
+            <div class="border border-brand-border bg-brand-black/60 rounded-lg p-3.5 space-y-3">
+              <div class="text-[10px] text-brand-text-dim uppercase tracking-wider border-b border-brand-border/40 pb-1">
                 Equation Form
               </div>
-              <div id="equation-display" class="text-sm font-bold text-brand-text tracking-wide">
+              <div id="equation-display" class="text-sm font-bold text-brand-text tracking-wide overflow-x-auto py-0.5 math-step-formula">
                 <!-- Equation representation -->
               </div>
-              <div class="text-[10px] text-brand-text-dim uppercase tracking-wider pt-2 border-b border-brand-border/40 pb-1.5">
+
+              <!-- Discriminant Breakdown Step -->
+              <div id="discriminant-step" class="border border-brand-surface-math-border/80 bg-brand-surface-math/60 rounded p-2.5 space-y-1 text-[11px]">
+                <!-- Populated with discriminant formula -->
+              </div>
+
+              <div class="text-[10px] text-brand-text-dim uppercase tracking-wider pt-1 border-b border-brand-border/40 pb-1">
                 Calculated Roots
               </div>
-              <div id="roots-output" class="space-y-2.5">
-                <!-- Solved Roots values -->
+              <div id="roots-output" class="space-y-2">
+                <!-- Solved Roots values (NO green!) -->
               </div>
             </div>
           </div>
@@ -209,7 +322,31 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     <FaqSection faqs={faqs} heading={faqHeadingMap[lang]} />
   </div>
 
+  <style>
+    :global(.math-step-formula .katex) {
+      font-size: 1.1em;
+      color: var(--color-brand-formula);
+    }
+    html.light :global(.math-step-formula .katex) {
+      color: #0056b3;
+    }
+  </style>
+
   <script>
+    import katex from 'katex';
+    import 'katex/dist/katex.min.css';
+
+    function renderKaTeX(latex: string, el: HTMLElement, displayMode = false) {
+      try {
+        katex.render(latex, el, {
+          throwOnError: false,
+          displayMode: displayMode
+        });
+      } catch (err) {
+        el.textContent = latex;
+      }
+    }
+
     // --- Parser Engine adapted for single variable x ---
     function tokenize(str: string) {
       const regex = /\d+(\.\d*)?(e[+-]?\d+)?|[a-zA-Z_]+|\+|\-|\*|\/|\^|\%|\(|\)|\!|\,/g;
@@ -285,7 +422,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           while (operatorStack.length > 0) {
             const top = operatorStack[operatorStack.length - 1];
             if (top === '(') { found = true; break; }
-            outputQueue.push(outputQueue.pop()); // Pop until open bracket
+            outputQueue.push(outputQueue.pop());
           }
         }
       }
@@ -342,53 +479,412 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       return Number(val.toPrecision(10));
     }
 
-    // --- Definite Integration via Simpson's Rule ---
-    function integrateDefinite() {
-      const exprInput = (document.getElementById('def-expr') as HTMLInputElement).value;
-      const limitA = parseFloat((document.getElementById('def-limit-a') as HTMLInputElement).value);
-      const limitB = parseFloat((document.getElementById('def-limit-b') as HTMLInputElement).value);
-      const output = document.getElementById('definite-result')!;
+    // --- 1. Symbolic & Numerical Differentiation Engine (Wolfram Style) ---
+    let activeDerivOrder = 1;
+    const btnDerivOrder1 = document.getElementById('btn-deriv-order-1') as HTMLButtonElement;
+    const btnDerivOrder2 = document.getElementById('btn-deriv-order-2') as HTMLButtonElement;
+    const diffExprInput = document.getElementById('diff-expr') as HTMLInputElement;
+    const diffEvalInput = document.getElementById('diff-eval-x') as HTMLInputElement;
+    const diffResultKatex = document.getElementById('diff-result-katex')!;
+    const diffEvalBadge = document.getElementById('diff-eval-badge')!;
+    const diffStepsContainer = document.getElementById('diff-steps-container')!;
+
+    interface DerivTerm {
+      originalLatex: string;
+      derivedLatex: string;
+      ruleName: string;
+      ruleFormula: string;
+      stepExplanation: string;
+      isZero: boolean;
+      coeff: number;
+      power: number;
+      func?: string;
+    }
+
+    function differentiateSingleTerm(sign: string, body: string): DerivTerm {
+      const isNeg = sign === '-';
+      const cleanBody = body.trim();
+
+      if (cleanBody === 'sin(x)') {
+        const outCoeff = isNeg ? -1 : 1;
+        const outLatex = isNeg ? '-\\cos(x)' : '\\cos(x)';
+        return {
+          originalLatex: isNeg ? '-\\sin(x)' : '\\sin(x)',
+          derivedLatex: outLatex,
+          ruleName: 'Trigonometric Sine Rule',
+          ruleFormula: '\\frac{d}{dx}[\\sin(x)] = \\cos(x)',
+          stepExplanation: `\\frac{d}{dx}\\left(${isNeg ? '-' : ''}\\sin(x)\\right) = ${outLatex}`,
+          isZero: false, coeff: outCoeff, power: 0, func: 'cos(x)'
+        };
+      }
+      if (cleanBody === 'cos(x)') {
+        const outLatex = isNeg ? '\\sin(x)' : '-\\sin(x)';
+        return {
+          originalLatex: isNeg ? '-\\cos(x)' : '\\cos(x)',
+          derivedLatex: outLatex,
+          ruleName: 'Trigonometric Cosine Rule',
+          ruleFormula: '\\frac{d}{dx}[\\cos(x)] = -\\sin(x)',
+          stepExplanation: `\\frac{d}{dx}\\left(${isNeg ? '-' : ''}\\cos(x)\\right) = ${outLatex}`,
+          isZero: false, coeff: isNeg ? 1 : -1, power: 0, func: 'sin(x)'
+        };
+      }
+      if (cleanBody === 'tan(x)') {
+        const outLatex = isNeg ? '-\\sec^2(x)' : '\\sec^2(x)';
+        return {
+          originalLatex: isNeg ? '-\\tan(x)' : '\\tan(x)',
+          derivedLatex: outLatex,
+          ruleName: 'Trigonometric Tangent Rule',
+          ruleFormula: '\\frac{d}{dx}[\\tan(x)] = \\sec^2(x)',
+          stepExplanation: `\\frac{d}{dx}\\left(${isNeg ? '-' : ''}\\tan(x)\\right) = ${outLatex}`,
+          isZero: false, coeff: isNeg ? -1 : 1, power: 0, func: 'sec^2(x)'
+        };
+      }
+      if (cleanBody === 'e^x' || cleanBody === 'exp(x)') {
+        const outLatex = isNeg ? '-e^x' : 'e^x';
+        return {
+          originalLatex: isNeg ? '-e^x' : 'e^x',
+          derivedLatex: outLatex,
+          ruleName: 'Natural Exponential Rule',
+          ruleFormula: '\\frac{d}{dx}[e^x] = e^x',
+          stepExplanation: `\\frac{d}{dx}\\left(${isNeg ? '-' : ''}e^x\\right) = ${outLatex}`,
+          isZero: false, coeff: isNeg ? -1 : 1, power: 0, func: 'e^x'
+        };
+      }
+      if (cleanBody === 'ln(x)' || cleanBody === 'log(x)') {
+        const outLatex = isNeg ? '-\\frac{1}{x}' : '\\frac{1}{x}';
+        return {
+          originalLatex: isNeg ? '-\\ln(x)' : '\\ln(x)',
+          derivedLatex: outLatex,
+          ruleName: 'Natural Logarithm Rule',
+          ruleFormula: '\\frac{d}{dx}[\\ln(x)] = \\frac{1}{x}',
+          stepExplanation: `\\frac{d}{dx}\\left(${isNeg ? '-' : ''}\\ln(x)\\right) = ${outLatex}`,
+          isZero: false, coeff: isNeg ? -1 : 1, power: -1
+        };
+      }
+      if (cleanBody === '1/x') {
+        const outLatex = isNeg ? '\\frac{1}{x^2}' : '-\\frac{1}{x^2}';
+        return {
+          originalLatex: isNeg ? '-\\frac{1}{x}' : '\\frac{1}{x}',
+          derivedLatex: outLatex,
+          ruleName: 'Reciprocal Power Rule',
+          ruleFormula: '\\frac{d}{dx}[x^{-1}] = -x^{-2}',
+          stepExplanation: `\\frac{d}{dx}\\left(${isNeg ? '-' : ''}x^{-1}\\right) = ${outLatex}`,
+          isZero: false, coeff: isNeg ? 1 : -1, power: -2
+        };
+      }
+
+      // Polynomial terms c*x^p
+      let coeff = 1;
+      let power = 0;
+      let hasX = false;
+
+      if (cleanBody.includes('x')) {
+        hasX = true;
+        const parts = cleanBody.split('x');
+        let coeffStr = parts[0].replace(/\*$/, '');
+        if (coeffStr === '') coeff = 1;
+        else if (coeffStr === '-') coeff = -1;
+        else coeff = parseFloat(coeffStr);
+
+        let expStr = parts[1];
+        if (expStr === '') power = 1;
+        else if (expStr.startsWith('^')) power = parseFloat(expStr.substring(1));
+        else power = 1;
+      } else {
+        coeff = parseFloat(cleanBody);
+        power = 0;
+      }
+
+      const signedCoeff = isNeg ? -coeff : coeff;
+
+      // Constant Rule
+      if (!hasX || isNaN(power)) {
+        return {
+          originalLatex: `${signedCoeff}`,
+          derivedLatex: '0',
+          ruleName: 'Constant Rule',
+          ruleFormula: '\\frac{d}{dx}[c] = 0',
+          stepExplanation: `\\frac{d}{dx}\\left(${signedCoeff}\\right) = 0`,
+          isZero: true, coeff: 0, power: 0
+        };
+      }
+
+      // Linear Power Rule
+      if (power === 1) {
+        return {
+          originalLatex: signedCoeff === 1 ? 'x' : (signedCoeff === -1 ? '-x' : `${signedCoeff}x`),
+          derivedLatex: `${signedCoeff}`,
+          ruleName: 'Linear Power Rule',
+          ruleFormula: '\\frac{d}{dx}[c \\cdot x] = c',
+          stepExplanation: `\\frac{d}{dx}\\left(${signedCoeff}x\\right) = ${signedCoeff} \\cdot (1) = ${signedCoeff}`,
+          isZero: signedCoeff === 0, coeff: signedCoeff, power: 0
+        };
+      }
+
+      // General Power Rule
+      const newCoeff = cleanResult(signedCoeff * power);
+      const newPower = power - 1;
+      let termLatex = '';
+      if (newPower === 1) {
+        termLatex = newCoeff === 1 ? 'x' : (newCoeff === -1 ? '-x' : `${newCoeff}x`);
+      } else {
+        termLatex = newCoeff === 1 ? `x^{${newPower}}` : (newCoeff === -1 ? `-x^{${newPower}}` : `${newCoeff}x^{${newPower}}`);
+      }
+
+      const origLatex = signedCoeff === 1 ? `x^{${power}}` : (signedCoeff === -1 ? `-x^{${power}}` : `${signedCoeff}x^{${power}}`);
+
+      return {
+        originalLatex: origLatex,
+        derivedLatex: termLatex,
+        ruleName: 'Power Rule',
+        ruleFormula: '\\frac{d}{dx}[c \\cdot x^n] = c \\cdot n \\cdot x^{n-1}',
+        stepExplanation: `\\frac{d}{dx}\\left(${origLatex}\\right) = (${signedCoeff})(${power})x^{${power}-1} = ${termLatex}`,
+        isZero: newCoeff === 0, coeff: newCoeff, power: newPower
+      };
+    }
+
+    function computeSymbolicDerivative(expr: string) {
+      const cleanExpr = expr.replace(/\s+/g, '');
+      const regex = /([+-]?)([^+-]+)/g;
+      const matches = [...cleanExpr.matchAll(regex)];
+      const terms: DerivTerm[] = [];
+
+      for (const m of matches) {
+        const sign = m[1] || '+';
+        const body = m[2];
+        if (!body) continue;
+        terms.push(differentiateSingleTerm(sign, body));
+      }
+
+      const nonZero = terms.filter(t => !t.isZero);
+      let combinedLatex = '';
+      let combinedText = '';
+
+      if (nonZero.length === 0) {
+        combinedLatex = '0';
+        combinedText = '0';
+      } else {
+        for (let i = 0; i < nonZero.length; i++) {
+          const t = nonZero[i];
+          const isNegative = t.coeff < 0;
+          const absCoeff = Math.abs(t.coeff);
+          const signPrefix = isNegative ? '-' : (i > 0 ? '+' : '');
+
+          let termBody = '';
+          if (t.func) {
+            termBody = t.func;
+          } else if (t.power === 0) {
+            termBody = `${absCoeff}`;
+          } else if (t.power === 1) {
+            termBody = absCoeff === 1 ? 'x' : `${absCoeff}x`;
+          } else {
+            termBody = absCoeff === 1 ? `x^{${t.power}}` : `${absCoeff}x^{${t.power}}`;
+          }
+
+          if (i === 0) {
+            combinedLatex += isNegative ? `-${termBody}` : termBody;
+          } else {
+            combinedLatex += ` ${signPrefix} ${termBody}`;
+          }
+        }
+        combinedText = combinedLatex.replace(/[{}]/g, '');
+      }
+
+      return { terms, combinedLatex, combinedText };
+    }
+
+    function differentiateFunction() {
+      const expr = diffExprInput.value.trim() || '4*x^3 - 5*x^2 + 2*x - 7';
+      const evalXStr = diffEvalInput.value.trim();
 
       try {
-        const tokens = tokenize(exprInput);
-        const rpn = parse(tokens);
+        const order1 = computeSymbolicDerivative(expr);
+        let finalLatex = '';
+        let stepHtml = '';
 
-        let n = 1000;
-        const h = (limitB - limitA) / n;
-        let sum = evaluateRPN(rpn, limitA) + evaluateRPN(rpn, limitB);
+        if (activeDerivOrder === 1) {
+          finalLatex = `f'(x) = ${order1.combinedLatex}`;
 
-        for (let i = 1; i < n; i++) {
-          const x = limitA + i * h;
-          const coeff = i % 2 === 0 ? 2 : 4;
-          sum += coeff * evaluateRPN(rpn, x);
+          stepHtml += `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1.5">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Step 1: Differentiation Rules
+                </span>
+                <span class="text-[9px] text-brand-text-dim">Linearity & Power Rules</span>
+              </div>
+              <div class="text-[11px] text-brand-text-muted leading-relaxed">
+                Apply linearity principle: differentiate each component term individually and sum the rates of change.
+              </div>
+            </div>
+          `;
+
+          stepHtml += `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1.5">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Step 2: Term-by-Term Derivation
+                </span>
+                <span class="text-[9px] text-brand-text-dim">${order1.terms.length} terms analyzed</span>
+              </div>
+              <div class="space-y-1.5 text-xs font-mono">
+                ${order1.terms.map((t) => `
+                  <div class="flex items-center justify-between py-1 border-b border-brand-border/20 last:border-b-0">
+                    <span class="text-brand-text-dim text-[10px]">${t.ruleName}:</span>
+                    <span class="text-brand-blue-neon font-semibold text-right">${t.stepExplanation}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+
+          stepHtml += `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Step 3: Combined Form
+                </span>
+              </div>
+              <div class="text-xs text-brand-text font-mono pt-1">
+                Combining all simplified components: <span class="text-brand-orange font-bold">f'(x) = ${order1.combinedLatex}</span>
+              </div>
+            </div>
+          `;
+
+        } else {
+          const order2 = computeSymbolicDerivative(order1.combinedText);
+          finalLatex = `f''(x) = ${order2.combinedLatex}`;
+
+          stepHtml += `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1.5">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Step 1: First Derivative f'(x)
+                </span>
+                <span class="text-[9px] text-brand-text-dim">Intermediate Order</span>
+              </div>
+              <div class="text-xs text-brand-text font-mono">
+                Differentiating $f(x)$ yields: <span class="text-brand-blue-neon font-bold">f'(x) = ${order1.combinedLatex}</span>
+              </div>
+            </div>
+
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1.5">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Step 2: Second Derivative f''(x) = d/dx[f'(x)]
+                </span>
+                <span class="text-[9px] text-brand-text-dim">Order 2</span>
+              </div>
+              <div class="space-y-1.5 text-xs font-mono">
+                ${order2.terms.map(t => `
+                  <div class="flex items-center justify-between py-1 border-b border-brand-border/20 last:border-b-0">
+                    <span class="text-brand-text-dim text-[10px]">${t.ruleName}:</span>
+                    <span class="text-brand-orange font-semibold text-right">${t.stepExplanation}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+              <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+                <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                  Step 3: Curvature & Inflection Form
+                </span>
+              </div>
+              <div class="text-xs text-brand-text font-mono pt-1">
+                Final second derivative: <span class="text-brand-orange font-bold">f''(x) = ${order2.combinedLatex}</span>
+              </div>
+            </div>
+          `;
         }
 
-        const area = (h / 3) * sum;
-        output.textContent = String(cleanResult(area));
+        renderKaTeX(finalLatex, diffResultKatex, true);
+        diffStepsContainer.innerHTML = stepHtml;
+
+        if (evalXStr !== '') {
+          const x0 = parseFloat(evalXStr);
+          if (!isNaN(x0)) {
+            try {
+              const tokens = tokenize(expr);
+              const rpn = parse(tokens);
+              const h = 1e-6;
+              const yPlus = evaluateRPN(rpn, x0 + h);
+              const yMinus = evaluateRPN(rpn, x0 - h);
+              const slope = (yPlus - yMinus) / (2 * h);
+              diffEvalBadge.textContent = `Slope at x₀ = ${x0}: ${cleanResult(slope)}`;
+            } catch(e) {
+              diffEvalBadge.textContent = '';
+            }
+          } else {
+            diffEvalBadge.textContent = '';
+          }
+        } else {
+          diffEvalBadge.textContent = '';
+        }
+
       } catch (err) {
-        output.textContent = 'Calculation Error';
+        diffResultKatex.textContent = 'Formula Parsing Error';
+        diffStepsContainer.innerHTML = '<div class="text-red-400 text-xs">Could not differentiate expression. Check bracket balance and syntax.</div>';
       }
     }
 
-    // --- Indefinite Integration (Symbolic) ---
+    // --- 2. Symbolic Indefinite Integration Engine (Wolfram Style) ---
     function integrateIndefinite() {
-      const expr = (document.getElementById('indef-expr') as HTMLInputElement).value;
-      const output = document.getElementById('indefinite-result')!;
+      const expr = (document.getElementById('indef-expr') as HTMLInputElement).value.trim() || '3*x^2 + 2*x - 1';
+      const outputKatex = document.getElementById('indefinite-result-katex')!;
+      const stepsContainer = document.getElementById('indef-steps-container')!;
 
       try {
         const cleanExpr = expr.replace(/\s+/g, '');
-        if (cleanExpr === 'sin(x)') { output.textContent = '-cos(x) + C'; return; }
-        if (cleanExpr === 'cos(x)') { output.textContent = 'sin(x) + C'; return; }
-        if (cleanExpr === 'e^x' || cleanExpr === 'exp(x)') { output.textContent = 'e^x + C'; return; }
-        if (cleanExpr === '1/x') { output.textContent = 'ln(|x|) + C'; return; }
+        
+        if (cleanExpr === 'sin(x)') {
+          renderKaTeX('F(x) = -\\cos(x) + C', outputKatex, true);
+          stepsContainer.innerHTML = `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">Trigonometric Antiderivative</span>
+              <div class="text-xs text-brand-text font-mono pt-1">Standard integral: $\\int \\sin(x) dx = -\\cos(x) + C$</div>
+            </div>
+          `;
+          return;
+        }
+        if (cleanExpr === 'cos(x)') {
+          renderKaTeX('F(x) = \\sin(x) + C', outputKatex, true);
+          stepsContainer.innerHTML = `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">Trigonometric Antiderivative</span>
+              <div class="text-xs text-brand-text font-mono pt-1">Standard integral: $\\int \\cos(x) dx = \\sin(x) + C$</div>
+            </div>
+          `;
+          return;
+        }
+        if (cleanExpr === 'e^x' || cleanExpr === 'exp(x)') {
+          renderKaTeX('F(x) = e^x + C', outputKatex, true);
+          stepsContainer.innerHTML = `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">Exponential Antiderivative</span>
+              <div class="text-xs text-brand-text font-mono pt-1">Standard integral: $\\int e^x dx = e^x + C$</div>
+            </div>
+          `;
+          return;
+        }
+        if (cleanExpr === '1/x') {
+          renderKaTeX('F(x) = \\ln|x| + C', outputKatex, true);
+          stepsContainer.innerHTML = `
+            <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">Reciprocal Antiderivative</span>
+              <div class="text-xs text-brand-text font-mono pt-1">Standard integral: $\\int x^{-1} dx = \\ln|x| + C$</div>
+            </div>
+          `;
+          return;
+        }
 
-        const termRegex = /([+-]?)([^+-]*)/g;
+        const termRegex = /([+-]?)([^+-]+)/g;
         const matches = [...cleanExpr.matchAll(termRegex)];
-        let integratedTerms: Array<{ sign: string; term: string }> = [];
+        let integratedTerms: Array<{ sign: string; coeff: number; power: number; stepLatex: string; ruleName: string }> = [];
 
         for (const match of matches) {
-          const sign = match[1];
-          let term = match[2];
+          const sign = match[1] || '+';
+          const term = match[2];
           if (!term) continue;
 
           let coeff = 1;
@@ -406,73 +902,210 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
             let expStr = parts[1];
             if (expStr === '') power = 1;
             else if (expStr.startsWith('^')) power = parseFloat(expStr.substring(1));
+            else power = 1;
           } else {
             coeff = parseFloat(term);
             power = 0;
           }
 
           if (isNaN(coeff) || isNaN(power)) {
-            output.textContent = 'Equation too complex';
+            outputKatex.textContent = 'Equation too complex';
             return;
           }
 
-          let intTerm = '';
+          const signedCoeff = sign === '-' ? -coeff : coeff;
+
           if (!hasX) {
-            intTerm = coeff === 1 ? 'x' : coeff === -1 ? '-x' : `${coeff}*x`;
+            const termLatex = signedCoeff === 1 ? 'x' : (signedCoeff === -1 ? '-x' : `${signedCoeff}x`);
+            integratedTerms.push({
+              sign, coeff: signedCoeff, power: 1,
+              ruleName: 'Constant Integration Rule',
+              stepLatex: `\\int (${signedCoeff}) \\, dx = ${termLatex}`
+            });
+          } else if (power === -1) {
+            const termLatex = signedCoeff === 1 ? '\\ln|x|' : (signedCoeff === -1 ? '-\\ln|x|' : `${signedCoeff}\\ln|x|`);
+            integratedTerms.push({
+              sign, coeff: signedCoeff, power: 0,
+              ruleName: 'Reciprocal / Logarithmic Rule',
+              stepLatex: `\\int \\left(${signedCoeff}x^{-1}\\right) \\, dx = ${termLatex}`
+            });
           } else {
-            if (power === -1) {
-              intTerm = coeff === 1 ? 'ln(|x|)' : coeff === -1 ? '-ln(|x|)' : `${coeff}*ln(|x|)`;
+            const newPower = power + 1;
+            const newCoeff = cleanResult(signedCoeff / newPower);
+            let termLatex = '';
+            if (newPower === 1) {
+              termLatex = newCoeff === 1 ? 'x' : (newCoeff === -1 ? '-x' : `${newCoeff}x`);
             } else {
-              const newCoeff = coeff / (power + 1);
-              const newPower = power + 1;
-              const coeffVal = cleanResult(newCoeff);
-
-              let coeffText = String(coeffVal);
-              if (coeffVal === 1) coeffText = '';
-              else if (coeffVal === -1) coeffText = '-';
-              else coeffText = coeffText + '*';
-
-              let powerText = newPower === 1 ? '' : `^${newPower}`;
-              intTerm = `${coeffText}x${powerText}`;
+              termLatex = newCoeff === 1 ? `x^{${newPower}}` : (newCoeff === -1 ? `-x^{${newPower}}` : `${newCoeff}x^{${newPower}}`);
             }
+            integratedTerms.push({
+              sign, coeff: newCoeff, power: newPower,
+              ruleName: 'Reverse Power Rule',
+              stepLatex: `\\int \\left(${signedCoeff}x^{${power}}\\right) \\, dx = \\frac{${signedCoeff}}{${power}+1}x^{${power}+1} = ${termLatex}`
+            });
           }
-
-          integratedTerms.push({ sign, term: intTerm });
         }
 
-        let result = '';
+        let resultLatex = '';
         for (let i = 0; i < integratedTerms.length; i++) {
-          const { sign, term } = integratedTerms[i];
-          if (i === 0) {
-            if (sign === '-') {
-              result += '-' + term;
-            } else {
-              result += term;
-            }
+          const t = integratedTerms[i];
+          const isNegative = t.coeff < 0;
+          const absCoeff = Math.abs(t.coeff);
+          const signPrefix = isNegative ? '-' : (i > 0 ? '+' : '');
+
+          let termBody = '';
+          if (t.power === 1) {
+            termBody = absCoeff === 1 ? 'x' : `${absCoeff}x`;
+          } else if (t.power > 1) {
+            termBody = absCoeff === 1 ? `x^{${t.power}}` : `${absCoeff}x^{${t.power}}`;
           } else {
-            const op = sign === '-' ? '-' : '+';
-            result += ` ${op} ${term}`;
+            termBody = `${absCoeff}\\ln|x|`;
+          }
+
+          if (i === 0) {
+            resultLatex += isNegative ? `-${termBody}` : termBody;
+          } else {
+            resultLatex += ` ${signPrefix} ${termBody}`;
           }
         }
 
-        output.textContent = result ? result + ' + C' : '0 + C';
+        const finalLatex = `F(x) = ${resultLatex} + C`;
+        renderKaTeX(finalLatex, outputKatex, true);
+
+        let stepHtml = `
+          <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2">
+            <div class="flex items-center justify-between border-b border-brand-border/30 pb-1.5">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                Step 1: Linearity Decomposition
+              </span>
+              <span class="text-[9px] text-brand-text-dim">Sum Rule</span>
+            </div>
+            <div class="text-[11px] text-brand-text-muted leading-relaxed">
+              Integrate each component term individually: $\\int [u \\pm v] dx = \\int u dx \\pm \\int v dx$.
+            </div>
+          </div>
+
+          <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2">
+            <div class="flex items-center justify-between border-b border-brand-border/30 pb-1.5">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                Step 2: Reverse Power Integration
+              </span>
+              <span class="text-[9px] text-brand-text-dim">${integratedTerms.length} terms</span>
+            </div>
+            <div class="space-y-1.5 text-xs font-mono">
+              ${integratedTerms.map(t => `
+                <div class="flex items-center justify-between py-1 border-b border-brand-border/20 last:border-b-0">
+                  <span class="text-brand-text-dim text-[10px]">${t.ruleName}:</span>
+                  <span class="text-brand-blue-neon font-semibold text-right">${t.stepLatex}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+            <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                Step 3: Arbitrary Constant (+ C)
+              </span>
+            </div>
+            <div class="text-xs text-brand-text font-mono pt-1">
+              Add constant of integration: <span class="text-brand-orange font-bold">${finalLatex}</span>
+            </div>
+          </div>
+        `;
+
+        stepsContainer.innerHTML = stepHtml;
+
       } catch (err) {
-        output.textContent = 'Parser Error';
+        outputKatex.textContent = 'Parser Error';
+        stepsContainer.innerHTML = '<div class="text-red-400 text-xs">Error parsing polynomial. Use standard format: 3*x^2 + 2*x - 1</div>';
       }
     }
 
-    // --- Polynomial & Cubic Equation Root Solver ---
+    // --- 3. Definite Integration Engine (Simpson's 1/3 Rule) ---
+    function integrateDefinite() {
+      const exprInput = (document.getElementById('def-expr') as HTMLInputElement).value.trim() || 'x^2';
+      const limitA = parseFloat((document.getElementById('def-limit-a') as HTMLInputElement).value || '0');
+      const limitB = parseFloat((document.getElementById('def-limit-b') as HTMLInputElement).value || '3');
+      const outputKatex = document.getElementById('definite-result-katex')!;
+      const stepsContainer = document.getElementById('definite-steps-container')!;
+
+      try {
+        const tokens = tokenize(exprInput);
+        const rpn = parse(tokens);
+
+        const n = 1000;
+        const h = (limitB - limitA) / n;
+        const fA = evaluateRPN(rpn, limitA);
+        const fB = evaluateRPN(rpn, limitB);
+        let sum = fA + fB;
+
+        for (let i = 1; i < n; i++) {
+          const x = limitA + i * h;
+          const coeff = i % 2 === 0 ? 2 : 4;
+          sum += coeff * evaluateRPN(rpn, x);
+        }
+
+        const area = (h / 3) * sum;
+        const cleanArea = cleanResult(area);
+
+        renderKaTeX(`\\int_{${limitA}}^{${limitB}} (${exprInput}) \\, dx \\approx ${cleanArea}`, outputKatex, true);
+
+        stepsContainer.innerHTML = `
+          <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-2">
+            <div class="flex items-center justify-between border-b border-brand-border/30 pb-1.5">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                Step 1: Domain & Discretization
+              </span>
+              <span class="text-[9px] text-brand-text-dim">n = 1,000 subintervals</span>
+            </div>
+            <div class="text-[11px] text-brand-text-muted leading-relaxed">
+              Integration interval $[a, b] = [${limitA}, ${limitB}]$, step size $h = \\frac{b-a}{n} = \\frac{${limitB}-${limitA}}{1000} = ${cleanResult(h)}$.
+            </div>
+          </div>
+
+          <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+            <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                Step 2: Boundary Ordinates
+              </span>
+            </div>
+            <div class="text-xs text-brand-text font-mono flex items-center justify-between py-0.5">
+              <span>f(a) = f(${limitA}) = ${cleanResult(fA)}</span>
+              <span>f(b) = f(${limitB}) = ${cleanResult(fB)}</span>
+            </div>
+          </div>
+
+          <div class="border border-brand-surface-math-border/90 bg-brand-black/50 rounded-lg p-3 space-y-1.5">
+            <div class="flex items-center justify-between border-b border-brand-border/30 pb-1">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-amber-400 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-semibold">
+                Step 3: Simpson Parabolic Summation
+              </span>
+            </div>
+            <div class="text-xs text-brand-text font-mono pt-1">
+              Accumulated bounded area: <span class="text-brand-orange font-bold">${cleanArea}</span>
+            </div>
+          </div>
+        `;
+
+      } catch (err) {
+        outputKatex.textContent = 'Calculation Error';
+        stepsContainer.innerHTML = '<div class="text-red-400 text-xs">Error evaluating definite integral. Verify bounds and formula.</div>';
+      }
+    }
+
+    // --- 4. Polynomial & Algebraic Root Solver Engine ---
     interface Complex {
       re: number;
       im: number;
     }
 
     let activeDegree = 2;
-
-    const btnDeg2 = document.getElementById('btn-deg-2')!;
-    const btnDeg3 = document.getElementById('btn-deg-3')!;
+    const btnDeg2 = document.getElementById('btn-deg-2') as HTMLButtonElement;
+    const btnDeg3 = document.getElementById('btn-deg-3') as HTMLButtonElement;
     const coeffInputs = document.getElementById('coeff-inputs')!;
     const equationDisplay = document.getElementById('equation-display')!;
+    const discriminantStep = document.getElementById('discriminant-step')!;
     const rootsOutput = document.getElementById('roots-output')!;
 
     function setupSolverUI(degree: number) {
@@ -480,52 +1113,53 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       coeffInputs.innerHTML = '';
 
       if (degree === 2) {
-        btnDeg2.className = "flex-1 py-1.5 text-center bg-brand-gray-light text-white font-medium focus:outline-none cursor-pointer";
-        btnDeg3.className = "flex-1 py-1.5 text-center text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50 focus:outline-none cursor-pointer border-l border-brand-border";
+        btnDeg2.className = "px-2.5 py-1 bg-brand-orange text-brand-black font-bold cursor-pointer transition-colors";
+        btnDeg3.className = "px-2.5 py-1 bg-brand-gray-light text-brand-text-muted hover:text-white cursor-pointer border-l border-brand-border transition-colors";
         
         coeffInputs.innerHTML = `
           <div class="grid grid-cols-3 gap-2">
             <div class="flex flex-col gap-1">
-              <label class="text-brand-text-dim text-[9px]">A (x²)</label>
+              <label for="coeff-a" class="text-brand-text-dim text-[9px]">A (x²)</label>
               <input type="number" id="coeff-a" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="1"/>
             </div>
             <div class="flex flex-col gap-1">
-              <label class="text-brand-text-dim text-[9px]">B (x)</label>
+              <label for="coeff-b" class="text-brand-text-dim text-[9px]">B (x)</label>
               <input type="number" id="coeff-b" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="-5"/>
             </div>
             <div class="flex flex-col gap-1">
-              <label class="text-brand-text-dim text-[9px]">C (const)</label>
+              <label for="coeff-c" class="text-brand-text-dim text-[9px]">C (const)</label>
               <input type="number" id="coeff-c" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="6"/>
             </div>
           </div>
         `;
-        equationDisplay.textContent = 'ax² + bx + c = 0';
+        renderKaTeX('ax^2 + bx + c = 0', equationDisplay, false);
       } else {
-        btnDeg3.className = "flex-1 py-1.5 text-center bg-brand-gray-light text-white font-medium focus:outline-none cursor-pointer";
-        btnDeg2.className = "flex-1 py-1.5 text-center text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50 focus:outline-none cursor-pointer border-r border-brand-border";
+        btnDeg3.className = "px-2.5 py-1 bg-brand-orange text-brand-black font-bold cursor-pointer transition-colors";
+        btnDeg2.className = "px-2.5 py-1 bg-brand-gray-light text-brand-text-muted hover:text-white cursor-pointer border-r border-brand-border transition-colors";
 
         coeffInputs.innerHTML = `
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <div class="flex flex-col gap-1">
-              <label class="text-brand-text-dim text-[9px]">A (x³)</label>
+              <label for="coeff-a" class="text-brand-text-dim text-[9px]">A (x³)</label>
               <input type="number" id="coeff-a" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="1"/>
             </div>
             <div class="flex flex-col gap-1">
-              <label class="text-brand-text-dim text-[9px]">B (x²)</label>
+              <label for="coeff-b" class="text-brand-text-dim text-[9px]">B (x²)</label>
               <input type="number" id="coeff-b" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="-6"/>
             </div>
             <div class="flex flex-col gap-1">
-              <label class="text-brand-text-dim text-[9px]">C (x)</label>
+              <label for="coeff-a_c" class="text-brand-text-dim text-[9px]">C (x)</label>
               <input type="number" id="coeff-a_c" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="11"/>
             </div>
             <div class="flex flex-col gap-1">
-              <label class="text-brand-text-dim text-[9px]">D (const)</label>
+              <label for="coeff-d" class="text-brand-text-dim text-[9px]">D (const)</label>
               <input type="number" id="coeff-d" class="w-full bg-brand-black border border-brand-border rounded px-2 py-1 text-brand-text text-xs focus:outline-none focus:border-brand-blue" value="-6"/>
             </div>
           </div>
         `;
-        equationDisplay.textContent = 'ax³ + bx² + cx + d = 0';
+        renderKaTeX('ax^3 + bx^2 + cx + d = 0', equationDisplay, false);
       }
+      discriminantStep.innerHTML = '<div class="text-brand-text-dim text-[11px] italic">Awaiting coefficients evaluation...</div>';
       rootsOutput.innerHTML = '<div class="text-brand-text-dim text-[11px] italic">Coefficients loaded. Solve roots to view values.</div>';
     }
 
@@ -554,17 +1188,22 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         
         const disc = b * b - 4 * a * c;
         let roots: Complex[] = [];
+        let discBadge = '';
+
         if (disc > 0) {
+          discBadge = `<span class="text-brand-blue-neon font-bold">Δ > 0 (Two Distinct Real Roots)</span>`;
           roots = [
             { re: (-b + Math.sqrt(disc)) / (2 * a), im: 0 },
             { re: (-b - Math.sqrt(disc)) / (2 * a), im: 0 }
           ];
         } else if (disc === 0) {
+          discBadge = `<span class="text-amber-400 font-bold">Δ = 0 (One Repeated Real Root)</span>`;
           roots = [
             { re: -b / (2 * a), im: 0 },
             { re: -b / (2 * a), im: 0 }
           ];
         } else {
+          discBadge = `<span class="text-brand-orange font-bold">Δ < 0 (Complex Conjugate Pair)</span>`;
           const re = -b / (2 * a);
           const im = Math.sqrt(-disc) / (2 * a);
           roots = [
@@ -573,12 +1212,23 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           ];
         }
 
-        equationDisplay.innerHTML = `<span class="text-brand-blue-neon font-bold">${a}</span>x² ${b >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${b}</span>x ${c >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${c}</span> = 0`;
+        renderKaTeX(`${a}x^2 ${b >= 0 ? '+' : ''}${b}x ${c >= 0 ? '+' : ''}${c} = 0`, equationDisplay, false);
+
+        discriminantStep.innerHTML = `
+          <div class="flex items-center justify-between border-b border-brand-border/20 pb-1">
+            <span class="text-brand-text-dim text-[10px] font-mono">DISCRIMINANT (Δ = b² - 4ac):</span>
+            <span class="font-mono font-bold text-brand-text">${cleanResult(disc)}</span>
+          </div>
+          <div class="text-[10px] font-mono pt-0.5 flex items-center justify-between">
+            <span class="text-brand-text-dim">Root Nature:</span>
+            ${discBadge}
+          </div>
+        `;
 
         rootsOutput.innerHTML = roots.map((r, idx) => `
           <div class="flex items-center justify-between py-1 border-b border-brand-border/20 last:border-b-0">
-            <span class="text-brand-text-dim">Root x${idx + 1}</span>
-            <span class="font-bold text-emerald-400 text-sm">${formatComplex(r)}</span>
+            <span class="text-brand-text-dim text-[11px]">Root x${idx + 1}</span>
+            <span class="font-bold text-brand-orange text-sm font-mono">${formatComplex(r)}</span>
           </div>
         `).join('');
 
@@ -632,28 +1282,81 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           ];
         }
 
-        equationDisplay.innerHTML = `<span class="text-brand-blue-neon font-bold">${a}</span>x³ ${b >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${b}</span>x² ${c >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${c}</span>x ${d >= 0 ? '+' : ''}<span class="text-brand-blue-neon font-bold">${d}</span> = 0`;
+        renderKaTeX(`${a}x^3 ${b >= 0 ? '+' : ''}${b}x^2 ${c >= 0 ? '+' : ''}${c}x ${d >= 0 ? '+' : ''}${d} = 0`, equationDisplay, false);
+
+        discriminantStep.innerHTML = `
+          <div class="flex items-center justify-between border-b border-brand-border/20 pb-1">
+            <span class="text-brand-text-dim text-[10px] font-mono">CARDANO DISCRIMINANT:</span>
+            <span class="font-mono font-bold text-brand-text">${cleanResult(discriminant)}</span>
+          </div>
+          <div class="text-[10px] font-mono pt-0.5 flex items-center justify-between">
+            <span class="text-brand-text-dim">Tschirnhaus Shift:</span>
+            <span class="text-brand-blue-neon font-mono">${cleanResult(shift)}</span>
+          </div>
+        `;
 
         rootsOutput.innerHTML = roots.map((r, idx) => `
           <div class="flex items-center justify-between py-1 border-b border-brand-border/20 last:border-b-0">
-            <span class="text-brand-text-dim">Root x${idx + 1}</span>
-            <span class="font-bold text-emerald-400 text-sm">${formatComplex(r)}</span>
+            <span class="text-brand-text-dim text-[11px]">Root x${idx + 1}</span>
+            <span class="font-bold text-brand-orange text-sm font-mono">${formatComplex(r)}</span>
           </div>
         `).join('');
       }
     }
 
     // Event Listeners initialization
-    document.getElementById('btn-integrate-definite')!.addEventListener('click', integrateDefinite);
-    document.getElementById('btn-integrate-indefinite')!.addEventListener('click', integrateIndefinite);
-    document.getElementById('btn-solve-roots')!.addEventListener('click', solveRoots);
+    document.getElementById('btn-differentiate')?.addEventListener('click', differentiateFunction);
+    document.getElementById('btn-integrate-indefinite')?.addEventListener('click', integrateIndefinite);
+    document.getElementById('btn-integrate-definite')?.addEventListener('click', integrateDefinite);
+    document.getElementById('btn-solve-roots')?.addEventListener('click', solveRoots);
+
+    btnDerivOrder1?.addEventListener('click', () => {
+      activeDerivOrder = 1;
+      btnDerivOrder1.className = "px-2.5 py-1 bg-brand-orange text-brand-black font-bold cursor-pointer transition-colors";
+      btnDerivOrder2.className = "px-2.5 py-1 bg-brand-gray-light text-brand-text-muted hover:text-white cursor-pointer border-l border-brand-border/60 transition-colors";
+      differentiateFunction();
+    });
+
+    btnDerivOrder2?.addEventListener('click', () => {
+      activeDerivOrder = 2;
+      btnDerivOrder2.className = "px-2.5 py-1 bg-brand-orange text-brand-black font-bold cursor-pointer transition-colors";
+      btnDerivOrder1.className = "px-2.5 py-1 bg-brand-gray-light text-brand-text-muted hover:text-white cursor-pointer border-r border-brand-border/60 transition-colors";
+      differentiateFunction();
+    });
+
+    document.querySelectorAll('.preset-diff-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        diffExprInput.value = btn.getAttribute('data-expr') || '';
+        differentiateFunction();
+      });
+    });
+
+    document.querySelectorAll('.preset-integ-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        (document.getElementById('indef-expr') as HTMLInputElement).value = btn.getAttribute('data-expr') || '';
+        integrateIndefinite();
+      });
+    });
 
     btnDeg2.addEventListener('click', () => setupSolverUI(2));
     btnDeg3.addEventListener('click', () => setupSolverUI(3));
 
+    // Handle incoming history item triggers
+    window.addEventListener('load-expression', (e: any) => {
+      if (e.detail.mode === 'calculus' && e.detail.expression) {
+        if (diffExprInput) {
+          diffExprInput.value = e.detail.expression;
+          differentiateFunction();
+          diffExprInput.focus();
+        }
+      }
+    });
+
     // Initial setups
     setupSolverUI(2);
-    integrateDefinite();
+    differentiateFunction();
     integrateIndefinite();
+    integrateDefinite();
+    solveRoots();
   </script>
 </Layout>

@@ -1,24 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @custom-variant light (.light &);
 @variant dark (&:where(.dark, .dark *));
 
-
 @theme {
-  --color-brand-black: #000000;
-  --color-brand-gray-dark: #0a0a0a;
-  --color-brand-gray-light: #121212;
-  --color-brand-gray-hover: #1f1f1f;
-  --color-brand-border: #1e1e1e;
-  --color-brand-border-hover: #2e2e2e;
-  --color-brand-border-strong: #3e3e3e;
-  --color-brand-blue: #0070f3;
-  --color-brand-blue-hover: #0051b3;
-  --color-brand-blue-neon: #00a2ff;
-  --color-brand-text: #ffffff;
-  --color-brand-text-muted: #888888;
-  --color-brand-text-dim: #666666;
+  --color-brand-black: #07080a;
+  --color-brand-gray-dark: #0d0e12;
+  --color-brand-gray-light: #13161c;
+  --color-brand-gray-hover: #1a1e27;
+  --color-brand-border: #1e222a;
+  --color-brand-border-hover: #2d3340;
+  --color-brand-border-strong: #3e4658;
+  
+  /* TradingView Precision Action Blue */
+  --color-brand-blue: #5b9cf6;
+  --color-brand-blue-hover: #3d88f4;
+  --color-brand-blue-neon: #60a5fa;
+
+  /* Wolfram Computational Orange & Teal */
+  --color-brand-orange: #ff6c00;
+  --color-brand-orange-hover: #ff851a;
+  --color-brand-teal: #2a7eb9;
+  --color-brand-teal-hover: #3593d6;
+
+  /* Raycast / TradingView Semantic Signals */
+  --color-brand-red: #f23645;
+  --color-brand-red-hover: #d82b39;
+  --color-brand-green: #59d499;
+  --color-brand-green-hover: #4ac087;
+
+  /* Wolfram Atmospheric Depth */
+  --color-brand-surface-math: #0e1424;
+  --color-brand-surface-math-border: #1e2b48;
+  --color-brand-formula: #b0ccec;
+
+  /* Text & Ink Tokens (High-Contrast Clear Hierarchy) */
+  --color-brand-text: #f8fafc;
+  --color-brand-text-muted: #cbd5e1;
+  --color-brand-text-dim: #94a3b8;
 
   --font-sans: "Inter", "Geist", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Geist Mono", ui-monospace, monospace;
@@ -30,14 +50,14 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #07080a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e1e1e;
+  background: #1e222a;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2e2e2e;
+  background: #2d3340;
 }
 
 /* Hide scrollbar utility */
@@ -51,19 +71,28 @@
 
 /* Light Mode overrides */
 html.light {
-  --color-brand-black: #fafafa;
-  --color-brand-gray-dark: #ffffff;
-  --color-brand-gray-light: #eaeaea;
-  --color-brand-gray-hover: #e1e1e1;
-  --color-brand-border: #d5d5d5;
-  --color-brand-border-hover: #b5b5b5;
-  --color-brand-border-strong: #888888;
-  --color-brand-blue: #0070f3;
-  --color-brand-blue-hover: #0051b3;
-  --color-brand-blue-neon: #0070f3;
-  --color-brand-text: #171717;
-  --color-brand-text-muted: #4d4d4d;
-  --color-brand-text-dim: #888888;
+  --color-brand-black: #ffffff;
+  --color-brand-gray-dark: #f8f9fa;
+  --color-brand-gray-light: #f1f3f5;
+  --color-brand-gray-hover: #e9ecef;
+  --color-brand-border: #dee2e6;
+  --color-brand-border-hover: #ced4da;
+  --color-brand-border-strong: #adb5bd;
+  --color-brand-blue: #1a73e8;
+  --color-brand-blue-hover: #1557b0;
+  --color-brand-blue-neon: #1a73e8;
+  --color-brand-orange: #e65100;
+  --color-brand-orange-hover: #bf4300;
+  --color-brand-teal: #2a7eb9;
+  --color-brand-teal-hover: #1557b0;
+  --color-brand-red: #d32f2f;
+  --color-brand-green: #2e7d32;
+  --color-brand-surface-math: #f0f4f8;
+  --color-brand-surface-math-border: #d0dbe5;
+  --color-brand-formula: #004085;
+  --color-brand-text: #0f141c;
+  --color-brand-text-muted: #495057;
+  --color-brand-text-dim: #6c757d;
 }
 
 html.light .text-white {
@@ -75,13 +104,13 @@ html.light .hover\:text-white:hover {
 }
 
 html.light ::-webkit-scrollbar-track {
-  background: #fafafa;
+  background: #f8f9fa;
 }
 html.light ::-webkit-scrollbar-thumb {
-  background: #d5d5d5;
+  background: #dee2e6;
 }
 html.light ::-webkit-scrollbar-thumb:hover {
-  background: #b5b5b5;
+  background: #ced4da;
 }
 
 /* Global Reset overrides */
@@ -91,64 +120,110 @@ body {
   padding: 0;
   background-color: var(--color-brand-black);
   color: var(--color-brand-text);
-  font-family: "Inter", "Geist", system-ui, -apple-system, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Theme-adaptable Token Matching Styles */
+/* Raycast Tactile Keycap Utility Classes */
+.keycap-tactile {
+  background: linear-gradient(180deg, #171920 0%, #0f1116 100%);
+  border: 1px solid #1e222a;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+  transition: all 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+.keycap-tactile:hover {
+  background: linear-gradient(180deg, #20242e 0%, #15181f 100%);
+  border-color: #2d3340;
+}
+.keycap-tactile:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.65);
+}
+
+html.light .keycap-tactile {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+  border: 1px solid #dee2e6;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+html.light .keycap-tactile:hover {
+  background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+  border-color: #ced4da;
+}
+html.light .keycap-tactile:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* Raycast / Command Palette <kbd> Token */
+.kbd-shortcut {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.1rem 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--color-brand-text-muted);
+  background-color: #12141a;
+  border: 1px solid #242934;
+  border-radius: 4px;
+  box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.4);
+}
+html.light .kbd-shortcut {
+  background-color: #e9ecef;
+  border-color: #ced4da;
+  color: #495057;
+  box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Theme-adaptable Token Matching Styles (Clean & High-Contrast) */
 .token-number {
-  color: var(--color-brand-text);
+  color: #ffffff;
+  font-weight: 500;
 }
 .token-constant {
-  color: #10b981;
+  color: #60a5fa;
+  font-weight: 500;
 }
 html.light .token-constant {
-  color: #059669;
+  color: #0284c7;
 }
 .token-function {
-  color: #c084fc;
+  color: #93c5fd;
+  font-weight: 500;
 }
 html.light .token-function {
-  color: #7e22ce;
+  color: #0369a1;
 }
 .token-operator {
-  color: var(--color-brand-blue-neon);
+  color: #ff851a;
+  font-weight: 600;
+}
+html.light .token-operator {
+  color: #ea580c;
 }
 .token-paren-match {
-  color: #10b981;
+  color: #cbd5e1;
 }
 html.light .token-paren-match {
-  color: #059669;
+  color: #334155;
 }
 .token-paren-error {
-  color: #ef4444;
+  color: #f87171;
   font-weight: 700;
 }
 
-/* Custom micro-animations */
-@keyframes pulse-blue {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(0, 112, 243, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(0, 162, 255, 0.4);
-  }
-}
-
-.focus-neon-blue:focus-within {
-  border-color: #0070f3;
-  box-shadow: 0 0 10px rgba(0, 112, 243, 0.25);
+.focus-compute-orange:focus-within {
+  border-color: #ff6c00;
+  box-shadow: 0 0 10px rgba(255, 108, 0, 0.25);
   transition: all 0.2s ease-in-out;
 }
 
 .hover-glow:hover {
-  border-color: #2e2e2e;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.03);
-}
-
-.active-glow {
-  animation: pulse-blue 2s infinite ease-in-out;
+  border-color: #2d3340;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.04);
 }

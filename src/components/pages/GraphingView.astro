@@ -73,8 +73,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <div class="space-y-3 font-mono text-xs">
           <div class="flex flex-col gap-1.5">
             <div class="flex items-center justify-between">
-              <label for="func-f" class="text-brand-text-dim uppercase text-[9px]">f(x) (Blue)</label>
-              <span class="w-2.5 h-2.5 rounded-full bg-brand-blue"></span>
+              <label for="func-f" class="text-brand-text-dim uppercase text-[9px] tracking-wider">f(x) (Precision Blue)</label>
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-blue shadow-[0_0_6px_rgba(91,156,246,0.5)]"></span>
             </div>
             <input 
               type="text" 
@@ -87,21 +87,21 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
           <div class="flex flex-col gap-1.5">
             <div class="flex items-center justify-between">
-              <label for="func-g" class="text-brand-text-dim uppercase text-[9px]">g(x) (Green)</label>
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <label for="func-g" class="text-brand-text-dim uppercase text-[9px] tracking-wider">g(x) (Computational Orange)</label>
+              <span class="w-2.5 h-2.5 rounded-full bg-brand-orange shadow-[0_0_6px_rgba(255,108,0,0.5)]"></span>
             </div>
             <input 
               type="text" 
               id="func-g" 
               placeholder="e.g. sin(x)" 
-              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-blue"
+              class="w-full bg-brand-black border border-brand-border rounded px-3 py-2 text-brand-text placeholder-brand-text-dim focus:outline-none focus:border-brand-orange"
               value="2*sin(x)"
             />
           </div>
 
           <button 
             id="btn-plot"
-            class="w-full h-10 rounded-md bg-brand-blue border border-brand-blue-hover text-white font-medium hover:bg-brand-blue-hover hover:shadow-[0_0_10px_rgba(0,112,243,0.3)] active:bg-brand-blue/80 transition-all cursor-pointer flex items-center justify-center text-sm"
+            class="w-full h-10 rounded-lg bg-brand-orange text-brand-black font-bold hover:bg-brand-orange-hover hover:shadow-[0_0_12px_rgba(255,108,0,0.35)] active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center text-sm"
           >
             Plot Functions
           </button>
@@ -122,7 +122,67 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <!-- Right Graph Area & Canvas -->
       <div class="lg:col-span-3 space-y-4">
         <!-- Interactive Graph Pane -->
-        <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-6 shadow-xl backdrop-blur-sm relative flex flex-col gap-4">
+        <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-4 sm:p-6 shadow-xl backdrop-blur-sm relative flex flex-col gap-3">
+          
+          <!-- Precision HUD Toolbar -->
+          <div class="flex flex-wrap items-center justify-between gap-2 p-2 bg-brand-black/60 border border-brand-border/60 rounded-lg text-xs font-mono">
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <span class="text-brand-text-dim text-[10px] hidden sm:inline uppercase tracking-wider">NAV:</span>
+              <button 
+                id="btn-zoom-in" 
+                type="button" 
+                aria-label="Zoom in" 
+                title="Zoom In (or scroll wheel)"
+                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text hover:text-white hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px] font-bold"
+              >
+                <span>+</span><span class="hidden md:inline">Zoom</span>
+              </button>
+              <button 
+                id="btn-zoom-out" 
+                type="button" 
+                aria-label="Zoom out" 
+                title="Zoom Out (or scroll wheel)"
+                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text hover:text-white hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px] font-bold"
+              >
+                <span>−</span><span class="hidden md:inline">Zoom</span>
+              </button>
+              <button 
+                id="btn-reset-view" 
+                type="button" 
+                aria-label="Reset view bounds" 
+                title="Reset view to default [-10, 10]"
+                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text-muted hover:text-white hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px]"
+              >
+                <span>⟲</span><span>Reset</span>
+              </button>
+              <button 
+                id="btn-toggle-tangent" 
+                type="button" 
+                aria-label="Toggle live tangent tracer" 
+                title="Toggle instantaneous derivative tangent tracer"
+                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text-muted hover:text-white hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1.5 text-[11px]"
+              >
+                <span class="w-1.5 h-1.5 rounded-full bg-neutral-600 transition-colors" id="tangent-indicator-dot"></span>
+                <span>dy/dx Tangent</span>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+              <span id="bounds-readout" class="text-[10px] text-brand-text-dim hidden md:inline font-mono tracking-tight">
+                X: [-10.0, 10.0]  Y: [-6.0, 6.0]
+              </span>
+              <button 
+                id="btn-export-png" 
+                type="button" 
+                aria-label="Export graph as high-resolution PNG" 
+                title="Export high-resolution PNG snapshot"
+                class="h-7 px-3 rounded bg-brand-orange/15 border border-brand-orange/40 text-brand-orange hover:bg-brand-orange hover:text-brand-black active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1.5 text-[11px] font-bold shadow-sm"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span id="export-btn-label">Export PNG</span>
+              </button>
+            </div>
+          </div>
           
           <div class="relative">
             <!-- Canvas Plotter -->
@@ -130,7 +190,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
               id="graph-canvas" 
               width="1000" 
               height="600" 
-              class="w-full h-[450px] sm:h-[500px] bg-brand-black border border-neutral-800 rounded-lg cursor-crosshair"
+              class="w-full h-[450px] sm:h-[500px] bg-brand-black border border-neutral-800 rounded-lg cursor-crosshair select-none touch-none"
             ></canvas>
 
             <!-- Floating Mouse Coordinate / Math Readout overlay -->
@@ -156,18 +216,18 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
               </div>
               <div class="grid grid-cols-3 gap-2">
                 <span class="text-brand-text-dim text-[10px]">X-INTERCEPTS:</span>
-                <span id="f-x-intercepts" class="col-span-2 text-emerald-400 font-bold text-right">-2.0, 2.0</span>
+                <span id="f-x-intercepts" class="col-span-2 text-brand-blue-neon font-bold text-right">-2.0, 2.0</span>
               </div>
               <div class="grid grid-cols-3 gap-2">
                 <span class="text-brand-text-dim text-[10px]">EXTREMA:</span>
-                <span id="f-extrema" class="col-span-2 text-brand-blue-neon font-bold text-right">(0.0, -4.0) Min</span>
+                <span id="f-extrema" class="col-span-2 text-brand-blue font-bold text-right">(0.0, -4.0) Min</span>
               </div>
             </div>
 
             <!-- g(x) Analytics -->
             <div class="space-y-1.5">
-              <div class="flex items-center gap-1.5 text-emerald-400 font-bold border-b border-brand-border/20 pb-1 uppercase tracking-wider">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <div class="flex items-center gap-1.5 text-brand-orange font-bold border-b border-brand-border/20 pb-1 uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-orange"></span>
                 g(x) Function Analytics
               </div>
               <div class="grid grid-cols-3 gap-2">
@@ -176,11 +236,11 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
               </div>
               <div class="grid grid-cols-3 gap-2">
                 <span class="text-brand-text-dim text-[10px]">X-INTERCEPTS:</span>
-                <span id="g-x-intercepts" class="col-span-2 text-emerald-400 font-bold text-right">-3.14, 0.0, 3.14</span>
+                <span id="g-x-intercepts" class="col-span-2 text-brand-orange font-bold text-right">-3.14, 0.0, 3.14</span>
               </div>
               <div class="grid grid-cols-3 gap-2">
                 <span class="text-brand-text-dim text-[10px]">EXTREMA:</span>
-                <span id="g-extrema" class="col-span-2 text-brand-blue-neon font-bold text-right">(-1.57, -2.0) Min, (1.57, 2.0) Max</span>
+                <span id="g-extrema" class="col-span-2 text-brand-orange font-bold text-right">(-1.57, -2.0) Min, (1.57, 2.0) Max</span>
               </div>
             </div>
           </div>
@@ -342,12 +402,26 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     const inputG = document.getElementById('func-g') as HTMLInputElement;
     const btnPlot = document.getElementById('btn-plot')!;
 
-    // Math boundaries
-    const xMin = -10, xMax = 10;
-    const yMin = -6, yMax = 6;
+    // Math boundaries (mutable for dynamic pan & zoom)
+    const DEFAULT_BOUNDS = { xMin: -10, xMax: 10, yMin: -6, yMax: 6 };
+    let xMin = DEFAULT_BOUNDS.xMin, xMax = DEFAULT_BOUNDS.xMax;
+    let yMin = DEFAULT_BOUNDS.yMin, yMax = DEFAULT_BOUNDS.yMax;
+    let tangentEnabled = false;
+
+    let isPanning = false;
+    let panStartX = 0;
+    let panStartY = 0;
+    let panInitialBounds = { xMin: DEFAULT_BOUNDS.xMin, xMax: DEFAULT_BOUNDS.xMax, yMin: DEFAULT_BOUNDS.yMin, yMax: DEFAULT_BOUNDS.yMax };
 
     let rpnF: any[] | null = null;
     let rpnG: any[] | null = null;
+
+    const boundsReadout = document.getElementById('bounds-readout');
+    function updateBoundsReadout() {
+      if (boundsReadout) {
+        boundsReadout.textContent = `X: [${xMin.toFixed(1)}, ${xMax.toFixed(1)}]  Y: [${yMin.toFixed(1)}, ${yMax.toFixed(1)}]`;
+      }
+    }
 
     function toPixelX(x: number) {
       return ((x - xMin) / (xMax - xMin)) * canvas.width;
@@ -365,86 +439,97 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       return yMax - (py / canvas.height) * (yMax - yMin);
     }
 
-    // Parse and plot formula values
-    function compileFunctions() {
-      rpnF = null;
-      rpnG = null;
-      
-      try {
-        if (inputF.value.trim()) rpnF = parse(tokenize(inputF.value));
-      } catch (err) {}
-
-      try {
-        if (inputG.value.trim()) rpnG = parse(tokenize(inputG.value));
-      } catch (err) {}
-
-      drawGrid();
-      if (rpnF) plotCurve(rpnF, '#0070f3'); // Neon Blue
-      if (rpnG) plotCurve(rpnG, '#10b981'); // Neon Green
-      
-      calculateAnalytics();
+    // Dynamic step sizing (TradingView coordinate precision)
+    function getNiceStep(range: number, targetTicks = 10) {
+      const rawStep = Math.max(range / targetTicks, 1e-6);
+      const mag = Math.pow(10, Math.floor(Math.log10(rawStep)));
+      const norm = rawStep / mag;
+      let step = mag;
+      if (norm > 5) step = 10 * mag;
+      else if (norm > 2) step = 5 * mag;
+      else if (norm > 1) step = 2 * mag;
+      return step;
     }
 
     function drawGrid() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Light/Dark Theme colors check
+      // Light/Dark Theme colors check (TradingView coordinate precision)
       const isLight = document.documentElement.classList.contains('light');
-      const gridColor = isLight ? '#eaeaea' : '#171717';
-      const axisColor = isLight ? '#888888' : '#3e3e3e';
-      const textColor = isLight ? '#171717' : '#888888';
+      const gridColor = isLight ? '#dee2e6' : '#141720';
+      const axisColor = isLight ? '#adb5bd' : '#242938';
+      const textColor = isLight ? '#495057' : '#8890a0';
 
-      // Draw horizontal & vertical grid lines
       ctx.lineWidth = 1;
       ctx.strokeStyle = gridColor;
       ctx.fillStyle = textColor;
       ctx.font = '10px monospace';
 
-      // Vertical lines
-      for (let x = Math.ceil(xMin); x <= Math.floor(xMax); x++) {
-        const px = toPixelX(x);
+      // Dynamic vertical lines & x-axis ticks
+      const xRange = xMax - xMin;
+      const xStep = getNiceStep(xRange, 10);
+      const startX = Math.ceil(xMin / xStep) * xStep;
+
+      for (let x = startX; x <= xMax + 1e-9; x += xStep) {
+        const roundedX = Number(x.toFixed(6));
+        const px = toPixelX(roundedX);
         ctx.beginPath();
         ctx.moveTo(px, 0);
         ctx.lineTo(px, canvas.height);
         ctx.stroke();
 
-        // tick labels on x-axis
-        if (x !== 0) {
-          const py = toPixelY(0);
-          ctx.fillText(String(x), px - 4, py + 12);
+        if (Math.abs(roundedX) > 1e-6) {
+          const py = Math.min(Math.max(toPixelY(0), 16), canvas.height - 8);
+          const label = Math.abs(roundedX) >= 1000 || (Math.abs(roundedX) < 0.01 && Math.abs(roundedX) > 0)
+            ? roundedX.toExponential(1)
+            : String(Number(roundedX.toPrecision(4)));
+          ctx.fillText(label, px - 6, py + 12);
         }
       }
 
-      // Horizontal lines
-      for (let y = Math.ceil(yMin); y <= Math.floor(yMax); y++) {
-        const py = toPixelY(y);
+      // Dynamic horizontal lines & y-axis ticks
+      const yRange = yMax - yMin;
+      const yStep = getNiceStep(yRange, 8);
+      const startY = Math.ceil(yMin / yStep) * yStep;
+
+      for (let y = startY; y <= yMax + 1e-9; y += yStep) {
+        const roundedY = Number(y.toFixed(6));
+        const py = toPixelY(roundedY);
         ctx.beginPath();
         ctx.moveTo(0, py);
         ctx.lineTo(canvas.width, py);
         ctx.stroke();
 
-        // tick labels on y-axis
-        if (y !== 0) {
-          const px = toPixelX(0);
-          ctx.fillText(String(y), px + 6, py + 3);
+        if (Math.abs(roundedY) > 1e-6) {
+          const px = Math.min(Math.max(toPixelX(0), 6), canvas.width - 44);
+          const label = Math.abs(roundedY) >= 1000 || (Math.abs(roundedY) < 0.01 && Math.abs(roundedY) > 0)
+            ? roundedY.toExponential(1)
+            : String(Number(roundedY.toPrecision(4)));
+          ctx.fillText(label, px + 6, py + 3);
         }
       }
 
-      // Main Central axes lines
+      // Central axes lines
       ctx.lineWidth = 1.5;
       ctx.strokeStyle = axisColor;
 
       // X-Axis
-      ctx.beginPath();
-      ctx.moveTo(0, toPixelY(0));
-      ctx.lineTo(canvas.width, toPixelY(0));
-      ctx.stroke();
+      if (yMin <= 0 && yMax >= 0) {
+        const py0 = toPixelY(0);
+        ctx.beginPath();
+        ctx.moveTo(0, py0);
+        ctx.lineTo(canvas.width, py0);
+        ctx.stroke();
+      }
 
       // Y-Axis
-      ctx.beginPath();
-      ctx.moveTo(toPixelX(0), 0);
-      ctx.lineTo(toPixelX(0), canvas.height);
-      ctx.stroke();
+      if (xMin <= 0 && xMax >= 0) {
+        const px0 = toPixelX(0);
+        ctx.beginPath();
+        ctx.moveTo(px0, 0);
+        ctx.lineTo(px0, canvas.height);
+        ctx.stroke();
+      }
     }
 
     function plotCurve(rpn: any[], color: string) {
@@ -478,6 +563,29 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       ctx.stroke();
     }
 
+    function renderScene() {
+      drawGrid();
+      if (rpnF) plotCurve(rpnF, '#5B9CF6'); // TradingView Precision Blue
+      if (rpnG) plotCurve(rpnG, '#FF6C00'); // Wolfram Computational Orange
+    }
+
+    // Parse and plot formula values
+    function compileFunctions() {
+      rpnF = null;
+      rpnG = null;
+      
+      try {
+        if (inputF.value.trim()) rpnF = parse(tokenize(inputF.value));
+      } catch (err) {}
+
+      try {
+        if (inputG.value.trim()) rpnG = parse(tokenize(inputG.value));
+      } catch (err) {}
+
+      renderScene();
+      calculateAnalytics();
+    }
+
     // Sweeping algorithms to calculate mathematical readouts
     function calculateAnalytics() {
       // f(x)
@@ -505,7 +613,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
         // X-intercepts (Sweep + Bisection)
         const roots: number[] = [];
-        const sweepStep = 0.05;
+        const xSpan = Math.abs(xMax - xMin);
+        const sweepStep = Math.max(xSpan / 400, 0.01);
         let prevVal = evaluateRPN(rpn, xMin);
         
         for (let x = xMin + sweepStep; x <= xMax; x += sweepStep) {
@@ -520,7 +629,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
             let left = x - sweepStep;
             let right = x;
             let mid = left;
-            for (let iter = 0; iter < 8; iter++) {
+            for (let iter = 0; iter < 10; iter++) {
               mid = (left + right) / 2;
               const midVal = evaluateRPN(rpn, mid);
               if (Math.abs(midVal) < 1.e-6) break;
@@ -539,19 +648,17 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         xInterceptsEl.textContent = uniqueRoots.length > 0 ? uniqueRoots.join(', ') : 'None inside grid';
 
         // Extrema detection
-        // We evaluate derivatives at visible steps. Where slope changes sign:
-        // slope > 0 to slope < 0 -> Maxima
-        // slope < 0 to slope > 0 -> Minima
         const extrema: string[] = [];
-        const h = 0.01;
+        const h = Math.max(xSpan * 0.0005, 0.001);
         const getSlope = (coordX: number) => {
           const y1 = evaluateRPN(rpn, coordX + h);
           const y0 = evaluateRPN(rpn, coordX - h);
           return (y1 - y0) / (2 * h);
         };
 
-        let prevSlope = getSlope(xMin + 0.1);
-        for (let x = xMin + 0.2; x < xMax - 0.2; x += 0.05) {
+        const extremaStep = Math.max(xSpan / 300, 0.02);
+        let prevSlope = getSlope(xMin + extremaStep);
+        for (let x = xMin + 2 * extremaStep; x < xMax - extremaStep; x += extremaStep) {
           const slope = getSlope(x);
           if (isNaN(slope) || isNaN(prevSlope)) {
             prevSlope = slope;
@@ -579,8 +686,51 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
 
+    // Dynamic Tangent Line tracer helper
+    function drawTangent(rpn: any[], mathX: number, color: string) {
+      try {
+        const h = Math.max((xMax - xMin) * 0.0001, 0.0001);
+        const y0 = evaluateRPN(rpn, mathX);
+        const yPlus = evaluateRPN(rpn, mathX + h);
+        const yMinus = evaluateRPN(rpn, mathX - h);
+        if (isNaN(y0) || !isFinite(y0) || isNaN(yPlus) || isNaN(yMinus)) return null;
+
+        const slope = (yPlus - yMinus) / (2 * h);
+        if (isNaN(slope) || !isFinite(slope)) return null;
+
+        // Tangent line: y - y0 = slope * (x - mathX) => y = y0 + slope * (x - mathX)
+        const yStart = y0 + slope * (xMin - mathX);
+        const yEnd = y0 + slope * (xMax - mathX);
+
+        ctx.save();
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([6, 4]);
+
+        ctx.beginPath();
+        ctx.moveTo(toPixelX(xMin), toPixelY(yStart));
+        ctx.lineTo(toPixelX(xMax), toPixelY(yEnd));
+        ctx.stroke();
+
+        // Contact point marker
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(toPixelX(mathX), toPixelY(y0), 4.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+
+        const intercept = y0 - slope * mathX;
+        return { y0, slope, intercept };
+      } catch (err) {
+        return null;
+      }
+    }
+
     // Mouse interactive coordinates tracking
     canvas.addEventListener('mousemove', (e) => {
+      if (isPanning) return;
+
       const rect = canvas.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
@@ -596,51 +746,67 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       const mathY = toMathY(py);
 
       let overlayHtml = `<div class="font-bold text-brand-blue-neon uppercase text-[9px] border-b border-brand-border/30 pb-1 mb-1">Grid Cursor</div>`;
-      overlayHtml += `<div>X: ${mathX.toFixed(2)}</div>`;
-      overlayHtml += `<div>Y: ${mathY.toFixed(2)}</div>`;
+      overlayHtml += `<div>X: ${mathX.toFixed(3)}</div>`;
+      overlayHtml += `<div>Y: ${mathY.toFixed(3)}</div>`;
 
-      // Check if functions are active to calculate exact overlays
-      const h = 0.001;
-      
-      if (rpnF) {
-        try {
-          const yF = evaluateRPN(rpnF, mathX);
-          const yF_plus = evaluateRPN(rpnF, mathX + h);
-          const yF_minus = evaluateRPN(rpnF, mathX - h);
-          const slopeF = (yF_plus - yF_minus) / (2 * h);
-          
-          if (!isNaN(yF) && isFinite(yF)) {
-            overlayHtml += `<div class="mt-1.5 pt-1.5 border-t border-brand-border/20 text-brand-blue font-bold">f(x): ${yF.toFixed(3)}</div>`;
-            overlayHtml += `<div class="text-[9px] text-brand-text-dim">Slope: ${slopeF.toFixed(3)}</div>`;
+      // Re-draw base scene
+      renderScene();
+
+      // Tangent or instantaneous function readout
+      if (tangentEnabled) {
+        if (rpnF) {
+          const tInfoF = drawTangent(rpnF, mathX, '#A78BFA'); // Raycast Purple
+          if (tInfoF) {
+            overlayHtml += `<div class="mt-1.5 pt-1.5 border-t border-brand-border/20 text-[#A78BFA] font-bold text-[10px]">f'(x) = ${tInfoF.slope.toFixed(3)}</div>`;
+            overlayHtml += `<div class="text-[9px] text-[#A78BFA]/90">y = ${tInfoF.slope.toFixed(2)}x ${tInfoF.intercept >= 0 ? '+' : '-'} ${Math.abs(tInfoF.intercept).toFixed(2)}</div>`;
           }
-        } catch(err){}
-      }
-
-      if (rpnG) {
-        try {
-          const yG = evaluateRPN(rpnG, mathX);
-          const yG_plus = evaluateRPN(rpnG, mathX + h);
-          const yG_minus = evaluateRPN(rpnG, mathX - h);
-          const slopeG = (yG_plus - yG_minus) / (2 * h);
-
-          if (!isNaN(yG) && isFinite(yG)) {
-            overlayHtml += `<div class="mt-1 pt-1 border-t border-brand-border/20 text-emerald-400 font-bold">g(x): ${yG.toFixed(3)}</div>`;
-            overlayHtml += `<div class="text-[9px] text-brand-text-dim">Slope: ${slopeG.toFixed(3)}</div>`;
+        }
+        if (rpnG) {
+          const tInfoG = drawTangent(rpnG, mathX, '#FF9933'); // Warm Amber-Orange
+          if (tInfoG) {
+            overlayHtml += `<div class="mt-1 pt-1 border-t border-brand-border/20 text-brand-orange font-bold text-[10px]">g'(x) = ${tInfoG.slope.toFixed(3)}</div>`;
+            overlayHtml += `<div class="text-[9px] text-brand-orange/90">y = ${tInfoG.slope.toFixed(2)}x ${tInfoG.intercept >= 0 ? '+' : '-'} ${Math.abs(tInfoG.intercept).toFixed(2)}</div>`;
           }
-        } catch(err){}
+        }
+      } else {
+        const h = Math.max((xMax - xMin) * 0.0001, 0.001);
+        if (rpnF) {
+          try {
+            const yF = evaluateRPN(rpnF, mathX);
+            const yF_plus = evaluateRPN(rpnF, mathX + h);
+            const yF_minus = evaluateRPN(rpnF, mathX - h);
+            const slopeF = (yF_plus - yF_minus) / (2 * h);
+            
+            if (!isNaN(yF) && isFinite(yF)) {
+              overlayHtml += `<div class="mt-1.5 pt-1.5 border-t border-brand-border/20 text-brand-blue font-bold">f(x): ${yF.toFixed(3)}</div>`;
+              overlayHtml += `<div class="text-[9px] text-brand-text-dim">Slope: ${slopeF.toFixed(3)}</div>`;
+            }
+          } catch(err){}
+        }
+
+        if (rpnG) {
+          try {
+            const yG = evaluateRPN(rpnG, mathX);
+            const yG_plus = evaluateRPN(rpnG, mathX + h);
+            const yG_minus = evaluateRPN(rpnG, mathX - h);
+            const slopeG = (yG_plus - yG_minus) / (2 * h);
+
+            if (!isNaN(yG) && isFinite(yG)) {
+              overlayHtml += `<div class="mt-1 pt-1 border-t border-brand-border/20 text-brand-orange font-bold">g(x): ${yG.toFixed(3)}</div>`;
+              overlayHtml += `<div class="text-[9px] text-brand-text-dim">Slope: ${slopeG.toFixed(3)}</div>`;
+            }
+          } catch(err){}
+        }
       }
 
       coordOverlay.innerHTML = overlayHtml;
       
-      // Position floating overlay near mouse
-      coordOverlay.style.left = `${mouseX + 15}px`;
+      // Position floating overlay near mouse, keep inside canvas bounds
+      const overlayWidth = 160;
+      const overlayLeft = (mouseX + 15 + overlayWidth > rect.width) ? (mouseX - overlayWidth - 10) : (mouseX + 15);
+      coordOverlay.style.left = `${Math.max(overlayLeft, 10)}px`;
       coordOverlay.style.top = `${mouseY + 15}px`;
       coordOverlay.classList.remove('hidden');
-
-      // Re-draw guide crosshair
-      drawGrid();
-      if (rpnF) plotCurve(rpnF, '#0070f3');
-      if (rpnG) plotCurve(rpnG, '#10b981');
 
       // Guide lines
       ctx.lineWidth = 1;
@@ -664,9 +830,190 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
     canvas.addEventListener('mouseleave', () => {
       coordOverlay.classList.add('hidden');
-      drawGrid();
-      if (rpnF) plotCurve(rpnF, '#0070f3');
-      if (rpnG) plotCurve(rpnG, '#10b981');
+      renderScene();
+    });
+
+    // Zoom logic
+    function zoom(factor: number, centerX?: number, centerY?: number) {
+      const cx = centerX !== undefined ? centerX : (xMin + xMax) / 2;
+      const cy = centerY !== undefined ? centerY : (yMin + yMax) / 2;
+
+      const newSpanX = (xMax - xMin) * factor;
+      const newSpanY = (yMax - yMin) * factor;
+
+      if (newSpanX < 1e-4 || newSpanX > 1e6) return;
+
+      const ratioX = (cx - xMin) / (xMax - xMin);
+      const ratioY = (cy - yMin) / (yMax - yMin);
+
+      xMin = cx - ratioX * newSpanX;
+      xMax = xMin + newSpanX;
+      yMin = cy - ratioY * newSpanY;
+      yMax = yMin + newSpanY;
+
+      updateBoundsReadout();
+      renderScene();
+      calculateAnalytics();
+    }
+
+    // Scroll wheel zoom
+    canvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const mathX = toMathX(mouseX * scaleX);
+      const mathY = toMathY(mouseY * scaleY);
+
+      const factor = e.deltaY < 0 ? 0.88 : 1.14;
+      zoom(factor, mathX, mathY);
+    }, { passive: false });
+
+    // Drag-to-Pan (Mouse)
+    canvas.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      isPanning = true;
+      panStartX = e.clientX;
+      panStartY = e.clientY;
+      panInitialBounds = { xMin, xMax, yMin, yMax };
+      canvas.style.cursor = 'grabbing';
+      coordOverlay.classList.add('hidden');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isPanning) return;
+      const dx = e.clientX - panStartX;
+      const dy = e.clientY - panStartY;
+      const rect = canvas.getBoundingClientRect();
+
+      const spanX = panInitialBounds.xMax - panInitialBounds.xMin;
+      const spanY = panInitialBounds.yMax - panInitialBounds.yMin;
+
+      const mathDx = (dx / rect.width) * spanX;
+      const mathDy = (dy / rect.height) * spanY;
+
+      xMin = panInitialBounds.xMin - mathDx;
+      xMax = panInitialBounds.xMax - mathDx;
+      yMin = panInitialBounds.yMin + mathDy;
+      yMax = panInitialBounds.yMax + mathDy;
+
+      updateBoundsReadout();
+      renderScene();
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isPanning) {
+        isPanning = false;
+        canvas.style.cursor = 'crosshair';
+        calculateAnalytics();
+      }
+    });
+
+    // Touch pan (Mobile)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isTouching = false;
+
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isTouching = true;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        panInitialBounds = { xMin, xMax, yMin, yMax };
+      }
+    }, { passive: true });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (!isTouching || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      const rect = canvas.getBoundingClientRect();
+
+      const spanX = panInitialBounds.xMax - panInitialBounds.xMin;
+      const spanY = panInitialBounds.yMax - panInitialBounds.yMin;
+
+      xMin = panInitialBounds.xMin - (dx / rect.width) * spanX;
+      xMax = panInitialBounds.xMax - (dx / rect.width) * spanX;
+      yMin = panInitialBounds.yMin + (dy / rect.height) * spanY;
+      yMax = panInitialBounds.yMax + (dy / rect.height) * spanY;
+
+      updateBoundsReadout();
+      renderScene();
+    }, { passive: true });
+
+    canvas.addEventListener('touchend', () => {
+      if (isTouching) {
+        isTouching = false;
+        calculateAnalytics();
+      }
+    });
+
+    // Navigation & Toolbar Button Event Listeners
+    document.getElementById('btn-zoom-in')?.addEventListener('click', () => zoom(0.8));
+    document.getElementById('btn-zoom-out')?.addEventListener('click', () => zoom(1.25));
+    document.getElementById('btn-reset-view')?.addEventListener('click', () => {
+      xMin = DEFAULT_BOUNDS.xMin;
+      xMax = DEFAULT_BOUNDS.xMax;
+      yMin = DEFAULT_BOUNDS.yMin;
+      yMax = DEFAULT_BOUNDS.yMax;
+      updateBoundsReadout();
+      renderScene();
+      calculateAnalytics();
+    });
+
+    // Live Tangent Slope Tracer Toggle
+    const btnTangent = document.getElementById('btn-toggle-tangent');
+    const tangentIndicatorDot = document.getElementById('tangent-indicator-dot');
+    btnTangent?.addEventListener('click', () => {
+      tangentEnabled = !tangentEnabled;
+      if (tangentEnabled) {
+        btnTangent.classList.add('bg-brand-orange/20', 'text-brand-orange', 'border-brand-orange/50');
+        btnTangent.classList.remove('bg-brand-gray-light/60', 'text-brand-text-muted', 'border-brand-border');
+        tangentIndicatorDot?.classList.remove('bg-neutral-600');
+        tangentIndicatorDot?.classList.add('bg-brand-orange', 'shadow-[0_0_6px_rgba(255,108,0,0.8)]');
+      } else {
+        btnTangent.classList.remove('bg-brand-orange/20', 'text-brand-orange', 'border-brand-orange/50');
+        btnTangent.classList.add('bg-brand-gray-light/60', 'text-brand-text-muted', 'border-brand-border');
+        tangentIndicatorDot?.classList.remove('bg-brand-orange', 'shadow-[0_0_6px_rgba(255,108,0,0.8)]');
+        tangentIndicatorDot?.classList.add('bg-neutral-600');
+        renderScene();
+      }
+    });
+
+    // High-Resolution PNG Export
+    const btnExport = document.getElementById('btn-export-png');
+    const exportBtnLabel = document.getElementById('export-btn-label');
+    btnExport?.addEventListener('click', () => {
+      renderScene();
+
+      // Draw subtle watermark branding
+      ctx.save();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.font = '12px monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText('SciCalcX.com • Precision Graph Engine', canvas.width - 16, canvas.height - 16);
+      ctx.restore();
+
+      const dataUrl = canvas.toDataURL('image/png');
+
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = `scicalcx-graph-${Date.now()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      renderScene();
+
+      if (exportBtnLabel) {
+        const originalText = exportBtnLabel.textContent;
+        exportBtnLabel.textContent = '✓ Saved!';
+        setTimeout(() => {
+          if (exportBtnLabel) exportBtnLabel.textContent = originalText;
+        }, 1500);
+      }
     });
 
     btnPlot.addEventListener('click', compileFunctions);
