@@ -95,14 +95,6 @@ html.light {
   --color-brand-text-dim: #6c757d;
 }
 
-html.light .text-white {
-  color: var(--color-brand-text) !important;
-}
-
-html.light .hover\:text-white:hover {
-  color: var(--color-brand-text) !important;
-}
-
 html.light ::-webkit-scrollbar-track {
   background: #f8f9fa;
 }

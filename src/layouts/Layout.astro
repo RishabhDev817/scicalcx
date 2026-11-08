@@ -199,8 +199,8 @@ const siteSchema = {
             href={translatePath('/')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'scientific'
-                ? 'bg-brand-gray-light text-white border border-brand-border'
-                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+                ? 'bg-brand-gray-light text-brand-text border border-brand-border'
+                : 'text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50'
             }`}
           >
             {t('nav.scientific')}
@@ -209,8 +209,8 @@ const siteSchema = {
             href={translatePath('/matrix')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'matrix'
-                ? 'bg-brand-gray-light text-white border border-brand-border'
-                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+                ? 'bg-brand-gray-light text-brand-text border border-brand-border'
+                : 'text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50'
             }`}
           >
             {t('nav.matrix')}
@@ -219,8 +219,8 @@ const siteSchema = {
             href={translatePath('/calculus')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'calculus'
-                ? 'bg-brand-gray-light text-white border border-brand-border'
-                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+                ? 'bg-brand-gray-light text-brand-text border border-brand-border'
+                : 'text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50'
             }`}
           >
             {t('nav.calculus')}
@@ -229,8 +229,8 @@ const siteSchema = {
             href={translatePath('/graphing')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'graphing'
-                ? 'bg-brand-gray-light text-white border border-brand-border'
-                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+                ? 'bg-brand-gray-light text-brand-text border border-brand-border'
+                : 'text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50'
             }`}
           >
             {t('nav.graphing')}
@@ -239,8 +239,8 @@ const siteSchema = {
             href={translatePath('/programming')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'programming'
-                ? 'bg-brand-gray-light text-white border border-brand-border'
-                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+                ? 'bg-brand-gray-light text-brand-text border border-brand-border'
+                : 'text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50'
             }`}
           >
             {t('nav.programming')}
@@ -249,8 +249,8 @@ const siteSchema = {
             href={translatePath('/statistics')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'statistics'
-                ? 'bg-brand-gray-light text-white border border-brand-border'
-                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+                ? 'bg-brand-gray-light text-brand-text border border-brand-border'
+                : 'text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50'
             }`}
           >
             {t('nav.statistics')}
@@ -259,8 +259,8 @@ const siteSchema = {
             href={translatePath('/compiler')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'compiler'
-                ? 'bg-brand-gray-light text-white border border-brand-border'
-                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+                ? 'bg-brand-gray-light text-brand-text border border-brand-border'
+                : 'text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50'
             }`}
           >
             {t('nav.compiler')}
@@ -269,8 +269,8 @@ const siteSchema = {
             href={translatePath('/blog')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
               activeTab === 'blog'
-                ? 'bg-brand-gray-light text-white border border-brand-border'
-                : 'text-brand-text-muted hover:text-white hover:bg-brand-gray-hover/50'
+                ? 'bg-brand-gray-light text-brand-text border border-brand-border'
+                : 'text-brand-text-muted hover:text-brand-text hover:bg-brand-gray-hover/50'
             }`}
           >
             {t('nav.blog')}
@@ -299,7 +299,7 @@ const siteSchema = {
         <!-- Theme Toggle Button -->
         <button
           id="theme-toggle"
-          class="flex items-center justify-center p-1.5 rounded-md text-brand-text-muted hover:text-white border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover hover:border-brand-border-hover transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-blue"
+          class="flex items-center justify-center p-1.5 rounded-md text-brand-text-muted hover:text-brand-text border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover hover:border-brand-border-hover transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-blue"
           aria-label={t('header.theme')}
         >
           <!-- Sun Icon (Visible in dark mode) -->
@@ -315,7 +315,7 @@ const siteSchema = {
         <!-- History Sidebar Toggle -->
         <button
           id="history-toggle"
-          class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-text-muted hover:text-white transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-blue"
+          class="flex items-center space-x-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium border border-brand-border bg-brand-gray-light/60 hover:bg-brand-gray-hover hover:border-brand-border-hover text-brand-text-muted hover:text-brand-text transition-all cursor-pointer focus:outline-none focus:ring-1 focus:ring-brand-blue"
           aria-label="Toggle history sidebar"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -331,7 +331,7 @@ const siteSchema = {
       <a
         href={translatePath('/')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
-          activeTab === 'scientific' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+          activeTab === 'scientific' ? 'bg-brand-gray-light text-brand-text border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         {t('nav.scientific')}
@@ -339,7 +339,7 @@ const siteSchema = {
       <a
         href={translatePath('/matrix')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
-          activeTab === 'matrix' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+          activeTab === 'matrix' ? 'bg-brand-gray-light text-brand-text border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         {t('nav.matrix')}
@@ -347,7 +347,7 @@ const siteSchema = {
       <a
         href={translatePath('/calculus')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
-          activeTab === 'calculus' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+          activeTab === 'calculus' ? 'bg-brand-gray-light text-brand-text border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         {t('nav.calculus')}
@@ -355,7 +355,7 @@ const siteSchema = {
       <a
         href={translatePath('/graphing')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
-          activeTab === 'graphing' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+          activeTab === 'graphing' ? 'bg-brand-gray-light text-brand-text border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         {t('nav.graphing')}
@@ -363,7 +363,7 @@ const siteSchema = {
       <a
         href={translatePath('/programming')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
-          activeTab === 'programming' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+          activeTab === 'programming' ? 'bg-brand-gray-light text-brand-text border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         {t('nav.programming')}
@@ -371,7 +371,7 @@ const siteSchema = {
       <a
         href={translatePath('/statistics')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
-          activeTab === 'statistics' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+          activeTab === 'statistics' ? 'bg-brand-gray-light text-brand-text border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         {t('nav.statistics')}
@@ -379,7 +379,7 @@ const siteSchema = {
       <a
         href={translatePath('/compiler')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
-          activeTab === 'compiler' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+          activeTab === 'compiler' ? 'bg-brand-gray-light text-brand-text border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         {t('nav.compiler')}
@@ -387,7 +387,7 @@ const siteSchema = {
       <a
         href={translatePath('/blog')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
-          activeTab === 'blog' ? 'bg-brand-gray-light text-white border border-brand-border' : 'text-brand-text-muted'
+          activeTab === 'blog' ? 'bg-brand-gray-light text-brand-text border border-brand-border' : 'text-brand-text-muted'
         }`}
       >
         {t('nav.blog')}
@@ -482,7 +482,7 @@ const siteSchema = {
                 ${item.mode}
               </div>
               <div class="text-brand-text-muted group-hover:text-brand-blue-neon transition-colors break-words pr-8 mt-1 font-mono">${item.expr}</div>
-              <div class="text-white font-semibold text-right mt-1.5 border-t border-brand-border/30 pt-1 text-sm break-all font-mono">= ${item.result}</div>
+              <div class="text-brand-text font-semibold text-right mt-1.5 border-t border-brand-border/30 pt-1 text-sm break-all font-mono">= ${item.result}</div>
             </div>
           `
           )

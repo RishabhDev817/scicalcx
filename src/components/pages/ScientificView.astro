@@ -51,11 +51,12 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-brand-text">
           {t('scientific.heading')}<span class="text-brand-blue">.</span>
         </h1>
-        <div class="flex flex-wrap justify-center md:justify-end gap-2 text-[9px] sm:text-[10px] font-mono">
-          <a href={translatePath('/about')} class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">{t('footer.aboutUs')}</a>
-          <a href={translatePath('/contact')} class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">{t('footer.contactSupport')}</a>
-          <a href={translatePath('/terms')} class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">{t('footer.terms')}</a>
-          <a href={translatePath('/privacy')} class="px-2 py-0.5 border border-brand-border rounded hover:border-brand-border-hover hover:text-white transition-all bg-brand-gray-light/40">{t('footer.privacy')}</a>
+        <div class="hidden sm:flex items-center gap-2.5 text-[10px] font-mono text-brand-text-dim">
+          <a href={translatePath('/about')} class="hover:text-brand-text transition-colors">{t('footer.aboutUs')}</a>
+          <span>·</span>
+          <a href={translatePath('/contact')} class="hover:text-brand-text transition-colors">{t('footer.contactSupport')}</a>
+          <span>·</span>
+          <a href={translatePath('/privacy')} class="hover:text-brand-text transition-colors">{t('footer.privacy')}</a>
         </div>
       </div>
       <div class="text-xs sm:text-sm text-brand-text-muted leading-relaxed space-y-2 pt-2 border-t border-brand-border/30">
@@ -80,7 +81,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <div class="flex items-center gap-2 sm:gap-4">
         <span class="hidden sm:inline opacity-80">PRECISION: FLOAT64 (12-DEC)</span>
         <!-- Sleek DEG/RAD slider toggle capsule -->
-        <div class="relative flex items-center bg-brand-black border border-brand-border rounded-full p-0.5 select-none w-24 h-6">
+        <div class="relative flex items-center bg-brand-gray-light dark:bg-brand-black border border-brand-border rounded-full p-0.5 select-none w-24 h-6">
           <div 
             id="angle-slider" 
             class="absolute top-0.5 bottom-0.5 left-0.5 w-[44px] bg-brand-blue rounded-full transition-transform duration-200 ease-in-out shadow-sm"
@@ -96,7 +97,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           <button 
             id="toggle-rad" 
             type="button"
-            class="relative z-10 flex-1 text-center text-[9px] font-bold font-mono tracking-wider transition-colors duration-200 focus:outline-none cursor-pointer text-white"
+            class="relative z-10 flex-1 text-center text-[9px] font-bold font-mono tracking-wider transition-colors duration-200 focus:outline-none cursor-pointer text-white font-bold"
           >
             RAD
           </button>
@@ -123,20 +124,20 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <!-- Auto-Wrapping Multi-Line Viewport Display -->
       <div 
         id="display-container" 
-        class="w-full min-h-[104px] sm:min-h-[116px] bg-[#07080b] border border-brand-border rounded-xl p-3.5 sm:p-4 flex flex-col justify-between cursor-text hover:border-brand-border-hover transition-colors focus-within:border-brand-blue focus-within:ring-1 focus-within:ring-brand-blue"
+        class="w-full min-h-[110px] sm:min-h-[124px] bg-white dark:bg-[#07090e] border-2 border-slate-300 dark:border-brand-border rounded-xl p-3.5 sm:p-4 flex flex-col justify-between cursor-text hover:border-brand-blue/50 transition-colors focus-within:border-brand-blue focus-within:ring-1 focus-within:ring-brand-blue shadow-sm"
         tabindex="0"
       >
         <!-- Token Matcher Syntax Overlay -->
-        <div id="display-tokens" class="w-full text-base sm:text-lg font-mono break-all whitespace-pre-wrap text-brand-text min-h-[28px] leading-relaxed">
-          <span class="text-brand-text-dim">0</span>
+        <div id="display-tokens" class="w-full text-base sm:text-lg font-mono break-all whitespace-pre-wrap text-slate-800 dark:text-brand-text min-h-[30px] leading-relaxed">
+          <span class="text-slate-400 dark:text-brand-text-dim">0</span>
         </div>
 
         <!-- Result / Error Output Pane -->
-        <div class="flex items-end justify-between mt-2 pt-2 border-t border-brand-border/40">
-          <div id="bracket-validation" class="text-xs font-mono text-brand-text-dim">
+        <div class="flex items-end justify-between mt-2 pt-2 border-t border-slate-200 dark:border-brand-border/40">
+          <div id="bracket-validation" class="text-xs font-mono text-slate-500 dark:text-brand-text-dim">
             <!-- Bracket validation state -->
           </div>
-          <div id="display-result" class="text-3xl sm:text-4xl font-bold font-mono text-white tracking-tight break-all text-right ml-auto">
+          <div id="display-result" class="text-3xl sm:text-4xl font-bold font-mono text-slate-900 dark:text-white tracking-tight break-all text-right ml-auto">
             0
           </div>
         </div>
@@ -146,11 +147,11 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 sm:gap-2">
         <!-- Row 1 -->
         <button class="key-sci font-bold" data-key="shift" id="btn-shift">SHIFT</button>
-        <button class="key-sci font-serif text-sm" data-key="/">◼/◼</button>
-        <button class="key-sci text-xs" data-key="logBase">log_◼(◻)</button>
-        <button class="key-sci text-sm" data-key="sqrt">√◼</button>
-        <button class="key-sci text-sm" data-key="sqr">x²</button>
-        <button class="key-sci text-sm" data-key="^">x^◼</button>
+        <button class="key-sci text-sm font-semibold" data-key="/">a/b</button>
+        <button class="key-sci text-xs font-semibold" data-key="logBase">log_b</button>
+        <button class="key-sci text-sm font-semibold" data-key="sqrt">√x</button>
+        <button class="key-sci text-sm font-semibold" data-key="sqr">x²</button>
+        <button class="key-sci text-sm font-semibold" data-key="^">xʸ</button>
 
         <!-- Row 2 -->
         <button class="key-sci text-sm" data-key="log">log</button>
@@ -163,8 +164,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <!-- Row 3 -->
         <button class="key-sci text-sm" data-key="(">(</button>
         <button class="key-sci text-sm" data-key=")" id="btn-paren-close">)</button>
-        <button class="key-sci text-xs" data-key="DMS">° ' ''</button>
-        <button class="key-sci text-xs" data-key="SD">S⇔D</button>
+        <button class="key-sci text-xs font-semibold" data-key="DMS">DMS</button>
+        <button class="key-sci text-xs font-semibold" data-key="SD">S⇔D</button>
         <button class="key-sci" data-key="pi">π</button>
         <button class="key-sci" data-key="e">e</button>
       </div>
@@ -229,6 +230,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       min-height: 0 !important;
       border-radius: 9999px;
     }
+    #toggle-deg.text-white, #toggle-rad.text-white {
+      color: #ffffff !important;
+      font-weight: 700;
+    }
 
     button {
       font-family: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
@@ -256,10 +261,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     
     /* Numeric Keys (Crisp, High-Contrast Digits) */
     .key-num {
-      background: #151822;
-      border: 1px solid #283040;
+      background: #141824;
+      border: 1px solid #283348;
       color: #ffffff;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 600;
     }
     @media (min-width: 640px) {
@@ -268,8 +273,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .key-num:hover {
-      background: #1e2332;
-      border-color: #3e4860;
+      background: #1c2336;
+      border-color: #3d4f6e;
       color: #ffffff;
     }
     .key-num:active {
@@ -279,10 +284,11 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
     /* Scientific Modifiers & Functions */
     .key-sci {
-      background: #0f1218;
-      border: 1px solid #1e2432;
+      background: #0d1017;
+      border: 1px solid #1c2230;
       color: #cbd5e1;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 500;
     }
     @media (min-width: 640px) {
       .key-sci {
@@ -290,9 +296,9 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .key-sci:hover {
-      background: #171c26;
+      background: #151a26;
       color: #ffffff;
-      border-color: #2e384c;
+      border-color: #2b364c;
     }
     .key-sci:active {
       transform: translateY(1px);
@@ -301,10 +307,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
     /* Mathematical Operators */
     .key-op {
-      background: #141c2c;
-      border: 1px solid #253554;
+      background: #111a2e;
+      border: 1px solid #233760;
       color: #60a5fa;
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 600;
     }
     @media (min-width: 640px) {
@@ -313,7 +319,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .key-op:hover {
-      background: #1a253c;
+      background: #182542;
       border-color: #3b82f6;
       color: #ffffff;
     }
@@ -324,11 +330,11 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
     /* Clear & Delete */
     .key-cmd {
-      background: #201317;
-      border: 1px solid #421e25;
+      background: #221217;
+      border: 1px solid #4a1e27;
       color: #f87171;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
     @media (min-width: 640px) {
       .key-cmd {
@@ -348,8 +354,8 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     /* Evaluation / Equals (Wolfram Computational Warm Orange) */
     .key-action {
       background: #ff6c00;
-      border: 1px solid #ff7b1a;
-      color: #000000;
+      border: 1px solid #ff8533;
+      color: #ffffff !important;
       font-weight: 800;
       font-size: 1.35rem;
     }
@@ -369,40 +375,92 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
     /* Light Mode Overrides */
     html.light .key-num {
-      background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
-      border: 1px solid #dee2e6;
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-      color: var(--color-brand-text);
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+    @media (min-width: 640px) {
+      html.light .key-num {
+        font-size: 1.35rem;
+      }
     }
     html.light .key-num:hover {
-      background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-      border-color: #ced4da;
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #000000;
     }
     html.light .key-sci {
-      background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
-      border: 1px solid #dee2e6;
-      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
-      color: #495057;
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      color: #334155;
+      font-weight: 600;
+      font-size: 0.85rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+    @media (min-width: 640px) {
+      html.light .key-sci {
+        font-size: 0.9rem;
+      }
     }
     html.light .key-sci:hover {
-      background: linear-gradient(180deg, #ffffff 0%, #e9ecef 100%);
-      color: #0f141c;
-      border-color: #ced4da;
+      background: #e2e8f0;
+      border-color: #94a3b8;
+      color: #0f172a;
     }
     html.light .key-op {
-      background: linear-gradient(180deg, rgba(26, 115, 232, 0.1) 0%, rgba(26, 115, 232, 0.04) 100%);
-      border: 1px solid rgba(26, 115, 232, 0.3);
-      color: #1a73e8;
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      color: #1d4ed8;
+      font-weight: 700;
+      font-size: 1.25rem;
+      box-shadow: 0 1px 2px rgba(29, 78, 216, 0.06);
+    }
+    @media (min-width: 640px) {
+      html.light .key-op {
+        font-size: 1.35rem;
+      }
+    }
+    html.light .key-op:hover {
+      background: #dbeafe;
+      border-color: #60a5fa;
+      color: #1e40af;
     }
     html.light .key-cmd {
-      background: linear-gradient(180deg, rgba(211, 47, 47, 0.1) 0%, rgba(211, 47, 47, 0.04) 100%);
-      border: 1px solid rgba(211, 47, 47, 0.3);
-      color: #d32f2f;
+      background: #fef2f2;
+      border: 1.5px solid #fecaca;
+      color: #dc2626;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 1px 2px rgba(220, 38, 38, 0.06);
+    }
+    @media (min-width: 640px) {
+      html.light .key-cmd {
+        font-size: 0.95rem;
+      }
+    }
+    html.light .key-cmd:hover {
+      background: #fee2e2;
+      border-color: #f87171;
+      color: #b91c1c;
     }
     html.light .key-action {
-      background: linear-gradient(180deg, #ff6c00 0%, #e65100 100%);
-      border: 1px solid #bf4300;
-      color: #ffffff;
+      background: #ea580c;
+      border: 1.5px solid #c2410c;
+      color: #ffffff !important;
+      font-weight: 800;
+      font-size: 1.35rem;
+      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
+    }
+    @media (min-width: 640px) {
+      html.light .key-action {
+        font-size: 1.55rem;
+      }
+    }
+    html.light .key-action:hover {
+      background: #c2410c;
     }
 
     /* Raycast Mechanical Keypress Reflection */
@@ -824,20 +882,20 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       return tokens
         .map((tok, idx) => {
           if (tok.includes('°') || (!isNaN(parseFloat(tok)) && isFinite(tok as any))) {
-            return `<span class="text-white font-medium">${tok}</span>`;
+            return `<span class="text-slate-900 dark:text-white font-semibold">${tok}</span>`;
           } else if (constants.has(tok)) {
-            return `<span class="text-brand-blue-neon font-medium">${tok}</span>`;
+            return `<span class="text-sky-600 dark:text-brand-blue-neon font-semibold">${tok}</span>`;
           } else if (functions.has(tok)) {
-            return `<span class="text-brand-blue font-medium">${tok}</span>`;
+            return `<span class="text-blue-600 dark:text-brand-blue font-semibold">${tok}</span>`;
           } else if (operators.has(tok)) {
-            return `<span class="text-brand-orange font-semibold">${tok}</span>`;
+            return `<span class="text-orange-600 dark:text-brand-orange font-bold">${tok}</span>`;
           } else if (tok === '(' || tok === ')') {
             const matched = matchMap[idx];
-            return `<span class="${matched ? 'text-brand-text-muted' : 'text-brand-red font-bold'}">${tok}</span>`;
+            return `<span class="${matched ? 'text-slate-500 dark:text-brand-text-muted' : 'text-red-600 dark:text-brand-red font-bold'}">${tok}</span>`;
           } else if (tok === '.') {
-            return `<span class="text-white">${tok}</span>`;
+            return `<span class="text-slate-900 dark:text-white font-bold">${tok}</span>`;
           }
-          return `<span class="text-brand-red">${tok}</span>`;
+          return `<span class="text-red-600 dark:text-brand-red font-bold">${tok}</span>`;
         })
         .join('');
     }
@@ -851,9 +909,9 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         if (tok === ')') closeCount++;
       });
       if (openCount > closeCount) {
-        bracketValidation.innerHTML = `<span class="text-brand-orange font-medium">Unclosed: ${openCount - closeCount} )</span>`;
+        bracketValidation.innerHTML = `<span class="text-orange-600 dark:text-brand-orange font-medium">Unclosed: ${openCount - closeCount} )</span>`;
       } else if (closeCount > openCount) {
-        bracketValidation.innerHTML = `<span class="text-brand-red font-medium">Extra: ${closeCount - openCount} )</span>`;
+        bracketValidation.innerHTML = `<span class="text-red-600 dark:text-brand-red font-medium">Extra: ${closeCount - openCount} )</span>`;
       } else {
         bracketValidation.innerHTML = '';
       }
@@ -865,8 +923,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
       if (!expression) {
         displayResult.textContent = '0';
-        displayResult.classList.remove('text-red-500', 'text-brand-blue-neon');
-        displayResult.classList.add('text-white');
+        displayResult.classList.remove('text-red-600', 'dark:text-red-500');
         return;
       }
       try {
@@ -875,12 +932,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         const rawRes = evaluateRPN(rpn);
         const clean = cleanResult(rawRes);
         displayResult.textContent = isNaN(clean) ? 'Error' : String(clean);
-        displayResult.classList.remove('text-red-500');
-        displayResult.classList.add('text-white');
+        displayResult.classList.remove('text-red-600', 'dark:text-red-500');
       } catch (err: any) {
         displayResult.textContent = '...';
-        displayResult.classList.remove('text-red-500');
-        displayResult.classList.add('text-brand-text-dim');
+        displayResult.classList.remove('text-red-600', 'dark:text-red-500');
       }
     }
 
@@ -889,14 +944,14 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       if (unit === 'DEG') {
         angleSlider.style.transform = 'translateX(0px)';
         toggleDeg.classList.remove('text-brand-text-muted');
-        toggleDeg.classList.add('text-brand-black');
-        toggleRad.classList.remove('text-brand-black');
+        toggleDeg.classList.add('text-white', 'font-bold');
+        toggleRad.classList.remove('text-white', 'font-bold');
         toggleRad.classList.add('text-brand-text-muted');
       } else {
         angleSlider.style.transform = 'translateX(44px)';
         toggleRad.classList.remove('text-brand-text-muted');
-        toggleRad.classList.add('text-brand-black');
-        toggleDeg.classList.remove('text-brand-black');
+        toggleRad.classList.add('text-white', 'font-bold');
+        toggleDeg.classList.remove('text-white', 'font-bold');
         toggleDeg.classList.add('text-brand-text-muted');
       }
       updateDisplay();
@@ -1044,8 +1099,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           updateMemoryIndicator();
         } catch (err) {
           displayResult.textContent = 'Syntax Error';
-          displayResult.classList.remove('text-brand-text');
-          displayResult.classList.add('text-red-500');
+          displayResult.classList.add('text-red-600', 'dark:text-red-500');
         }
         return;
       } else if (key === 'M-') {
@@ -1060,8 +1114,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           updateMemoryIndicator();
         } catch (err) {
           displayResult.textContent = 'Syntax Error';
-          displayResult.classList.remove('text-brand-text');
-          displayResult.classList.add('text-red-500');
+          displayResult.classList.add('text-red-600', 'dark:text-red-500');
         }
         return;
       } else if (key === 'SD') {
@@ -1099,13 +1152,11 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           window.dispatchEvent(new CustomEvent('add-history', { detail: { expr: expression, result: finalResult, mode: 'scientific' } }));
           expression = finalResult;
           displayResult.textContent = finalResult;
-          displayResult.classList.remove('text-brand-text-dim', 'text-red-500');
-          displayResult.classList.add('text-white');
+          displayResult.classList.remove('text-red-600', 'dark:text-red-500');
         } catch (err: any) {
           numericResult = null;
           displayResult.textContent = 'Syntax Error';
-          displayResult.classList.remove('text-brand-text');
-          displayResult.classList.add('text-red-500');
+          displayResult.classList.add('text-red-600', 'dark:text-red-500');
         }
         return;
       } else if (key === 'ans') {
