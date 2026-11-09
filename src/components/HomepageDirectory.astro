@@ -46,7 +46,7 @@ const toolHrefs = [
                 <span class="w-7 h-7 rounded-lg bg-brand-black border border-brand-border flex items-center justify-center font-mono font-bold text-xs text-brand-text group-hover:border-brand-blue/60 group-hover:text-brand-blue-neon transition-colors">
                   {tool.icon}
                 </span>
-                <h3 class="text-base font-semibold text-brand-text group-hover:text-white transition-colors">
+                <h3 class="text-base font-semibold text-brand-text group-hover:text-brand-blue-neon transition-colors">
                   {tool.title}
                 </h3>
               </div>
@@ -136,7 +136,7 @@ const toolHrefs = [
     <div class="p-4 sm:p-5 rounded-xl border border-brand-border bg-brand-black/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div class="space-y-1 text-xs">
         <div class="flex items-center gap-2">
-          <span class="font-semibold text-white text-sm">TypingBull</span>
+          <span class="font-semibold text-brand-text text-sm">TypingBull</span>
           <span class="text-[9px] font-mono px-2 py-0.5 rounded-full border border-emerald-500/30 text-emerald-400 bg-emerald-500/10">Free Typing Tutor</span>
         </div>
         <p class="text-brand-text-muted leading-relaxed">
@@ -162,9 +162,9 @@ const toolHrefs = [
       {content.privacyText}
     </p>
     <div class="flex flex-wrap gap-4 pt-2 text-xs font-mono">
-      <a href={translatePath('/privacy')} class="text-brand-blue hover:text-white transition-colors">{content.privacyLink} &rarr;</a>
-      <a href={translatePath('/terms')} class="text-brand-blue hover:text-white transition-colors">{content.termsLink} &rarr;</a>
-      <a href={translatePath('/editorial-integrity')} class="text-brand-blue hover:text-white transition-colors">{content.editorialLink} &rarr;</a>
+      <a href={translatePath('/privacy')} class="text-brand-blue hover:underline hover:text-brand-blue-hover transition-colors">{content.privacyLink} &rarr;</a>
+      <a href={translatePath('/terms')} class="text-brand-blue hover:underline hover:text-brand-blue-hover transition-colors">{content.termsLink} &rarr;</a>
+      <a href={translatePath('/editorial-integrity')} class="text-brand-blue hover:underline hover:text-brand-blue-hover transition-colors">{content.editorialLink} &rarr;</a>
     </div>
   </section>
 </div>

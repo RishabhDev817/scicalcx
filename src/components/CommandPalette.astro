@@ -34,6 +34,7 @@ const translatePath = useTranslatedPath(currentLang);
         type="text" 
         id="cmd-search-input" 
         placeholder="Type a tool name or search constants (e.g. 'c', 'planck', 'matrix')..." 
+        aria-label="Search tools, commands, or constants"
         class="w-full bg-transparent text-sm sm:text-base font-sans text-brand-text placeholder-brand-text-dim focus:outline-none"
         autocomplete="off" 
         spellcheck="false"
@@ -43,7 +44,7 @@ const translatePath = useTranslatedPath(currentLang);
         id="cmd-palette-close-btn"
         type="button" 
         aria-label="Close Command Palette"
-        class="sm:hidden text-brand-text-dim hover:text-white p-1 text-xs cursor-pointer focus:outline-none"
+        class="sm:hidden text-brand-text-dim hover:text-brand-text p-1 text-xs cursor-pointer focus:outline-none"
       >
         ✕
       </button>

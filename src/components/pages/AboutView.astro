@@ -278,7 +278,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
 
     <!-- Core Mission Card -->
     <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-8 space-y-4 shadow-xl backdrop-blur-sm">
-      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-brand-text font-mono flex items-center gap-1.5">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> {content.missionBadge}
       </h2>
       <p class="text-sm text-brand-text-muted leading-relaxed">
@@ -291,14 +291,14 @@ const extra = aboutExtras[lang] || aboutExtras.en;
 
     <!-- Maintainers & Author Profiles (E-E-A-T) -->
     <div class="space-y-4">
-      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5 px-1">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-brand-text font-mono flex items-center gap-1.5 px-1">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> {content.teamTitle}
       </h2>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold text-white">Rishabh Raj Mahato</span>
+            <span class="text-xs font-mono font-bold text-brand-text">Rishabh Raj Mahato</span>
             <span class="text-[10px] font-mono text-brand-blue-neon uppercase">{extra.teamRishabhRole}</span>
           </div>
           <p class="text-xs text-brand-text-muted leading-relaxed">
@@ -313,7 +313,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
 
         <div class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold text-white">Riya</span>
+            <span class="text-xs font-mono font-bold text-brand-text">Riya</span>
             <span class="text-[10px] font-mono text-emerald-400 uppercase">{extra.teamRiyaRole}</span>
           </div>
           <p class="text-xs text-brand-text-muted leading-relaxed">
@@ -328,7 +328,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
 
     <!-- Editorial & Numerical Calculation Standards -->
     <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-8 space-y-4">
-      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-brand-text font-mono flex items-center gap-1.5">
         <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> {content.standardsTitle}
       </h2>
       <p class="text-xs text-brand-text-muted leading-relaxed">
@@ -337,7 +337,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
       <ul class="list-disc pl-5 space-y-2 text-xs text-brand-text-muted">
         {content.standards.map((s) => (
           <li>
-            <strong class="text-white">{s.label}:</strong> {s.text}
+            <strong class="text-brand-text">{s.label}:</strong> {s.text}
           </li>
         ))}
       </ul>
@@ -345,7 +345,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
 
     <!-- Feature Ecosystem Grid -->
     <div class="space-y-4">
-      <h2 class="text-base font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5 px-1">
+      <h2 class="text-base font-semibold uppercase tracking-wider text-brand-text font-mono flex items-center gap-1.5 px-1">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> {extra.ecosystemTitle}
       </h2>
       
@@ -353,7 +353,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
         <!-- Scientific & Matrix -->
         <a href={translatePath('/matrix')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
           <div class="text-brand-blue-neon font-mono text-[10px] uppercase">{extra.cardScientificTag}</div>
-          <h3 class="text-sm font-semibold text-white">
+          <h3 class="text-sm font-semibold text-brand-text">
             {extra.cardScientificTitle}
           </h3>
           <p class="text-xs text-brand-text-muted leading-relaxed">
@@ -364,7 +364,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
         <!-- Calculus & Graphing -->
         <a href={translatePath('/calculus')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
           <div class="text-brand-blue-neon font-mono text-[10px] uppercase">{extra.cardCalculusTag}</div>
-          <h3 class="text-sm font-semibold text-white">
+          <h3 class="text-sm font-semibold text-brand-text">
             {extra.cardCalculusTitle}
           </h3>
           <p class="text-xs text-brand-text-muted leading-relaxed">
@@ -375,7 +375,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
         <!-- Bitboard & Base-N -->
         <a href={translatePath('/programming')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
           <div class="text-brand-blue-neon font-mono text-[10px] uppercase">{extra.cardBitwiseTag}</div>
-          <h3 class="text-sm font-semibold text-white">
+          <h3 class="text-sm font-semibold text-brand-text">
             {extra.cardBitwiseTitle}
           </h3>
           <p class="text-xs text-brand-text-muted leading-relaxed">
@@ -386,7 +386,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
         <!-- Code Tutor & Compiler -->
         <a href={translatePath('/compiler')} class="border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 space-y-3 hover-glow transition-all block">
           <div class="text-amber-400 font-mono text-[10px] uppercase">{extra.cardCompilerTag}</div>
-          <h3 class="text-sm font-semibold text-white">
+          <h3 class="text-sm font-semibold text-brand-text">
             {extra.cardCompilerTitle}
           </h3>
           <p class="text-xs text-brand-text-muted leading-relaxed">
@@ -398,7 +398,7 @@ const extra = aboutExtras[lang] || aboutExtras.en;
 
     <!-- Tech Stack Profile -->
     <div class="border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 space-y-4">
-      <h2 class="text-sm font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text font-mono flex items-center gap-1.5">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span> {content.architectureTitle}
       </h2>
       <p class="text-xs text-brand-text-muted leading-relaxed">

@@ -177,6 +177,9 @@ html.light .kbd-shortcut {
   color: #ffffff;
   font-weight: 500;
 }
+html.light .token-number {
+  color: #0f141c;
+}
 .token-constant {
   color: #60a5fa;
   font-weight: 500;

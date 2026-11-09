@@ -37,7 +37,7 @@ const content = getInfoContent('contact', lang);
       
       <!-- Direct Contact Info Column -->
       <div class="md:col-span-1 space-y-4 border border-brand-border bg-brand-gray-dark/30 rounded-xl p-5 font-mono text-[11px] text-brand-text-muted hover-glow transition-all">
-        <h2 class="text-xs font-semibold uppercase tracking-wider text-white">{content.directTitle}</h2>
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text">{content.directTitle}</h2>
         <div class="space-y-4">
           <div>
             <span class="text-brand-text-dim block uppercase text-[9px] tracking-wider mb-1">{content.emailLabel}</span>
@@ -53,14 +53,14 @@ const content = getInfoContent('contact', lang);
           </div>
           <div>
             <span class="text-brand-text-dim block uppercase text-[9px] tracking-wider mb-1">{content.responseLabel}</span>
-            <span class="text-white block font-sans text-xs">{content.responseTime}</span>
+            <span class="text-brand-text block font-sans text-xs">{content.responseTime}</span>
           </div>
         </div>
       </div>
 
       <!-- Contact Form Column -->
       <div class="md:col-span-2 border border-brand-border bg-brand-gray-dark/40 rounded-xl p-6 sm:p-8 shadow-xl backdrop-blur-sm relative">
-        <h2 class="text-sm font-semibold uppercase tracking-wider text-white flex items-center gap-1.5 border-b border-brand-border/40 pb-3 mb-5 font-mono">
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-brand-text flex items-center gap-1.5 border-b border-brand-border/40 pb-3 mb-5 font-mono">
           <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span> {content.formTitle}
         </h2>
 

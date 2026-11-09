@@ -111,10 +111,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <div class="space-y-2 pt-2">
           <span class="text-brand-text-dim font-mono text-[9px] uppercase tracking-wider block">Quick Presets</span>
           <div class="grid grid-cols-2 gap-2 font-mono text-[10px]">
-            <button class="preset-btn bg-brand-gray-light border border-brand-border text-brand-text-muted hover:text-white rounded py-1 cursor-pointer transition-colors" data-f="x^2" data-g="2*x">Parabola / Line</button>
-            <button class="preset-btn bg-brand-gray-light border border-brand-border text-brand-text-muted hover:text-white rounded py-1 cursor-pointer transition-colors" data-f="x^3 - 3*x" data-g="x">Cubic Curves</button>
-            <button class="preset-btn bg-brand-gray-light border border-brand-border text-brand-text-muted hover:text-white rounded py-1 cursor-pointer transition-colors" data-f="sin(x)" data-g="cos(x)">Trig Waves</button>
-            <button class="preset-btn bg-brand-gray-light border border-brand-border text-brand-text-muted hover:text-white rounded py-1 cursor-pointer transition-colors" data-f="exp(-0.2*x)*sin(2*x)" data-g="exp(-0.2*x)">Dampened Osc</button>
+            <button class="preset-btn keycap-tactile text-brand-text-muted hover:text-brand-text rounded py-1.5 px-2 cursor-pointer transition-all" data-f="x^2" data-g="2*x">Parabola / Line</button>
+            <button class="preset-btn keycap-tactile text-brand-text-muted hover:text-brand-text rounded py-1.5 px-2 cursor-pointer transition-all" data-f="x^3 - 3*x" data-g="x">Cubic Curves</button>
+            <button class="preset-btn keycap-tactile text-brand-text-muted hover:text-brand-text rounded py-1.5 px-2 cursor-pointer transition-all" data-f="sin(x)" data-g="cos(x)">Trig Waves</button>
+            <button class="preset-btn keycap-tactile text-brand-text-muted hover:text-brand-text rounded py-1.5 px-2 cursor-pointer transition-all" data-f="exp(-0.2*x)*sin(2*x)" data-g="exp(-0.2*x)">Dampened Osc</button>
           </div>
         </div>
       </div>
@@ -133,7 +133,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
                 type="button" 
                 aria-label="Zoom in" 
                 title="Zoom In (or scroll wheel)"
-                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text hover:text-white hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px] font-bold"
+                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text hover:text-brand-text hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px] font-bold"
               >
                 <span>+</span><span class="hidden md:inline">Zoom</span>
               </button>
@@ -142,7 +142,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
                 type="button" 
                 aria-label="Zoom out" 
                 title="Zoom Out (or scroll wheel)"
-                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text hover:text-white hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px] font-bold"
+                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text hover:text-brand-text hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px] font-bold"
               >
                 <span>−</span><span class="hidden md:inline">Zoom</span>
               </button>
@@ -151,7 +151,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
                 type="button" 
                 aria-label="Reset view bounds" 
                 title="Reset view to default [-10, 10]"
-                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text-muted hover:text-white hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px]"
+                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text-muted hover:text-brand-text hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1 text-[11px]"
               >
                 <span>⟲</span><span>Reset</span>
               </button>
@@ -160,7 +160,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
                 type="button" 
                 aria-label="Toggle live tangent tracer" 
                 title="Toggle instantaneous derivative tangent tracer"
-                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text-muted hover:text-white hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1.5 text-[11px]"
+                class="h-7 px-2.5 rounded bg-brand-gray-light/60 border border-brand-border text-brand-text-muted hover:text-brand-text hover:bg-brand-border/60 active:scale-[0.97] transition-all cursor-pointer flex items-center gap-1.5 text-[11px]"
               >
                 <span class="w-1.5 h-1.5 rounded-full bg-neutral-600 transition-colors" id="tangent-indicator-dot"></span>
                 <span>dy/dx Tangent</span>

@@ -126,10 +126,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     <!-- Bitwise Operator Panel -->
     <div class="border border-brand-border bg-brand-gray-dark/20 rounded-xl p-3 sm:p-4 flex flex-wrap gap-1.5 sm:gap-2 justify-center items-center">
       <span class="text-xs font-mono text-brand-text-muted px-2">Bitwise Actions:</span>
-      <button class="btn-bit-action px-2.5 sm:px-3 py-1.5 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-blue-neon rounded font-mono" data-action="not">NOT (~)</button>
-      <button class="btn-bit-action px-2.5 sm:px-3 py-1.5 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-blue-neon rounded font-mono" data-action="lsh">LSH (&lt;&lt;)</button>
-      <button class="btn-bit-action px-2.5 sm:px-3 py-1.5 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-blue-neon rounded font-mono" data-action="rsh">RSH (&gt;&gt;)</button>
-      <button class="btn-bit-action px-2.5 sm:px-3 py-1.5 text-xs border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-blue-neon rounded font-mono" data-action="clear">AC</button>
+      <button class="btn-bit-action px-2.5 sm:px-3 py-1.5 text-xs text-brand-blue-neon rounded font-mono" data-action="not">NOT (~)</button>
+      <button class="btn-bit-action px-2.5 sm:px-3 py-1.5 text-xs text-brand-blue-neon rounded font-mono" data-action="lsh">LSH (&lt;&lt;)</button>
+      <button class="btn-bit-action px-2.5 sm:px-3 py-1.5 text-xs text-brand-blue-neon rounded font-mono" data-action="rsh">RSH (&gt;&gt;)</button>
+      <button class="btn-bit-action px-2.5 sm:px-3 py-1.5 text-xs text-brand-red rounded font-mono" data-action="clear">AC</button>
     </div>
 
     <!-- Programmer Keyboard Pad -->
@@ -139,18 +139,18 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <button class="btn-prog key-hex" data-key="A">A</button>
         <button class="btn-prog key-hex" data-key="B">B</button>
         <button class="btn-prog key-hex" data-key="C">C</button>
-        <button class="btn-prog" data-key="DEL" style="color: #ea4335; border-color: #4a1515; background: #1a0808">DEL</button>
+        <button class="btn-prog key-cmd-prog font-bold" data-key="DEL">DEL</button>
 
         <button class="btn-prog key-hex" data-key="D">D</button>
         <button class="btn-prog key-hex" data-key="E">E</button>
         <button class="btn-prog key-hex" data-key="F">F</button>
-        <button class="btn-prog" data-key="AC" style="color: #ea4335; border-color: #4a1515; background: #1a0808">AC</button>
+        <button class="btn-prog key-cmd-prog font-bold" data-key="AC">AC</button>
 
         <!-- Numbers 7-9 -->
         <button class="btn-prog key-dec" data-key="7">7</button>
         <button class="btn-prog key-dec" data-key="8">8</button>
         <button class="btn-prog key-dec" data-key="9">9</button>
-        <button class="btn-prog" id="btn-save-prog" style="color: #0070f3; border-color: #102a45; background: #060e1a">SAVE</button>
+        <button class="btn-prog key-action-prog font-bold" id="btn-save-prog">SAVE</button>
 
         <!-- Numbers 4-6 -->
         <button class="btn-prog key-dec" data-key="4">4</button>
@@ -162,7 +162,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <button class="btn-prog key-bin" data-key="1">1</button>
         <button class="btn-prog key-oct" data-key="2">2</button>
         <button class="btn-prog key-oct" data-key="3">3</button>
-        <button class="btn-prog col-span-1" data-key="toggle-sign" style="font-size: 10px; color: #888">+/-</button>
+        <button class="btn-prog col-span-1 text-xs text-brand-text-dim" data-key="toggle-sign">+/-</button>
       </div>
     </div>
 
@@ -180,16 +180,23 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     button {
       outline: none;
     }
+    button:focus-visible {
+      outline: 2px solid var(--color-brand-blue, #5b9cf6);
+      outline-offset: 2px;
+      z-index: 10;
+    }
     .btn-prog, .btn-bit-action {
       height: 40px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-      border: 1px solid #1e1e1e;
+      border: 1px solid #1e222a;
       border-radius: 6px;
-      background: #0c0c0c;
-      color: #ffffff;
+      background: linear-gradient(180deg, #171920 0%, #0f1116 100%);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+      color: #f4f5f8;
       font-weight: 500;
-      transition: all 0.15s ease-in-out;
+      transition: all 0.1s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
+      user-select: none;
     }
     @media (min-width: 640px) {
       .btn-prog, .btn-bit-action {
@@ -197,15 +204,93 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .btn-prog:hover:not(:disabled), .btn-bit-action:hover:not(:disabled) {
-      background-color: #171717;
-      border-color: #2e2e2e;
+      background: linear-gradient(180deg, #20242e 0%, #15181f 100%);
+      border-color: #2d3340;
+      color: #ffffff;
+    }
+    .btn-prog:active:not(:disabled), .btn-bit-action:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.65);
     }
     .btn-prog:disabled, .btn-bit-action:disabled {
-      opacity: 0.15;
+      opacity: 0.18;
       cursor: not-allowed;
-      border-color: #121212 !important;
-      background-color: #050505 !important;
-      color: #555555 !important;
+      border-color: #1a1d24 !important;
+      background: #090a0d !important;
+      color: #5c6474 !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    /* Programmer Command Keys (DEL / AC) */
+    .key-cmd-prog {
+      background: linear-gradient(180deg, #241216 0%, #170a0d 100%) !important;
+      border-color: #451b24 !important;
+      box-shadow: inset 0 1px 0 0 rgba(242, 54, 69, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.45) !important;
+      color: #f23645 !important;
+    }
+    .key-cmd-prog:hover:not(:disabled) {
+      background: linear-gradient(180deg, #2e171c 0%, #1e0d11 100%) !important;
+      border-color: #5f2431 !important;
+      color: #ffffff !important;
+    }
+
+    /* Programmer Action Key (SAVE) */
+    .key-action-prog {
+      background: linear-gradient(180deg, #111a2c 0%, #0b1120 100%) !important;
+      border-color: #1c2c48 !important;
+      box-shadow: inset 0 1px 0 0 rgba(91, 156, 246, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.45) !important;
+      color: #5b9cf6 !important;
+    }
+    .key-action-prog:hover:not(:disabled) {
+      background: linear-gradient(180deg, #16223b 0%, #0e1629 100%) !important;
+      border-color: #284068 !important;
+      color: #ffffff !important;
+    }
+
+    /* Light Mode Overrides for Programmer Suite */
+    html.light .btn-prog, html.light .btn-bit-action {
+      background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+      border: 1px solid #dee2e6;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      color: #0f141c;
+    }
+    html.light .btn-prog:hover:not(:disabled), html.light .btn-bit-action:hover:not(:disabled) {
+      background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+      border-color: #ced4da;
+      color: #000000;
+    }
+    html.light .btn-prog:active:not(:disabled), html.light .btn-bit-action:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+    }
+    html.light .btn-prog:disabled, html.light .btn-bit-action:disabled {
+      background: #f1f3f5 !important;
+      border-color: #dee2e6 !important;
+      color: #adb5bd !important;
+      opacity: 0.5;
+    }
+    html.light .key-cmd-prog {
+      background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%) !important;
+      border-color: #fecaca !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 1px 2px 0 rgba(220, 38, 38, 0.08) !important;
+      color: #d32f2f !important;
+    }
+    html.light .key-cmd-prog:hover:not(:disabled) {
+      background: linear-gradient(180deg, #fee2e2 0%, #fecaca 100%) !important;
+      border-color: #fca5a5 !important;
+      color: #b91c1c !important;
+    }
+    html.light .key-action-prog {
+      background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%) !important;
+      border-color: #bfdbfe !important;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 1px 2px 0 rgba(29, 78, 216, 0.08) !important;
+      color: #1a73e8 !important;
+    }
+    html.light .key-action-prog:hover:not(:disabled) {
+      background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%) !important;
+      border-color: #93c5fd !important;
+      color: #1557b0 !important;
     }
   </style>
 
@@ -417,8 +502,15 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
 
     // Keyboard bindings
     window.addEventListener('keydown', (e) => {
-      // Ignore global shortcuts when explicitly typing in the Decimal field
+      if (e.metaKey || e.ctrlKey || e.altKey) {
+        return;
+      }
+
+      // Ignore global shortcuts when explicitly typing in the Decimal field or other inputs
       if (document.activeElement === displayDec) {
+        return;
+      }
+      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
         return;
       }
 

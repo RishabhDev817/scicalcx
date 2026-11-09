@@ -129,13 +129,13 @@ relatedPosts = relatedPosts.slice(0, 3);
         </span>
       </div>
 
-      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-brand-text leading-tight">
         {post.data.title}
       </h1>
 
       <div class="flex flex-wrap items-center gap-2 pt-1 text-xs text-brand-text-muted font-mono">
         <span>By</span>
-        <a href={translatePath('/about')} class="text-white hover:text-brand-blue-neon transition-colors font-semibold underline underline-offset-2">
+        <a href={translatePath('/about')} class="text-brand-text hover:text-brand-blue-neon transition-colors font-semibold underline underline-offset-2">
           {post.data.author}
         </a>
         <span>&bull;</span>
@@ -186,7 +186,7 @@ relatedPosts = relatedPosts.slice(0, 3);
             <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon animate-pulse"></span>
             {t('blog.interactiveToolTitle')}
           </div>
-          <h2 class="text-base sm:text-lg font-bold text-white">
+          <h2 class="text-base sm:text-lg font-bold text-brand-text">
             {post.data.calculatorLabel || 'SciCalcX Interactive Computational Engine'}
           </h2>
           <p class="text-xs text-brand-text-muted max-w-xl leading-relaxed">
@@ -214,10 +214,10 @@ relatedPosts = relatedPosts.slice(0, 3);
         {t('blog.editorialReviewNote')} {t('blog.authorBio')}
       </p>
       <div class="pt-2 flex flex-wrap gap-4 text-xs font-mono">
-        <a href={translatePath('/editorial-integrity')} class="text-brand-blue-neon hover:text-white transition-colors underline underline-offset-2">
+        <a href={translatePath('/editorial-integrity')} class="text-brand-blue-neon hover:text-brand-blue-hover hover:underline transition-colors underline underline-offset-2">
           {t('blog.readIntegrityPolicy')}
         </a>
-        <a href={translatePath('/about')} class="text-brand-text-dim hover:text-white transition-colors">
+        <a href={translatePath('/about')} class="text-brand-text-dim hover:text-brand-text transition-colors">
           About SciCalcX & Our Founders &rarr;
         </a>
       </div>
@@ -226,7 +226,7 @@ relatedPosts = relatedPosts.slice(0, 3);
     <!-- Related Articles -->
     {relatedPosts.length > 0 && (
       <section aria-labelledby="related-articles-title" class="space-y-4 pt-4 border-t border-brand-border/60">
-        <h2 id="related-articles-title" class="text-sm font-mono uppercase tracking-wider text-white flex items-center gap-2">
+        <h2 id="related-articles-title" class="text-sm font-mono uppercase tracking-wider text-brand-text flex items-center gap-2">
           <span class="w-1.5 h-1.5 rounded-full bg-brand-blue"></span>
           {t('blog.relatedArticles')}
         </h2>
@@ -244,7 +244,7 @@ relatedPosts = relatedPosts.slice(0, 3);
                       {rel.data.category}
                     </span>
                   )}
-                  <h3 class="text-xs sm:text-sm font-bold text-white group-hover:text-brand-blue-neon transition-colors line-clamp-2">
+                  <h3 class="text-xs sm:text-sm font-bold text-brand-text group-hover:text-brand-blue-neon transition-colors line-clamp-2">
                     {rel.data.title}
                   </h3>
                   <p class="text-[11px] text-brand-text-muted line-clamp-2 leading-relaxed">
@@ -265,13 +265,13 @@ relatedPosts = relatedPosts.slice(0, 3);
     <div class="border-t border-brand-border/60 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs">
       <a
         href={translatePath('/blog')}
-        class="inline-flex items-center gap-1.5 text-brand-blue-neon hover:text-white transition-colors"
+        class="inline-flex items-center gap-1.5 text-brand-blue-neon hover:text-brand-text transition-colors"
       >
         &larr; {t('blog.backToArticles')}
       </a>
       <a
         href={translatePath('/')}
-        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-brand-border bg-brand-black hover:border-brand-border-strong text-white transition-colors"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-brand-border bg-brand-black hover:border-brand-border-strong text-brand-text transition-colors"
       >
         Explore SciCalcX Calculators &rarr;
       </a>

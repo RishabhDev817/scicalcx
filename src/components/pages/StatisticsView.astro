@@ -89,7 +89,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <div class="lg:col-span-4 border border-brand-border bg-brand-gray-dark/50 rounded-xl p-5 space-y-4 flex flex-col justify-between shadow-lg">
         <div class="space-y-2">
           <div class="flex items-center justify-between">
-            <h2 class="text-xs font-semibold uppercase tracking-wider text-white font-mono flex items-center gap-1.5">
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-brand-text font-mono flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-sm bg-brand-blue"></span> Dataset Input
             </h2>
             <span id="parsed-badge" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-gray-light border border-brand-border text-brand-text-dim">
@@ -105,7 +105,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <textarea
           id="data-input"
           aria-label="Dataset input numbers"
-          class="w-full h-44 bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded-lg p-3 text-xs font-mono text-white focus:outline-none focus:ring-1 focus:ring-brand-blue/30 resize-none placeholder:text-brand-text-dim/60 transition-colors leading-relaxed"
+          class="w-full h-44 bg-brand-black hover:border-brand-border-hover focus:border-brand-blue border border-brand-border rounded-lg p-3 text-xs font-mono text-brand-text focus:outline-none focus:ring-1 focus:ring-brand-blue/30 resize-none placeholder:text-brand-text-dim/60 transition-colors leading-relaxed"
           placeholder="e.g. 12, 19, 3, 5, 2, 3, 9, 14, 16, 22, 15, 8"
         ></textarea>
 
@@ -113,16 +113,16 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
         <div class="space-y-1.5 pt-1">
           <div class="text-[10px] font-mono text-brand-text-dim uppercase tracking-wider">Dataset Presets</div>
           <div class="grid grid-cols-2 gap-1.5">
-            <button id="btn-preset-sample" aria-label="Load basic sample dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-white transition-all cursor-pointer">
+            <button id="btn-preset-sample" aria-label="Load basic sample dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-brand-text transition-all cursor-pointer">
               ✦ Sample
             </button>
-            <button id="btn-preset-normal" aria-label="Load normal bell curve dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-white transition-all cursor-pointer">
+            <button id="btn-preset-normal" aria-label="Load normal bell curve dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-brand-text transition-all cursor-pointer">
               ◈ Normal (Bell)
             </button>
-            <button id="btn-preset-finance" aria-label="Load daily stock market returns dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-white transition-all cursor-pointer">
+            <button id="btn-preset-finance" aria-label="Load daily stock market returns dataset" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-brand-text transition-all cursor-pointer">
               📈 Stock Returns
             </button>
-            <button id="btn-preset-outliers" aria-label="Load dataset containing extreme outliers" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-white transition-all cursor-pointer">
+            <button id="btn-preset-outliers" aria-label="Load dataset containing extreme outliers" class="keycap-tactile text-[11px] py-1.5 px-2 text-left truncate rounded font-mono text-brand-text-muted hover:text-brand-text transition-all cursor-pointer">
               ⚠ With Outliers
             </button>
           </div>
@@ -149,7 +149,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           <button id="btn-clear-data" aria-label="Clear current dataset" class="text-xs py-2 border border-brand-border bg-brand-black hover:bg-brand-gray-hover text-brand-text-muted hover:text-brand-red rounded transition-all cursor-pointer font-mono font-medium">
             Clear
           </button>
-          <button id="btn-sample-data" aria-label="Load default sample dataset" class="text-xs py-2 border border-brand-blue/30 bg-brand-blue/10 hover:bg-brand-blue/20 text-brand-blue-neon hover:text-white rounded transition-all cursor-pointer font-mono font-medium">
+          <button id="btn-sample-data" aria-label="Load default sample dataset" class="text-xs py-2 border border-brand-blue/30 bg-brand-blue/10 hover:bg-brand-blue/20 text-brand-blue-neon hover:text-brand-text rounded transition-all cursor-pointer font-mono font-medium">
             Reset Sample
           </button>
         </div>
@@ -169,10 +169,10 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
             
             <!-- Visualizer View Toggle -->
             <div class="flex items-center p-0.5 bg-brand-black border border-brand-border rounded-lg text-[10px] font-mono">
-              <button id="tab-boxplot" aria-label="Show Five-Number Box and Whisker Plot" class="px-2.5 py-1 rounded text-white bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors">
+              <button id="tab-boxplot" aria-label="Show Five-Number Box and Whisker Plot" class="px-2.5 py-1 rounded text-brand-text bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors">
                 Box & Whisker
               </button>
-              <button id="tab-histogram" aria-label="Show Frequency Histogram Distribution" class="px-2.5 py-1 rounded text-brand-text-muted hover:text-white cursor-pointer transition-colors">
+              <button id="tab-histogram" aria-label="Show Frequency Histogram Distribution" class="px-2.5 py-1 rounded text-brand-text-muted hover:text-brand-text cursor-pointer transition-colors">
                 Frequency Histogram
               </button>
             </div>
@@ -316,7 +316,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
                 [ Download CSV ]
               </button>
             </div>
-            <button id="btn-save-stats" aria-label="Save statistics analysis to calculation history" class="text-brand-blue-neon hover:text-white uppercase transition-colors cursor-pointer font-semibold">
+            <button id="btn-save-stats" aria-label="Save statistics analysis to calculation history" class="text-brand-blue-neon hover:text-brand-text uppercase transition-colors cursor-pointer font-semibold">
               [ Save analysis to history ]
             </button>
           </div>
@@ -329,7 +329,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       <div class="flex flex-wrap items-center justify-between gap-2 border-b border-brand-surface-math-border/70 pb-3">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 rounded-full bg-brand-orange"></span>
-          <h3 class="text-sm font-bold tracking-wide uppercase text-white font-mono">
+          <h3 class="text-sm font-bold tracking-wide uppercase text-brand-text font-mono">
             Wolfram Mathematical Derivations & Decompositions
           </h3>
         </div>
@@ -882,15 +882,15 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     // Toggle Visualizer Views
     tabBoxplot.addEventListener('click', () => {
       currentViewMode = 'boxplot';
-      tabBoxplot.className = 'px-2.5 py-1 rounded text-white bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors';
-      tabHistogram.className = 'px-2.5 py-1 rounded text-brand-text-muted hover:text-white cursor-pointer transition-colors';
+      tabBoxplot.className = 'px-2.5 py-1 rounded text-brand-text bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors';
+      tabHistogram.className = 'px-2.5 py-1 rounded text-brand-text-muted hover:text-brand-text cursor-pointer transition-colors';
       calculateStats();
     });
 
     tabHistogram.addEventListener('click', () => {
       currentViewMode = 'histogram';
-      tabHistogram.className = 'px-2.5 py-1 rounded text-white bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors';
-      tabBoxplot.className = 'px-2.5 py-1 rounded text-brand-text-muted hover:text-white cursor-pointer transition-colors';
+      tabHistogram.className = 'px-2.5 py-1 rounded text-brand-text bg-brand-gray-light border border-brand-border/80 font-medium cursor-pointer transition-colors';
+      tabBoxplot.className = 'px-2.5 py-1 rounded text-brand-text-muted hover:text-brand-text cursor-pointer transition-colors';
       calculateStats();
     });
 

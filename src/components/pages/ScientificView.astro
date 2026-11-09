@@ -137,7 +137,12 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
           <div id="bracket-validation" class="text-[11px] sm:text-xs font-mono text-slate-500 dark:text-brand-text-dim">
             <!-- Bracket validation state -->
           </div>
-          <div id="display-result" class="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-slate-900 dark:text-white tracking-tight break-all text-right ml-auto">
+          <div 
+            id="display-result" 
+            class="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-slate-900 dark:text-white tracking-tight break-all text-right ml-auto"
+            role="status"
+            aria-live="polite"
+          >
             0
           </div>
         </div>
@@ -251,6 +256,11 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       outline: none;
       position: relative;
     }
+    button:focus-visible {
+      outline: 2px solid var(--color-brand-blue, #5b9cf6);
+      outline-offset: 2px;
+      z-index: 10;
+    }
     @media (min-width: 640px) {
       button {
         font-size: 0.9rem;
@@ -267,11 +277,12 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     
-    /* Numeric Keys (Crisp, High-Contrast Digits) */
+    /* Numeric Keys (Crisp, High-Contrast Hardware Keycaps) */
     .key-num {
-      background: #141824;
-      border: 1px solid #283348;
-      color: #ffffff;
+      background: linear-gradient(180deg, #171920 0%, #0f1116 100%);
+      border: 1px solid #1e222a;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+      color: #f4f5f8;
       font-size: 1.15rem;
       font-weight: 600;
       height: 42px;
@@ -292,20 +303,21 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .key-num:hover {
-      background: #1c2336;
-      border-color: #3d4f6e;
+      background: linear-gradient(180deg, #20242e 0%, #15181f 100%);
+      border-color: #2d3340;
       color: #ffffff;
     }
     .key-num:active {
       transform: translateY(1px);
-      background: #0f121a;
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.65);
     }
 
     /* Scientific Modifiers & Functions */
     .key-sci {
-      background: #0d1017;
-      border: 1px solid #1c2230;
-      color: #cbd5e1;
+      background: linear-gradient(180deg, #15171e 0%, #0c0e13 100%);
+      border: 1px solid #1a1e26;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+      color: #cbd0dc;
       font-size: 0.85rem;
       font-weight: 500;
     }
@@ -315,20 +327,21 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .key-sci:hover {
-      background: #151a26;
+      background: linear-gradient(180deg, #1c202a 0%, #11141b 100%);
       color: #ffffff;
-      border-color: #2b364c;
+      border-color: #272d3b;
     }
     .key-sci:active {
       transform: translateY(1px);
-      background: #0b0d12;
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.65);
     }
 
     /* Mathematical Operators */
     .key-op {
-      background: #111a2e;
-      border: 1px solid #233760;
-      color: #60a5fa;
+      background: linear-gradient(180deg, #111a2c 0%, #0b1120 100%);
+      border: 1px solid #1c2c48;
+      box-shadow: inset 0 1px 0 0 rgba(91, 156, 246, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+      color: #5b9cf6;
       font-size: 1.25rem;
       font-weight: 600;
     }
@@ -338,20 +351,21 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .key-op:hover {
-      background: #182542;
-      border-color: #3b82f6;
+      background: linear-gradient(180deg, #16223b 0%, #0e1629 100%);
+      border-color: #284068;
       color: #ffffff;
     }
     .key-op:active {
       transform: translateY(1px);
-      background: #0e1420;
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.7);
     }
 
     /* Clear & Delete */
     .key-cmd {
-      background: #221217;
-      border: 1px solid #4a1e27;
-      color: #f87171;
+      background: linear-gradient(180deg, #241216 0%, #170a0d 100%);
+      border: 1px solid #451b24;
+      box-shadow: inset 0 1px 0 0 rgba(242, 54, 69, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.45);
+      color: #f23645;
       font-weight: 700;
       font-size: 0.9rem;
     }
@@ -361,19 +375,20 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .key-cmd:hover {
-      background: #2c171e;
-      border-color: #ef4444;
+      background: linear-gradient(180deg, #2e171c 0%, #1e0d11 100%);
+      border-color: #5f2431;
       color: #ffffff;
     }
     .key-cmd:active {
       transform: translateY(1px);
-      background: #150a0d;
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.7);
     }
 
     /* Evaluation / Equals (Wolfram Computational Warm Orange) */
     .key-action {
-      background: #ff6c00;
+      background: linear-gradient(180deg, #ff7a1a 0%, #ff6c00 100%);
       border: 1px solid #ff8533;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.25), 0 1px 3px 0 rgba(255, 108, 0, 0.35);
       color: #ffffff !important;
       font-weight: 800;
       font-size: 1.35rem;
@@ -384,22 +399,24 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     .key-action:hover {
-      background: #ff7e1a;
+      background: linear-gradient(180deg, #ff8c33 0%, #ff7a1a 100%);
       border-color: #ffa154;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.3), 0 0 12px rgba(255, 108, 0, 0.45);
     }
     .key-action:active {
       transform: translateY(1px);
-      background: #e65c00;
+      background: linear-gradient(180deg, #e65c00 0%, #cc5200 100%);
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.6);
     }
 
     /* Light Mode Overrides */
     html.light .key-num {
-      background: #ffffff;
-      border: 1.5px solid #cbd5e1;
-      color: #0f172a;
+      background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+      border: 1px solid #dee2e6;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      color: #0f141c;
       font-weight: 700;
       font-size: 1.25rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
     @media (min-width: 640px) {
       html.light .key-num {
@@ -407,17 +424,21 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     html.light .key-num:hover {
-      background: #f8fafc;
-      border-color: #94a3b8;
+      background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+      border-color: #ced4da;
       color: #000000;
     }
+    html.light .key-num:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+    }
     html.light .key-sci {
-      background: #f1f5f9;
-      border: 1.5px solid #cbd5e1;
+      background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+      border: 1px solid #dee2e6;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.9), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
       color: #334155;
       font-weight: 600;
       font-size: 0.85rem;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
     @media (min-width: 640px) {
       html.light .key-sci {
@@ -425,17 +446,21 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     html.light .key-sci:hover {
-      background: #e2e8f0;
-      border-color: #94a3b8;
+      background: linear-gradient(180deg, #ffffff 0%, #f1f3f5 100%);
+      border-color: #ced4da;
       color: #0f172a;
     }
+    html.light .key-sci:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    }
     html.light .key-op {
-      background: #eff6ff;
-      border: 1.5px solid #bfdbfe;
-      color: #1d4ed8;
+      background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+      border: 1px solid #bfdbfe;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 1px 2px 0 rgba(29, 78, 216, 0.08);
+      color: #1a73e8;
       font-weight: 700;
       font-size: 1.25rem;
-      box-shadow: 0 1px 2px rgba(29, 78, 216, 0.06);
     }
     @media (min-width: 640px) {
       html.light .key-op {
@@ -443,17 +468,21 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     html.light .key-op:hover {
-      background: #dbeafe;
-      border-color: #60a5fa;
-      color: #1e40af;
+      background: linear-gradient(180deg, #dbeafe 0%, #bfdbfe 100%);
+      border-color: #93c5fd;
+      color: #1557b0;
+    }
+    html.light .key-op:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 2px 0 rgba(29, 78, 216, 0.15);
     }
     html.light .key-cmd {
-      background: #fef2f2;
-      border: 1.5px solid #fecaca;
-      color: #dc2626;
+      background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%);
+      border: 1px solid #fecaca;
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 1px 2px 0 rgba(220, 38, 38, 0.08);
+      color: #d32f2f;
       font-weight: 700;
       font-size: 0.9rem;
-      box-shadow: 0 1px 2px rgba(220, 38, 38, 0.06);
     }
     @media (min-width: 640px) {
       html.light .key-cmd {
@@ -461,17 +490,33 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
       }
     }
     html.light .key-cmd:hover {
-      background: #fee2e2;
-      border-color: #f87171;
+      background: linear-gradient(180deg, #fee2e2 0%, #fecaca 100%);
+      border-color: #fca5a5;
       color: #b91c1c;
     }
+    html.light .key-cmd:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 2px 0 rgba(220, 38, 38, 0.15);
+    }
     html.light .key-action {
-      background: #ea580c;
-      border: 1.5px solid #c2410c;
+      background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+      border: 1px solid #c2410c;
       color: #ffffff !important;
       font-weight: 800;
       font-size: 1.35rem;
-      box-shadow: 0 2px 6px rgba(234, 88, 12, 0.25);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.3), 0 2px 6px rgba(234, 88, 12, 0.25);
+    }
+    @media (min-width: 640px) {
+      html.light .key-action {
+        font-size: 1.55rem;
+      }
+    }
+    html.light .key-action:hover {
+      background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%);
+    }
+    html.light .key-action:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 2px 0 rgba(194, 65, 12, 0.35);
     }
     @media (min-width: 640px) {
       html.light .key-action {
@@ -1229,7 +1274,9 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     }
 
     window.addEventListener('keydown', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
       if (document.activeElement?.tagName === 'INPUT' && document.activeElement !== rawInput) return;
+      if (document.activeElement?.tagName === 'TEXTAREA') return;
       const key = e.key;
       const dataKey = keyToDataMap[key] || (key >= '0' && key <= '9' ? key : null);
       if (dataKey) {
@@ -1252,6 +1299,7 @@ const faqHeadingMap: Record<SupportedLanguage, string> = {
     });
 
     window.addEventListener('keyup', (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
       const dataKey = keyToDataMap[e.key] || (e.key >= '0' && e.key <= '9' ? e.key : null);
       if (dataKey) {
         highlightButton(dataKey, false);
