@@ -29,7 +29,7 @@ const languageList = Object.entries(languages) as [SupportedLanguage, string][];
       </div>
       <select
         id="language-select"
-        class="bg-brand-gray-light/70 hover:bg-brand-gray-hover border border-brand-border hover:border-brand-border-hover text-brand-text-muted hover:text-white text-[11px] font-mono rounded-md pl-6 sm:pl-7 pr-5 sm:pr-6 py-1.5 cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all"
+        class="bg-brand-gray-light/70 hover:bg-brand-gray-hover border border-brand-border hover:border-brand-border-hover text-brand-text-muted hover:text-brand-text text-[11px] font-mono rounded-md pl-6 sm:pl-7 pr-5 sm:pr-6 py-1.5 cursor-pointer appearance-none focus:outline-none focus:ring-1 focus:ring-brand-blue transition-all max-w-[85px] min-[400px]:max-w-none truncate"
         aria-label="Select language"
         onchange="if (this.value) { const opt = this.options[this.selectedIndex]; const l = opt.getAttribute('data-code'); if (l) { try { localStorage.setItem('scicalcx_lang', l); document.cookie = 'scicalcx_lang=' + l + '; path=/; max-age=31536000; SameSite=Lax'; } catch(e){} } window.location.href = this.value; }"
       >

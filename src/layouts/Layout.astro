@@ -194,7 +194,7 @@ const siteSchema = {
             SciCalc<span class="text-brand-blue-neon">X</span>
           </span>
         </a>
-        <nav class="hidden md:flex items-center space-x-1">
+        <nav class="hidden lg:flex items-center space-x-1">
           <a
             href={translatePath('/')}
             class={`px-2 py-1.5 text-[10px] sm:text-xs font-medium rounded-md transition-colors ${
@@ -326,8 +326,8 @@ const siteSchema = {
       </div>
     </header>
 
-    <!-- Mobile Scrollable Sub-Nav -->
-    <div class="md:hidden border-b border-brand-border bg-brand-black/90 py-2 px-3 flex items-center space-x-1.5 overflow-x-auto scrollbar-none">
+    <!-- Mobile & Tablet Scrollable Sub-Nav -->
+    <div class="lg:hidden border-b border-brand-border bg-brand-black/90 py-2 px-3 flex items-center space-x-1.5 overflow-x-auto scrollbar-none">
       <a
         href={translatePath('/')}
         class={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded text-[10px] font-medium transition-colors ${
@@ -411,13 +411,22 @@ const siteSchema = {
             <span class="w-1.5 h-1.5 rounded-full bg-brand-blue-neon"></span>
             {t('history.title')}
           </h2>
-          <button
-            id="clear-history"
-            aria-label={t('history.clear')}
-            class="text-[10px] text-brand-text-dim hover:text-brand-red font-mono transition-colors uppercase cursor-pointer focus:outline-none"
-          >
-            {t('history.clear')}
-          </button>
+          <div class="flex items-center gap-3">
+            <button
+              id="clear-history"
+              aria-label={t('history.clear')}
+              class="text-[10px] text-brand-text-dim hover:text-brand-red font-mono transition-colors uppercase cursor-pointer focus:outline-none"
+            >
+              {t('history.clear')}
+            </button>
+            <button
+              id="close-history-sidebar"
+              aria-label="Close history sidebar"
+              class="sm:hidden text-brand-text-muted hover:text-brand-text p-1 cursor-pointer focus:outline-none text-xs font-mono"
+            >
+              ✕
+            </button>
+          </div>
         </div>
 
         <!-- History Content -->
@@ -441,6 +450,7 @@ const siteSchema = {
       const historySidebar = document.getElementById('history-sidebar');
       const historyList = document.getElementById('history-list');
       const clearHistoryBtn = document.getElementById('clear-history');
+      const closeHistoryBtn = document.getElementById('close-history-sidebar');
 
       let isSidebarOpen = false;
 
@@ -518,6 +528,7 @@ const siteSchema = {
       }
 
       historyToggle?.addEventListener('click', toggleSidebar);
+      closeHistoryBtn?.addEventListener('click', toggleSidebar);
 
       clearHistoryBtn?.addEventListener('click', () => {
         if (confirm('Clear calculation history?')) {

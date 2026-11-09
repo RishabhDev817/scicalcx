@@ -39,6 +39,14 @@ const translatePath = useTranslatedPath(currentLang);
         spellcheck="false"
       />
       <kbd class="kbd-shortcut hidden sm:inline-flex text-[9px] px-1.5 py-0.5">ESC</kbd>
+      <button 
+        id="cmd-palette-close-btn"
+        type="button" 
+        aria-label="Close Command Palette"
+        class="sm:hidden text-brand-text-dim hover:text-white p-1 text-xs cursor-pointer focus:outline-none"
+      >
+        ✕
+      </button>
     </div>
 
     <!-- Results List -->
@@ -335,6 +343,11 @@ const translatePath = useTranslatedPath(currentLang);
     const triggerBtn = document.getElementById('cmd-palette-toggle');
     if (triggerBtn) {
       triggerBtn.addEventListener('click', openPalette);
+    }
+
+    const closeBtn = document.getElementById('cmd-palette-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closePalette);
     }
   })();
 </script>
